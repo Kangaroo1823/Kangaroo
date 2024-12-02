@@ -22,28 +22,25 @@ FetchContent_Declare(
         GIT_TAG        11.0.2 # or a later release
 )
 
-FetchContent_Declare(
-        QT
-        GIT_REPOSITORY https://github.com/qt/qt5.git
-        GIT_TAG        v6.8.0 # or a later release
-)
-
 FetchContent_MakeAvailable(Catch2)
 
 set(BENCHMARK_DOWNLOAD_DEPENDENCIES ON)
 FetchContent_MakeAvailable(GoogleBenchmark)
 
 FetchContent_MakeAvailable(FMT)
-FetchContent_MakeAvailable(QT)
+
 
 # create a library to hold the tested logic of the ChessEngine
-add_library(ChessEngineLib src/Bitboard.h src/Bitboard.cpp
+add_library(ChessEngineLib src/Bitboard.h src/bitboard.cpp
         src/pawn_attacks.h
         src/colors.h
         src/king_attacks.h
         src/chess_board.cpp
         src/chess_board.h
-        src/knight_attacks.h)
+        src/knight_attacks.h
+        src/rook_attack_masks.h
+        src/bishop_attack_masks.h
+        src/queen_attack_masks.h)
 target_link_libraries(ChessEngineLib PUBLIC fmt::fmt)
 
 # take care of the test executable
@@ -52,7 +49,12 @@ add_executable(ChessEngineTests test/test.cpp
         src/colors.h
         src/king_attacks.h
         src/chess_board.h
-        src/knight_attacks.h)
+        src/knight_attacks.h
+        src/rook_attack_masks.h
+        src/bishop_attack_masks.h
+        src/queen_attack_masks.h
+        test/bitboard_tests.cpp
+        test/pawn_attack_tests.cpp)
 target_link_libraries(ChessEngineTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(ChessEngineTests PRIVATE ChessEngineLib)
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)

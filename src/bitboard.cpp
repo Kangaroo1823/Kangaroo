@@ -15,11 +15,10 @@
 void print_bitboard(const Bitboard bitboard) {
 
     std::cout << "/*" << std::endl;
-    std::cout << "        A  B  C  D  E  F  G  H" << std::endl;
 
-    for (unsigned int rank = 0; rank < 8 ; rank++) {
+    for (int rank = 7; rank >= 0 ; rank--) {
         std::cout << "    " << rank + 1 << "  ";
-        for (unsigned int file = 0; file < 8 ; file++) {
+        for (int file = 0; file < 8 ; file++) {
             if (bitboard & (1ULL << rank * 8 + file)) {
                 std::cout << " 1 ";
             } else {
@@ -28,6 +27,7 @@ void print_bitboard(const Bitboard bitboard) {
         }
         std::cout << std::endl;
     }
+    std::cout << "        A  B  C  D  E  F  G  H" << std::endl;
     std::cout << std::endl;
     std::cout << "       " << "bitboard as 64 bit integer: */" << std::endl;
     std::cout << "       " << bitboard << "ULL," << std::endl;

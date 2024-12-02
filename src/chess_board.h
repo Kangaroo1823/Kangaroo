@@ -5,7 +5,7 @@
 #ifndef CHESS_BOARD_H
 #define CHESS_BOARD_H
 
-#include "Bitboard.h"
+#include "bitboard.h"
 
 typedef struct {
     Bitboard white_king;

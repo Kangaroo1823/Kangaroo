@@ -83,7 +83,7 @@ void print_chess_board(const Chess_Board* board) {
                 fmt::print("{: ^3}", white_bishop_c);
             else if ( get_bit(board->white_pawns, rank_file_to_position(rank, file)))
                 fmt::print("{: ^3}", white_pawn_c);
-            else fmt::print("{}{}{}", empty2_c, "\u2022", empty2_c);
+            else fmt::print("{}{}{}", " ", ".", " ");
 
         }
         fmt::print("\n");

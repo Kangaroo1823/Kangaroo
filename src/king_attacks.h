@@ -5,7 +5,7 @@
 #ifndef KING_ATTACKS_H
 #define KING_ATTACKS_H
 
-#include "Bitboard.h"
+#include "bitboard.h"
 
 constexpr Bitboard king_attacks[64] = {
     /*

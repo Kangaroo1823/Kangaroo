@@ -1,135 +1,24 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/internal/catch_preprocessor_internal_stringify.hpp>
 
-#include "../src/Bitboard.h"
+#include "../src/bishop_attack_masks.h"
+#include "../src/bitboard.h"
 #include "../src/colors.h"
 #include "../src/pawn_attacks.h"
 #include "../src/king_attacks.h"
 #include "../src/knight_attacks.h"
+#include "../src/queen_attack_masks.h"
+#include "../src/rook_attack_masks.h"
+#include "catch2/internal/catch_assertion_handler.hpp"
 #include "catch2/internal/catch_compiler_capabilities.hpp"
+#include "catch2/internal/catch_decomposer.hpp"
+#include "catch2/internal/catch_result_type.hpp"
+#include "catch2/internal/catch_test_macro_impl.hpp"
 #include "catch2/internal/catch_test_registry.hpp"
 
-TEST_CASE("set_bit", "[set_bit]")
- {
-    Bitboard bitboard = 0ULL;
-    REQUIRE( set_bit(bitboard, A1) == 1 );
-    REQUIRE( set_bit(bitboard, H8) == /*
-        A  B  C  D  E  F  G  H
-    1   0  0  0  0  0  0  0  0
-    2   0  0  0  0  0  0  0  0
-    3   0  0  0  0  0  0  0  0
-    4   0  0  0  0  0  0  0  0
-    5   0  0  0  0  0  0  0  0
-    6   0  0  0  0  0  0  0  0
-    7   0  0  0  0  0  0  0  0
-    8   0  0  0  0  0  0  0  1
 
-       bitboard as 64 bit integer: */
-       9223372036854775808ULL );
 
-    REQUIRE( set_bit(bitboard, E4) == /*
-        A  B  C  D  E  F  G  H
-    1   0  0  0  0  0  0  0  0
-    2   0  0  0  0  0  0  0  0
-    3   0  0  0  0  0  0  0  0
-    4   0  0  0  0  1  0  0  0
-    5   0  0  0  0  0  0  0  0
-    6   0  0  0  0  0  0  0  0
-    7   0  0  0  0  0  0  0  0
-    8   0  0  0  0  0  0  0  0
 
-       bitboard as 64 bit integer: */
-       268435456ULL );
-
-}
-
-TEST_CASE("Constants", "[constants]") {
-    REQUIRE( not_a_file == /*
-        A  B  C  D  E  F  G  H
-    1   0  1  1  1  1  1  1  1
-    2   0  1  1  1  1  1  1  1
-    3   0  1  1  1  1  1  1  1
-    4   0  1  1  1  1  1  1  1
-    5   0  1  1  1  1  1  1  1
-    6   0  1  1  1  1  1  1  1
-    7   0  1  1  1  1  1  1  1
-    8   0  1  1  1  1  1  1  1
-
-       bitboard as 64 bit integer: */
-       18374403900871474942ULL );
-
-    REQUIRE( not_ab_file == /*
-        A  B  C  D  E  F  G  H
-    1   0  0  1  1  1  1  1  1
-    2   0  0  1  1  1  1  1  1
-    3   0  0  1  1  1  1  1  1
-    4   0  0  1  1  1  1  1  1
-    5   0  0  1  1  1  1  1  1
-    6   0  0  1  1  1  1  1  1
-    7   0  0  1  1  1  1  1  1
-    8   0  0  1  1  1  1  1  1
-
-       bitboard as 64 bit integer: */
-       18229723555195321596ULL );
-
-    REQUIRE( not_h_file == /*
-        A  B  C  D  E  F  G  H
-    1   1  1  1  1  1  1  1  0
-    2   1  1  1  1  1  1  1  0
-    3   1  1  1  1  1  1  1  0
-    4   1  1  1  1  1  1  1  0
-    5   1  1  1  1  1  1  1  0
-    6   1  1  1  1  1  1  1  0
-    7   1  1  1  1  1  1  1  0
-    8   1  1  1  1  1  1  1  0
-
-       bitboard as 64 bit integer: */
-       9187201950435737471ULL );
-
-    REQUIRE( not_gh_file == /*
-        A  B  C  D  E  F  G  H
-    1   1  1  1  1  1  1  0  0
-    2   1  1  1  1  1  1  0  0
-    3   1  1  1  1  1  1  0  0
-    4   1  1  1  1  1  1  0  0
-    5   1  1  1  1  1  1  0  0
-    6   1  1  1  1  1  1  0  0
-    7   1  1  1  1  1  1  0  0
-    8   1  1  1  1  1  1  0  0
-
-       bitboard as 64 bit integer: */
-       4557430888798830399ULL );
-
-}
-
-Bitboard create_pawn_attacks(unsigned int color, const Position position) {
-
-    Bitboard attacks = 0ULL;
-
-    Bitboard bitboard = set_bit(0ULL, position);
-
-    if (color == white) {
-        // color = white
-        attacks = attacks | bitboard >> 7 & not_a_file;
-        attacks = attacks | bitboard >> 9 & not_h_file;
-    } else {
-        // color = black
-        attacks = attacks | bitboard << 7 & not_h_file;
-        attacks = attacks | bitboard << 9 & not_a_file;
-    }
-
-    return attacks;
-}
-
-TEST_CASE("pawn_attacks", "[pawn_attacks]") {
-
-    for (const Color color : All_Colors) {
-        for (const Position position : All_Positions) {
-            const Bitboard attacks = create_pawn_attacks(color, position);
-            REQUIRE(pawn_attacks[color][position] == attacks);
-        }
-    }
-
-}
 
 
 Bitboard create_king_attacks(const Position& position) {
@@ -150,7 +39,7 @@ Bitboard create_king_attacks(const Position& position) {
     return attacks;
 }
 
-TEST_CASE("king_attacks", "[king_attacks]") {
+TEST_CASE("King Attacks", "[king_attacks]") {
     for (Position position : All_Positions) {
         const Bitboard attacks = create_king_attacks(position);
         REQUIRE(king_attacks[position] == attacks);
@@ -179,5 +68,82 @@ TEST_CASE("Knight Attacks", "[knight_attacks]") {
     for (Position position : All_Positions) {
         const Bitboard attacks = create_knight_attacks(position);
         REQUIRE(knight_attacks[position] == attacks);
+    }
+}
+
+
+
+Bitboard create_rook_attack_mask(Position position) {
+    Bitboard attacks = 0ULL;
+
+    const int rank = position >> 3;
+    const int file = position & 7;
+
+    for (int r = rank + 1; r < 7; ++r) attacks |= 1ULL << r * 8 + file;
+    for (int f = file + 1; f < 7; ++f) attacks |= 1ULL << rank * 8 + f;
+    for (int r = rank - 1; r > 0; --r) attacks |= 1ULL << r * 8 + file;
+    for (int f = file - 1; f > 0; --f) attacks |= 1ULL << rank * 8 + f;
+
+    return attacks;
+}
+
+TEST_CASE("Rooks Attack Masks", "[rook_attack_masks]") {
+
+    for (Position position : All_Positions) {
+        const Bitboard board = create_rook_attack_mask(position);
+        REQUIRE(rook_attack_masks[position] == board);
+    }
+
+}
+
+
+Bitboard create_bishop_attack_mask(Position position) {
+    Bitboard attacks = 0ULL;
+
+    const int rank = position >> 3;
+    const int file = position & 7;
+
+    int r, f;
+    for (r = rank + 1, f = file + 1; r < 7 && f < 7; ++r, ++f) attacks |= 1ULL << r * 8 + f;
+    for (r = rank + 1, f = file - 1; r < 7 && f > 0; ++r, --f) attacks |= 1ULL << r * 8 + f;
+    for (r = rank - 1, f = file - 1; r > 0 && f > 0; --r, --f) attacks |= 1ULL << r * 8 + f;
+    for (r = rank - 1, f = file + 1; r > 0 && f < 7; --r, ++f) attacks |= 1ULL << r * 8 + f;
+
+    return attacks;
+}
+
+TEST_CASE("Bishops attack masks", "[bishop_attack_mask]") {
+    for (Position position : All_Positions) {
+        const Bitboard board = create_bishop_attack_mask(position);
+        REQUIRE(bishop_attack_masks[position] == board);
+    }
+}
+
+
+Bitboard create_queen_attack_mask(Position position) {
+    Bitboard attacks = 0ULL;
+
+    const int rank = position >> 3;
+    const int file = position & 7;
+
+    int r, f;
+    for (r = rank + 1, f = file + 1; r < 7 && f < 7; ++r, ++f) attacks |= 1ULL << r * 8 + f;
+    for (r = rank + 1, f = file - 1; r < 7 && f > 0; ++r, --f) attacks |= 1ULL << r * 8 + f;
+    for (r = rank - 1, f = file - 1; r > 0 && f > 0; --r, --f) attacks |= 1ULL << r * 8 + f;
+    for (r = rank - 1, f = file + 1; r > 0 && f < 7; --r, ++f) attacks |= 1ULL << r * 8 + f;
+
+    for (r = rank + 1; r < 7; ++r) attacks |= 1ULL << r * 8 + file;
+    for (f = file + 1; f < 7; ++f) attacks |= 1ULL << rank * 8 + f;
+    for (r = rank - 1; r > 0; --r) attacks |= 1ULL << r * 8 + file;
+    for (f = file - 1; f > 0; --f) attacks |= 1ULL << rank * 8 + f;
+
+    return attacks;
+}
+
+
+TEST_CASE("Queen Attack Masks", "[queen_attack_masks]") {
+    for (Position position : All_Positions) {
+        const Bitboard board = create_queen_attack_mask(position);
+        REQUIRE(queen_attack_masks[position] == board);
     }
 }
