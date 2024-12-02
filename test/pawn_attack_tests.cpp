@@ -5,9 +5,9 @@
 
 #include "catch2/catch_test_macros.hpp"
 
-#include "../src/bitboard.h"
-#include "../src/colors.h"
-#include "../src/pawn_attacks.h"
+#include "../include/bitboard.h"
+#include "../include/colors.h"
+#include "../include/pawn_attacks.h"
 
 Bitboard create_pawn_attacks(unsigned int color, const Position position) {
 

@@ -5,7 +5,7 @@
 
 
 #include "catch2/catch_test_macros.hpp"
-#include "../src/bitboard.h"
+#include "../include/bitboard.h"
 
 TEST_CASE("Set/Get/Pop Bit", "[set_bit]")
  {

@@ -2,7 +2,7 @@
 // Created by peter on 01/12/2024.
 //
 
-#include "chess_board.h"
+#include "../include/chess_board.h"
 #include <iostream>
 #include <fmt/xchar.h>
 
@@ -37,22 +37,22 @@ Chess_Board* create_chess_board() {
 }
 
 void print_chess_board(const Chess_Board* board) {
-    std::string white_king_c   = "\u2654";
-    std::string white_queen_c  = "\u2655";
-    std::string white_rook_c   = "\u2656";
-    std::string white_knight_c = "\u2658";
-    std::string white_bishop_c = "\u2657";
-    std::string white_pawn_c   = "\u2659";
+    std::string white_king_c   = "K"; //"\u2654";
+    std::string white_queen_c  = "Q"; // "\u2655";
+    std::string white_rook_c   = "R"; // "\u2656";
+    std::string white_knight_c = "K"; // "\u2658";
+    std::string white_bishop_c = "B"; // "\u2657";
+    std::string white_pawn_c   = "P"; // "\u2659";
 
-    std::string black_king_c   = "\u265A";
-    std::string black_queen_c  = "\u265B";
-    std::string black_rook_c   = "\u265C";
-    std::string black_knight_c = "\u265E";
-    std::string black_bishop_c = "\u265D";
-    std::string black_pawn_c   = "\u265F";
+    std::string black_king_c   = "k"; // "\u265A";
+    std::string black_queen_c  = "q"; // "\u265B";
+    std::string black_rook_c   = "r"; // "\u265C";
+    std::string black_knight_c = "k"; // \u265E";
+    std::string black_bishop_c = "b"; // "\u265D";
+    std::string black_pawn_c   = "p"; // "\u265F";
 
-    std::string empty_c  = "\u2003";
-    std::string empty2_c  = "\u2007\u200A\u200A";
+    std::string empty_c  = " "; // "\u2003";
+    std::string empty2_c  = " "; // "\u2007\u200A\u200A";
 
     if (board == nullptr) return;
 
@@ -83,7 +83,7 @@ void print_chess_board(const Chess_Board* board) {
                 fmt::print("{: ^3}", white_bishop_c);
             else if ( get_bit(board->white_pawns, rank_file_to_position(rank, file)))
                 fmt::print("{: ^3}", white_pawn_c);
-            else fmt::print("{}{}{}", " ", ".", " ");
+            else fmt::print("{}{}{}", empty_c, ".", empty_c);
 
         }
         fmt::print("\n");

@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "bitboard.h"
+#include "../include/bitboard.h"
 
 
 /**

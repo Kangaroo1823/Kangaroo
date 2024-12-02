@@ -1,10 +1,7 @@
-#include <bitset>
-#include <iostream>
-#include <iso646.h>
 
-#include "bitboard.h"
-#include "chess_board.h"
-#include "colors.h"
+
+#include "../include/bitboard.h"
+#include "../include/colors.h"
 
 
 Bitboard create_queen_attack_mask(Position position) {
