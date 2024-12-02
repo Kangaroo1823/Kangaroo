@@ -28,12 +28,23 @@ add_library(ChessEngineLib ../include/bitboard.h
         ../include/knight_attacks.h
         ../include/rook_attack_masks.h
         ../include/bishop_attack_masks.h
-        ../include/queen_attack_masks.h)
+        ../include/queen_attack_masks.h
+        create_possible_rook_moves.cpp
+        ../include/create_possible_rook_moves.h
+        ../include/create_possible_bishop_moves.h
+        create_possible_bishop_moves.cpp
+        create_possible_queen_moves.cpp
+        ../include/create_possible_queen_moves.h
+        create_occupantion_of_mask.cpp
+        ../include/create_occupantion_of_mask.h)
 target_link_libraries(ChessEngineLib PUBLIC fmt::fmt)
 
 # take care of the main executable
 add_executable(ChessEngine
         main.cpp
         ../include/bitboard.h
+        ../include/create_possible_bishop_moves.h
+        ../include/create_possible_queen_moves.h
+        ../include/create_occupantion_of_mask.h
 )
 target_link_libraries(ChessEngine PRIVATE ChessEngineLib)

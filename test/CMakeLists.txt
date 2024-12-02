@@ -26,7 +26,14 @@ add_executable(ChessEngineTests
         knight_attacks_tests.cpp
         rook_attack_mask_tests.cpp
         bishop_attack_mask_tests.cpp
-        queen_attack_mask_tests.cpp)
+        queen_attack_mask_tests.cpp
+        ../include/create_possible_rook_moves.h
+        create_possible_rook_moves_tests.cpp
+        create_possible_bishop_moves_tests.cpp
+        ../include/create_possible_bishop_moves.h
+        ../include/create_possible_queen_moves.h
+        ../include/create_occupantion_of_mask.h
+        create_occupantion_of_mask_tests.cpp)
 target_link_libraries(ChessEngineTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(ChessEngineTests PRIVATE ChessEngineLib)
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)

@@ -108,6 +108,43 @@ inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
     return bitboard & ~(1ULL << position);
 }
 
+/**
+ *
+ * @param bitboard
+ * @return The number of set bits in bitboard
+ */
+inline int count_1_bits(Bitboard bitboard) {
+
+    // initialize the count variable
+    int count = 0;
+
+    // loop while there are still some bits set to one in bitboard
+    while (bitboard) {
+
+        // increment the count variable
+        count++;
+
+        // erase the least significant one bit
+        bitboard &= bitboard - 1;
+    }
+
+    // return the count
+    return count;
+}
+
+/**
+ *
+ * @param bitboard
+ * @return the index (zero based) of the least significant bit set to one in bitboard or -1 in case bitboard is zero.
+ */
+inline int get_ls1b_index(Bitboard bitboard) {
+
+    // check if bitboard has bits set. Otherwise, return -1.
+    if (bitboard == 0) return -1;
+
+    // count the bits before the first 1 bit.
+    return count_1_bits((bitboard & -bitboard) -1);
+}
 
 constexpr Bitboard not_a_file = /*
         A  B  C  D  E  F  G  H
