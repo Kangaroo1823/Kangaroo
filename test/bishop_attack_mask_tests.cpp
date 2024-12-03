@@ -26,6 +26,6 @@ Bitboard create_bishop_attack_mask(Position position) {
 TEST_CASE("Bishops attack masks", "[bishop_attack_mask]") {
     for (Position position : All_Positions) {
         const Bitboard board = create_bishop_attack_mask(position);
-        REQUIRE(bishop_attack_masks[position] == board);
+        REQUIRE(Constants::bishop_attack_masks[position] == board);
     }
 }

@@ -3,19 +3,31 @@ set(CMAKE_CXX_STANDARD 20)
 
 ##############################################
 #
-# see that fmt is valiable
+# see that fmt is available
 #
 ##############################################
 Include(FetchContent)
-
 FetchContent_Declare(
         FMT
         GIT_REPOSITORY https://github.com/fmtlib/fmt.git
         GIT_TAG        11.0.2 # or a later release
 )
-
 FetchContent_MakeAvailable(FMT)
 
+##############################################
+#
+# see that boost is available
+#
+##############################################
+set(BOOST_INCLUDE_LIBRARIES thread filesystem system program_options)
+set(BOOST_ENABLE_CMAKE ON)
+FetchContent_Declare(
+        Boost
+        GIT_REPOSITORY https://github.com/boostorg/boost.git
+        GIT_TAG boost-1.86.0
+        GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(Boost)
 
 # create a library to hold the tested logic of the ChessEngine
 add_library(ChessEngineLib ../include/bitboard.h

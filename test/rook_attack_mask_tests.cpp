@@ -26,7 +26,7 @@ TEST_CASE("Rooks Attack Masks", "[rook_attack_masks]") {
 
     for (Position position : All_Positions) {
         const Bitboard board = create_rook_attack_mask(position);
-        REQUIRE(rook_attack_masks[position] == board);
+        REQUIRE(Constants::rook_attack_masks[position] == board);
     }
 
 }

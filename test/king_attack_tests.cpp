@@ -28,6 +28,6 @@ Bitboard create_king_attacks(const Position& position) {
 TEST_CASE("King Attacks", "[king_attacks]") {
     for (Position position : All_Positions) {
         const Bitboard attacks = create_king_attacks(position);
-        REQUIRE(king_attacks[position] == attacks);
+        REQUIRE(Constants::king_attacks[position] == attacks);
     }
 }

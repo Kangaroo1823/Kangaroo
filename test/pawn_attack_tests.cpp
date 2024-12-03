@@ -28,12 +28,12 @@ Bitboard create_pawn_attacks(unsigned int color, const Position position) {
     return attacks;
 }
 
-TEST_CASE("Pawn Attacks", "[pawn_attacks]") {
+TEST_CASE("Pawn Attacks", "[Pawn_Attacks]") {
 
     for (const Color color : All_Colors) {
         for (const Position position : All_Positions) {
             const Bitboard attacks = create_pawn_attacks(color, position);
-            REQUIRE(pawn_attacks[color][position] == attacks);
+            REQUIRE(Constants::Pawn_Attacks[color][position] == attacks);
         }
     }
 

@@ -29,9 +29,9 @@ Bitboard create_queen_attack_mask(Position position) {
 }
 
 
-TEST_CASE("Queen Attack Masks", "[queen_attack_masks]") {
+TEST_CASE("Queen Attack Masks", "[Queen_Attack_Masks]") {
     for (Position position : All_Positions) {
         const Bitboard board = create_queen_attack_mask(position);
-        REQUIRE(queen_attack_masks[position] == board);
+        REQUIRE(Constants::Queen_Attack_Masks[position] == board);
     }
 }
