@@ -5,6 +5,7 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
+#include <array>
 #include <string>
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
@@ -81,7 +82,7 @@ typedef enum {
     H8 = 63
 } Position;
 
-constexpr Position All_Positions[64] = {
+constexpr std::array<Position, 64> All_Positions = {
     A1, B1, C1, D1, E1, F1, G1, H1,
     A2, B2, C2, D2, E2, F2, G2, H2,
     A3, B3, C3, D3, E3, F3, G3, H3,

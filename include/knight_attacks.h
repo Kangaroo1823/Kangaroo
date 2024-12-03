@@ -4,6 +4,8 @@
 
 #ifndef KNIGHT_ATTACKS_H
 #define KNIGHT_ATTACKS_H
+#include <array>
+
 #include "bitboard.h"
 
 namespace Constants {
@@ -22,7 +24,7 @@ namespace Constants {
      * The board squares are indexed from 0 to 63, starting from A1 to H1, then A2 to H2, and so on
      * up to A8 to H8.
      */
-    static constexpr Bitboard knight_attacks[64] = { /*
+    static constexpr std::array<Bitboard,64> knight_attacks = { /*
             A  B  C  D  E  F  G  H
         1   0  0  0  0  0  0  0  0
         2   0  0  1  0  0  0  0  0

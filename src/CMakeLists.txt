@@ -19,7 +19,7 @@ FetchContent_MakeAvailable(FMT)
 # see that boost is available
 #
 ##############################################
-set(BOOST_INCLUDE_LIBRARIES thread filesystem system program_options)
+set(BOOST_INCLUDE_LIBRARIES thread filesystem system program_options random)
 set(BOOST_ENABLE_CMAKE ON)
 FetchContent_Declare(
         Boost
@@ -49,7 +49,7 @@ add_library(ChessEngineLib ../include/bitboard.h
         ../include/create_possible_queen_moves.h
         create_occupantion_of_mask.cpp
         ../include/create_occupantion_of_mask.h)
-target_link_libraries(ChessEngineLib PUBLIC fmt::fmt)
+target_link_libraries(ChessEngineLib PUBLIC fmt::fmt Boost::random)
 
 # take care of the main executable
 add_executable(ChessEngine

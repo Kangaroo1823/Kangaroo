@@ -4,6 +4,8 @@
 
 #ifndef QUEEN_ATTACK_MASKS_H
 #define QUEEN_ATTACK_MASKS_H
+#include <array>
+
 #include "bitboard.h"
 
 namespace Constants {
@@ -26,7 +28,7 @@ namespace Constants {
      * further in the direction or the queen cannot go there at all the corresponding
      * bit is unset (0).
      */
-    static constexpr Bitboard Queen_Attack_Masks[64] = {
+    static constexpr std::array<Bitboard,64> Queen_Attack_Masks = {
         /*
             A  B  C  D  E  F  G  H
         1   0  1  1  1  1  1  1  0

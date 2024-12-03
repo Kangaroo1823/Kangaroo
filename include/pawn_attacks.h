@@ -5,6 +5,8 @@
 #ifndef PAWN_ATTACKS_H
 #define PAWN_ATTACKS_H
 
+#include <array>
+
 #include "bitboard.h"
 
 namespace Constants {
@@ -21,8 +23,7 @@ namespace Constants {
      * Each bit in the 64-bit integer corresponds to a square on the chessboard, where a set bit (1)
      * indicates that the square is under attack by the pawn.
      */
-    static constexpr Bitboard Pawn_Attacks[2][64] = {
-        {
+    static constexpr std::array<std::array<Bitboard,64>,2> Pawn_Attacks = {{{
             /*
         8   0  0  0  0  0  0  0  0
         7   0  0  0  0  0  0  0  0
@@ -1689,7 +1690,7 @@ namespace Constants {
              bitboard as 64 bit integer: */
              18014398509481984ULL
           }
-    };
+    }};
 }
 
 #endif //PAWN_ATTACKS_H

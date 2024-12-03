@@ -5,6 +5,8 @@
 #ifndef KING_ATTACKS_H
 #define KING_ATTACKS_H
 
+#include <array>
+
 #include "bitboard.h"
 
 namespace Constants {
@@ -29,7 +31,7 @@ namespace Constants {
      * Usage of this table allows quick computation of a king's attack
      * pattern without recalculating it dynamically.
      */
-    static constexpr Bitboard king_attacks[64] = {
+    static constexpr std::array<Bitboard, 64> king_attacks = {
         /*
             A  B  C  D  E  F  G  H
         1   0  1  0  0  0  0  0  0

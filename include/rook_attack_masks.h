@@ -5,6 +5,8 @@
 #ifndef ROOK_ATTACK_MASKS_H
 #define ROOK_ATTACK_MASKS_H
 
+#include <array>
+
 #include "bitboard.h"
 
 namespace Constants {
@@ -28,7 +30,7 @@ namespace Constants {
      * corresponding bit is unset (0). Again it is assumed that the rook might move to
      * this square
      */
-    static constexpr Bitboard rook_attack_masks[64] = {
+    static constexpr std::array<Bitboard, 64> rook_attack_masks = {
         /*
                 A  B  C  D  E  F  G  H
             1   0  1  1  1  1  1  1  0
