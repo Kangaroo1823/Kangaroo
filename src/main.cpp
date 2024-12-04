@@ -36,11 +36,12 @@ MagicNumber find_magic_number(const Position position, const bool isBishop) {
 
     const Bitboard mask = isBishop ? Constants::bishop_attack_masks[position] : Constants::rook_attack_masks[position];
     const int relevant_bits_in_mask = count_1_bits(mask);
+    const int number_of_masks = 1 << relevant_bits_in_mask;
 
     //
-    Bitboard occupancy_table[1 << relevant_bits_in_mask] = {0ULL};
-    Bitboard attack_table[1 << relevant_bits_in_mask] = {0ULL};
-    Bitboard used_attack_table[1 << relevant_bits_in_mask] = {0ULL};
+    std::vector<Bitboard> occupancy_table;
+    std::vector<Bitboard> attack_table;
+    std::vector<Bitboard> used_attack_table;
 
     // fill the occupation- and attacks-tables with the relevant data.
     for (int index = 0; index < 1 << relevant_bits_in_mask; index++ ) {
@@ -53,13 +54,13 @@ MagicNumber find_magic_number(const Position position, const bool isBishop) {
     for (int magic_candidate_number = 0; magic_candidate_number < 1000000000; magic_candidate_number++ ) {
         MagicNumber magic_number = magic_candidate(mask, relevant_bits_in_mask);
 
-        used_attack_table = {0};
+
 
     }
 
     for (int i = 0; i < 100; i++ ) {
-        MagicNumber random_number = magic_candidate();
-        fmt::print("/* {} */ 0b{:0b}ULL,\n", print_position(position),random_number);
+        //MagicNumber random_number = magic_candidate();
+        //fmt::print("/* {} */ 0b{:0b}ULL,\n", print_position(position),random_number);
     }
     return 0;
 }
@@ -69,7 +70,7 @@ int main() {
 
     Position position = E4;
 
-   find_magic_number(position, 6, false);
+   //find_magic_number(position, 6, false);
 
     return 0;
 }
