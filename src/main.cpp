@@ -54,8 +54,6 @@ MagicNumber find_magic_number(const Position position, const bool isBishop) {
     for (int magic_candidate_number = 0; magic_candidate_number < 1000000000; magic_candidate_number++ ) {
         MagicNumber magic_number = magic_candidate(mask, relevant_bits_in_mask);
 
-
-
     }
 
     for (int i = 0; i < 100; i++ ) {
