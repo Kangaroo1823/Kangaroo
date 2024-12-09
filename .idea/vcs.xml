@@ -2,5 +2,27 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/headers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/heap" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/histogram" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/hof" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/icl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/integer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/interprocess" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/intrusive" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/io" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/iostreams" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/iterator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/json" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/lambda" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/lambda2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/leaf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/lexical_cast" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/local_function" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/locale" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/lockfree" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/log" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/logic" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/math" vcs="Git" />
   </component>
 </project>

@@ -25,7 +25,7 @@ MagicNumber magic_candidate(Bitboard mask, int relevant_bits) {
 
     MagicNumber res = dist(rng) & dist(rng) & dist(rng);
 
-    while (count_1_bits(mask * res & 0xFF00000000000000) < 6) {
+    while (Bitcount(mask * res & 0xFF00000000000000) < 6) {
         res = dist(rng) & dist(rng) & dist(rng);
     }
 
@@ -35,7 +35,7 @@ MagicNumber magic_candidate(Bitboard mask, int relevant_bits) {
 MagicNumber find_magic_number(const Position position, const bool isBishop) {
 
     const Bitboard mask = isBishop ? Constants::bishop_attack_masks[position] : Constants::rook_attack_masks[position];
-    const int relevant_bits_in_mask = count_1_bits(mask);
+    const int relevant_bits_in_mask = Bitcount(mask);
     const int number_of_masks = 1 << relevant_bits_in_mask;
 
     //

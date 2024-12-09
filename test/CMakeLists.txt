@@ -33,7 +33,8 @@ add_executable(ChessEngineTests
         ../include/create_possible_bishop_moves.h
         ../include/create_possible_queen_moves.h
         ../include/create_occupantion_of_mask.h
-        create_occupantion_of_mask_tests.cpp)
+        create_occupantion_of_mask_tests.cpp
+        ../include/base.h)
 target_link_libraries(ChessEngineTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(ChessEngineTests PRIVATE ChessEngineLib)
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)

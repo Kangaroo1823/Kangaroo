@@ -7,6 +7,9 @@
 
 #include <array>
 #include <string>
+#include <immintrin.h>
+
+#include "base.h"
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
  */
@@ -110,42 +113,28 @@ inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
 }
 
 /**
+ * Computes the index of the least significant set bit in the given bitboard.
  *
- * @param bitboard
- * @return The number of set bits in bitboard
+ * This function utilizes the _tzcnt_u64 intrinsic to determine the index of
+ * the least significant bit that is set to '1' in the bitboard, interpreted as
+ * a zero-based position.
+ *
+ * @param bitboard The bitboard to extract the least significant bit's index from.
+ * @return The index of the least significant set bit in the input bitboard.
  */
-inline int count_1_bits(Bitboard bitboard) {
+#define SquareOf(bitboard) _tzcnt_u64(bitboard)
 
-    // initialize the count variable
-    int count = 0;
-
-    // loop while there are still some bits set to one in bitboard
-    while (bitboard) {
-
-        // increment the count variable
-        count++;
-
-        // erase the least significant one bit
-        bitboard &= bitboard - 1;
-    }
-
-    // return the count
-    return count;
-}
 
 /**
+ * Iterates over each set bit in a bitboard.
  *
- * @param bitboard
- * @return the index (zero based) of the least significant bit set to one in bitboard or -1 in case bitboard is zero.
+ * @param x The Bitboard to iterate over. For each set bit there will be one iteration over the
+ *          following block of commands. Then the bit will be erased, and it will be checked if
+ *          there are set bits remaining. If the answer is 'yes' the block will get executed again ...
+ *          and so on.
  */
-inline int get_ls1b_index(Bitboard bitboard) {
+#define Bitloop(x) for(;x;x=_blsr_u64(x))
 
-    // check if bitboard has bits set. Otherwise, return -1.
-    if (bitboard == 0) return -1;
-
-    // count the bits before the first 1 bit.
-    return count_1_bits((bitboard & -bitboard) -1);
-}
 
 constexpr Bitboard not_a_file = /*
         A  B  C  D  E  F  G  H

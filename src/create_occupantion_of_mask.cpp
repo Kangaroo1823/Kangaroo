@@ -8,9 +8,9 @@
 Bitboard create_occupation_of_mask( unsigned int index, Bitboard mask ) {
     Bitboard occupancy = 0ULL;
 
-    const unsigned int count = count_1_bits(mask);
+    const unsigned int count = Bitcount(mask);
     for ( unsigned int i = 0; i < count; i++ ) {
-        unsigned int s = get_ls1b_index( mask );
+        unsigned int s = SquareOf( mask );
         mask &= mask - 1ULL;
         if (index & 1ULL << i ) occupancy |= 1ULL << s;
     }
