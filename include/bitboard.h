@@ -7,6 +7,7 @@
 
 #include <array>
 #include <string>
+#include <immintrin.h>
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
  */
@@ -133,19 +134,11 @@ inline int count_1_bits(Bitboard bitboard) {
     return count;
 }
 
-/**
- *
- * @param bitboard
- * @return the index (zero based) of the least significant bit set to one in bitboard or -1 in case bitboard is zero.
- */
-inline int get_ls1b_index(Bitboard bitboard) {
+#define SquareOf(x) _tzcnt_u64(x)
 
-    // check if bitboard has bits set. Otherwise, return -1.
-    if (bitboard == 0) return -1;
+#define Bitloop(x) for(;x;x=_blsr_u64(x))
 
-    // count the bits before the first 1 bit.
-    return count_1_bits((bitboard & -bitboard) -1);
-}
+
 
 constexpr Bitboard not_a_file = /*
         A  B  C  D  E  F  G  H
