@@ -26,7 +26,7 @@ MagicNumber magic_candidate(Bitboard mask, int relevant_bits) {
 
     MagicNumber res = dist(rng) & dist(rng) & dist(rng);
 
-    while (count_1_bits(mask * res & 0xFF00000000000000) < 6) {
+    while (Bitcount(mask * res & 0xFF00000000000000) < 6) {
         res = dist(rng) & dist(rng) & dist(rng);
     }
 
@@ -36,7 +36,7 @@ MagicNumber magic_candidate(Bitboard mask, int relevant_bits) {
 MagicNumber find_magic_number(const Position position, const bool isBishop) {
 
     const Bitboard mask = isBishop ? Constants::bishop_attack_masks[position] : Constants::rook_attack_masks[position];
-    const int relevant_bits_in_mask = count_1_bits(mask);
+    const int relevant_bits_in_mask = Bitcount(mask);
     const int number_of_masks = 1 << relevant_bits_in_mask;
 
     //
@@ -45,7 +45,7 @@ MagicNumber find_magic_number(const Position position, const bool isBishop) {
     std::vector<Bitboard> used_attack_table;
 
     // fill the occupation- and attacks-tables with the relevant data.
-    for (int index = 0; index < 1 << relevant_bits_in_mask; index++ ) {
+    for (int index = 0; index < number_of_masks; index++ ) {
         occupancy_table[index] = create_occupation_of_mask(index, mask);
 
         attack_table[index] = isBishop ? create_possible_bishop_moves(mask, position) : create_possible_rook_moves(mask, position);

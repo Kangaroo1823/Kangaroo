@@ -1,5 +1,5 @@
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 ##############################################
 #
@@ -29,6 +29,36 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Boost)
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2" )
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj /EHsc /arch:AVX2" )
+    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} /bigobj /EHsc /arch:AVX2" )
+
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ot")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /Ot")
+    set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} /O2 /Ot")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+        # using clang with clang-cl front end
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2 " )
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj /EHsc /arch:AVX2" )
+        set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} /bigobj /EHsc /arch:AVX2" )
+
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ot")
+        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /Ot")
+        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} /O2 /Ot")
+    elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
+        # using clang with regular front end
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
+        set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
+
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
+        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
+        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
+    endif()
+endif()
+
 # create a library to hold the tested logic of the ChessEngine
 add_library(ChessEngineLib ../include/bitboard.h
         bitboard.cpp
@@ -40,15 +70,13 @@ add_library(ChessEngineLib ../include/bitboard.h
         ../include/knight_attacks.h
         ../include/rook_attack_masks.h
         ../include/bishop_attack_masks.h
-        ../include/queen_attack_masks.h
         create_possible_rook_moves.cpp
         ../include/create_possible_rook_moves.h
         ../include/create_possible_bishop_moves.h
         create_possible_bishop_moves.cpp
-        create_possible_queen_moves.cpp
-        ../include/create_possible_queen_moves.h
         create_occupantion_of_mask.cpp
-        ../include/create_occupantion_of_mask.h)
+        ../include/create_occupantion_of_mask.h
+        ../include/base.h)
 target_link_libraries(ChessEngineLib PUBLIC fmt::fmt Boost::random)
 
 # take care of the main executable
@@ -56,7 +84,7 @@ add_executable(ChessEngine
         main.cpp
         ../include/bitboard.h
         ../include/create_possible_bishop_moves.h
-        ../include/create_possible_queen_moves.h
         ../include/create_occupantion_of_mask.h
+        ../include/base.h
 )
 target_link_libraries(ChessEngine PRIVATE ChessEngineLib)

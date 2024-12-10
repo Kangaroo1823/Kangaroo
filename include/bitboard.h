@@ -9,6 +9,8 @@
 #include <string>
 #include <immintrin.h>
 
+#include "base.h"
+
 /** define a 'Bitboard' to be a 64 bit unsigned integer
  */
 typedef unsigned long long Bitboard;
@@ -111,33 +113,41 @@ inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
 }
 
 /**
+ * Computes the index of the least significant set bit in the given bitboard.
  *
- * @param bitboard
- * @return The number of set bits in bitboard
+ * This function utilizes the _tzcnt_u64 intrinsic to determine the index of
+ * the least significant bit that is set to '1' in the bitboard, interpreted as
+ * a zero-based position.
+ *
+ * @param bitboard The bitboard to extract the least significant bit's index from.
+ * @return The index of the least significant set bit in the input bitboard.
  */
-inline int count_1_bits(Bitboard bitboard) {
+#define SquareOf(bitboard) _tzcnt_u64(bitboard)
 
-    // initialize the count variable
-    int count = 0;
+/**
+ * Extracts bits from the given bitboard using the specified mask.
+ *
+ * This function utilizes the _pext_u64 intrinsic to extract bits from the
+ * specified bitboard according to the pattern specified by the mask.
+ * The bits in the bitboard corresponding to '1's in the mask are
+ * extracted to form a densely packed result.
+ *
+ * @param bitboard The Bitboard from which bits will be extracted.
+ * @param mask The Bitboard mask that specifies which bits to extract.
+ * @return A Bitboard containing the extracted bits, densely packed.
+ */
+#define ExtractMask(bitboard,mask) _pext_u64(bitboard,mask)
 
-    // loop while there are still some bits set to one in bitboard
-    while (bitboard) {
 
-        // increment the count variable
-        count++;
-
-        // erase the least significant one bit
-        bitboard &= bitboard - 1;
-    }
-
-    // return the count
-    return count;
-}
-
-#define SquareOf(x) _tzcnt_u64(x)
-
+/**
+ * Iterates over each set bit in a bitboard.
+ *
+ * @param x The Bitboard to iterate over. For each set bit there will be one iteration over the
+ *          following block of commands. Then the bit will be erased, and it will be checked if
+ *          there are set bits remaining. If the answer is 'yes' the block will get executed again ...
+ *          and so on.
+ */
 #define Bitloop(x) for(;x;x=_blsr_u64(x))
-
 
 
 constexpr Bitboard not_a_file = /*

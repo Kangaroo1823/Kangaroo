@@ -27,7 +27,7 @@ void print_bitboard(const Bitboard bitboard) {
     }
     fmt::print("        A  B  C  D  E  F  G  H\n\n");
     fmt::print("       bitboard as 64 bit integer: */\n");
-    fmt::print( "       {}ULL,\n", bitboard);
+    fmt::print( "       0x{0:x},\n", bitboard);
 }
 
 std::string print_position(const Position position) {
