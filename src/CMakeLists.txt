@@ -53,9 +53,9 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
         set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
 
-        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=x86-64-v3 -O3 -flto")
-        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=x86-64-v3 -O3 -flto")
-        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=x86-64-v3 -O3 -flto")
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
+        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
+        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
     endif()
 endif()
 
@@ -70,13 +70,10 @@ add_library(ChessEngineLib ../include/bitboard.h
         ../include/knight_attacks.h
         ../include/rook_attack_masks.h
         ../include/bishop_attack_masks.h
-        ../include/queen_attack_masks.h
         create_possible_rook_moves.cpp
         ../include/create_possible_rook_moves.h
         ../include/create_possible_bishop_moves.h
         create_possible_bishop_moves.cpp
-        create_possible_queen_moves.cpp
-        ../include/create_possible_queen_moves.h
         create_occupantion_of_mask.cpp
         ../include/create_occupantion_of_mask.h
         ../include/base.h)
@@ -87,7 +84,6 @@ add_executable(ChessEngine
         main.cpp
         ../include/bitboard.h
         ../include/create_possible_bishop_moves.h
-        ../include/create_possible_queen_moves.h
         ../include/create_occupantion_of_mask.h
         ../include/base.h
 )

@@ -124,6 +124,20 @@ inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
  */
 #define SquareOf(bitboard) _tzcnt_u64(bitboard)
 
+/**
+ * Extracts bits from the given bitboard using the specified mask.
+ *
+ * This function utilizes the _pext_u64 intrinsic to extract bits from the
+ * specified bitboard according to the pattern specified by the mask.
+ * The bits in the bitboard corresponding to '1's in the mask are
+ * extracted to form a densely packed result.
+ *
+ * @param bitboard The Bitboard from which bits will be extracted.
+ * @param mask The Bitboard mask that specifies which bits to extract.
+ * @return A Bitboard containing the extracted bits, densely packed.
+ */
+#define ExtractMask(bitboard,mask) _pext_u64(bitboard,mask)
+
 
 /**
  * Iterates over each set bit in a bitboard.

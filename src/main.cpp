@@ -44,7 +44,7 @@ MagicNumber find_magic_number(const Position position, const bool isBishop) {
     std::vector<Bitboard> used_attack_table;
 
     // fill the occupation- and attacks-tables with the relevant data.
-    for (int index = 0; index < 1 << relevant_bits_in_mask; index++ ) {
+    for (int index = 0; index < number_of_masks; index++ ) {
         occupancy_table[index] = create_occupation_of_mask(index, mask);
 
         attack_table[index] = isBishop ? create_possible_bishop_moves(mask, position) : create_possible_rook_moves(mask, position);
