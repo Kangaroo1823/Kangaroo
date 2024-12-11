@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeProjectFlavorService">
     <option name="flavorId" value="CMakePlainProjectFlavor" />
   </component>
@@ -135,25 +135,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cmake/Cache.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake/CompilerWarnings.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake/Sanitizers.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake/StandardProjectSettings.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake/Utilities.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake/VCEnvironment.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dependencies.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Dependencies.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KangarooOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/KangarooOptions.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/bitboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitboard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bitboard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bitboard.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess_board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess_board.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bitboard_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bitboard_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/create_occupantion_of_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_occupantion_of_mask_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/pawn_attack_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/pawn_attack_tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,10 +161,10 @@
     <option name="minorVersion" value="3.1" />
     <option name="productBranch" value="Classic" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2q4lAaZwh7KxZQK733VYgHlBlA0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -195,6 +183,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -205,11 +194,6 @@
   }
 }]]></component>
   <component name="RunManager" selected="Catch.Kangaroo_tests">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Bitcount" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ChessEngineTests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="ChessEngineTests" TEST_CLASS="[bitcount]" TEST_METHOD="Bitcount" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -378,6 +362,11 @@
       </method>
     </configuration>
     <configuration name="NightlyUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyUpdate" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -865,6 +854,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733929587374</updated>
       <workItem from="1733929589144" duration="3676000" />
+      <workItem from="1733935142530" duration="1396000" />
     </task>
     <servers />
   </component>

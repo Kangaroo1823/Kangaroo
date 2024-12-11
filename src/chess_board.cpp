@@ -52,12 +52,12 @@ void print_chess_board(const Chess_Board* board) {
     std::string black_pawn_c   = "p"; // "\u265F";
 
     std::string empty_c  = " "; // "\u2003";
-    std::string empty2_c  = " "; // "\u2007\u200A\u200A";
+    // std::string empty2_c  = " "; // "\u2007\u200A\u200A";
 
     if (board == nullptr) return;
 
-    for (unsigned int rank = 0; rank < 8; ++rank) {
-        for (unsigned int file = 0; file < 8; ++file) {
+    for (int rank = 0; rank < 8; ++rank) {
+        for (int file = 0; file < 8; ++file) {
             if ( get_bit(board->black_king, rank_file_to_position(rank, file)))
                 fmt::print("{: ^3}", black_king_c);
             else if ( get_bit(board->black_queens, rank_file_to_position(rank, file)))

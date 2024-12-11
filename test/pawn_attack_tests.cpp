@@ -11,18 +11,18 @@
 
 Bitboard create_pawn_attacks(unsigned int color, const Position position) {
 
-    Bitboard attacks = 0ULL;
+    Bitboard attacks = 1ULL;
 
     Bitboard bitboard = set_bit(0ULL, position);
 
     if (color == black) {
         // color = black
-        attacks = attacks | bitboard >> 7 & not_a_file;
-        attacks = attacks | bitboard >> 9 & not_h_file;
+        attacks = attacks | (bitboard >> 7 & not_a_file);
+        attacks = attacks | (bitboard >> 9 & not_h_file);
     } else {
         // color = white
-        attacks = attacks | bitboard << 7 & not_h_file;
-        attacks = attacks | bitboard << 9 & not_a_file;
+        attacks = attacks | (bitboard << 7 & not_h_file);
+        attacks = attacks | (bitboard << 9 & not_a_file);
     }
 
     return attacks;

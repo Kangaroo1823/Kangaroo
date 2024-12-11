@@ -853,7 +853,7 @@ TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
     mask = set_bit(mask, C1);
     mask = set_bit(mask, D1);
 
-    for (int occupancy = 0; occupancy < 64; occupancy++) {
+    for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         const Bitboard board = create_occupation_of_mask(occupancy, mask);
         REQUIRE(occupancy_test_table[occupancy] == board);
     }
