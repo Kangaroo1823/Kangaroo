@@ -1,4 +1,4 @@
-
+set( CMAKE_VERBOSE_MAKEFILE ON )
 
 if(NOT TARGET Kangaroo_options)
     message(ERROR " Need target 'Kangaroo_options' to build Kangaroo_library")
@@ -97,6 +97,8 @@ target_link_libraries(Kangaroo_library
         Kangaroo_options
 )
 
+
+
 # take care of the main executable
 add_executable(Kangaroo
         main.cpp
@@ -106,3 +108,9 @@ add_executable(Kangaroo
         ../include/base.h
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
+
+if(Kangaroo_ENABLE_IPO)
+    include(../cmake/InterproceduralOptimization.cmake)
+    Kangaroo_enable_ipo_for_target(Kangaroo_library)
+    Kangaroo_enable_ipo_for_target(Kangaroo)
+endif()

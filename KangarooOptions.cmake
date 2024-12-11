@@ -46,6 +46,7 @@ macro(Kangaroo_setup_options)
         option(Kangaroo_ENABLE_CACHE "Enable ccache" OFF)
     else()
         option(Kangaroo_ENABLE_IPO "Enable IPO/LTO" ON)
+        option(Kangaroo_OPTIMIZE_FOR_NATIVE "Build with -march=native" ON)
         option(Kangaroo_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
         option(Kangaroo_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
         option(Kangaroo_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
@@ -90,27 +91,28 @@ macro(Kangaroo_setup_options)
 endmacro()
 
 macro(Kangaroo_global_options)
-    if(Kangaroo_ENABLE_IPO)
-       include(cmake/InterproceduralOptimization.cmake)
-       Kangaroo_enable_ipo()
-    endif()
+
+    if(Kangaroo_OPTIMIZE_FOR_NATIVE)
+        include(cmake/OptimizeForNative.cmake)
+        Kangaroo_optimize_for_native()
+    endif ()
 
     Kangaroo_supports_sanitizers()
 
-    if(Kangaroo_ENABLE_HARDENING AND Kangaroo_ENABLE_GLOBAL_HARDENING)
-        include(cmake/Hardening.cmake)
-        if(NOT SUPPORTS_UBSAN
-                OR Kangaroo_ENABLE_SANITIZER_UNDEFINED
-                OR Kangaroo_ENABLE_SANITIZER_ADDRESS
-                OR Kangaroo_ENABLE_SANITIZER_THREAD
-                OR Kangaroo_ENABLE_SANITIZER_LEAK)
-            set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
-        else()
-            set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
-        endif()
-        message("${Kangaroo_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${Kangaroo_ENABLE_SANITIZER_UNDEFINED}")
-        Kangaroo_enable_hardening(Kangaroo_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
-    endif()
+#    if(Kangaroo_ENABLE_HARDENING AND Kangaroo_ENABLE_GLOBAL_HARDENING)
+#        include(cmake/Hardening.cmake)
+#        if(NOT SUPPORTS_UBSAN
+#                OR Kangaroo_ENABLE_SANITIZER_UNDEFINED
+#                OR Kangaroo_ENABLE_SANITIZER_ADDRESS
+#                OR Kangaroo_ENABLE_SANITIZER_THREAD
+#                OR Kangaroo_ENABLE_SANITIZER_LEAK)
+#            set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
+#        else()
+#            set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
+#        endif()
+#        message("${Kangaroo_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${Kangaroo_ENABLE_SANITIZER_UNDEFINED}")
+#        Kangaroo_enable_hardening(Kangaroo_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+#    endif()
 endmacro()
 
 macro(Kangaroo_local_options)
@@ -135,15 +137,15 @@ macro(Kangaroo_local_options)
         Kangaroo_configure_linker(Kangaroo_options)
     endif()
 
-    include(cmake/Sanitizers.cmake)
-    Kangaroo_enable_sanitizers(
-            Kangaroo_options
-            ${Kangaroo_ENABLE_SANITIZER_ADDRESS}
-            ${Kangaroo_ENABLE_SANITIZER_LEAK}
-            ${Kangaroo_ENABLE_SANITIZER_UNDEFINED}
-            ${Kangaroo_ENABLE_SANITIZER_THREAD}
-            ${Kangaroo_ENABLE_SANITIZER_MEMORY})
-
+#    include(cmake/Sanitizers.cmake)
+#    Kangaroo_enable_sanitizers(
+#            Kangaroo_options
+#            ${Kangaroo_ENABLE_SANITIZER_ADDRESS}
+#            ${Kangaroo_ENABLE_SANITIZER_LEAK}
+#            ${Kangaroo_ENABLE_SANITIZER_UNDEFINED}
+#            ${Kangaroo_ENABLE_SANITIZER_THREAD}
+#            ${Kangaroo_ENABLE_SANITIZER_MEMORY})
+#
     set_target_properties(Kangaroo_options PROPERTIES UNITY_BUILD ${Kangaroo_ENABLE_UNITY_BUILD})
 
     if(Kangaroo_ENABLE_PCH)
@@ -183,18 +185,18 @@ macro(Kangaroo_local_options)
         endif()
     endif()
 
-    if(Kangaroo_ENABLE_HARDENING AND NOT Kangaroo_ENABLE_GLOBAL_HARDENING)
-        include(cmake/Hardening.cmake)
-        if(NOT SUPPORTS_UBSAN
-                OR Kangaroo_ENABLE_SANITIZER_UNDEFINED
-                OR Kangaroo_ENABLE_SANITIZER_ADDRESS
-                OR Kangaroo_ENABLE_SANITIZER_THREAD
-                OR Kangaroo_ENABLE_SANITIZER_LEAK)
-            set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
-        else()
-            set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
-        endif()
-        Kangaroo_enable_hardening(Kangaroo_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
-    endif()
+#    if(Kangaroo_ENABLE_HARDENING AND NOT Kangaroo_ENABLE_GLOBAL_HARDENING)
+#        include(cmake/Hardening.cmake)
+#        if(NOT SUPPORTS_UBSAN
+#                OR Kangaroo_ENABLE_SANITIZER_UNDEFINED
+#                OR Kangaroo_ENABLE_SANITIZER_ADDRESS
+#                OR Kangaroo_ENABLE_SANITIZER_THREAD
+#                OR Kangaroo_ENABLE_SANITIZER_LEAK)
+#            set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
+#        else()
+#            set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
+#        endif()
+#        Kangaroo_enable_hardening(Kangaroo_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+#    endif()
 
 endmacro()

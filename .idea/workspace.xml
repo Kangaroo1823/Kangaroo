@@ -3,6 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="452" type="long" />
+  </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
 }</component>
@@ -17,7 +20,6 @@
       <config projectName="Kangaroo" targetName="display_aggregates_only_test" />
       <config projectName="Kangaroo" targetName="internal_threading_test" />
       <config projectName="Kangaroo" targetName="boost_chrono" />
-      <config projectName="Kangaroo" targetName="cxx03_test" />
       <config projectName="Kangaroo" targetName="fmt" />
       <config projectName="Kangaroo" targetName="register_benchmark_test" />
       <config projectName="Kangaroo" targetName="boost_locale" />
@@ -123,24 +125,23 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug">
-        <ADDITIONAL_GENERATION_ENVIRONMENT>
-          <envs>
-            <env name="HTTP_PROXY" value="http://U439644:1RedLabel@prx-fralh-v01.sec.fra.dlh.de:8080" />
-            <env name="HTTPS_PROXY" value="http://U439644:1RedLabel@prx-fralh-v01.sec.fra.dlh.de:8080" />
-          </envs>
-        </ADDITIONAL_GENERATION_ENVIRONMENT>
-      </configuration>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DKangaroo_ENABLE_CLANG_TIDY=OFF" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake/OptimizeForNative.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KangarooOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/KangarooOptions.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/InterproceduralOptimization.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/InterproceduralOptimization.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/Sanitizers.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/Sanitizers.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chess_board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess_board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/bitboard_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bitboard_tests.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/create_occupantion_of_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_occupantion_of_mask_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/create_occupantion_of_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_occupation_of_mask_tests.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/pawn_attack_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/pawn_attack_tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -155,6 +156,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pml76"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/pml76/ChessEngine.git",
+    "accountId": "bd486097-3bae-40bc-b423-893e3dcc6185"
+  }
+}]]></component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2024" />
@@ -172,13 +185,19 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "CMake Application.Kangaroo.executor": "Run",
+    "Catch.Bit.executor": "Run",
     "Catch.Bitcount.executor": "Run",
     "Catch.Kangaroo_tests.executor": "Run",
+    "Catch.Pawn Attacks.executor": "Run",
+    "Catch.SquareOf.executor": "Run",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "RunOnceActivity.west.config.association.type.startup.service": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.advertisement.text.has.clang-format": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
@@ -189,18 +208,41 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CMakeSettings",
+    "settings.editor.selected.configurable": "CPPToolchains",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Catch.Kangaroo_tests">
-    <configuration name="Bitcount" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ChessEngineTests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="ChessEngineTests" TEST_CLASS="[bitcount]" TEST_METHOD="Bitcount" TEST_MODE="SUITE_TEST">
+  <component name="RunManager" selected="Catch.Bit">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Bit" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[bit]" TEST_METHOD="Bit" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Bitcount" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[bitcount]" TEST_METHOD="Bitcount" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Kangaroo_tests" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Pawn Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[pawn_attacks]" TEST_METHOD="Pawn Attacks" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SquareOf" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[squareof]" TEST_METHOD="SquareOf" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
@@ -362,11 +404,6 @@
       </method>
     </configuration>
     <configuration name="NightlyUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyUpdate" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -596,11 +633,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="cxx03_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="cxx03_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="cxx03_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="diagnostics_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="diagnostics_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="diagnostics_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -733,6 +765,9 @@
     </configuration>
     <list>
       <item itemvalue="Catch.Kangaroo_tests" />
+      <item itemvalue="Catch.Bit" />
+      <item itemvalue="Catch.Pawn Attacks" />
+      <item itemvalue="Catch.SquareOf" />
       <item itemvalue="Catch.Bitcount" />
       <item itemvalue="CMake Application.benchmark" />
       <item itemvalue="CMake Application.benchmark_main" />
@@ -743,7 +778,6 @@
       <item itemvalue="CMake Application.benchmark_setup_teardown_test" />
       <item itemvalue="CMake Application.benchmark_test" />
       <item itemvalue="CMake Application.complexity_test" />
-      <item itemvalue="CMake Application.cxx03_test" />
       <item itemvalue="CMake Application.diagnostics_test" />
       <item itemvalue="CMake Application.display_aggregates_only_test" />
       <item itemvalue="CMake Application.donotoptimize_test" />
@@ -841,6 +875,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Catch.Bit" />
+        <item itemvalue="Catch.SquareOf" />
+        <item itemvalue="Catch.Pawn Attacks" />
         <item itemvalue="Catch.Bitcount" />
       </list>
     </recent_temporary>
@@ -855,6 +892,7 @@
       <updated>1733929587374</updated>
       <workItem from="1733929589144" duration="3676000" />
       <workItem from="1733935142530" duration="1396000" />
+      <workItem from="1733941896757" duration="8824000" />
     </task>
     <servers />
   </component>
@@ -876,5 +914,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -4,6 +4,7 @@
 
 #include "../include/chess_board.h"
 #include <iostream>
+#include <numeric>
 #include <fmt/xchar.h>
 
 Chess_Board* create_chess_board() {
@@ -16,9 +17,12 @@ Chess_Board* create_chess_board() {
     board->black_bishops = set_bit(0ULL, C8) | set_bit(0ULL, F8);
 
     Bitboard bitboard = 0ULL;
-    for (Position position : {A7, B7, C7, D7, E7, F7, G7, H7}) {
-        bitboard = set_bit(bitboard, position);
-    }
+    std::array<Position, 8> positions = {A7, B7, C7, D7, E7, F7, G7, H7};
+    bitboard = std::accumulate(positions.begin(), positions.end(), bitboard, set_bit);
+
+ //   for (Position position : {A7, B7, C7, D7, E7, F7, G7, H7}) {
+ //       bitboard = set_bit(bitboard, position);
+  //  }
     board->black_pawns = bitboard;
 
     board->white_king = set_bit(0ULL, E1);
@@ -28,9 +32,11 @@ Chess_Board* create_chess_board() {
     board->white_bishops = set_bit(0ULL, C1) | set_bit(0ULL, F1);
 
     bitboard = 0ULL;
-    for (Position position : {A2, B2, C2, D2, E2, F2, G2, H2}) {
-        bitboard = set_bit(bitboard, position);
-    }
+    positions = {A2, B2, C2, D2, E2, F2, G2, H2};
+    bitboard = std::accumulate(positions.begin(), positions.end(), bitboard, set_bit);
+    // for (Position position : {A2, B2, C2, D2, E2, F2, G2, H2}) {
+    //     bitboard = set_bit(bitboard, position);
+    // }
     board->white_pawns = bitboard;
 
     return board;
