@@ -1,4 +1,13 @@
 
+
+if(NOT TARGET Kangaroo_options)
+    message(ERROR " Need target 'Kangaroo_options' to build Kangaroo_library")
+endif ()
+
+if(NOT TARGET Kangaroo_warnings)
+    message( ERROR " Need target 'Kangaroo_warnings to build Kangaroo_library")
+endif ()
+
 ##############################################
 #
 # see that fmt is available
@@ -51,9 +60,9 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
         set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
 
-        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
-        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
-        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
+       # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
+       # set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
+       # set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
     endif()
 else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
@@ -63,7 +72,7 @@ else()
 endif()
 
 # create a library to hold the tested logic of the ChessEngine
-add_library(ChessEngineLib ../include/bitboard.h
+add_library(Kangaroo_library ../include/bitboard.h
         bitboard.cpp
         ../include/pawn_attacks.h
         ../include/colors.h
@@ -80,18 +89,20 @@ add_library(ChessEngineLib ../include/bitboard.h
         create_occupantion_of_mask.cpp
         ../include/create_occupantion_of_mask.h
         ../include/base.h)
-target_link_libraries(ChessEngineLib
+target_link_libraries(Kangaroo_library
         PUBLIC
         fmt::fmt
         Boost::random
+        Kangaroo_warnings
+        Kangaroo_options
 )
 
 # take care of the main executable
-add_executable(ChessEngine
+add_executable(Kangaroo
         main.cpp
         ../include/bitboard.h
         ../include/create_possible_bishop_moves.h
         ../include/create_occupantion_of_mask.h
         ../include/base.h
 )
-target_link_libraries(ChessEngine PRIVATE ChessEngineLib)
+target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)

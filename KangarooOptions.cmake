@@ -91,8 +91,8 @@ endmacro()
 
 macro(Kangaroo_global_options)
     if(Kangaroo_ENABLE_IPO)
-        include(cmake/InterproceduralOptimization.cmake)
-        Kangaroo_enable_ipo()
+       include(cmake/InterproceduralOptimization.cmake)
+       Kangaroo_enable_ipo()
     endif()
 
     Kangaroo_supports_sanitizers()

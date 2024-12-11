@@ -30,6 +30,8 @@ Kangaroo_global_options()
 include(Dependencies.cmake)
 Kangaroo_setup_dependencies()
 
+Kangaroo_local_options()
+
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
 add_subdirectory(src)

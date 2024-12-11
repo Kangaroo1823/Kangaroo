@@ -1,5 +1,6 @@
-include(cmake/CPM.cmake)
+set(CPM_SOURCE_CACHE "${CMAKE_SOURCE_DIR}/cpm_source_cache")
 
+include(cmake/CPM.cmake)
 # Done as a function so that updates to variables like
 # CMAKE_CXX_FLAGS don't propagate out to other
 # targets

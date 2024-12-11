@@ -17,7 +17,7 @@ void print_bitboard(const Bitboard bitboard) {
     for (int rank = 7; rank >= 0 ; rank--) {
         fmt::print( "    {}  ", rank + 1);
         for (int file = 0; file < 8 ; file++) {
-            if (bitboard & (1ULL << rank * 8 + file)) {
+            if (bitboard & (1ULL << (rank * 8 + file))) {
                 fmt::print(" 1 ");
             } else {
                 fmt::print(" 0 ");

@@ -96,8 +96,8 @@ constexpr std::array<Position, 64> All_Positions = {
     A8, B8, C8, D8, E8, F8, G8, H8
 };
 
-inline Position rank_file_to_position(const unsigned int rank, const unsigned int file) {
-    return All_Positions[rank * 8 + file];
+inline Position rank_file_to_position(const int rank, const int file) {
+    return All_Positions[static_cast<unsigned long long int>(rank * 8 + file)];
 }
 
 inline Bitboard set_bit(const Bitboard bitboard, const Position position) {
