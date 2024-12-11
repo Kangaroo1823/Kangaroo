@@ -57,6 +57,11 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
         set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
     endif()
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
+    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
+
 endif()
 
 # create a library to hold the tested logic of the ChessEngine

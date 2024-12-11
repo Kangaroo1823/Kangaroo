@@ -1,5 +1,6 @@
 
 
+#include <vector>
 #include "../include/bishop_attack_masks.h"
 #include "../include/bitboard.h"
 #include "../include/create_occupantion_of_mask.h"
