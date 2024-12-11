@@ -21,6 +21,7 @@ project(
         HOMEPAGE_URL "https://github.com/pml76/Kangaroo"
         LANGUAGES CXX C)
 
+include(cmake/PreventInSourceBuilds.cmake)
 
 include(Dependencies.cmake)
 Kangaroo_setup_dependencies()
