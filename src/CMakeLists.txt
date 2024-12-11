@@ -1,33 +1,31 @@
 
-set(CMAKE_CXX_STANDARD 26)
-
 ##############################################
 #
 # see that fmt is available
 #
 ##############################################
-Include(FetchContent)
-FetchContent_Declare(
-        FMT
-        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-        GIT_TAG        11.0.2 # or a later release
-)
-FetchContent_MakeAvailable(FMT)
+#Include(FetchContent)
+#FetchContent_Declare(
+#        FMT
+#        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+#        GIT_TAG        11.0.2 # or a later release
+#)
+#FetchContent_MakeAvailable(FMT)
 
 ##############################################
 #
 # see that boost is available
 #
 ##############################################
-set(BOOST_INCLUDE_LIBRARIES thread filesystem system program_options random)
-set(BOOST_ENABLE_CMAKE ON)
-FetchContent_Declare(
-        Boost
-        GIT_REPOSITORY https://github.com/boostorg/boost.git
-        GIT_TAG boost-1.86.0
-        GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(Boost)
+#set(BOOST_INCLUDE_LIBRARIES thread filesystem system program_options random)
+#set(BOOST_ENABLE_CMAKE ON)
+#FetchContent_Declare(
+#        Boost
+#        GIT_REPOSITORY https://github.com/boostorg/boost.git
+#        GIT_TAG boost-1.86.0
+#        GIT_SHALLOW TRUE
+#)
+# FetchContent_MakeAvailable(Boost)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2" )
@@ -82,7 +80,11 @@ add_library(ChessEngineLib ../include/bitboard.h
         create_occupantion_of_mask.cpp
         ../include/create_occupantion_of_mask.h
         ../include/base.h)
-target_link_libraries(ChessEngineLib PUBLIC fmt::fmt Boost::random)
+target_link_libraries(ChessEngineLib
+        PUBLIC
+        fmt::fmt
+        # Boost::random
+)
 
 # take care of the main executable
 add_executable(ChessEngine

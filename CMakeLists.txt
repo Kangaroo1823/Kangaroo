@@ -13,7 +13,17 @@ endif()
 # when compiling with PCH enabled
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-project(ChessEngine)
+# Set the project name and language
+project(
+        Kangaroo
+        VERSION 0.0.1
+        DESCRIPTION ""
+        HOMEPAGE_URL "https://github.com/pml76/Kangaroo"
+        LANGUAGES CXX C)
+
+
+include(Dependencies.cmake)
+Kangaroo_setup_dependencies()
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
