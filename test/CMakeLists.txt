@@ -1,14 +1,8 @@
 
 
-Include(FetchContent)
-FetchContent_Declare(
-        Catch2
-        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG        v3.4.0 # or a later release
-)
-
-FetchContent_MakeAvailable(Catch2)
-
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
+    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
 
 # take care of the test executable
 add_executable(ChessEngineTests
@@ -34,7 +28,6 @@ add_executable(ChessEngineTests
         ../include/base.h)
 target_link_libraries(ChessEngineTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(ChessEngineTests PRIVATE ChessEngineLib)
-list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(CTest)
 include(Catch)
 catch_discover_tests(ChessEngineTests)

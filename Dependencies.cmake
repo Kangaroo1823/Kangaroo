@@ -17,7 +17,16 @@ function(Kangaroo_setup_dependencies)
     endif ()
 
     if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage("gh:catchorg/Catch2@3.4.0")
+        cpmaddpackage(
+                NAME
+                Catch2
+                VERSION
+                3.4.0
+                GITHUB_REPOSITORY
+                "catchorg/Catch2"
+        )
+        list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
+        set (CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} PARENT_SCOPE)
     endif ()
 
     if (NOT TARGET benchmark::benchmark_main)

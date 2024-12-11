@@ -83,7 +83,7 @@ add_library(ChessEngineLib ../include/bitboard.h
 target_link_libraries(ChessEngineLib
         PUBLIC
         fmt::fmt
-        # Boost::random
+        Boost::random
 )
 
 # take care of the main executable
