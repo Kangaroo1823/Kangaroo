@@ -23,6 +23,10 @@ project(
 
 include(cmake/PreventInSourceBuilds.cmake)
 
+include(KangarooOptions.cmake)
+Kangaroo_setup_options()
+Kangaroo_global_options()
+
 include(Dependencies.cmake)
 Kangaroo_setup_dependencies()
 
