@@ -31,16 +31,16 @@ inline Bitboard Bitcount_(Bitboard bitboard) {
 
 TEST_CASE("Bit", "[bit]") {
 
-    // for (Bitboard i = 0; i < 64; i++) {
-    //     REQUIRE(Bitcount(1ULL << i) == 1);
-    //     REQUIRE(Bitcount_(i) == Bitcount(i));
-    // }
+    for (Bitboard i = 0; i < 64; i++) {
+        REQUIRE(Bitcount(1ULL << i) == 1);
+        REQUIRE(Bitcount_(i) == Bitcount(i));
+    }
 }
 
 inline Bitboard get_ls1b_index_(Bitboard bitboard) {
 
     // count the bits before the first 1 bit.
-    return bitboard; // Bitcount((bitboard & -bitboard) -1);
+    return Bitcount((bitboard & -bitboard) -1);
 }
 
 

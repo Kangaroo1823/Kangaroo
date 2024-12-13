@@ -6,6 +6,7 @@
 #define BITBOARD_H
 
 #include <array>
+#include <cstdint>
 #include <string>
 #include <immintrin.h>
 
@@ -13,7 +14,7 @@
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
  */
-typedef unsigned long long Bitboard;
+using Bitboard = uint64_t;
 
 /**
  * Have a convenient way of naming positions
@@ -97,7 +98,7 @@ constexpr std::array<Position, 64> All_Positions = {
 };
 
 inline Position rank_file_to_position(const int rank, const int file) {
-    return All_Positions[static_cast<unsigned long long int>(rank * 8 + file)];
+    return All_Positions[std::array<Position, 64>::size_type(rank * 8 + file)];
 }
 
 inline Bitboard set_bit(const Bitboard bitboard, const Position position) {

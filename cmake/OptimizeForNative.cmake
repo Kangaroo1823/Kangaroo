@@ -25,8 +25,7 @@ macro(Kangaroo_optimize_for_native)
 
     elseif (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 
-        if (NOT ${CMAKE_CXX_FLAGS} MATCHES ".*-march=native.*")
-            include(CheckCXXCompilerFlag)
+        if (NOT (${CMAKE_CXX_FLAGS} MATCHES ".*-march=native") )
 
             CHECK_CXX_COMPILER_FLAG("-march=native" COMPILER_SUPPORTS_MARCH_NATIVE)
             if (COMPILER_SUPPORTS_MARCH_NATIVE)
