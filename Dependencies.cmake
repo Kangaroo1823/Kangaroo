@@ -13,9 +13,15 @@ function(Kangaroo_setup_dependencies)
         cpmaddpackage("gh:fmtlib/fmt#11.0.2")
     endif ()
 
-    if (NOT TARGET Boost::boost)
-        cpmaddpackage("gh:boostorg/boost#boost-1.86.0")
-    endif ()
+#    if (NOT TARGET Boost::boost)
+#        CPMAddPackage(
+#                NAME Boost
+#                VERSION 1.87.0
+#                URL https://github.com/boostorg/boost/releases/download/boost-1.87.0/boost-1.87.0-cmake.zip
+#                URL_HASH SHA256=03530dec778bc1b85b070f0b077f3b01fd417133509bb19fe7c142e47777a87b
+#                OPTIONS "BOOST_ENABLE_CMAKE ON"
+#        )
+#    endif ()
 
     if (NOT TARGET Catch2::Catch2WithMain)
         cpmaddpackage(

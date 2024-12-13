@@ -92,7 +92,6 @@ add_library(Kangaroo_library ../include/bitboard.h
 target_link_libraries(Kangaroo_library
         PUBLIC
         fmt::fmt
-        Boost::random
         Kangaroo_warnings
         Kangaroo_options
 )

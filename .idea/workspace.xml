@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BackendCodeEditorMiscSettings">
-    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="474" type="long" />
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="562" type="long" />
   </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
@@ -22,6 +22,7 @@
       <config projectName="Kangaroo" targetName="internal_threading_test" />
       <config projectName="Kangaroo" targetName="boost_chrono" />
       <config projectName="Kangaroo" targetName="cxx03_test" />
+      <config projectName="Kangaroo" targetName="boost_stacktrace_from_exception" />
       <config projectName="Kangaroo" targetName="fmt" />
       <config projectName="Kangaroo" targetName="register_benchmark_test" />
       <config projectName="Kangaroo" targetName="boost_locale" />
@@ -30,6 +31,7 @@
       <config projectName="Kangaroo" targetName="Kangaroo_tests" />
       <config projectName="Kangaroo" targetName="boost_context" />
       <config projectName="Kangaroo" targetName="Continuous" />
+      <config projectName="Kangaroo" targetName="boost_json_regenerate_printers" />
       <config projectName="Kangaroo" targetName="repetitions_test" />
       <config projectName="Kangaroo" targetName="report_aggregates_only_test" />
       <config projectName="Kangaroo" targetName="boost_random" />
@@ -55,6 +57,7 @@
       <config projectName="Kangaroo" targetName="NightlyMemCheck" />
       <config projectName="Kangaroo" targetName="skip_with_error_test" />
       <config projectName="Kangaroo" targetName="copy_clobber_memory_assembly_test" />
+      <config projectName="Kangaroo" targetName="boost_optional" />
       <config projectName="Kangaroo" targetName="link_main_test" />
       <config projectName="Kangaroo" targetName="boost_prg_exec_monitor" />
       <config projectName="Kangaroo" targetName="NightlyMemoryCheck" />
@@ -97,8 +100,8 @@
       <config projectName="Kangaroo" targetName="boost_type_erasure" />
       <config projectName="Kangaroo" targetName="benchmark_min_time_flag_iters_test" />
       <config projectName="Kangaroo" targetName="memory_manager_test" />
-      <config projectName="Kangaroo" targetName="boost_process" />
       <config projectName="Kangaroo" targetName="boost_url" />
+      <config projectName="Kangaroo" targetName="boost_process" />
       <config projectName="Kangaroo" targetName="boost_coroutine" />
       <config projectName="Kangaroo" targetName="boost_wave" />
       <config projectName="Kangaroo" targetName="reporter_output_test" />
@@ -124,6 +127,7 @@
       <config projectName="Kangaroo" targetName="output_test_helper" />
       <config projectName="Kangaroo" targetName="boost_stacktrace_basic" />
       <config projectName="Kangaroo" targetName="boost_unit_test_framework" />
+      <config projectName="Kangaroo" targetName="boost_math" />
       <config projectName="Kangaroo" targetName="boost_filesystem" />
       <config projectName="Kangaroo" targetName="user_counters_thousands_test" />
       <config projectName="Kangaroo" targetName="boost_charconv" />
@@ -131,12 +135,20 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DKangaroo_ENABLE_CLANG_TIDY=OFF" />
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DKangaroo_ENABLE_CLANG_TIDY=OFF -DCMAKE_EXE_LINKER_FLAGS=&quot;-fuse-ld=mold&quot; -DCMAKE_SHARED_LINKER_FLAGS=&quot;-fuse-ld=mold&quot;" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/cppcheck_suppressions.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dependencies.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Dependencies.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KangarooOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/KangarooOptions.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/CheckForMold.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/CheckForMold.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/bitboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,12 +168,12 @@
     &quot;assignee&quot;: &quot;pml76&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/pml76/ChessEngine.git&quot;,
-    &quot;accountId&quot;: &quot;bd486097-3bae-40bc-b423-893e3dcc6185&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:pml76/ChessEngine.git",
+    "accountId": "bd486097-3bae-40bc-b423-893e3dcc6185"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/include/base.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/include/bitboard.h" root0="FORCE_HIGHLIGHTING" />
@@ -230,11 +242,11 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CPPToolchains",
+    "settings.editor.selected.configurable": "CMakeSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Catch.Knight Attacks">
+  <component name="RunManager" selected="CMake Application.Kangaroo">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
@@ -551,6 +563,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="boost_json_regenerate_printers" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_json_regenerate_printers" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="boost_locale" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_locale" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -566,7 +583,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="boost_math" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_math" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="boost_nowide" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_nowide" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="boost_optional" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_optional" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -602,6 +629,11 @@
       </method>
     </configuration>
     <configuration name="boost_stacktrace_basic" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_stacktrace_basic" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="boost_stacktrace_from_exception" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_stacktrace_from_exception" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -884,10 +916,13 @@
       <item itemvalue="CMake Application.boost_graph" />
       <item itemvalue="CMake Application.boost_iostreams" />
       <item itemvalue="CMake Application.boost_json" />
+      <item itemvalue="CMake Application.boost_json_regenerate_printers" />
       <item itemvalue="CMake Application.boost_locale" />
       <item itemvalue="CMake Application.boost_log" />
       <item itemvalue="CMake Application.boost_log_setup" />
+      <item itemvalue="CMake Application.boost_math" />
       <item itemvalue="CMake Application.boost_nowide" />
+      <item itemvalue="CMake Application.boost_optional" />
       <item itemvalue="CMake Application.boost_process" />
       <item itemvalue="CMake Application.boost_program_options" />
       <item itemvalue="CMake Application.boost_random" />
@@ -895,6 +930,7 @@
       <item itemvalue="CMake Application.boost_wserialization" />
       <item itemvalue="CMake Application.boost_stacktrace_addr2line" />
       <item itemvalue="CMake Application.boost_stacktrace_basic" />
+      <item itemvalue="CMake Application.boost_stacktrace_from_exception" />
       <item itemvalue="CMake Application.boost_stacktrace_noop" />
       <item itemvalue="CMake Application.boost_prg_exec_monitor" />
       <item itemvalue="CMake Application.boost_test_exec_monitor" />
@@ -960,7 +996,7 @@
       <workItem from="1733935142530" duration="1396000" />
       <workItem from="1733941896757" duration="8824000" />
       <workItem from="1734036272491" duration="1761000" />
-      <workItem from="1734074325450" duration="6608000" />
+      <workItem from="1734074325450" duration="13490000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -970,7 +1006,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734112329550</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary=".">
+      <option name="closed" value="true" />
+      <created>1734113469114</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1734113469114</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -97,19 +97,19 @@ constexpr std::array<Position, 64> All_Positions = {
     A8, B8, C8, D8, E8, F8, G8, H8
 };
 
-inline Position rank_file_to_position(const int rank, const int file) {
+constexpr Position rank_file_to_position(const int rank, const int file) {
     return All_Positions[std::array<Position, 64>::size_type(rank * 8 + file)];
 }
 
-inline Bitboard set_bit(const Bitboard bitboard, const Position position) {
+constexpr Bitboard set_bit(const Bitboard bitboard, const Position position) {
     return bitboard | (1ULL << position);
 }
 
-inline Bitboard get_bit(const Bitboard bitboard, const Position position) {
+constexpr Bitboard get_bit(const Bitboard bitboard, const Position position) {
     return bitboard & (1ULL << position);
 }
 
-inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
+constexpr Bitboard pop_bit(const Bitboard bitboard, const Position position) {
     return bitboard & ~(1ULL << position);
 }
 
@@ -123,7 +123,9 @@ inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
  * @param bitboard The bitboard to extract the least significant bit's index from.
  * @return The index of the least significant set bit in the input bitboard.
  */
-#define SquareOf(bitboard) _tzcnt_u64(bitboard)
+constexpr Bitboard SquareOf(const Bitboard bitboard) {
+    return _tzcnt_u64(bitboard);
+}
 
 /**
  * Extracts bits from the given bitboard using the specified mask.
@@ -137,18 +139,28 @@ inline Bitboard pop_bit(const Bitboard bitboard, const Position position) {
  * @param mask The Bitboard mask that specifies which bits to extract.
  * @return A Bitboard containing the extracted bits, densely packed.
  */
-#define ExtractMask(bitboard,mask) _pext_u64(bitboard,mask)
+constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
+    return _pext_u64(bitboard,mask);
+}
 
-
+template<typename Fn>
 /**
- * Iterates over each set bit in a bitboard.
+ * @brief Iterates through the bits set in a Bitboard and applies a function to each.
  *
- * @param x The Bitboard to iterate over. For each set bit there will be one iteration over the
- *          following block of commands. Then the bit will be erased, and it will be checked if
- *          there are set bits remaining. If the answer is 'yes' the block will get executed again ...
- *          and so on.
+ * This function iterates over each bit that is set (1) in the given Bitboard `x`.
+ * During each iteration, the provided callable `f` is invoked with the current bit
+ * represented as a Bitboard. The loop operates by successively clearing the least
+ * significant set bit using the `_blsr_u64` intrinsic.
+ *
+ * @tparam Fn The type of the callable object. Must be invokable with a Bitboard.
+ * @param x The Bitboard to iterate through. Each set bit (1) in `x` will be visited once.
+ * @param f The callable to apply to each set bit. It must accept a single parameter of type Bitboard.
  */
-#define Bitloop(x) for(;x;x=_blsr_u64(x))
+constexpr void Bitloop(Bitboard x, Fn f) {
+    for(;x;x=_blsr_u64(x)) {
+        f(x);
+    }
+}
 
 
 constexpr Bitboard not_a_file = /*

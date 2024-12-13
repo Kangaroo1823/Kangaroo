@@ -96,6 +96,7 @@ macro(Kangaroo_global_options)
 
     if(Kangaroo_USE_MOLD)
         include(cmake/CheckForMold.cmake)
+        Kangaroo_enable_mold()
     endif ()
 
     if(Kangaroo_OPTIMIZE_FOR_NATIVE)
