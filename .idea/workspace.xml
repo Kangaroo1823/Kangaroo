@@ -135,14 +135,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cmake/CheckForMold.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KangarooOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/KangarooOptions.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake/OptimizeForNative.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/OptimizeForNative.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/bitboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitboard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/bitboard_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bitboard_tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -966,8 +960,17 @@
       <workItem from="1733935142530" duration="1396000" />
       <workItem from="1733941896757" duration="8824000" />
       <workItem from="1734036272491" duration="1761000" />
-      <workItem from="1734074325450" duration="5997000" />
+      <workItem from="1734074325450" duration="6608000" />
     </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1734112329550</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734112329550</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -988,6 +991,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
