@@ -3,10 +3,10 @@
 //
 
 
-#include "catch2/catch_test_macros.hpp"
-
-#include "../include/bitboard.h"
-#include "../include/knight_attacks.h"
+#include <array>                         // for array
+#include "../include/bitboard.h"         // for Bitboard, Position, not_a_file
+#include "../include/knight_attacks.h"   // for knight_attacks
+#include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler
 
 Bitboard create_knight_attacks(Position position) {
     Bitboard attacks = 0ULL;
@@ -27,6 +27,7 @@ Bitboard create_knight_attacks(Position position) {
 
 TEST_CASE("Knight Attacks", "[knight_attacks]") {
     for (Position position : All_Positions) {
+        // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_knight_attacks(position);
         REQUIRE(Constants::knight_attacks[position] == attacks);
     }

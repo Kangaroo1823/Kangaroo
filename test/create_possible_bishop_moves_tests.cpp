@@ -15,8 +15,8 @@ TEST_CASE("Create Possible Bishop Moves", "[create_possible_bishop_moves]") {
     mask = set_bit(mask, F3);
     mask = set_bit(mask, C2);
 
-
-    Bitboard board = create_possible_bishop_moves(mask, position);
+    // cppcheck-suppress unreadVariable
+    const Bitboard board = create_possible_bishop_moves(mask, position);
 
     REQUIRE(board == /*
     8   0  0  0  0  0  0  0  0

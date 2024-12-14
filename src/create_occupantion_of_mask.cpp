@@ -2,8 +2,9 @@
 // Created by peter on 02/12/2024.
 //
 
-#include "../include/bitboard.h"
 #include "../include/create_occupantion_of_mask.h"
+#include <immintrin.h>            // for _pdep_u64
+#include "../include/bitboard.h"  // for Bitboard
 
 /**
  * Creates an occupation mask on a bitboard based on the provided index and mask.

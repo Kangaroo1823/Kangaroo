@@ -3,18 +3,18 @@
 //
 
 
-#include "catch2/catch_test_macros.hpp"
-#include "../include/bitboard.h"
-
+#include <cstdint>                      // for int64_t
+#include "../include/bitboard.h"         // for set_bit, Bitcount, E4, Bitboard
+#include "catch2/catch_test_macros.hpp"  // for AssertionHandler, operator""...
 
 /**
  *
  * @param bitboard
  * @return The number of set bits in bitboard
  */
-inline Bitboard Bitcount_(Bitboard bitboard) {
+inline int64_t Bitcount_(Bitboard bitboard) {
     // initialize the count variable
-    Bitboard count = 0ULL;
+    int64_t count = 0ULL;
 
     // loop while there are still some bits set to one in bitboard
     while (bitboard) {
@@ -40,7 +40,7 @@ TEST_CASE("Bit", "[bit]") {
 inline Bitboard get_ls1b_index_(Bitboard bitboard) {
 
     // count the bits before the first 1 bit.
-    return Bitcount((bitboard & -bitboard) -1);
+    return static_cast<Bitboard>(Bitcount((bitboard & -bitboard) - 1));
 }
 
 
@@ -52,8 +52,12 @@ TEST_CASE("SquareOf", "[SquareOf]") {
 
 
 TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
+    // cppcheck-suppress unreadVariable
     Bitboard bitboard = 0ULL;
+    // cppcheck-suppress knownConditionTrueFalse
     REQUIRE(set_bit(bitboard, A1) == 1);
+
+    // cppcheck-suppress knownConditionTrueFalse
     REQUIRE(set_bit(bitboard, H8) == /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
@@ -68,6 +72,7 @@ TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
        bitboard as 64 bit integer: */
         9223372036854775808ULL);
 
+    // cppcheck-suppress knownConditionTrueFalse
     REQUIRE(set_bit(bitboard, E4) == /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0

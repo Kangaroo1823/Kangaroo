@@ -5,12 +5,12 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
-#include <array>
-#include <cstdint>
-#include <string>
-#include <immintrin.h>
+#include <immintrin.h>     // for _pext_u64, _blsr_u64, _tzcnt_u64
+#include <popcntintrin.h>  // for _mm_popcnt_u64
+#include <array>           // for array
+#include <cstdint>         // for int64_t, uint64_t
+#include <string>          // for string
 
-#include "base.h"
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
  */
@@ -160,6 +160,10 @@ constexpr void Bitloop(Bitboard x, Fn f) {
     for(;x;x=_blsr_u64(x)) {
         f(x);
     }
+}
+
+constexpr int64_t Bitcount(const Bitboard board) {
+    return _mm_popcnt_u64(board);
 }
 
 

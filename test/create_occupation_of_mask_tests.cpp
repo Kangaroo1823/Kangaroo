@@ -854,6 +854,7 @@ TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
     mask = set_bit(mask, D1);
 
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
+        // cppcheck-suppress unreadVariable
         const Bitboard board = create_occupation_of_mask(occupancy, mask);
         REQUIRE(occupancy_test_table[occupancy] == board);
     }

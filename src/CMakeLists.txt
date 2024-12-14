@@ -95,6 +95,7 @@ target_link_libraries(Kangaroo_library
         Kangaroo_warnings
         Kangaroo_options
 )
+target_include_directories(Kangaroo_library PRIVATE ../include)
 
 
 
@@ -107,6 +108,7 @@ add_executable(Kangaroo
         ../include/base.h
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
+target_include_directories(Kangaroo PRIVATE ../include)
 
 if(Kangaroo_ENABLE_IPO)
     include(../cmake/InterproceduralOptimization.cmake)

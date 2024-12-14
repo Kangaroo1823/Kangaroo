@@ -3,9 +3,11 @@
 //
 
 #include "../include/chess_board.h"
-#include <iostream>
+#include <fmt/base.h>
+#include <array>
 #include <numeric>
-#include <fmt/xchar.h>
+#include <string>
+#include "../include/bitboard.h"
 
 Chess_Board* create_chess_board() {
     auto* board = new Chess_Board();

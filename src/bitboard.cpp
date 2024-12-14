@@ -1,8 +1,6 @@
 #include "../include/bitboard.h"
-
-#include <array>
-
-#include "fmt/printf.h"
+#include <fmt/base.h>  // for print
+#include <array>       // for array
 
 
 /**

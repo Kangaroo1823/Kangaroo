@@ -3,10 +3,10 @@
 //
 
 
-#include "catch2/catch_test_macros.hpp"
-
-#include "../include/bitboard.h"
-#include "../include/rook_attack_masks.h"
+#include <array>                           // for array
+#include "../include/bitboard.h"           // for Bitboard, Position, print_...
+#include "../include/rook_attack_masks.h"  // for rook_attack_masks
+#include "catch2/catch_test_macros.hpp"    // for StringRef, AssertionHandler
 
 Bitboard create_rook_attack_mask(Position position) {
     Bitboard mask = 0ULL;

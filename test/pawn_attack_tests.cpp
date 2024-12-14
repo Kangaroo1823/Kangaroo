@@ -3,11 +3,11 @@
 //
 
 
-#include "catch2/catch_test_macros.hpp"
-
-#include "../include/bitboard.h"
-#include "../include/colors.h"
-#include "../include/pawn_attacks.h"
+#include <array>                         // for array
+#include "../include/bitboard.h"         // for Bitboard, Position, not_a_file
+#include "../include/colors.h"           // for All_Colors, Color, black
+#include "../include/pawn_attacks.h"     // for Pawn_Attacks
+#include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler
 
 Bitboard create_pawn_attacks(unsigned int color, const Position position) {
 
@@ -32,6 +32,7 @@ TEST_CASE("Pawn Attacks", "[Pawn_Attacks]") {
 
     for (const Color color : All_Colors) {
         for (const Position position : All_Positions) {
+            // cppcheck-suppress unreadVariable
             const Bitboard attacks = create_pawn_attacks(color, position);
             REQUIRE(Constants::Pawn_Attacks[color][position] == attacks);
         }

@@ -2,10 +2,10 @@
 // Created by peter on 02/12/2024.
 //
 
-#include "catch2/catch_test_macros.hpp"
-
-#include "../include/bitboard.h"
-#include "../include/king_attacks.h"
+#include <array>                         // for array
+#include "../include/bitboard.h"         // for Bitboard, not_a_file, not_h_...
+#include "../include/king_attacks.h"     // for king_attacks
+#include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler
 
 Bitboard create_king_attacks(const Position& position) {
     Bitboard attacks = 0ULL;
@@ -27,6 +27,7 @@ Bitboard create_king_attacks(const Position& position) {
 
 TEST_CASE("King Attacks", "[king_attacks]") {
     for (Position position : All_Positions) {
+        // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_king_attacks(position);
         REQUIRE(Constants::king_attacks[position] == attacks);
     }

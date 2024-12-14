@@ -12,7 +12,7 @@ macro(Kangaroo_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
             # Enable all warnings that are actionable by the user of this toolset
             # style should enable the other 3, but we'll be explicit just in case
             #set(SUPPRESS_DIR "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*.h *:${CMAKE_SOURCE_DIR}/cpm_source_cache/*.hpp")
-            set(SUPPRESS_DIR "*:${CMAKE_SOURCE_DIR}/cpm_source_cache/")
+            set(SUPPRESS_DIR "*:${CMAKE_SOURCE_DIR}/cpm_source_cache/*.hpp")
 
             set(CMAKE_CXX_CPPCHECK
                     ${CPPCHECK}
@@ -30,9 +30,10 @@ macro(Kangaroo_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
                     --suppress=syntaxError
                     --suppress=preprocessorErrorDirective
                     --inconclusive
+                    --force
                     --check-level=exhaustive
                     --platform=win64
-                    --suppressions-list=${CMAKE_SOURCE_DIR}/cppcheck_suppressions.txt)
+                    --suppress=${SUPPRESS_DIR})
             message(STATUS "CPPCHECK command: ${CMAKE_CXX_CPPCHECK}")
         else ()
             # if the user provides a CPPCHECK_OPTIONS with a template specified, it will override this template
@@ -104,9 +105,16 @@ macro(Kangaroo_enable_clang_tidy target WARNINGS_AS_ERRORS)
     else ()
         message(${WARNING_MESSAGE} "clang-tidy requested but executable not found")
     endif ()
+    message(
+            STATUS
+            "Setting CMAKE_CXX_CLANG_TIDY = '${CMAKE_CXX_CLANG_TIDY}'")
 endmacro()
 
 macro(Kangaroo_enable_include_what_you_use)
+    message(
+            STATUS
+            "Enabling 'include-what-you-use' ..."
+    )
     find_program(INCLUDE_WHAT_YOU_USE include-what-you-use)
     if (INCLUDE_WHAT_YOU_USE)
         set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE ${INCLUDE_WHAT_YOU_USE})

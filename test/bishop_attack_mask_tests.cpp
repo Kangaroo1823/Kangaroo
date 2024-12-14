@@ -3,13 +3,13 @@
 //
 
 
-#include "catch2/catch_test_macros.hpp"
-
-#include "../include/bitboard.h"
-#include "../include/bishop_attack_masks.h"
+#include <array>                             // for array
+#include "../include/bishop_attack_masks.h"  // for bishop_attack_masks
+#include "../include/bitboard.h"             // for Bitboard, Position, prin...
+#include "catch2/catch_test_macros.hpp"      // for StringRef, AssertionHandler
 #include "catch2/internal/catch_test_registry.hpp"
 
-Bitboard create_bishop_attack_mask(Position position) {
+Bitboard create_bishop_attack_mask(const Position position) {
     Bitboard mask = 0ULL;
 
     const int rank = position >> 3;
@@ -25,7 +25,8 @@ Bitboard create_bishop_attack_mask(Position position) {
 }
 
 TEST_CASE("Bishops attack masks", "[bishop_attack_mask]") {
-    for (Position position : All_Positions) {
+    for (const Position position : All_Positions) {
+
         const Bitboard board = create_bishop_attack_mask(position);
         print_bitboard(board);
         REQUIRE(Constants::bishop_attack_masks[position] == board);
