@@ -18,62 +18,17 @@
   <component name="CMakeRunConfigurationManager">
     <generated>
       <config projectName="Kangaroo" targetName="state_assembly_test" />
-      <config projectName="Kangaroo" targetName="display_aggregates_only_test" />
-      <config projectName="Kangaroo" targetName="internal_threading_test" />
-      <config projectName="Kangaroo" targetName="boost_chrono" />
-      <config projectName="Kangaroo" targetName="cxx03_test" />
-      <config projectName="Kangaroo" targetName="boost_stacktrace_from_exception" />
-      <config projectName="Kangaroo" targetName="fmt" />
-      <config projectName="Kangaroo" targetName="register_benchmark_test" />
-      <config projectName="Kangaroo" targetName="boost_locale" />
-      <config projectName="Kangaroo" targetName="boost_container" />
-      <config projectName="Kangaroo" targetName="boost_log_setup" />
-      <config projectName="Kangaroo" targetName="Kangaroo_tests" />
-      <config projectName="Kangaroo" targetName="boost_context" />
-      <config projectName="Kangaroo" targetName="Continuous" />
-      <config projectName="Kangaroo" targetName="boost_json_regenerate_printers" />
-      <config projectName="Kangaroo" targetName="repetitions_test" />
-      <config projectName="Kangaroo" targetName="report_aggregates_only_test" />
-      <config projectName="Kangaroo" targetName="boost_random" />
-      <config projectName="Kangaroo" targetName="boost_fiber" />
-      <config projectName="Kangaroo" targetName="Experimental" />
-      <config projectName="Kangaroo" targetName="copy_state_assembly_test" />
-      <config projectName="Kangaroo" targetName="ExperimentalMemCheck" />
-      <config projectName="Kangaroo" targetName="ExperimentalUpdate" />
-      <config projectName="Kangaroo" targetName="benchmark_test" />
-      <config projectName="Kangaroo" targetName="boost_date_time" />
-      <config projectName="Kangaroo" targetName="Nightly" />
-      <config projectName="Kangaroo" targetName="NightlyConfigure" />
-      <config projectName="Kangaroo" targetName="user_counters_tabular_test" />
-      <config projectName="Kangaroo" targetName="Kangaroo" />
-      <config projectName="Kangaroo" targetName="boost_fiber_numa" />
-      <config projectName="Kangaroo" targetName="filter_test" />
-      <config projectName="Kangaroo" targetName="ContinuousUpdate" />
-      <config projectName="Kangaroo" targetName="ContinuousMemCheck" />
-      <config projectName="Kangaroo" targetName="benchmark_main" />
-      <config projectName="Kangaroo" targetName="boost_wserialization" />
-      <config projectName="Kangaroo" targetName="NightlyTest" />
-      <config projectName="Kangaroo" targetName="ContinuousCoverage" />
-      <config projectName="Kangaroo" targetName="NightlyMemCheck" />
-      <config projectName="Kangaroo" targetName="skip_with_error_test" />
-      <config projectName="Kangaroo" targetName="copy_clobber_memory_assembly_test" />
-      <config projectName="Kangaroo" targetName="boost_optional" />
-      <config projectName="Kangaroo" targetName="link_main_test" />
-      <config projectName="Kangaroo" targetName="boost_prg_exec_monitor" />
-      <config projectName="Kangaroo" targetName="NightlyMemoryCheck" />
-      <config projectName="Kangaroo" targetName="complexity_test" />
-      <config projectName="Kangaroo" targetName="clobber_memory_assembly_test" />
-      <config projectName="Kangaroo" targetName="boost_timer" />
-      <config projectName="Kangaroo" targetName="boost_cobalt" />
       <config projectName="Kangaroo" targetName="Catch2WithMain" />
+      <config projectName="Kangaroo" targetName="display_aggregates_only_test" />
       <config projectName="Kangaroo" targetName="profiler_manager_test" />
       <config projectName="Kangaroo" targetName="spec_arg_verbosity_test" />
       <config projectName="Kangaroo" targetName="benchmark_min_time_flag_time_test" />
       <config projectName="Kangaroo" targetName="Catch2" />
-      <config projectName="Kangaroo" targetName="boost_program_options" />
-      <config projectName="Kangaroo" targetName="boost_graph" />
+      <config projectName="Kangaroo" targetName="internal_threading_test" />
+      <config projectName="Kangaroo" targetName="cxx03_test" />
+      <config projectName="Kangaroo" targetName="fmt" />
+      <config projectName="Kangaroo" targetName="register_benchmark_test" />
       <config projectName="Kangaroo" targetName="benchmark" />
-      <config projectName="Kangaroo" targetName="boost_thread" />
       <config projectName="Kangaroo" targetName="NightlyStart" />
       <config projectName="Kangaroo" targetName="donotoptimize_test" />
       <config projectName="Kangaroo" targetName="user_counters_test" />
@@ -82,73 +37,76 @@
       <config projectName="Kangaroo" targetName="ExperimentalCoverage" />
       <config projectName="Kangaroo" targetName="ExperimentalConfigure" />
       <config projectName="Kangaroo" targetName="diagnostics_test" />
+      <config projectName="Kangaroo" targetName="Kangaroo_tests" />
       <config projectName="Kangaroo" targetName="NightlyCoverage" />
       <config projectName="Kangaroo" targetName="ExperimentalStart" />
-      <config projectName="Kangaroo" targetName="boost_serialization" />
+      <config projectName="Kangaroo" targetName="Continuous" />
       <config projectName="Kangaroo" targetName="ContinuousSubmit" />
       <config projectName="Kangaroo" targetName="NightlySubmit" />
+      <config projectName="Kangaroo" targetName="repetitions_test" />
       <config projectName="Kangaroo" targetName="copy_donotoptimize_assembly_test" />
-      <config projectName="Kangaroo" targetName="boost_stacktrace_noop" />
       <config projectName="Kangaroo" targetName="ContinuousTest" />
-      <config projectName="Kangaroo" targetName="boost_atomic" />
+      <config projectName="Kangaroo" targetName="report_aggregates_only_test" />
       <config projectName="Kangaroo" targetName="ContinuousConfigure" />
       <config projectName="Kangaroo" targetName="NightlyBuild" />
-      <config projectName="Kangaroo" targetName="boost_log" />
       <config projectName="Kangaroo" targetName="multiple_ranges_test" />
-      <config projectName="Kangaroo" targetName="boost_iostreams" />
-      <config projectName="Kangaroo" targetName="boost_test_exec_monitor" />
-      <config projectName="Kangaroo" targetName="boost_type_erasure" />
       <config projectName="Kangaroo" targetName="benchmark_min_time_flag_iters_test" />
+      <config projectName="Kangaroo" targetName="Experimental" />
       <config projectName="Kangaroo" targetName="memory_manager_test" />
-      <config projectName="Kangaroo" targetName="boost_url" />
-      <config projectName="Kangaroo" targetName="boost_process" />
-      <config projectName="Kangaroo" targetName="boost_coroutine" />
-      <config projectName="Kangaroo" targetName="boost_wave" />
+      <config projectName="Kangaroo" targetName="copy_state_assembly_test" />
+      <config projectName="Kangaroo" targetName="ExperimentalMemCheck" />
+      <config projectName="Kangaroo" targetName="ExperimentalUpdate" />
+      <config projectName="Kangaroo" targetName="benchmark_test" />
+      <config projectName="Kangaroo" targetName="Nightly" />
       <config projectName="Kangaroo" targetName="reporter_output_test" />
       <config projectName="Kangaroo" targetName="fixture_test" />
       <config projectName="Kangaroo" targetName="map_test" />
+      <config projectName="Kangaroo" targetName="NightlyConfigure" />
       <config projectName="Kangaroo" targetName="options_test" />
       <config projectName="Kangaroo" targetName="ExperimentalSubmit" />
-      <config projectName="Kangaroo" targetName="boost_json" />
-      <config projectName="Kangaroo" targetName="boost_stacktrace_addr2line" />
+      <config projectName="Kangaroo" targetName="user_counters_tabular_test" />
       <config projectName="Kangaroo" targetName="NightlyUpdate" />
-      <config projectName="Kangaroo" targetName="boost_contract" />
       <config projectName="Kangaroo" targetName="ExperimentalTest" />
+      <config projectName="Kangaroo" targetName="Kangaroo" />
       <config projectName="Kangaroo" targetName="Kangaroo_library" />
       <config projectName="Kangaroo" targetName="benchmark_setup_teardown_test" />
       <config projectName="Kangaroo" targetName="ExperimentalBuild" />
+      <config projectName="Kangaroo" targetName="filter_test" />
+      <config projectName="Kangaroo" targetName="ContinuousUpdate" />
+      <config projectName="Kangaroo" targetName="ContinuousMemCheck" />
+      <config projectName="Kangaroo" targetName="benchmark_main" />
       <config projectName="Kangaroo" targetName="args_product_test" />
-      <config projectName="Kangaroo" targetName="boost_nowide" />
+      <config projectName="Kangaroo" targetName="NightlyTest" />
+      <config projectName="Kangaroo" targetName="ContinuousCoverage" />
       <config projectName="Kangaroo" targetName="ContinuousBuild" />
+      <config projectName="Kangaroo" targetName="NightlyMemCheck" />
       <config projectName="Kangaroo" targetName="templated_fixture_test" />
       <config projectName="Kangaroo" targetName="donotoptimize_assembly_test" />
+      <config projectName="Kangaroo" targetName="skip_with_error_test" />
+      <config projectName="Kangaroo" targetName="copy_clobber_memory_assembly_test" />
       <config projectName="Kangaroo" targetName="perf_counters_test" />
       <config projectName="Kangaroo" targetName="ContinuousStart" />
+      <config projectName="Kangaroo" targetName="link_main_test" />
+      <config projectName="Kangaroo" targetName="NightlyMemoryCheck" />
       <config projectName="Kangaroo" targetName="output_test_helper" />
-      <config projectName="Kangaroo" targetName="boost_stacktrace_basic" />
-      <config projectName="Kangaroo" targetName="boost_unit_test_framework" />
-      <config projectName="Kangaroo" targetName="boost_math" />
-      <config projectName="Kangaroo" targetName="boost_filesystem" />
+      <config projectName="Kangaroo" targetName="complexity_test" />
+      <config projectName="Kangaroo" targetName="clobber_memory_assembly_test" />
       <config projectName="Kangaroo" targetName="user_counters_thousands_test" />
-      <config projectName="Kangaroo" targetName="boost_charconv" />
     </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DKangaroo_ENABLE_CLANG_TIDY=OFF -DCMAKE_EXE_LINKER_FLAGS=&quot;-fuse-ld=mold&quot; -DCMAKE_SHARED_LINKER_FLAGS=&quot;-fuse-ld=mold&quot;" />
+      <configuration PROFILE_NAME="Debug-WSL - gcc14" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="WSL - gcc14" GENERATION_OPTIONS="-DCMAKE_EXE_LINKER_FLAGS=&quot;-fuse-ld=mold&quot; -DCMAKE_SHARED_LINKER_FLAGS=&quot;-fuse-ld=mold&quot;" />
+      <configuration PROFILE_NAME="Release-WSL - gcc14" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="WSL - gcc14" GENERATION_OPTIONS="-DCMAKE_EXE_LINKER_FLAGS=&quot;-fuse-ld=mold&quot; -DCMAKE_SHARED_LINKER_FLAGS=&quot;-fuse-ld=mold&quot;" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/cppcheck_suppressions.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake/Linker.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dependencies.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Dependencies.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KangarooOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/KangarooOptions.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake/CheckForMold.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/CheckForMold.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake/StaticAnalyzers.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/bitboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitboard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/CheckForMold.cmake" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +116,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-WSL - gcc14" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -168,12 +126,12 @@
     &quot;assignee&quot;: &quot;pml76&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:pml76/ChessEngine.git",
-    "accountId": "bd486097-3bae-40bc-b423-893e3dcc6185"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:pml76/ChessEngine.git&quot;,
+    &quot;accountId&quot;: &quot;bd486097-3bae-40bc-b423-893e3dcc6185&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/include/base.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/include/bitboard.h" root0="FORCE_HIGHLIGHTING" />
@@ -190,8 +148,6 @@
     <setting file="file://$PROJECT_DIR$/test/knight_attacks_tests.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/test/pawn_attack_tests.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/test/rook_attack_mask_tests.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -208,647 +164,452 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CMake Application.Kangaroo.executor": "Run",
-    "Catch.Bishops attack masks.executor": "Run",
-    "Catch.Bit.executor": "Run",
-    "Catch.Bitcount.executor": "Run",
-    "Catch.Create Occupation of Mask.executor": "Run",
-    "Catch.Create Possible Bishop Moves.executor": "Run",
-    "Catch.Create Possible Rook Moves.executor": "Run",
-    "Catch.Kangaroo_tests.executor": "Run",
-    "Catch.King Attacks.executor": "Run",
-    "Catch.Knight Attacks.executor": "Run",
-    "Catch.Pawn Attacks.executor": "Run",
-    "Catch.Rooks Attack Masks.executor": "Run",
-    "Catch.Set/Get/Pop Bit.executor": "Run",
-    "Catch.SquareOf.executor": "Run",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.advertisement.text.has.clang-format": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "//wsl.localhost/openSUSE-Tumbleweed/home/perter/CLionProjects/ChessEngine",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CMakeSettings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.Kangaroo.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Bishops attack masks.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Bit.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Bitcount.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Create Occupation of Mask.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Create Possible Bishop Moves.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Create Possible Rook Moves.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Kangaroo_tests.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.King Attacks.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Knight Attacks.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Pawn Attacks.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Rooks Attack Masks.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.Set/Get/Pop Bit.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.SquareOf.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.advertisement.text.has.clang-format&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/openSUSE-Tumbleweed/home/perter/CLionProjects/ChessEngine&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="CMake Application.Kangaroo">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Create Possible Rook Moves" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[create_possible_rook_moves]" TEST_METHOD="Create Possible Rook Moves" TEST_MODE="SUITE_TEST">
+    <configuration name="Create Possible Rook Moves" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[create_possible_rook_moves]" TEST_METHOD="Create Possible Rook Moves" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Kangaroo_tests" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_MODE="SUITE_TEST">
+    <configuration name="Kangaroo_tests" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="King Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[king_attacks]" TEST_METHOD="King Attacks" TEST_MODE="SUITE_TEST">
+    <configuration name="King Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[king_attacks]" TEST_METHOD="King Attacks" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Knight Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[knight_attacks]" TEST_METHOD="Knight Attacks" TEST_MODE="SUITE_TEST">
+    <configuration name="Knight Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[knight_attacks]" TEST_METHOD="Knight Attacks" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Pawn Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[pawn_attacks]" TEST_METHOD="Pawn Attacks" TEST_MODE="SUITE_TEST">
+    <configuration name="Pawn Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[pawn_attacks]" TEST_METHOD="Pawn Attacks" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Rooks Attack Masks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[rook_attack_masks]" TEST_METHOD="Rooks Attack Masks" TEST_MODE="SUITE_TEST">
+    <configuration name="Rooks Attack Masks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[rook_attack_masks]" TEST_METHOD="Rooks Attack Masks" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Catch2" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Catch2" CONFIG_NAME="Debug">
+    <configuration name="Catch2" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Catch2" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Catch2WithMain" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Catch2WithMain" CONFIG_NAME="Debug">
+    <configuration name="Catch2WithMain" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Catch2WithMain" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Continuous" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Continuous" CONFIG_NAME="Debug">
+    <configuration name="Continuous" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Continuous" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousBuild" CONFIG_NAME="Debug">
+    <configuration name="ContinuousBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousBuild" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousConfigure" CONFIG_NAME="Debug">
+    <configuration name="ContinuousConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousConfigure" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousCoverage" CONFIG_NAME="Debug">
+    <configuration name="ContinuousCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousCoverage" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousMemCheck" CONFIG_NAME="Debug">
+    <configuration name="ContinuousMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousMemCheck" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousStart" CONFIG_NAME="Debug">
+    <configuration name="ContinuousStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousStart" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousSubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousSubmit" CONFIG_NAME="Debug">
+    <configuration name="ContinuousSubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousSubmit" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousTest" CONFIG_NAME="Debug">
+    <configuration name="ContinuousTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousTest" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContinuousUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousUpdate" CONFIG_NAME="Debug">
+    <configuration name="ContinuousUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ContinuousUpdate" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Experimental" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Experimental" CONFIG_NAME="Debug">
+    <configuration name="Experimental" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Experimental" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalBuild" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalBuild" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalConfigure" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalConfigure" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalCoverage" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalCoverage" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalMemCheck" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalMemCheck" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalStart" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalStart" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalSubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalSubmit" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalSubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalSubmit" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalTest" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalTest" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExperimentalUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalUpdate" CONFIG_NAME="Debug">
+    <configuration name="ExperimentalUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="ExperimentalUpdate" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Kangaroo" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo">
+    <configuration name="Kangaroo" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Kangaroo_library" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_library" CONFIG_NAME="Debug">
+    <configuration name="Kangaroo_library" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_library" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Nightly" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Nightly" CONFIG_NAME="Debug">
+    <configuration name="Nightly" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Nightly" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyBuild" CONFIG_NAME="Debug">
+    <configuration name="NightlyBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyBuild" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyConfigure" CONFIG_NAME="Debug">
+    <configuration name="NightlyConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyConfigure" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyCoverage" CONFIG_NAME="Debug">
+    <configuration name="NightlyCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyCoverage" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyMemCheck" CONFIG_NAME="Debug">
+    <configuration name="NightlyMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyMemCheck" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyMemoryCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyMemoryCheck" CONFIG_NAME="Debug">
+    <configuration name="NightlyMemoryCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyMemoryCheck" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyStart" CONFIG_NAME="Debug">
+    <configuration name="NightlyStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyStart" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlySubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlySubmit" CONFIG_NAME="Debug">
+    <configuration name="NightlySubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlySubmit" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyTest" CONFIG_NAME="Debug">
+    <configuration name="NightlyTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyTest" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightlyUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyUpdate" CONFIG_NAME="Debug">
+    <configuration name="NightlyUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyUpdate" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="args_product_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="args_product_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="args_product_test">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="basic_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="basic_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="basic_test">
+    <configuration name="args_product_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="args_product_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="args_product_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="benchmark" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark" CONFIG_NAME="Debug">
+    <configuration name="basic_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="basic_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="basic_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="benchmark_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_main" CONFIG_NAME="Debug">
+    <configuration name="benchmark" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="benchmark_min_time_flag_iters_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_min_time_flag_iters_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_min_time_flag_iters_test">
+    <configuration name="benchmark_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_main" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="benchmark_min_time_flag_time_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_min_time_flag_time_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_min_time_flag_time_test">
+    <configuration name="benchmark_min_time_flag_iters_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_min_time_flag_iters_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_min_time_flag_iters_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="benchmark_setup_teardown_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_setup_teardown_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_setup_teardown_test">
+    <configuration name="benchmark_min_time_flag_time_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_min_time_flag_time_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_min_time_flag_time_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="benchmark_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_test">
+    <configuration name="benchmark_setup_teardown_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_setup_teardown_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_setup_teardown_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_atomic" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_atomic" CONFIG_NAME="Debug">
+    <configuration name="benchmark_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="benchmark_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="benchmark_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_charconv" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_charconv" CONFIG_NAME="Debug">
+    <configuration name="clobber_memory_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="clobber_memory_assembly_test" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_chrono" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_chrono" CONFIG_NAME="Debug">
+    <configuration name="complexity_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="complexity_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="complexity_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_cobalt" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_cobalt" CONFIG_NAME="Debug">
+    <configuration name="copy_clobber_memory_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="copy_clobber_memory_assembly_test" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_container" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_container" CONFIG_NAME="Debug">
+    <configuration name="copy_donotoptimize_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="copy_donotoptimize_assembly_test" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_context" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_context" CONFIG_NAME="Debug">
+    <configuration name="copy_state_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="copy_state_assembly_test" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_contract" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_contract" CONFIG_NAME="Debug">
+    <configuration name="cxx03_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="cxx03_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="cxx03_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_coroutine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_coroutine" CONFIG_NAME="Debug">
+    <configuration name="diagnostics_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="diagnostics_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="diagnostics_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_date_time" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_date_time" CONFIG_NAME="Debug">
+    <configuration name="display_aggregates_only_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="display_aggregates_only_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="display_aggregates_only_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_fiber" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_fiber" CONFIG_NAME="Debug">
+    <configuration name="donotoptimize_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="donotoptimize_assembly_test" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_fiber_numa" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_fiber_numa" CONFIG_NAME="Debug">
+    <configuration name="donotoptimize_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="donotoptimize_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="donotoptimize_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_filesystem" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_filesystem" CONFIG_NAME="Debug">
+    <configuration name="filter_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="filter_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="filter_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_graph" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_graph" CONFIG_NAME="Debug">
+    <configuration name="fixture_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="fixture_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="fixture_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_iostreams" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_iostreams" CONFIG_NAME="Debug">
+    <configuration name="fmt" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="fmt" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_json" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_json" CONFIG_NAME="Debug">
+    <configuration name="internal_threading_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="internal_threading_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="internal_threading_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_json_regenerate_printers" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_json_regenerate_printers" CONFIG_NAME="Debug">
+    <configuration name="link_main_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="link_main_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="link_main_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_locale" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_locale" CONFIG_NAME="Debug">
+    <configuration name="map_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="map_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="map_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_log" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_log" CONFIG_NAME="Debug">
+    <configuration name="memory_manager_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="memory_manager_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="memory_manager_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_log_setup" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_log_setup" CONFIG_NAME="Debug">
+    <configuration name="multiple_ranges_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="multiple_ranges_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="multiple_ranges_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_math" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_math" CONFIG_NAME="Debug">
+    <configuration name="options_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="options_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="options_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_nowide" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_nowide" CONFIG_NAME="Debug">
+    <configuration name="output_test_helper" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="output_test_helper" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_optional" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_optional" CONFIG_NAME="Debug">
+    <configuration name="perf_counters_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="perf_counters_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="perf_counters_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_prg_exec_monitor" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_prg_exec_monitor" CONFIG_NAME="Debug">
+    <configuration name="profiler_manager_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="profiler_manager_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="profiler_manager_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_process" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_process" CONFIG_NAME="Debug">
+    <configuration name="register_benchmark_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="register_benchmark_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="register_benchmark_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_program_options" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_program_options" CONFIG_NAME="Debug">
+    <configuration name="repetitions_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="repetitions_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="repetitions_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_random" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_random" CONFIG_NAME="Debug">
+    <configuration name="report_aggregates_only_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="report_aggregates_only_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="report_aggregates_only_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_serialization" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_serialization" CONFIG_NAME="Debug">
+    <configuration name="reporter_output_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="reporter_output_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="reporter_output_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_stacktrace_addr2line" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_stacktrace_addr2line" CONFIG_NAME="Debug">
+    <configuration name="skip_with_error_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="skip_with_error_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="skip_with_error_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_stacktrace_basic" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_stacktrace_basic" CONFIG_NAME="Debug">
+    <configuration name="spec_arg_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="spec_arg_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="spec_arg_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_stacktrace_from_exception" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_stacktrace_from_exception" CONFIG_NAME="Debug">
+    <configuration name="spec_arg_verbosity_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="spec_arg_verbosity_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="spec_arg_verbosity_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_stacktrace_noop" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_stacktrace_noop" CONFIG_NAME="Debug">
+    <configuration name="state_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="state_assembly_test" CONFIG_NAME="Debug-WSL - gcc14">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_test_exec_monitor" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_test_exec_monitor" CONFIG_NAME="Debug">
+    <configuration name="templated_fixture_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="templated_fixture_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="templated_fixture_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_thread" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_thread" CONFIG_NAME="Debug">
+    <configuration name="user_counters_tabular_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="user_counters_tabular_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="user_counters_tabular_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_timer" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_timer" CONFIG_NAME="Debug">
+    <configuration name="user_counters_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="user_counters_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="user_counters_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="boost_type_erasure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_type_erasure" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="boost_unit_test_framework" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_unit_test_framework" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="boost_url" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_url" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="boost_wave" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_wave" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="boost_wserialization" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="boost_wserialization" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="clobber_memory_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="clobber_memory_assembly_test" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="complexity_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="complexity_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="complexity_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="copy_clobber_memory_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="copy_clobber_memory_assembly_test" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="copy_donotoptimize_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="copy_donotoptimize_assembly_test" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="copy_state_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="copy_state_assembly_test" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="cxx03_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="cxx03_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="cxx03_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="diagnostics_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="diagnostics_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="diagnostics_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="display_aggregates_only_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="display_aggregates_only_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="display_aggregates_only_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="donotoptimize_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="donotoptimize_assembly_test" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="donotoptimize_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="donotoptimize_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="donotoptimize_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="filter_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="filter_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="filter_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="fixture_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="fixture_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="fixture_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="fmt" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="fmt" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="internal_threading_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="internal_threading_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="internal_threading_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="link_main_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="link_main_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="link_main_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="map_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="map_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="map_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="memory_manager_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="memory_manager_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="memory_manager_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="multiple_ranges_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="multiple_ranges_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="multiple_ranges_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="options_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="options_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="options_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="output_test_helper" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="output_test_helper" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="perf_counters_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="perf_counters_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="perf_counters_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="profiler_manager_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="profiler_manager_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="profiler_manager_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="register_benchmark_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="register_benchmark_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="register_benchmark_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="repetitions_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="repetitions_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="repetitions_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="report_aggregates_only_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="report_aggregates_only_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="report_aggregates_only_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="reporter_output_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="reporter_output_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="reporter_output_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="skip_with_error_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="skip_with_error_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="skip_with_error_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="spec_arg_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="spec_arg_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="spec_arg_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="spec_arg_verbosity_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="spec_arg_verbosity_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="spec_arg_verbosity_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="state_assembly_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="state_assembly_test" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="templated_fixture_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="templated_fixture_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="templated_fixture_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="user_counters_tabular_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="user_counters_tabular_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="user_counters_tabular_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="user_counters_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="user_counters_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="user_counters_test">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="user_counters_thousands_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="user_counters_thousands_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="user_counters_thousands_test">
+    <configuration name="user_counters_thousands_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="user_counters_thousands_test" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="user_counters_thousands_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -901,45 +662,6 @@
       <item itemvalue="CMake Application.user_counters_tabular_test" />
       <item itemvalue="CMake Application.user_counters_test" />
       <item itemvalue="CMake Application.user_counters_thousands_test" />
-      <item itemvalue="CMake Application.boost_atomic" />
-      <item itemvalue="CMake Application.boost_charconv" />
-      <item itemvalue="CMake Application.boost_chrono" />
-      <item itemvalue="CMake Application.boost_cobalt" />
-      <item itemvalue="CMake Application.boost_container" />
-      <item itemvalue="CMake Application.boost_context" />
-      <item itemvalue="CMake Application.boost_contract" />
-      <item itemvalue="CMake Application.boost_coroutine" />
-      <item itemvalue="CMake Application.boost_date_time" />
-      <item itemvalue="CMake Application.boost_fiber" />
-      <item itemvalue="CMake Application.boost_fiber_numa" />
-      <item itemvalue="CMake Application.boost_filesystem" />
-      <item itemvalue="CMake Application.boost_graph" />
-      <item itemvalue="CMake Application.boost_iostreams" />
-      <item itemvalue="CMake Application.boost_json" />
-      <item itemvalue="CMake Application.boost_json_regenerate_printers" />
-      <item itemvalue="CMake Application.boost_locale" />
-      <item itemvalue="CMake Application.boost_log" />
-      <item itemvalue="CMake Application.boost_log_setup" />
-      <item itemvalue="CMake Application.boost_math" />
-      <item itemvalue="CMake Application.boost_nowide" />
-      <item itemvalue="CMake Application.boost_optional" />
-      <item itemvalue="CMake Application.boost_process" />
-      <item itemvalue="CMake Application.boost_program_options" />
-      <item itemvalue="CMake Application.boost_random" />
-      <item itemvalue="CMake Application.boost_serialization" />
-      <item itemvalue="CMake Application.boost_wserialization" />
-      <item itemvalue="CMake Application.boost_stacktrace_addr2line" />
-      <item itemvalue="CMake Application.boost_stacktrace_basic" />
-      <item itemvalue="CMake Application.boost_stacktrace_from_exception" />
-      <item itemvalue="CMake Application.boost_stacktrace_noop" />
-      <item itemvalue="CMake Application.boost_prg_exec_monitor" />
-      <item itemvalue="CMake Application.boost_test_exec_monitor" />
-      <item itemvalue="CMake Application.boost_unit_test_framework" />
-      <item itemvalue="CMake Application.boost_thread" />
-      <item itemvalue="CMake Application.boost_timer" />
-      <item itemvalue="CMake Application.boost_type_erasure" />
-      <item itemvalue="CMake Application.boost_url" />
-      <item itemvalue="CMake Application.boost_wave" />
       <item itemvalue="CMake Application.Catch2" />
       <item itemvalue="CMake Application.Catch2WithMain" />
       <item itemvalue="CMake Application.fmt" />
@@ -996,7 +718,8 @@
       <workItem from="1733935142530" duration="1396000" />
       <workItem from="1733941896757" duration="8824000" />
       <workItem from="1734036272491" duration="1761000" />
-      <workItem from="1734074325450" duration="13490000" />
+      <workItem from="1734074325450" duration="13741000" />
+      <workItem from="1734163744533" duration="966000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -1014,7 +737,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734113469114</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=".">
+      <option name="closed" value="true" />
+      <created>1734120730835</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1734120730835</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
