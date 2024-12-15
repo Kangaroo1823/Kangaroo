@@ -10,6 +10,9 @@
 #include <array>           // for array
 #include <cstdint>         // for int64_t, uint64_t
 #include <string>          // for string
+#include <strings.h>
+
+#include "fmt/base.h"
 
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
@@ -19,7 +22,7 @@ using Bitboard = uint64_t;
 /**
  * Have a convenient way of naming positions
  */
-typedef enum {
+using Position = enum class Position_t {
     A1 = 0,
     B1 = 1,
     C1 = 2,
@@ -141,6 +144,22 @@ constexpr Bitboard SquareOf(const Bitboard bitboard) {
  */
 constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
     return _pext_u64(bitboard,mask);
+}
+
+
+template<typename T, std::size_t N>
+/**
+ * Creates an occupation mask on a bitboard based on the provided index and mask.
+ *
+ * The function utilizes the parallel bits deposit instruction (_pdep_u64).
+ * It maps bits from the index value onto the specified positions in the mask.
+ *
+ * @param index An unsigned integer representing the index or bit pattern to be mapped onto the mask.
+ * @param mask A Bitboard representing the mask where the index bits are to be deposited.
+ * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
+ */
+constexpr Bitboard create_occupation_of_mask(const typename std::array<T,N>::size_type index, Bitboard mask ) {
+    return _pdep_u64(index, mask);
 }
 
 template<typename Fn>

@@ -86,8 +86,6 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/create_possible_rook_moves.h
         ../include/create_possible_bishop_moves.h
         create_possible_bishop_moves.cpp
-        create_occupantion_of_mask.cpp
-        ../include/create_occupantion_of_mask.h
         ../include/base.h)
 target_link_libraries(Kangaroo_library
         PUBLIC
@@ -104,7 +102,6 @@ add_executable(Kangaroo
         main.cpp
         ../include/bitboard.h
         ../include/create_possible_bishop_moves.h
-        ../include/create_occupantion_of_mask.h
         ../include/base.h
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
