@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <array>                                      // for array
 #include <random>                                     // for mt19937_64
+#include <utility>
+#include <utility>
 #include "../include/bishop_attack_masks.h"           // for bishop_attack_m...
 #include "../include/bitboard.h"                      // for Bitboard, Bitcount
 #include "../include/create_possible_bishop_moves.h"  // for create_possible...
@@ -127,6 +129,23 @@ bool check_magic_number_collisions(const int64_t relevant_bits_in_mask, const un
 }
 
 template<bool isBishop>
+/**
+ * \brief Attempts to generate a magic number for optimizing chess move lookup.
+ *
+ * This function brute-forces the generation of a magic number by validating candidates
+ * against constraints such as avoiding collisions in occupancy and attack tables
+ * for a given chess piece (bishop or rook). The process continues until a valid
+ * magic number is found or the search limit is exceeded.
+ *
+ * \tparam isBishop Determines if the function is generating a magic number for a bishop (true) or rook (false).
+ * \param mask The bitboard mask representing possible movements restricted by the relevant piece's position.
+ * \param relevant_bits_in_mask Number of relevant bits in the given \p mask.
+ * \param number_of_masks The number of possible occupancy variations based on \p mask.
+ * \param occupancy_table Lookup table containing all potential occupancies derived from \p mask.
+ * \param attack_table Lookup table containing precomputed attacks for each possible occupancy.
+ * \param value1 Reference to store the resulting magic number if successfully generated.
+ * \return True if a valid magic number is found; otherwise, false.
+ */
 bool generate_magic_number(const Bitboard mask, const int64_t relevant_bits_in_mask,
                            const unsigned long number_of_masks,
                            const std::array<Bitboard, isBishop ? 512 : 4096> &occupancy_table,
@@ -159,11 +178,23 @@ bool generate_magic_number(const Bitboard mask, const int64_t relevant_bits_in_m
 }
 
 template<bool isBishop>
+/**
+ * \brief Finds a magic number for the specified position of a figure.
+ *
+ * Computes a magic number used for hashing chessboard states based on the given position.
+ * The function determines relevant mask bits, all possible occupancy values within the mask,
+ * and fills corresponding attack tables for the figure type. It attempts to generate and
+ * return a valid magic number using a heuristic approach. If no magic number is found,
+ * it returns 0.
+ *
+ * \param position_of_figure The position of the chess piece on the board.
+ * \return The computed magic number or 0 if no valid number is found.
+ */
 MagicNumber find_magic_number(const Position position_of_figure) {
     // get the mask corresponding to the position of the figure.
     const Bitboard mask = isBishop
-                              ? Constants::bishop_attack_masks[position_of_figure]
-                              : Constants::rook_attack_masks[position_of_figure];
+                              ? Constants::bishop_attack_masks[std::to_underlying(position_of_figure)]
+                              : Constants::rook_attack_masks[std::to_underlying(position_of_figure)];
 
     // compute the size of the mask
     const int64_t relevant_bits_in_mask = Bitcount(mask);
@@ -189,6 +220,13 @@ MagicNumber find_magic_number(const Position position_of_figure) {
     return 0;
 }
 
+/**
+ * \brief Computes and prints magic numbers for positions on a chessboard.
+ *
+ * This method iterates over all 64 squares of a chessboard and computes magic numbers
+ * for both rooks and bishops using the `find_magic_number` function. The results are
+ * formatted and printed for each square.
+ */
 void compute_magic_numbers() {
     // loop over all 64 board squares
     fmt::print("// rooks:\n");

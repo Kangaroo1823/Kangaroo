@@ -40,8 +40,8 @@ std::string print_position(const Position position) {
         "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7",
         "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
     };
-    if (position >= A1 && position <= H8) {
-        return position_table[position];
+    if (position >= Position_t::A1 && position <= Position_t::H8) {
+        return position_table[std::to_underlying(position)];
     }
     return "unknown";
 }

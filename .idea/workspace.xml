@@ -108,15 +108,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="enabled cppcheck and include-what-you-use">
+    <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="finished creation routine of magic numbers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KangarooOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/KangarooOptions.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/bitboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitboard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/create_occupantion_of_mask.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/create_occupantion_of_mask.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/chess_board.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/chess_board.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bitboard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bitboard.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chess_board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess_board.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/create_possible_bishop_moves.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/create_possible_bishop_moves.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/create_possible_rook_moves.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/create_possible_rook_moves.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/create_occupation_of_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_occupation_of_mask_tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,9 +145,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/include/base.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/include/bitboard.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/include/create_occupantion_of_mask.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/bitboard.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/create_occupantion_of_mask.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/test/bitboard_tests.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -199,6 +197,7 @@
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;cf.advertisement.text.has.clang-format&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
@@ -407,11 +406,6 @@
       </method>
     </configuration>
     <configuration name="NightlyUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="NightlyUpdate" CONFIG_NAME="Debug-WSL - gcc14">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -628,32 +622,64 @@
     </configuration>
     <list>
       <item itemvalue="Catch.Kangaroo_tests" />
-      <item itemvalue="Catch.Create Occupation of Mask" />
       <item itemvalue="Catch.Bishops attack masks" />
+      <item itemvalue="Catch.Create Occupation of Mask" />
       <item itemvalue="Catch.Knight Attacks" />
-      <item itemvalue="Catch.Rooks Attack Masks" />
       <item itemvalue="Catch.Pawn Attacks" />
-      <item itemvalue="CMake Application.benchmark" />
-      <item itemvalue="CMake Application.benchmark_main" />
-      <item itemvalue="CMake Application.clobber_memory_assembly_test" />
-      <item itemvalue="CMake Application.copy_clobber_memory_assembly_test" />
-      <item itemvalue="CMake Application.copy_donotoptimize_assembly_test" />
-      <item itemvalue="CMake Application.copy_state_assembly_test" />
-      <item itemvalue="CMake Application.donotoptimize_assembly_test" />
-      <item itemvalue="CMake Application.state_assembly_test" />
+      <item itemvalue="Catch.Rooks Attack Masks" />
+      <item itemvalue="CMake Application.Catch2WithMain" />
+      <item itemvalue="CMake Application.Catch2" />
+      <item itemvalue="CMake Application.ContinuousBuild" />
+      <item itemvalue="CMake Application.ContinuousConfigure" />
+      <item itemvalue="CMake Application.ContinuousCoverage" />
+      <item itemvalue="CMake Application.ContinuousMemCheck" />
+      <item itemvalue="CMake Application.ContinuousStart" />
+      <item itemvalue="CMake Application.ContinuousSubmit" />
+      <item itemvalue="CMake Application.ContinuousTest" />
+      <item itemvalue="CMake Application.ContinuousUpdate" />
+      <item itemvalue="CMake Application.Continuous" />
+      <item itemvalue="CMake Application.ExperimentalBuild" />
+      <item itemvalue="CMake Application.ExperimentalConfigure" />
+      <item itemvalue="CMake Application.ExperimentalCoverage" />
+      <item itemvalue="CMake Application.ExperimentalMemCheck" />
+      <item itemvalue="CMake Application.ExperimentalStart" />
+      <item itemvalue="CMake Application.ExperimentalSubmit" />
+      <item itemvalue="CMake Application.ExperimentalTest" />
+      <item itemvalue="CMake Application.ExperimentalUpdate" />
+      <item itemvalue="CMake Application.Experimental" />
+      <item itemvalue="CMake Application.Kangaroo" />
+      <item itemvalue="CMake Application.Kangaroo_library" />
+      <item itemvalue="CMake Application.NightlyBuild" />
+      <item itemvalue="CMake Application.NightlyConfigure" />
+      <item itemvalue="CMake Application.NightlyCoverage" />
+      <item itemvalue="CMake Application.NightlyMemCheck" />
+      <item itemvalue="CMake Application.NightlyMemoryCheck" />
+      <item itemvalue="CMake Application.NightlyStart" />
+      <item itemvalue="CMake Application.NightlySubmit" />
+      <item itemvalue="CMake Application.NightlyTest" />
+      <item itemvalue="CMake Application.NightlyUpdate" />
+      <item itemvalue="CMake Application.Nightly" />
       <item itemvalue="CMake Application.args_product_test" />
       <item itemvalue="CMake Application.basic_test" />
+      <item itemvalue="CMake Application.benchmark" />
+      <item itemvalue="CMake Application.benchmark_main" />
       <item itemvalue="CMake Application.benchmark_min_time_flag_iters_test" />
       <item itemvalue="CMake Application.benchmark_min_time_flag_time_test" />
       <item itemvalue="CMake Application.benchmark_setup_teardown_test" />
       <item itemvalue="CMake Application.benchmark_test" />
+      <item itemvalue="CMake Application.clobber_memory_assembly_test" />
       <item itemvalue="CMake Application.complexity_test" />
+      <item itemvalue="CMake Application.copy_clobber_memory_assembly_test" />
+      <item itemvalue="CMake Application.copy_donotoptimize_assembly_test" />
+      <item itemvalue="CMake Application.copy_state_assembly_test" />
       <item itemvalue="CMake Application.cxx03_test" />
       <item itemvalue="CMake Application.diagnostics_test" />
       <item itemvalue="CMake Application.display_aggregates_only_test" />
+      <item itemvalue="CMake Application.donotoptimize_assembly_test" />
       <item itemvalue="CMake Application.donotoptimize_test" />
       <item itemvalue="CMake Application.filter_test" />
       <item itemvalue="CMake Application.fixture_test" />
+      <item itemvalue="CMake Application.fmt" />
       <item itemvalue="CMake Application.internal_threading_test" />
       <item itemvalue="CMake Application.link_main_test" />
       <item itemvalue="CMake Application.map_test" />
@@ -670,43 +696,11 @@
       <item itemvalue="CMake Application.skip_with_error_test" />
       <item itemvalue="CMake Application.spec_arg_test" />
       <item itemvalue="CMake Application.spec_arg_verbosity_test" />
+      <item itemvalue="CMake Application.state_assembly_test" />
       <item itemvalue="CMake Application.templated_fixture_test" />
       <item itemvalue="CMake Application.user_counters_tabular_test" />
       <item itemvalue="CMake Application.user_counters_test" />
       <item itemvalue="CMake Application.user_counters_thousands_test" />
-      <item itemvalue="CMake Application.Catch2" />
-      <item itemvalue="CMake Application.Catch2WithMain" />
-      <item itemvalue="CMake Application.fmt" />
-      <item itemvalue="CMake Application.Kangaroo" />
-      <item itemvalue="CMake Application.Kangaroo_library" />
-      <item itemvalue="CMake Application.Continuous" />
-      <item itemvalue="CMake Application.ContinuousBuild" />
-      <item itemvalue="CMake Application.ContinuousConfigure" />
-      <item itemvalue="CMake Application.ContinuousCoverage" />
-      <item itemvalue="CMake Application.ContinuousMemCheck" />
-      <item itemvalue="CMake Application.ContinuousStart" />
-      <item itemvalue="CMake Application.ContinuousSubmit" />
-      <item itemvalue="CMake Application.ContinuousTest" />
-      <item itemvalue="CMake Application.ContinuousUpdate" />
-      <item itemvalue="CMake Application.Experimental" />
-      <item itemvalue="CMake Application.ExperimentalBuild" />
-      <item itemvalue="CMake Application.ExperimentalConfigure" />
-      <item itemvalue="CMake Application.ExperimentalCoverage" />
-      <item itemvalue="CMake Application.ExperimentalMemCheck" />
-      <item itemvalue="CMake Application.ExperimentalStart" />
-      <item itemvalue="CMake Application.ExperimentalSubmit" />
-      <item itemvalue="CMake Application.ExperimentalTest" />
-      <item itemvalue="CMake Application.ExperimentalUpdate" />
-      <item itemvalue="CMake Application.Nightly" />
-      <item itemvalue="CMake Application.NightlyBuild" />
-      <item itemvalue="CMake Application.NightlyConfigure" />
-      <item itemvalue="CMake Application.NightlyCoverage" />
-      <item itemvalue="CMake Application.NightlyMemCheck" />
-      <item itemvalue="CMake Application.NightlyMemoryCheck" />
-      <item itemvalue="CMake Application.NightlyStart" />
-      <item itemvalue="CMake Application.NightlySubmit" />
-      <item itemvalue="CMake Application.NightlyTest" />
-      <item itemvalue="CMake Application.NightlyUpdate" />
     </list>
     <recent_temporary>
       <list>
@@ -734,7 +728,10 @@
       <workItem from="1734163744533" duration="11140000" />
       <workItem from="1734211276284" duration="481000" />
       <workItem from="1734246441389" duration="3892000" />
-      <workItem from="1734250809172" duration="2650000" />
+      <workItem from="1734250809172" duration="3843000" />
+      <workItem from="1734256587742" duration="148000" />
+      <workItem from="1734256746694" duration="3348000" />
+      <workItem from="1734275182305" duration="2556000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -776,7 +773,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734205771628</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="finished creation routine of magic numbers">
+      <option name="closed" value="true" />
+      <created>1734256553369</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1734256553369</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -802,7 +807,19 @@
     <MESSAGE value="." />
     <MESSAGE value="finished cmake setup" />
     <MESSAGE value="enabled cppcheck and include-what-you-use" />
-    <option name="LAST_COMMIT_MESSAGE" value="enabled cppcheck and include-what-you-use" />
+    <MESSAGE value="finished creation routine of magic numbers" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished creation routine of magic numbers" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/chess_board.cpp</url>
+          <line>4</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

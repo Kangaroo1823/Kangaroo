@@ -6,8 +6,9 @@
 #define CHESS_BOARD_H
 
 #include "bitboard.h"
+#include <memory>
 
-typedef struct {
+using Chess_Board = struct {
     Bitboard white_king;
     Bitboard white_queens;
     Bitboard white_rooks;
@@ -23,10 +24,10 @@ typedef struct {
     Bitboard black_bishops;
     Bitboard black_pawns;
     Bitboard black_pieces;
-} Chess_Board;
+};
 
 
-Chess_Board *create_chess_board();
+std::unique_ptr<Chess_Board> create_chess_board();
 
 void print_chess_board(const Chess_Board* board);
 

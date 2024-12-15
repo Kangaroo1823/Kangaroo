@@ -10,9 +10,8 @@
 #include <array>           // for array
 #include <cstdint>         // for int64_t, uint64_t
 #include <string>          // for string
-#include <strings.h>
+#include <utility>
 
-#include "fmt/base.h"
 
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
@@ -22,7 +21,7 @@ using Bitboard = uint64_t;
 /**
  * Have a convenient way of naming positions
  */
-using Position = enum class Position_t {
+using Position = enum class Position_t  : std::size_t {
     A1 = 0,
     B1 = 1,
     C1 = 2,
@@ -87,33 +86,33 @@ using Position = enum class Position_t {
     F8 = 61,
     G8 = 62,
     H8 = 63
-} Position;
-
-constexpr std::array<Position, 64> All_Positions = {
-    A1, B1, C1, D1, E1, F1, G1, H1,
-    A2, B2, C2, D2, E2, F2, G2, H2,
-    A3, B3, C3, D3, E3, F3, G3, H3,
-    A4, B4, C4, D4, E4, F4, G4, H4,
-    A5, B5, C5, D5, E5, F5, G5, H5,
-    A6, B6, C6, D6, E6, F6, G6, H6,
-    A7, B7, C7, D7, E7, F7, G7, H7,
-    A8, B8, C8, D8, E8, F8, G8, H8
 };
 
-constexpr Position rank_file_to_position(const int rank, const int file) {
-    return All_Positions[std::array<Position, 64>::size_type(rank * 8 + file)];
+constexpr std::array<Position, 64> All_Positions = {
+    Position_t::A1, Position_t::B1, Position_t::C1, Position_t::D1, Position_t::E1, Position_t::F1, Position_t::G1, Position_t::H1,
+    Position_t::A2, Position_t::B2, Position_t::C2, Position_t::D2, Position_t::E2, Position_t::F2, Position_t::G2, Position_t::H2,
+    Position_t::A3, Position_t::B3, Position_t::C3, Position_t::D3, Position_t::E3, Position_t::F3, Position_t::G3, Position_t::H3,
+    Position_t::A4, Position_t::B4, Position_t::C4, Position_t::D4, Position_t::E4, Position_t::F4, Position_t::G4, Position_t::H4,
+    Position_t::A5, Position_t::B5, Position_t::C5, Position_t::D5, Position_t::E5, Position_t::F5, Position_t::G5, Position_t::H5,
+    Position_t::A6, Position_t::B6, Position_t::C6, Position_t::D6, Position_t::E6, Position_t::F6, Position_t::G6, Position_t::H6,
+    Position_t::A7, Position_t::B7, Position_t::C7, Position_t::D7, Position_t::E7, Position_t::F7, Position_t::G7, Position_t::H7,
+    Position_t::A8, Position_t::B8, Position_t::C8, Position_t::D8, Position_t::E8, Position_t::F8, Position_t::G8, Position_t::H8
+};
+
+constexpr Position rank_file_to_position(const std::size_t rank, const std::size_t file) {
+    return All_Positions[rank * 8 + file];
 }
 
-constexpr Bitboard set_bit(const Bitboard bitboard, const Position position) {
-    return bitboard | (1ULL << position);
+constexpr Bitboard set_bit(const Bitboard bitboard, const Position &position) {
+    return bitboard | (1ULL << std::to_underlying(position));
 }
 
-constexpr Bitboard get_bit(const Bitboard bitboard, const Position position) {
-    return bitboard & (1ULL << position);
+constexpr Bitboard get_bit(const Bitboard bitboard, const Position &position) {
+    return bitboard & (1ULL << std::to_underlying(position));
 }
 
-constexpr Bitboard pop_bit(const Bitboard bitboard, const Position position) {
-    return bitboard & ~(1ULL << position);
+constexpr Bitboard pop_bit(const Bitboard bitboard, const Position &position) {
+    return bitboard & ~(1ULL << std::to_underlying(position));
 }
 
 /**
