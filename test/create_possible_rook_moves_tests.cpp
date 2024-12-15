@@ -10,13 +10,13 @@
 
 TEST_CASE("Create Possible Rook Moves", "[create_possible_rook_moves]") {
 
-    Position position = E4;
+    Position position = Position::E4;
     Bitboard mask = 0ULL;
 
-    mask = set_bit(mask, B4);
-    mask = set_bit(mask, G4);
-    mask = set_bit(mask, E2);
-    mask = set_bit(mask, E7);
+    mask = set_bit(mask, Position::B4);
+    mask = set_bit(mask, Position::G4);
+    mask = set_bit(mask, Position::E2);
+    mask = set_bit(mask, Position::E7);
 
     // cppcheck-suppress unreadVariable
     const Bitboard board = create_possible_rook_moves(mask, position);

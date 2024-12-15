@@ -26,10 +26,10 @@ Bitboard create_knight_attacks(Position position) {
 }
 
 TEST_CASE("Knight Attacks", "[knight_attacks]") {
-    for (Position position : All_Positions) {
+    for (const Position &position : All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_knight_attacks(position);
-        REQUIRE(Constants::knight_attacks[position] == attacks);
+        REQUIRE(Constants::knight_attacks[std::to_underlying(position)] == attacks);
     }
 }
 

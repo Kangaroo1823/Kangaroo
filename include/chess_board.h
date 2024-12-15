@@ -8,7 +8,7 @@
 #include "bitboard.h"
 #include <memory>
 
-using Chess_Board = struct {
+using Chess_Board = struct Chess_Board_t {
     Bitboard white_king;
     Bitboard white_queens;
     Bitboard white_rooks;

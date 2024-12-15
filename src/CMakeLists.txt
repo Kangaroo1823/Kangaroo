@@ -86,7 +86,9 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/create_possible_rook_moves.h
         ../include/create_possible_bishop_moves.h
         create_possible_bishop_moves.cpp
-        ../include/base.h)
+        ../include/base.h
+        ../include/magic_numbers.h
+        magic_numbers.cpp)
 target_link_libraries(Kangaroo_library
         PUBLIC
         fmt::fmt

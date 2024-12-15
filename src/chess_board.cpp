@@ -49,7 +49,7 @@ std::unique_ptr<Chess_Board> create_chess_board() {
     return board;
 }
 
-void print_chess_board(const Chess_Board *board) {
+void print_chess_board(const std::unique_ptr<Chess_Board> board) {
     std::string white_king_c = "K"; //"\u2654";
     std::string white_queen_c = "Q"; // "\u2655";
     std::string white_rook_c = "R"; // "\u2656";

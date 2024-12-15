@@ -108,15 +108,25 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="finished creation routine of magic numbers">
+    <list default="true" id="d1aa7228-73dd-4913-9856-f71673af88b4" name="Changes" comment="added test for magic numbers">
+      <change afterPath="$PROJECT_DIR$/include/magic_numbers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/magic_numbers.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/magic_numbers_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/bitboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitboard.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/chess_board.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/chess_board.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bitboard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bitboard.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chess_board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/chess_board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/create_possible_bishop_moves.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/create_possible_bishop_moves.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/create_possible_rook_moves.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/create_possible_rook_moves.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bishop_attack_mask_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/bitboard_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/bitboard_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/create_occupation_of_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_occupation_of_mask_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/create_possible_bishop_moves_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_possible_bishop_moves_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/create_possible_rook_moves_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/create_possible_rook_moves_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/king_attack_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/king_attack_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/knight_attacks_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/knight_attacks_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/pawn_attack_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/pawn_attack_tests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/rook_attack_mask_tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/test/rook_attack_mask_tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,6 +168,88 @@
     <setting file="file://$PROJECT_DIR$/test/rook_attack_mask_tests.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -186,6 +278,7 @@
     &quot;Catch.Kangaroo_tests.executor&quot;: &quot;Run&quot;,
     &quot;Catch.King Attacks.executor&quot;: &quot;Run&quot;,
     &quot;Catch.Knight Attacks.executor&quot;: &quot;Run&quot;,
+    &quot;Catch.MagicNumbers.executor&quot;: &quot;Run&quot;,
     &quot;Catch.Pawn Attacks.executor&quot;: &quot;Run&quot;,
     &quot;Catch.Rooks Attack Masks.executor&quot;: &quot;Run&quot;,
     &quot;Catch.Set/Get/Pop Bit.executor&quot;: &quot;Run&quot;,
@@ -213,7 +306,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="CMake Application.Kangaroo">
+  <component name="RunManager" selected="Catch.MagicNumbers">
     <configuration name="Bishops attack masks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[bishop_attack_mask]" TEST_METHOD="Bishops attack masks" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -238,7 +331,7 @@
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Pawn Attacks" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[pawn_attacks]" TEST_METHOD="Pawn Attacks" TEST_MODE="SUITE_TEST">
+    <configuration name="MagicNumbers" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Kangaroo" TARGET_NAME="Kangaroo_tests" CONFIG_NAME="Debug-WSL - gcc14" RUN_TARGET_PROJECT_NAME="Kangaroo" RUN_TARGET_NAME="Kangaroo_tests" TEST_CLASS="[magic_numbers]" TEST_METHOD="MagicNumbers" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
@@ -621,11 +714,11 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Catch.Kangaroo_tests" />
       <item itemvalue="Catch.Bishops attack masks" />
       <item itemvalue="Catch.Create Occupation of Mask" />
+      <item itemvalue="Catch.Kangaroo_tests" />
       <item itemvalue="Catch.Knight Attacks" />
-      <item itemvalue="Catch.Pawn Attacks" />
+      <item itemvalue="Catch.MagicNumbers" />
       <item itemvalue="Catch.Rooks Attack Masks" />
       <item itemvalue="CMake Application.Catch2WithMain" />
       <item itemvalue="CMake Application.Catch2" />
@@ -704,11 +797,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Catch.MagicNumbers" />
         <item itemvalue="Catch.Create Occupation of Mask" />
         <item itemvalue="Catch.Bishops attack masks" />
         <item itemvalue="Catch.Knight Attacks" />
         <item itemvalue="Catch.Rooks Attack Masks" />
-        <item itemvalue="Catch.Pawn Attacks" />
       </list>
     </recent_temporary>
   </component>
@@ -731,7 +824,8 @@
       <workItem from="1734250809172" duration="3843000" />
       <workItem from="1734256587742" duration="148000" />
       <workItem from="1734256746694" duration="3348000" />
-      <workItem from="1734275182305" duration="2556000" />
+      <workItem from="1734275182305" duration="8649000" />
+      <workItem from="1734291669126" duration="3000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -781,7 +875,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734256553369</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixed some code issues">
+      <option name="closed" value="true" />
+      <created>1734278695649</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1734278695649</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,7 +910,9 @@
     <MESSAGE value="finished cmake setup" />
     <MESSAGE value="enabled cppcheck and include-what-you-use" />
     <MESSAGE value="finished creation routine of magic numbers" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished creation routine of magic numbers" />
+    <MESSAGE value="fixed some code issues" />
+    <MESSAGE value="added test for magic numbers" />
+    <option name="LAST_COMMIT_MESSAGE" value="added test for magic numbers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -817,6 +921,11 @@
           <url>file://$PROJECT_DIR$/src/chess_board.cpp</url>
           <line>4</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/include/magic_numbers.h</url>
+          <line>253</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

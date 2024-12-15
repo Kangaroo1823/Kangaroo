@@ -31,10 +31,10 @@ Bitboard create_pawn_attacks(unsigned int color, const Position position) {
 TEST_CASE("Pawn Attacks", "[Pawn_Attacks]") {
 
     for (const Color color : All_Colors) {
-        for (const Position position : All_Positions) {
+        for (const Position &position : All_Positions) {
             // cppcheck-suppress unreadVariable
             const Bitboard attacks = create_pawn_attacks(color, position);
-            REQUIRE(Constants::Pawn_Attacks[color][position] == attacks);
+            REQUIRE(Constants::Pawn_Attacks[color][std::to_underlying(position)] == attacks);
         }
     }
 

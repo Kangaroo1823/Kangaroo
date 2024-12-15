@@ -7,13 +7,13 @@
 #include "catch2/catch_test_macros.hpp"
 
 TEST_CASE("Create Possible Bishop Moves", "[create_possible_bishop_moves]") {
-    Position position = E4;
+    Position position = Position::E4;
     Bitboard mask = 0ULL;
 
-    mask = set_bit(mask, B7);
-    mask = set_bit(mask, G6);
-    mask = set_bit(mask, F3);
-    mask = set_bit(mask, C2);
+    mask = set_bit(mask, Position::B7);
+    mask = set_bit(mask, Position::G6);
+    mask = set_bit(mask, Position::F3);
+    mask = set_bit(mask, Position::C2);
 
     // cppcheck-suppress unreadVariable
     const Bitboard board = create_possible_bishop_moves(mask, position);

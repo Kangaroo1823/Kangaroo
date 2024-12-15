@@ -30,17 +30,16 @@ inline int64_t Bitcount_(Bitboard bitboard) {
 }
 
 TEST_CASE("Bit", "[bit]") {
-
     for (Bitboard i = 0; i < 64; i++) {
         REQUIRE(Bitcount(1ULL << i) == 1);
         REQUIRE(Bitcount_(i) == Bitcount(i));
     }
 }
 
-inline Bitboard get_ls1b_index_(Bitboard bitboard) {
-
+inline Bitboard get_ls1b_index_(const Bitboard bitboard) {
     // count the bits before the first 1 bit.
-    return static_cast<Bitboard>(Bitcount((bitboard & -bitboard) - 1));
+    const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
+    return static_cast<Bitboard>(Bitcount((bitboard & b) - 1));
 }
 
 
@@ -55,10 +54,10 @@ TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
     // cppcheck-suppress unreadVariable
     Bitboard bitboard = 0ULL;
     // cppcheck-suppress knownConditionTrueFalse
-    REQUIRE(set_bit(bitboard, A1) == 1);
+    REQUIRE(set_bit(bitboard, Position::A1) == 1);
 
     // cppcheck-suppress knownConditionTrueFalse
-    REQUIRE(set_bit(bitboard, H8) == /*
+    REQUIRE(set_bit(bitboard, Position::H8) == /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
     2   0  0  0  0  0  0  0  0
@@ -73,7 +72,7 @@ TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
         9223372036854775808ULL);
 
     // cppcheck-suppress knownConditionTrueFalse
-    REQUIRE(set_bit(bitboard, E4) == /*
+    REQUIRE(set_bit(bitboard, Position::E4) == /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
     2   0  0  0  0  0  0  0  0
@@ -87,7 +86,5 @@ TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
        bitboard as 64 bit integer: */
         268435456ULL);
 
-    REQUIRE(pop_bit(set_bit(0ULL, E4), E4) == 0);
+    REQUIRE(pop_bit(set_bit(0ULL, Position::E4), Position::E4) == 0);
 }
-
-

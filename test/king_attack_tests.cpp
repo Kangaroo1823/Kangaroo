@@ -26,9 +26,9 @@ Bitboard create_king_attacks(const Position& position) {
 }
 
 TEST_CASE("King Attacks", "[king_attacks]") {
-    for (Position position : All_Positions) {
+    for (const Position &position : All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_king_attacks(position);
-        REQUIRE(Constants::king_attacks[position] == attacks);
+        REQUIRE(Constants::king_attacks[std::to_underlying(position)] == attacks);
     }
 }
