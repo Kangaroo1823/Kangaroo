@@ -843,14 +843,15 @@ constexpr std::array<Bitboard, 64> occupancy_test_table = {
 };
 
 TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
+    using enum Position_t;
     Bitboard mask = 0ULL;
 
-    mask = set_bit(mask, Position::A2);
-    mask = set_bit(mask, Position::A3);
-    mask = set_bit(mask, Position::A4);
-    mask = set_bit(mask, Position::B1);
-    mask = set_bit(mask, Position::C1);
-    mask = set_bit(mask, Position::D1);
+    mask = set_bit(mask, A2);
+    mask = set_bit(mask, A3);
+    mask = set_bit(mask, A4);
+    mask = set_bit(mask, B1);
+    mask = set_bit(mask, C1);
+    mask = set_bit(mask, D1);
 
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         // cppcheck-suppress unreadVariable
@@ -874,14 +875,15 @@ Bitboard create_occupation_of_mask_(const unsigned int index, Bitboard mask) {
 }
 
 TEST_CASE("Create Occupation of Mask2", "[create_occupation_of_mask2]") {
+    using enum Position_t;
     Bitboard mask = 0ULL;
 
-    mask = set_bit(mask, Position::A2);
-    mask = set_bit(mask, Position::A3);
-    mask = set_bit(mask, Position::A4);
-    mask = set_bit(mask, Position::B1);
-    mask = set_bit(mask, Position::C1);
-    mask = set_bit(mask, Position::D1);
+    mask = set_bit(mask, A2);
+    mask = set_bit(mask, A3);
+    mask = set_bit(mask, A4);
+    mask = set_bit(mask, B1);
+    mask = set_bit(mask, C1);
+    mask = set_bit(mask, D1);
 
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         // cppcheck-suppress unreadVariable
