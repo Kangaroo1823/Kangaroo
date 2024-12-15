@@ -11,13 +11,13 @@
 Bitboard create_rook_attack_mask(Position position) {
     Bitboard mask = 0ULL;
 
-    const std::size_t rank = std::to_underlying(position) >> 3;
-    const std::size_t file = std::to_underlying(position) & 7;
+    const auto rank = static_cast<int64_t>(std::to_underlying(position) >> 3);
+    const auto file = static_cast<int64_t>(std::to_underlying(position) & 7);
 
-    for (std::size_t r = rank + 1; r < 7; ++r) mask |= 1ULL << (r * 8 + file);
-    for (std::size_t f = file + 1; f < 7; ++f) mask |= 1ULL << (rank * 8 + f);
-    for (std::size_t r = rank - 1; r > 0; --r) mask |= 1ULL << (r * 8 + file);
-    for (std::size_t f = file - 1; f > 0; --f) mask |= 1ULL << (rank * 8 + f);
+    for (int64_t r = rank + 1; r < 7; ++r) mask |= 1ULL << (r * 8 + file);
+    for (int64_t f = file + 1; f < 7; ++f) mask |= 1ULL << (rank * 8 + f);
+    for (int64_t r = rank - 1; r > 0; --r) mask |= 1ULL << (r * 8 + file);
+    for (int64_t f = file - 1; f > 0; --f) mask |= 1ULL << (rank * 8 + f);
 
     return mask;
 }

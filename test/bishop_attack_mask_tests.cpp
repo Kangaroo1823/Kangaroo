@@ -12,13 +12,13 @@
 Bitboard create_bishop_attack_mask(const Position position) {
     Bitboard mask = 0ULL;
 
-    const std::size_t rank = std::to_underlying(position) >> 3;
-    const std::size_t file = std::to_underlying(position) & 7;
+    const auto rank = static_cast<int64_t>(std::to_underlying(position) >> 3);
+    const auto file = static_cast<int64_t>(std::to_underlying(position) & 7);
 
-    for (std::size_t r = rank + 1, f = file + 1; r < 7 && f < 7; ++r, ++f) mask |= 1ULL << (r * 8 + f);
-    for (std::size_t r = rank + 1, f = file - 1; r < 7 && f > 0; ++r, --f) mask |= 1ULL << (r * 8 + f);
-    for (std::size_t r = rank - 1, f = file - 1; r > 0 && f > 0; --r, --f) mask |= 1ULL << (r * 8 + f);
-    for (std::size_t r = rank - 1, f = file + 1; r > 0 && f < 7; --r, ++f) mask |= 1ULL << (r * 8 + f);
+    for (int64_t r = rank + 1, f = file + 1; r < 7 && f < 7; ++r, ++f) mask |= 1ULL << (r * 8 + f);
+    for (int64_t r = rank + 1, f = file - 1; r < 7 && f > 0; ++r, --f) mask |= 1ULL << (r * 8 + f);
+    for (int64_t r = rank - 1, f = file - 1; r > 0 && f > 0; --r, --f) mask |= 1ULL << (r * 8 + f);
+    for (int64_t r = rank - 1, f = file + 1; r > 0 && f < 7; --r, ++f) mask |= 1ULL << (r * 8 + f);
 
     return mask;
 }
