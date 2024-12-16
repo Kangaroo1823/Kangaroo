@@ -36,16 +36,10 @@ TEST_CASE("Bit", "[bit]") {
     }
 }
 
-inline Bitboard get_ls1b_index_(const Bitboard bitboard) {
-    // count the bits before the first 1 bit.
-    const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
-    return static_cast<Bitboard>(Bitcount((bitboard & b) - 1));
-}
-
 
 TEST_CASE("SquareOf", "[SquareOf]") {
     for (unsigned int i = 0; i < 64; i++) {
-        REQUIRE(get_ls1b_index_(1ULL << i) == SquareOf(1ULL << i));
+        REQUIRE(fake_tzcnt_u64(1ULL << i) == SquareOf(1ULL << i));
     }
 }
 

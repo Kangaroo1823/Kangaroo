@@ -246,7 +246,7 @@ namespace Constants {
                                            std::array<Bitboard, isBishop ? 512 : 4096> attack_table,
                                            std::array<Bitboard, isBishop ? 512 : 4096> used_attack_table,
                                            MagicNumber magic_number) {
-            for (uint index = 0; index < number_of_masks; index++) {
+            for (std::size_t index = 0; index < number_of_masks; index++) {
                 Bitboard magic_index = occupancy_table[index] * magic_number >> (64 - relevant_bits_in_mask);
 
                 if (used_attack_table[magic_index] == 0) {

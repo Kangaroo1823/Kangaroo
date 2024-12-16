@@ -5,13 +5,23 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
+#ifdef _MSC_VER
+#include <intrin0.inl.h>
+#include <immintrin.h>
+#elif defined(__clang__)
 #include <immintrin.h>     // for _pext_u64, _blsr_u64, _pdep_u64, _tzcnt_u64
 #include <popcntintrin.h>  // for _mm_popcnt_u64
+#elif defined(__GNUC__)
+#include <immintrin.h>     // for _pext_u64, _blsr_u64, _pdep_u64, _tzcnt_u64
+#include <popcntintrin.h>  // for _mm_popcnt_u64
+#endif
+
 #include <array>           // for array
 #include <cstddef>         // for size_t
 #include <cstdint>         // for int64_t, uint64_t
 #include <string>          // for string
 #include <utility>         // for to_underlying
+#include "base.h"
 
 
 
@@ -116,6 +126,25 @@ constexpr Bitboard pop_bit(const Bitboard bitboard, const Position &position) {
     return bitboard & ~(1ULL << std::to_underlying(position));
 }
 
+
+constexpr int64_t Bitcount(const Bitboard board) {
+#ifdef _MSC_VER
+    return static_cast<int64_t>(__popcnt64(board));
+#elif defined(__clang__)
+    return _mm_popcnt_u64(board);
+#elif defined(__GNUC__)
+    return _mm_popcnt_u64(board);
+#endif
+
+}
+
+constexpr Bitboard fake_tzcnt_u64(const Bitboard bitboard) {
+    // count the bits before the first 1 bit.
+    const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
+    return static_cast<Bitboard>(Bitcount((bitboard & b) - 1));
+}
+
+
 /**
  * Computes the index of the least significant set bit in the given bitboard.
  *
@@ -127,7 +156,11 @@ constexpr Bitboard pop_bit(const Bitboard bitboard, const Position &position) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Bitboard SquareOf(const Bitboard bitboard) {
-    return _tzcnt_u64(bitboard);
+    if consteval {
+        return fake_tzcnt_u64(bitboard);
+    } else {
+        return _tzcnt_u64(bitboard);
+    }
 }
 
 /**
@@ -181,9 +214,6 @@ constexpr void Bitloop(Bitboard x, Fn f) {
     }
 }
 
-constexpr int64_t Bitcount(const Bitboard board) {
-    return _mm_popcnt_u64(board);
-}
 
 
 constexpr Bitboard not_a_file = /*

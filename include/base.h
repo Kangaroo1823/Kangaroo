@@ -11,21 +11,21 @@
 #define _NoInline __declspec(noinline)
 #define _Inline inline
 #define _ForceInline __forceinline
-#define Bitcount(X) __popcnt64(X)
+//#define Bitcount(X) __popcnt64(X)
 #elif defined(__clang__)
 #define _ASSUME(cond) ((cond) ? static_cast<void>(0) : __builtin_unreachable())
 #define _Compiletime __attribute__((always_inline)) static constexpr
 #define _NoInline __attribute__((noinline))
 #define _Inline inline
 #define _ForceInline __attribute__((always_inline))
-#define Bitcount(X) static_cast<uint64_t>(__builtin_popcountll(X))
+//#define Bitcount(X) static_cast<uint64_t>(__builtin_popcountll(X))
 #elif defined(__GNUC__)
 #define _ASSUME(cond) ((cond) ? static_cast<void>(0) : __builtin_unreachable())
 #define _Compiletime __attribute__((always_inline)) static constexpr
 #define _NoInline __attribute__ ((noinline))
 #define _Inline inline
 #define _ForceInline __attribute__((always_inline)) inline
-#define Bitcount(X) static_cast<uint64_t>(__builtin_popcountll(X))
+//#define Bitcount(X) static_cast<uint64_t>(__builtin_popcountll(X))
 #else
 #define _ASSUME(cond) static_cast<void>(!!(cond))
 #define _Compiletime static constexpr
