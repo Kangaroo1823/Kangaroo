@@ -3,7 +3,9 @@
 //
 
 
+#include <stdint.h>                        // for int64_t
 #include <array>                           // for array
+#include <utility>                         // for to_underlying
 #include "../include/bitboard.h"           // for Bitboard, Position, print_...
 #include "../include/rook_attack_masks.h"  // for rook_attack_masks
 #include "catch2/catch_test_macros.hpp"    // for StringRef, AssertionHandler

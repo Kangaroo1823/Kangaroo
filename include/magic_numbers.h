@@ -5,16 +5,17 @@
 #ifndef MAGIC_NUMBERS_H
 #define MAGIC_NUMBERS_H
 
-#include <array>
-#include <cstdint>
-#include <algorithm>
-#include <fmt/base.h>
-
-#include "bishop_attack_masks.h"
-#include "bitboard.h"
-#include "rook_attack_masks.h"
-#include <create_possible_bishop_moves.h>
-#include <create_possible_rook_moves.h>
+#include <create_possible_bishop_moves.h>  // for create_possible_bishop_moves
+#include <create_possible_rook_moves.h>    // for create_possible_rook_moves
+#include <fmt/base.h>                      // for print
+#include <sys/types.h>                     // for uint
+#include <algorithm>                       // for for_each
+#include <array>                           // for array
+#include <cstdint>                         // for int64_t, uint64_t
+#include <utility>                         // for to_underlying
+#include "bishop_attack_masks.h"           // for bishop_attack_masks
+#include "bitboard.h"                      // for Bitboard, Bitcount, Position
+#include "rook_attack_masks.h"             // for rook_attack_masks
 
 namespace Constants {
     using MagicNumber = uint64_t;

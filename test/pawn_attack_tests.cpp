@@ -4,6 +4,7 @@
 
 
 #include <array>                         // for array
+#include <utility>                       // for to_underlying
 #include "../include/bitboard.h"         // for Bitboard, Position, not_a_file
 #include "../include/colors.h"           // for All_Colors, Color, black
 #include "../include/pawn_attacks.h"     // for Pawn_Attacks

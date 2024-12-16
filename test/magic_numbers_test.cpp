@@ -3,7 +3,9 @@
 //
 
 #include <magic_numbers.h>
-#include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler
+#include <immintrin.h>                   // for _pdep_u64
+#include <string>                        // for basic_string
+#include "catch2/catch_test_macros.hpp"  // for AssertionHandler, StringRef
 
 
 template<bool isBishop>

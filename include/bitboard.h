@@ -5,12 +5,13 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
-#include <immintrin.h>     // for _pext_u64, _blsr_u64, _tzcnt_u64
+#include <immintrin.h>     // for _pext_u64, _blsr_u64, _pdep_u64, _tzcnt_u64
 #include <popcntintrin.h>  // for _mm_popcnt_u64
 #include <array>           // for array
+#include <cstddef>         // for size_t
 #include <cstdint>         // for int64_t, uint64_t
 #include <string>          // for string
-#include <utility>
+#include <utility>         // for to_underlying
 
 
 

@@ -4,6 +4,7 @@
 
 
 #include <array>                         // for array
+#include <utility>                       // for to_underlying
 #include "../include/bitboard.h"         // for Bitboard, Position, not_a_file
 #include "../include/knight_attacks.h"   // for knight_attacks
 #include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler

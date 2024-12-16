@@ -3,14 +3,16 @@
 //
 
 #include "../include/chess_board.h"
-#include <fmt/base.h>
-#include <array>
-#include <numeric>
-#include <string>
-#include <memory>
-#include "../include/bitboard.h"
+#include <fmt/base.h>             // for print
+#include <array>                  // for array
+#include <cstddef>                // for size_t
+#include <memory>                 // for unique_ptr, make_unique, operator==
+#include <numeric>                // for accumulate
+#include <string>                 // for basic_string, string
+#include "../include/bitboard.h"  // for Position_t, set_bit, get_bit, rank_...
 
 std::unique_ptr<Chess_Board> create_chess_board() {
+
     // Helper function to generate bitboard for a set of positions
     auto generate_bitboard = [](const std::array<Position, 8> &positions) -> Bitboard {
         return std::accumulate(positions.begin(), positions.end(), 0ULL, set_bit);

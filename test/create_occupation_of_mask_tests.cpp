@@ -2,9 +2,9 @@
 // Created by peter on 02/12/2024.
 //
 
-#include <immintrin.h>                   // for _pdep_u64
+#include <array>                         // for array
 #include <cstdint>                       // for int64_t
-#include "../include/bitboard.h"         // for set_bit, Bitboard, create_oc...
+#include "../include/bitboard.h"         // for set_bit, Bitboard, Position_t
 #include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler
 
 constexpr std::array<Bitboard, 64> occupancy_test_table = {

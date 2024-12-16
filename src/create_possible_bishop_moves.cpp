@@ -2,8 +2,9 @@
 // Created by peter on 02/12/2024.
 //
 
-#include "../include/bitboard.h"
-#include "../include/create_possible_bishop_moves.h"
+#include <cstddef>                // for size_t
+#include <utility>                // for to_underlying
+#include "../include/bitboard.h"  // for rank_file_to_position, set_bit, Pos...
 
 Bitboard create_possible_bishop_moves( const Bitboard mask, const Position position ) {
     Bitboard moves = 0ULL;

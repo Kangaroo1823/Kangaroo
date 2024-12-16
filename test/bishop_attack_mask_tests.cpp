@@ -3,7 +3,9 @@
 //
 
 
+#include <cstdint>                          // for int64_t
 #include <array>                             // for array
+#include <utility>                           // for to_underlying
 #include "../include/bishop_attack_masks.h"  // for bishop_attack_masks
 #include "../include/bitboard.h"             // for Bitboard, Position, prin...
 #include "catch2/catch_test_macros.hpp"      // for StringRef, AssertionHandler

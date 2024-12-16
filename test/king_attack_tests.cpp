@@ -3,6 +3,7 @@
 //
 
 #include <array>                         // for array
+#include <utility>                       // for to_underlying
 #include "../include/bitboard.h"         // for Bitboard, not_a_file, not_h_...
 #include "../include/king_attacks.h"     // for king_attacks
 #include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler

@@ -3,8 +3,10 @@
 //
 
 #include "magic_numbers.h"
-#include <random>
-#include <fmt/base.h>
+#include <fmt/base.h>   // for print
+#include <immintrin.h>  // for _pdep_u64
+#include <random>       // for mt19937_64
+#include <string>       // for basic_string
 
 namespace Constants::Impl {
 
