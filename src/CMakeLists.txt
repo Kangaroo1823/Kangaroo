@@ -106,6 +106,7 @@ add_executable(Kangaroo
         ../include/create_possible_bishop_moves.h
         ../include/create_occupantion_of_mask.h
         ../include/base.h
+        create_occupantion_of_mask.cpp
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
 

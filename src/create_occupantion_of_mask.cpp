@@ -15,7 +15,7 @@
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-Bitboard create_occupation_of_mask(const unsigned int index, Bitboard mask ) {
+Bitboard create_occupation_of_mask_(const unsigned int index, Bitboard mask ) {
 
     return _pdep_u64(index, mask);
 

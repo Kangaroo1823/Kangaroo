@@ -7,19 +7,18 @@
 
 #include "bitboard.h"
 
+
 /**
- * The mask Bitboard is supposed to have ones everywhere where there _could_ be a chess figure that
- * would restrict the movement of a slider piece. The index parameter is supposed to be in the range
- * of zero to the number of possible (partly) occupancies of these squares. This function create a 1:1 mapping
- * between the index and the occupancy; i. e, if index runs over the range of  zero to the number of possible
- * occupations, there is a single occupation computed (by this function) that corresponds to the index.
+ * Creates an occupation mask on a bitboard based on the provided index and mask.
  *
- * @note There is one and only one such occupation for each valid index.
+ * The function utilizes the parallel bits deposit instruction (_pdep_u64).
+ * It maps bits from the index value onto the specified positions in the mask.
  *
- * @param index
- * @param mask
- * @return Given an index the above described occupation is returned.
+ * @param index An unsigned integer representing the index or bit pattern to be mapped onto the mask.
+ * @param mask A Bitboard representing the mask where the index bits are to be deposited.
+ * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-Bitboard create_occupation_of_mask( unsigned int index, Bitboard mask );
+#define create_occupation_of_mask(index,mask) _pdep_u64(index,mask)
+
 
 #endif //CREATE_OCCUPANCY_H

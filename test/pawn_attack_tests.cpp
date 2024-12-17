@@ -9,7 +9,7 @@
 #include "../include/colors.h"
 #include "../include/pawn_attacks.h"
 
-Bitboard create_pawn_attacks(unsigned int color, const Position position) {
+extern "C" Bitboard create_pawn_attacks(unsigned int color, const Position position) {
 
     Bitboard attacks = 0ULL;
 
