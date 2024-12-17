@@ -855,7 +855,7 @@ TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
 
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         // cppcheck-suppress unreadVariable
-        const Bitboard board = create_occupation_of_mask<Bitboard, 4096>(occupancy, mask);
+        const Bitboard board = create_occupation_of_mask(occupancy, mask);
         REQUIRE(occupancy_test_table[occupancy] == board);
     }
 }
@@ -887,7 +887,7 @@ TEST_CASE("Create Occupation of Mask2", "[create_occupation_of_mask2]") {
 
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         // cppcheck-suppress unreadVariable
-        const Bitboard board = create_occupation_of_mask<Bitboard, 4096>(occupancy, mask);
+        const Bitboard board = create_occupation_of_mask(occupancy, mask);
 
         // cppcheck-suppress unreadVariable
         const Bitboard board_ = create_occupation_of_mask_(occupancy, mask);
