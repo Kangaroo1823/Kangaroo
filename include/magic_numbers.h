@@ -178,7 +178,7 @@ namespace Constants {
                                           std::array<Bitboard, isBishop ? 512 : 4096> &occupancy_table) {
             typename std::array<Bitboard, isBishop ? 512 : 4096>::size_type index = 0;
             for (auto &occupancy: occupancy_table) {
-                occupancy = create_occupation_of_mask<Bitboard, isBishop ? 512 : 4096>(index, mask);
+                occupancy = create_occupation_of_mask(index, mask);
                 ++index;
             }
         }

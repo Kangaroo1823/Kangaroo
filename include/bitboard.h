@@ -156,11 +156,7 @@ constexpr Bitboard fake_tzcnt_u64(const Bitboard bitboard) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Bitboard SquareOf(const Bitboard bitboard) {
-    if consteval {
-        return fake_tzcnt_u64(bitboard);
-    } else {
-        return _tzcnt_u64(bitboard);
-    }
+    return _tzcnt_u64(bitboard);
 }
 
 /**
@@ -180,7 +176,6 @@ constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
 }
 
 
-template<typename T, std::size_t N>
 /**
  * Creates an occupation mask on a bitboard based on the provided index and mask.
  *
@@ -191,7 +186,7 @@ template<typename T, std::size_t N>
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-constexpr Bitboard create_occupation_of_mask(const typename std::array<T,N>::size_type index, Bitboard mask ) {
+constexpr Bitboard create_occupation_of_mask(const typename std::size_t index, Bitboard mask ) {
     return _pdep_u64(index, mask);
 }
 

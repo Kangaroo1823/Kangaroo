@@ -14,7 +14,7 @@
 std::unique_ptr<Chess_Board> create_chess_board() {
 
     // Helper function to generate bitboard for a set of positions
-    auto generate_bitboard = [](const std::array<Position, 8> &positions) -> Bitboard {
+    auto generate_bitboard = [](const std::array<Position, 8> &positions) {
         return std::accumulate(positions.begin(), positions.end(), 0ULL, set_bit);
     };
 
