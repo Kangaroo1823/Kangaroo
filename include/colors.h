@@ -6,13 +6,14 @@
 #define COLORS_H
 
 #include <array>
+#include <cstdlib>
 
-typedef enum {
+using Color = enum class Color_t : std::size_t {
     white = 0,
     black = 1,
-} Color;
+};
 
-constexpr std::array<Color,2> All_Colors ={white, black};
+constexpr std::array<Color_t,2> All_Colors ={Color_t::white, Color_t::black};
 
 
 #endif //COLORS_H
