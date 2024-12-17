@@ -18,7 +18,7 @@ namespace Constants::Impl {
         // make sure that the random number is not too small.
         do {
             res = rng() & rng() & rng();
-        } while (Bitcount(occupation * res & 0xFF00000000000000) < 6);
+        } while (Bitcount(occupation * res & 0xFF00000000000000ULL) < 6);
 
         return res;
     }
