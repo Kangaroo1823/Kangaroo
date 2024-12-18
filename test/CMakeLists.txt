@@ -19,7 +19,8 @@ add_executable(Kangaroo_tests
         create_possible_rook_moves_tests.cpp
         create_possible_bishop_moves_tests.cpp
         create_occupation_of_mask_tests.cpp
-        magic_numbers_test.cpp)
+        magic_numbers_test.cpp
+        attack_tables_tests.cpp)
 target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings Catch2::Catch2WithMain)
 target_include_directories(Kangaroo_tests PRIVATE ../include)
 

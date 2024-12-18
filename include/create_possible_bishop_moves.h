@@ -7,6 +7,6 @@
 
 #include "bitboard.h"
 
-Bitboard create_possible_bishop_moves( Bitboard mask, Position position );
+Bitboard create_possible_bishop_moves( Bitboard occupancy, Position position );
 
 #endif //CREATE_POSSIBLE_BISHOP_MOVES_H

@@ -2,6 +2,8 @@
 #include <fmt/base.h>  // for print
 #include <array>       // for array
 
+#include "fmt/color.h"
+
 
 /**
  * print a bitboard

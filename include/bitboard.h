@@ -22,7 +22,7 @@
 #include <string>          // for string
 #include <utility>         // for to_underlying
 #include "base.h"
-
+#include "fmt/format.h"
 
 
 /** define a 'Bitboard' to be a 64 bit unsigned integer
@@ -186,7 +186,7 @@ constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-constexpr Bitboard create_occupation_of_mask(const typename std::size_t index, Bitboard mask ) {
+constexpr Bitboard create_occupancy_of_mask(const typename std::size_t index, Bitboard mask ) {
     return _pdep_u64(index, mask);
 }
 
@@ -269,5 +269,10 @@ constexpr Bitboard not_gh_file = /*
 
 void print_bitboard(Bitboard bitboard);
 std::string print_position(Position position);
+
+inline std::string format_bitboard(Bitboard bitboard) {
+    return fmt::format("0x{0:x},\n", bitboard);
+}
+
 
 #endif //BITBOARD_H

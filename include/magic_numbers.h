@@ -178,7 +178,7 @@ namespace Constants {
                                           std::array<Bitboard, isBishop ? 512 : 4096> &occupancy_table) {
             typename std::array<Bitboard, isBishop ? 512 : 4096>::size_type index = 0;
             for (auto &occupancy: occupancy_table) {
-                occupancy = create_occupation_of_mask(index, mask);
+                occupancy = create_occupancy_of_mask(index, mask);
                 ++index;
             }
         }
@@ -234,19 +234,19 @@ namespace Constants {
          * resulting mapped values in the `used_attack_table` do not collide with entries in the `attack_table`.
          *
          * \param relevant_bits_in_mask The number of bits in the mask relevant for the magic number computation.
-         * \param number_of_masks The total number of masks in the occupancy and attack tables.
+         * \param number_of_occupancies The total number of masks in the occupancy and attack tables.
          * \param occupancy_table Stores occupancy configurations for a given piece.
          * \param attack_table Stores attack patterns corresponding to the occupancy configurations.
          * \param used_attack_table A table to track mappings created by the magic number.
          * \param magic_number The candidate magic number being tested for collisions.
          * \return True if there are no collisions using the magic number, false otherwise.
          */
-        bool check_magic_number_collisions(const int64_t relevant_bits_in_mask, const unsigned long number_of_masks,
+        bool check_magic_number_collisions(const int64_t relevant_bits_in_mask, const unsigned long number_of_occupancies,
                                            std::array<Bitboard, isBishop ? 512 : 4096> occupancy_table,
                                            std::array<Bitboard, isBishop ? 512 : 4096> attack_table,
                                            std::array<Bitboard, isBishop ? 512 : 4096> used_attack_table,
                                            MagicNumber magic_number) {
-            for (std::size_t index = 0; index < number_of_masks; index++) {
+            for (std::size_t index = 0; index < number_of_occupancies; index++) {
                 Bitboard magic_index = occupancy_table[index] * magic_number >> (64 - relevant_bits_in_mask);
 
                 if (used_attack_table[magic_index] == 0) {
@@ -272,14 +272,14 @@ namespace Constants {
          * \tparam isBishop Determines if the function is generating a magic number for a bishop (true) or rook (false).
          * \param mask The bitboard mask representing possible movements restricted by the relevant piece's position.
          * \param relevant_bits_in_mask Number of relevant bits in the given \p mask.
-         * \param number_of_masks The number of possible occupancy variations based on \p mask.
+         * \param number_of_occupancies The number of possible occupancy variations based on \p mask.
          * \param occupancy_table Lookup table containing all potential occupancies derived from \p mask.
          * \param attack_table Lookup table containing precomputed attacks for each possible occupancy.
          * \param value1 Reference to store the resulting magic number if successfully generated.
          * \return True if a valid magic number is found; otherwise, false.
          */
         bool generate_magic_number(const Bitboard mask, const int64_t relevant_bits_in_mask,
-                                   const unsigned long number_of_masks,
+                                   const unsigned long number_of_occupancies,
                                    const std::array<Bitboard, isBishop ? 512 : 4096> &occupancy_table,
                                    const std::array<Bitboard, isBishop ? 512 : 4096> &attack_table,
                                    MagicNumber &value1) {
@@ -294,7 +294,7 @@ namespace Constants {
 
                 reset_used_attack_table<isBishop>(used_attack_table);
 
-                const bool success = check_magic_number_collisions<isBishop>(relevant_bits_in_mask, number_of_masks,
+                const bool success = check_magic_number_collisions<isBishop>(relevant_bits_in_mask, number_of_occupancies,
                                                                              occupancy_table, attack_table,
                                                                              used_attack_table, magic_number);
 
@@ -331,7 +331,7 @@ namespace Constants {
             const int64_t relevant_bits_in_mask = Bitcount(mask);
 
             // compute the number of positions that can be created within the given mask.
-            const auto number_of_masks = 1UL << relevant_bits_in_mask;
+            const auto number_of_occupancies = 1UL << relevant_bits_in_mask;
 
             // holds every possible occupation within mask
             std::array<Bitboard, isBishop ? 512 : 4096> occupancy_table{};
@@ -342,7 +342,7 @@ namespace Constants {
             std::array<Bitboard, isBishop ? 512 : 4096> attack_table{};
             fill_attack_table_from_occupancy<isBishop>(position_of_figure, occupancy_table, attack_table);
 
-            if (MagicNumber value1; generate_magic_number<isBishop>(mask, relevant_bits_in_mask, number_of_masks,
+            if (MagicNumber value1; generate_magic_number<isBishop>(mask, relevant_bits_in_mask, number_of_occupancies,
                                                                     occupancy_table, attack_table, value1)) {
                 return value1;
             }

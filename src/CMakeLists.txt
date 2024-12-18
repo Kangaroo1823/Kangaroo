@@ -105,6 +105,7 @@ add_executable(Kangaroo
         ../include/bitboard.h
         ../include/create_possible_bishop_moves.h
         ../include/base.h
+        ../include/attack_tables.h
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
 target_include_directories(Kangaroo PRIVATE ../include)
