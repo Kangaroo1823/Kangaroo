@@ -9,8 +9,12 @@
 #include "bitboard.h"
 #include "magic_numbers.h"
 
-constexpr std::array<Bitboard, 64 * 4096> rook_attack_table = {};
-constexpr std::array<Bitboard, 64 * 512> bishop_attack_table = {};
+constexpr std::array<Bitboard, 64 * 4096> rook_attack_table = {
+#include "rook_attacks.inc"
+};
+constexpr std::array<Bitboard, 64 * 512> bishop_attack_table = {
+#include "bishop_attacks.inc"
+};
 
 template<bool isBishop>
 constexpr std::size_t compute_magic_hash(const Position &position, const Bitboard &occupancy,
