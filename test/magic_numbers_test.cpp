@@ -8,10 +8,10 @@
 #include "catch2/catch_test_macros.hpp"  // for AssertionHandler, StringRef
 
 
-template<bool isBishop>
+template<Slider slider>
 bool check_magic_number(const Position position_of_figure, const Constants::MagicNumber magic_number) {
     // get the mask corresponding to the position of the figure.
-    const Bitboard mask = isBishop
+    const Bitboard mask = slider == Slider::bishop
                               ? Constants::bishop_attack_masks[std::to_underlying(position_of_figure)]
                               : Constants::rook_attack_masks[std::to_underlying(position_of_figure)];
 
@@ -22,18 +22,18 @@ bool check_magic_number(const Position position_of_figure, const Constants::Magi
     const auto number_of_masks = 1UL << relevant_bits_in_mask;
 
     // holds every possible occupation within mask
-    std::array<Bitboard, isBishop ? 512 : 4096> occupancy_table{};
-    Constants::Impl::populate_occupancy_with_mask<isBishop>(mask, occupancy_table);
+    std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> occupancy_table{};
+    Constants::Impl::populate_occupancy_with_mask<slider>(mask, occupancy_table);
 
     // a bit in attack_table[index] is set iff the figure in question can attack it given the
     // occupancy in occupancy_table[index].
-    std::array<Bitboard, isBishop ? 512 : 4096> attack_table{};
-    Constants::Impl::fill_attack_table_from_occupancy<isBishop>(position_of_figure, occupancy_table, attack_table);
+    std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> attack_table{};
+    Constants::Impl::fill_attack_table_from_occupancy<slider>(position_of_figure, occupancy_table, attack_table);
 
-    std::array<Bitboard, isBishop ? 512 : 4096> used_attack_table{};
-    Constants::Impl::reset_used_attack_table<isBishop>(used_attack_table);
+    std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> used_attack_table{};
+    Constants::Impl::reset_used_attack_table<slider>(used_attack_table);
 
-    return Constants::Impl::check_magic_number_collisions<isBishop>(relevant_bits_in_mask, number_of_masks,
+    return Constants::Impl::check_magic_number_collisions<slider>(relevant_bits_in_mask, number_of_masks,
                                                                     occupancy_table, attack_table,
                                                                     used_attack_table, magic_number);
 }
@@ -42,12 +42,12 @@ TEST_CASE("MagicNumbers", "[magic_numbers]") {
     for (const auto &position: All_Positions) {
         fmt::print("Rook: Position: {}\n", print_position(position));
         // cppcheck-suppress unreadVariable
-        bool flag = check_magic_number<false>(position, Constants::Rook_Magic_Numbers[std::to_underlying(position)]);
+        bool flag = check_magic_number<Slider::rook>(position, Constants::Rook_Magic_Numbers[std::to_underlying(position)]);
         REQUIRE(flag);
 
         fmt::print("Bishop: Position: {}\n", print_position(position));
         // cppcheck-suppress unreadVariable
-        bool flag2 = check_magic_number<true>(position, Constants::Bishop_Magic_Numbers[std::to_underlying(position)]);
+        bool flag2 = check_magic_number<Slider::bishop>(position, Constants::Bishop_Magic_Numbers[std::to_underlying(position)]);
         REQUIRE(flag2);
     }
 }

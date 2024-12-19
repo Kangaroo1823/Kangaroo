@@ -7,27 +7,7 @@
 #include "../include/bitboard.h"         // for set_bit, Bitcount, E4, Bitboard
 #include "catch2/catch_test_macros.hpp"  // for AssertionHandler, operator""...
 
-/**
- *
- * @param bitboard
- * @return The number of set bits in bitboard
- */
-inline int64_t Bitcount_(Bitboard bitboard) {
-    // initialize the count variable
-    int64_t count = 0ULL;
 
-    // loop while there are still some bits set to one in bitboard
-    while (bitboard) {
-        // increment the count variable
-        count++;
-
-        // erase the least significant one bit
-        bitboard &= bitboard - 1;
-    }
-
-    // return the count
-    return count;
-}
 
 TEST_CASE("Bit", "[bit]") {
     for (Bitboard i = 0; i < 64; i++) {
@@ -39,7 +19,7 @@ TEST_CASE("Bit", "[bit]") {
 
 TEST_CASE("SquareOf", "[SquareOf]") {
     for (unsigned int i = 0; i < 64; i++) {
-        REQUIRE(fake_tzcnt_u64(1ULL << i) == SquareOf(1ULL << i));
+        REQUIRE(square_of_(1ULL << i) == square_of(1ULL << i));
     }
 }
 

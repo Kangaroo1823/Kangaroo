@@ -855,24 +855,13 @@ TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
 
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         // cppcheck-suppress unreadVariable
-        const Bitboard board = create_occupancy_of_mask(occupancy, mask);
+        const Bitboard board = create_occupancy_from_mask(occupancy, mask);
         REQUIRE(occupancy_test_table[occupancy] == board);
     }
 }
 
 
-Bitboard create_occupation_of_mask_(const unsigned int index, Bitboard mask) {
-    Bitboard occupancy = 0ULL;
 
-    const int64_t count = Bitcount(mask);
-    for (unsigned int i = 0; i < count; i++) {
-        const Bitboard s = SquareOf(mask);
-        mask &= mask - 1ULL;
-        if (index & 1ULL << i) occupancy |= 1ULL << s;
-    }
-
-    return occupancy;
-}
 
 TEST_CASE("Create Occupation of Mask2", "[create_occupation_of_mask2]") {
     using enum Position_t;
@@ -885,12 +874,12 @@ TEST_CASE("Create Occupation of Mask2", "[create_occupation_of_mask2]") {
     mask = set_bit(mask, C1);
     mask = set_bit(mask, D1);
 
-    for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
+    for (unsigned int index = 0; index < 64; index++) {
         // cppcheck-suppress unreadVariable
-        const Bitboard board = create_occupancy_of_mask(occupancy, mask);
+        const Bitboard board = create_occupancy_from_mask(index, mask);
 
         // cppcheck-suppress unreadVariable
-        const Bitboard board_ = create_occupation_of_mask_(occupancy, mask);
+        const Bitboard board_ = create_occupation_from_mask_(index, mask);
 
         REQUIRE(board_ == board);
     }

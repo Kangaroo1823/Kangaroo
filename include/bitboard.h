@@ -127,18 +127,43 @@ constexpr Bitboard pop_bit(const Bitboard bitboard, const Position &position) {
 }
 
 
-constexpr int64_t Bitcount(const Bitboard board) {
-#ifdef _MSC_VER
-    return static_cast<int64_t>(__popcnt64(board));
-#elif defined(__clang__)
-    return _mm_popcnt_u64(board);
-#elif defined(__GNUC__)
-    return _mm_popcnt_u64(board);
-#endif
+/**
+ *
+ * @param bitboard
+ * @return The number of set bits in bitboard
+ */
+constexpr int64_t Bitcount_(Bitboard bitboard) {
+    // initialize the count variable
+    int64_t count = 0ULL;
 
+    // loop while there are still some bits set to one in bitboard
+    while (bitboard) {
+        // increment the count variable
+        count++;
+
+        // erase the least significant one bit
+        bitboard &= bitboard - 1;
+    }
+
+    // return the count
+    return count;
 }
 
-constexpr Bitboard fake_tzcnt_u64(const Bitboard bitboard) {
+constexpr int64_t Bitcount(const Bitboard board) {
+    if consteval {
+        return Bitcount_(board);
+    } else {
+#ifdef _MSC_VER
+        return static_cast<int64_t>(__popcnt64(board));
+#elif defined(__clang__)
+        return _mm_popcnt_u64(board);
+#elif defined(__GNUC__)
+        return _mm_popcnt_u64(board);
+#endif
+    }
+}
+
+constexpr Bitboard square_of_(const Bitboard bitboard) {
     // count the bits before the first 1 bit.
     const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
     return static_cast<Bitboard>(Bitcount((bitboard & b) - 1));
@@ -155,8 +180,12 @@ constexpr Bitboard fake_tzcnt_u64(const Bitboard bitboard) {
  * @param bitboard The bitboard to extract the least significant bit's index from.
  * @return The index of the least significant set bit in the input bitboard.
  */
-constexpr Bitboard SquareOf(const Bitboard bitboard) {
-    return _tzcnt_u64(bitboard);
+constexpr Bitboard square_of(const Bitboard bitboard) {
+    if consteval {
+        return square_of_(bitboard);
+    } else {
+        return _tzcnt_u64(bitboard);
+    }
 }
 
 /**
@@ -175,6 +204,32 @@ constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
     return _pext_u64(bitboard,mask);
 }
 
+/**
+ * Generates a bitboard with a specific occupancy pattern based on the given index and mask.
+ *
+ * This function creates an occupancy bitboard by iterating through the bits set in the mask
+ * and conditionally setting corresponding bits in the resulting occupancy bitboard based on
+ * the provided index.
+ *
+ * @param index A size_t value representing the index used to determine which bits from the mask
+ *              are included in the resulting occupancy bitboard.
+ * @param mask A Bitboard value representing the mask with bits set to 1 for positions to consider
+ *             in the occupancy creation.
+ * @return A Bitboard representing the calculated occupancy based on the index and mask.
+ */
+constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask ) {
+    Bitboard occupancy = 0ULL;
+    Bitboard mask_copy = mask;
+
+    const int64_t count = Bitcount(mask_copy);
+    for (unsigned int i = 0; i < count; i++) {
+        const Bitboard s = square_of(mask_copy);
+        mask_copy &= mask_copy - 1ULL;
+        if (index & 1ULL << i) occupancy |= 1ULL << s;
+    }
+
+    return occupancy;
+}
 
 /**
  * Creates an occupation mask on a bitboard based on the provided index and mask.
@@ -186,8 +241,12 @@ constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-constexpr Bitboard create_occupancy_of_mask(const typename std::size_t index, Bitboard mask ) {
-    return _pdep_u64(index, mask);
+constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask ) {
+    if consteval {
+        return create_occupation_from_mask_(index, mask);
+    } else {
+        return _pdep_u64(index, mask);
+    }
 }
 
 template<typename Fn>

@@ -82,10 +82,7 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/knight_attacks.h
         ../include/rook_attack_masks.h
         ../include/bishop_attack_masks.h
-        create_possible_rook_moves.cpp
-        ../include/create_possible_rook_moves.h
-        ../include/create_possible_bishop_moves.h
-        create_possible_bishop_moves.cpp
+        ../include/create_possible_slider_moves.h
         ../include/base.h
         ../include/magic_numbers.h
         magic_numbers.cpp)
@@ -96,6 +93,7 @@ target_link_libraries(Kangaroo_library
         Kangaroo_options
 )
 target_include_directories(Kangaroo_library PRIVATE ../include)
+target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-ops-limit=10000000000")
 
 
 
@@ -103,7 +101,7 @@ target_include_directories(Kangaroo_library PRIVATE ../include)
 add_executable(Kangaroo
         main.cpp
         ../include/bitboard.h
-        ../include/create_possible_bishop_moves.h
+        ../include/create_possible_slider_moves.h
         ../include/base.h
         ../include/attack_tables.h
 )

@@ -26,14 +26,14 @@ namespace Constants::Impl {
         // loop over all 64 board squares
         fmt::print("// rooks:\n");
         for (const auto square: All_Positions) {
-            const MagicNumber m = find_magic_number<false>(square);
+            const MagicNumber m = find_magic_number<Slider::rook>(square);
             fmt::print("/* magic number found for {}: */", print_position(square));
             fmt::print(" 0x{0:x},\n", m);
         }
         fmt::print("\n");
         fmt::print("// bishops:\n");
         for (const auto square: All_Positions) {
-            const MagicNumber m = find_magic_number<true>(square);
+            const MagicNumber m = find_magic_number<Slider::bishop>(square);
             fmt::print("/* magic number found for {}: */", print_position(square));
             fmt::print(" 0x{0:x},\n", m);
         }

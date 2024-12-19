@@ -16,8 +16,7 @@ add_executable(Kangaroo_tests
         knight_attacks_tests.cpp
         rook_attack_mask_tests.cpp
         bishop_attack_mask_tests.cpp
-        create_possible_rook_moves_tests.cpp
-        create_possible_bishop_moves_tests.cpp
+        create_possible_slider_moves_tests.cpp
         create_occupation_of_mask_tests.cpp
         magic_numbers_test.cpp
         attack_tables_tests.cpp)

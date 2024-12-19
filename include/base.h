@@ -29,4 +29,10 @@
 #define _Inline inline
 #endif
 
+using Slider = enum class Slider_t : std::size_t {
+    rook = 0,
+    bishop = 1,
+};
+
+
 #endif //BASE_H

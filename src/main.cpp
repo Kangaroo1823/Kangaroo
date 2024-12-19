@@ -1,23 +1,12 @@
-#include <fmt/base.h>                                 // for print
-#include <cstdint>                                   // for int64_t, uint64_t
-#include <sys/types.h>                                // for uint
-#include <algorithm>
-#include <array>                                      // for array
-#include <random>                                     // for mt19937_64
-#include <utility>
-#include <utility>
-#include "../include/bishop_attack_masks.h"           // for bishop_attack_m...
-#include "../include/bitboard.h"                      // for Bitboard, Bitcount
-#include "../include/create_possible_bishop_moves.h"  // for create_possible...
-#include "../include/create_possible_rook_moves.h"    // for create_possible...
-#include "../include/rook_attack_masks.h"             // for rook_attack_masks
+
 #include "magic_numbers.h"
 
+#include <attack_tables.h>
 
 
-
-int main() {
+int main(int argc, char **) {
     Constants::Impl::compute_magic_numbers();
 
-    return 0;
+
+    return static_cast<int>(Constants::rook_attack_masks[static_cast<std::size_t>(argc)]);
 }
