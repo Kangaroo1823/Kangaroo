@@ -20,12 +20,26 @@ constexpr std::size_t compute_magic_hash(const Position &position, const Bitboar
 }
 
 template<Slider slider>
+/**
+ * Computes the attack mask for a sliding piece (rook or bishop) based on its position
+ * on the board. The function determines if the slider is a bishop or rook and retrieves
+ * the corresponding attack mask from the predefined constants.
+ *
+ * @param position The position of the sliding piece on the chess board (e.g., A1, B2, etc.).
+ * @return The attack mask represented as a Bitboard, defining all possible attack moves
+ *         from the given position for the respective slider.
+ */
+constexpr Bitboard get_attack_mask_for_slider(const Position &position) {
+    return slider == Slider::bishop
+               ? Constants::bishop_attack_masks[std::to_underlying(position)]
+               : Constants::rook_attack_masks[std::to_underlying(position)];
+}
+
+template<Slider slider>
 constexpr std::array<Bitboard, slider == Slider::bishop ? 512 : 4096>
 create_attack_table_for(const Position &position) {
 
-    const Bitboard mask = slider == Slider::bishop
-                              ? Constants::bishop_attack_masks[std::to_underlying(position)]
-                              : Constants::rook_attack_masks[std::to_underlying(position)];
+    const Bitboard mask = get_attack_mask_for_slider<slider>(position);
 
     const int64_t relevant_bits = Bitcount(mask);
     const std::size_t number_of_masks = 1UL << relevant_bits;
