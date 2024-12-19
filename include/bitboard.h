@@ -271,7 +271,7 @@ void print_bitboard(Bitboard bitboard);
 std::string print_position(Position position);
 
 inline std::string format_bitboard(Bitboard bitboard) {
-    return fmt::format("0x{0:x},\n", bitboard);
+    return fmt::format("0x{0:x}, ", bitboard);
 }
 
 

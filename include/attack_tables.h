@@ -9,11 +9,11 @@
 #include "bitboard.h"
 #include "magic_numbers.h"
 
-constexpr std::array<Bitboard, 64 * 4096> rook_attack_table = {
-#include "rook_attacks.inc"
+static constexpr std::array<Bitboard, 64 * 4096> rook_attack_table = {
+
 };
-constexpr std::array<Bitboard, 64 * 512> bishop_attack_table = {
-#include "bishop_attacks.inc"
+static constexpr std::array<Bitboard, 64 * 512> bishop_attack_table = {
+#include <bishop_attack_masks.h>
 };
 
 template<bool isBishop>
