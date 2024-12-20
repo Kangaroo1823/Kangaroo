@@ -8,6 +8,12 @@
 #include <array>
 #include "bitboard.h"
 #include "magic_numbers.h"
+#include "colors.h"
+
+/**********************************************************************************
+ * Slider attacks
+ *********************************************************************************/
+
 
 template<Slider slider>
 constexpr std::size_t compute_magic_hash(const Position &position, const Bitboard &occupancy,
@@ -91,5 +97,123 @@ namespace Constants {
             as_constant(create_attack_table<Slider::rook>());
 }
 
+
+
+/**********************************************************************************
+ * Pawn attacks
+ *********************************************************************************/
+
+template<Color color>
+constexpr Bitboard create_pawn_attacks_for(const Position &position) {
+
+    Bitboard attacks = 0ULL;
+
+    const Bitboard bitboard = set_bit(0ULL, position);
+
+    if constexpr (color == Color_t::black) {
+        // color = black
+        attacks = (bitboard >> 7 & not_a_file);
+        attacks = attacks | (bitboard >> 9 & not_h_file);
+    } else {
+        // color = white
+        attacks = (bitboard << 7 & not_h_file);
+        attacks = attacks | (bitboard << 9 & not_a_file);
+    }
+
+    return attacks;
+}
+
+
+template<Color color>
+constexpr std::array<Bitboard, 64> create_pawn_attacks() {
+    std::array<Bitboard, 64> attacks = {};
+    for (auto iter = attacks.begin(); const auto &position: All_Positions) {
+        *iter = create_pawn_attacks_for<color>(position);
+        iter++;
+    }
+    return attacks;
+}
+
+namespace Constants {
+    inline constexpr std::array<Bitboard,64> white_pawn_attacks = as_constant(create_pawn_attacks<Color::white>());
+    inline constexpr std::array<Bitboard,64> black_pawn_attacks = as_constant(create_pawn_attacks<Color::black>());
+}
+
+
+/**********************************************************************************
+ * King attacks
+ *********************************************************************************/
+
+constexpr Bitboard create_king_attacks_for(const Position& position) {
+    Bitboard attacks = 0ULL;
+
+    const Bitboard bitboard = set_bit(attacks, position);
+
+    attacks |= bitboard << 1 & not_a_file;
+    attacks |= bitboard << 9 & not_a_file;
+    attacks |= bitboard << 8;
+    attacks |= bitboard << 7 & not_h_file;
+
+    attacks |= bitboard >> 1 & not_h_file;
+    attacks |= bitboard >> 9 & not_h_file;
+    attacks |= bitboard >> 8;
+    attacks |= bitboard >> 7 & not_a_file;
+
+    return attacks;
+}
+
+
+
+constexpr std::array<Bitboard, 64> create_king_attacks() {
+    std::array<Bitboard, 64> attacks = {};
+    for (auto iter = attacks.begin(); const auto &position: All_Positions) {
+        *iter = create_king_attacks_for(position);
+        ++iter;
+    }
+    return attacks;
+}
+
+namespace Constants {
+
+    inline constexpr std::array<Bitboard, 64> king_attacks = as_constant(create_king_attacks());
+
+}
+
+/**********************************************************************************
+ * Knight attacks
+ *********************************************************************************/
+
+
+constexpr Bitboard create_knight_attacks_for(Position position) {
+    Bitboard attacks = 0ULL;
+    const Bitboard bitboard = set_bit(0ULL, position);
+
+    // generate knight attacks
+    attacks |= bitboard >> 17 & not_h_file;
+    attacks |= bitboard >> 15 & not_a_file;
+    attacks |= bitboard >> 6 & not_ab_file;
+    attacks |= bitboard >> 10 & not_gh_file;
+
+    attacks |= bitboard << 17 & not_a_file;
+    attacks |= bitboard << 15 & not_h_file;
+    attacks |= bitboard << 6 & not_gh_file;
+    attacks |= bitboard << 10 & not_ab_file;
+    return attacks;
+}
+
+constexpr std::array<Bitboard, 64> create_knight_attacks() {
+    std::array<Bitboard, 64> attacks = {};
+    for (auto iter = attacks.begin(); const auto &position: All_Positions) {
+        *iter = create_knight_attacks_for(position);
+        ++iter;
+    }
+    return attacks;
+}
+
+namespace Constants {
+
+    inline constexpr std::array<Bitboard,64> knight_attacks = as_constant(create_knight_attacks());
+
+}
 
 #endif //ATTACK_TABLES_H

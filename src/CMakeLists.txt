@@ -74,12 +74,9 @@ endif()
 # create a library to hold the tested logic of the ChessEngine
 add_library(Kangaroo_library ../include/bitboard.h
         bitboard.cpp
-        ../include/pawn_attacks.h
         ../include/colors.h
-        ../include/king_attacks.h
         chess_board.cpp
         ../include/chess_board.h
-        ../include/knight_attacks.h
         ../include/attack_masks.h
         ../include/create_possible_slider_moves.h
         ../include/base.h

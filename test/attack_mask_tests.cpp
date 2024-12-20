@@ -59,3 +59,5 @@ TEST_CASE("Rooks Attack Masks", "[rook_attack_masks]") {
     }
 }
 
+
+

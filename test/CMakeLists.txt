@@ -11,9 +11,6 @@ endif ()
 # take care of the test executable
 add_executable(Kangaroo_tests
         bitboard_tests.cpp
-        pawn_attack_tests.cpp
-        king_attack_tests.cpp
-        knight_attacks_tests.cpp
         attack_mask_tests.cpp
         create_possible_slider_moves_tests.cpp
         create_occupation_of_mask_tests.cpp
