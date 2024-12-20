@@ -35,4 +35,17 @@ using Slider = enum class Slider_t : std::size_t {
 };
 
 
+/**
+ * @brief Returns the given value as a compile-time constant.
+ *
+ * This function can be used to force evaluation at compile
+ * time of its argument
+ *
+ * @param value The value to be marked as a compile-time constant.
+ * @return The input value, as a constant expression.
+ */
+consteval auto as_constant(auto value) {
+    return value;
+}
+
 #endif //BASE_H

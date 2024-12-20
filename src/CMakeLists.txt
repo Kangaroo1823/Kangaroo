@@ -80,8 +80,7 @@ add_library(Kangaroo_library ../include/bitboard.h
         chess_board.cpp
         ../include/chess_board.h
         ../include/knight_attacks.h
-        ../include/rook_attack_masks.h
-        ../include/bishop_attack_masks.h
+        ../include/attack_masks.h
         ../include/create_possible_slider_moves.h
         ../include/base.h
         ../include/magic_numbers.h

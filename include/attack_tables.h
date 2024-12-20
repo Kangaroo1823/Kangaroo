@@ -59,9 +59,20 @@ create_attack_table_for(const Position &position) {
 
 
 template<Slider slider>
+/**
+ * Generates and initializes an attack table containing all possible attack patterns
+ * for sliding pieces (rooks and bishops) across the chessboard. This function precomputes
+ * attack masks for each position and stores them for quick lookup during gameplay.
+ *
+ * The attack table is a crucial data structure used to optimize move generation for sliding
+ * pieces by avoiding recalculating attack patterns repeatedly.
+ *
+ * @return A data structure representing the precomputed attack patterns for all positions
+ *         on the board for sliding pieces.
+ */
 constexpr std::array<Bitboard, slider == Slider::bishop ? 64 * 512 : 64 * 4096>
 create_attack_table() {
-    std::array<Bitboard, slider == Slider::bishop ? 64 * 512 : 64 * 4096> result;
+    std::array<Bitboard, slider == Slider::bishop ? 64 * 512 : 64 * 4096> result = {0};
 
     auto iter = result.begin();
     for (const auto &position: All_Positions) {
@@ -75,9 +86,9 @@ create_attack_table() {
 
 namespace Constants {
     inline constexpr std::array<Bitboard, 64 * 512 > rook_attack_table =
-            create_attack_table<Slider::bishop>();
+            as_constant(create_attack_table<Slider::bishop>());
     inline constexpr std::array<Bitboard, 64 * 4096> bishop_attack_table =
-            create_attack_table<Slider::rook>();
+            as_constant(create_attack_table<Slider::rook>());
 }
 
 

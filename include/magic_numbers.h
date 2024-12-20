@@ -11,9 +11,8 @@
 #include <array>                           // for array
 #include <cstdint>                         // for int64_t, uint64_t
 #include <utility>                         // for to_underlying
-#include "bishop_attack_masks.h"           // for bishop_attack_masks
+#include "attack_masks.h"                  // for bishop_attack_masks
 #include "bitboard.h"                      // for Bitboard, Bitcount, Position
-#include "rook_attack_masks.h"             // for rook_attack_masks
 #include "create_possible_slider_moves.h"
 
 namespace Constants {
