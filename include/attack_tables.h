@@ -16,14 +16,31 @@
 
 
 template<Slider slider>
-constexpr std::size_t compute_magic_hash(const Position &position, const Bitboard &occupancy,
-                                         const int64_t &relevant_bits) {
+constexpr std::size_t create_hash_index(const Position &position, const Bitboard &occupancy,
+                                        const int64_t &relevant_bits) {
     if constexpr (slider == Slider::bishop) {
         return occupancy * Constants::Bishop_Magic_Numbers[std::to_underlying(position)] >> (64 - relevant_bits);
     } else {
         return occupancy * Constants::Rook_Magic_Numbers[std::to_underlying(position)] >> (64 - relevant_bits);
     }
 }
+
+
+template<Slider slider>
+constexpr std::size_t create_magic_hash_index(const Position &position, const Bitboard &occupancy) {
+
+    const std::size_t offset = (slider == Slider::bishop ? 512 : 4096) * std::to_underlying(position);
+
+    const size_t mask = slider == Slider::bishop
+                            ? Constants::bishop_attack_masks[std::to_underlying(position)]
+                            : Constants::rook_attack_masks[std::to_underlying(position)];
+
+    const int64_t relevant_bits = Bitcount(mask);
+
+    return offset + create_hash_index<slider>(position, occupancy, relevant_bits);
+}
+
+
 
 template<Slider slider>
 /**
@@ -44,7 +61,6 @@ constexpr Bitboard get_attack_mask_for_slider(const Position &position) {
 template<Slider slider>
 constexpr std::array<Bitboard, slider == Slider::bishop ? 512 : 4096>
 create_attack_table_for(const Position &position) {
-
     const Bitboard mask = get_attack_mask_for_slider<slider>(position);
 
     const int64_t relevant_bits = Bitcount(mask);
@@ -55,7 +71,7 @@ create_attack_table_for(const Position &position) {
     for (std::size_t index = 0; index < number_of_masks; ++index) {
         const Bitboard occupancy = create_occupancy_from_mask(index, mask);
         const Bitboard attack = create_possible_slider_moves<slider>(occupancy, position);
-        auto hashed_index = compute_magic_hash<slider>(position, occupancy, relevant_bits);
+        auto hashed_index = create_hash_index<slider>(position, occupancy, relevant_bits);
 
         attack_table[hashed_index] = attack;
     }
@@ -91,12 +107,11 @@ create_attack_table() {
 }
 
 namespace Constants {
-    inline constexpr std::array<Bitboard, 64 * 512 > rook_attack_table =
-            as_constant(create_attack_table<Slider::bishop>());
-    inline constexpr std::array<Bitboard, 64 * 4096> bishop_attack_table =
+    inline constexpr std::array<Bitboard, 64 * 4096> rook_attack_table =
             as_constant(create_attack_table<Slider::rook>());
+    inline constexpr std::array<Bitboard, 64 * 512> bishop_attack_table =
+            as_constant(create_attack_table<Slider::bishop>());
 }
-
 
 
 /**********************************************************************************
@@ -105,7 +120,6 @@ namespace Constants {
 
 template<Color color>
 constexpr Bitboard create_pawn_attacks_for(const Position &position) {
-
     Bitboard attacks = 0ULL;
 
     const Bitboard bitboard = set_bit(0ULL, position);
@@ -135,8 +149,8 @@ constexpr std::array<Bitboard, 64> create_pawn_attacks() {
 }
 
 namespace Constants {
-    inline constexpr std::array<Bitboard,64> white_pawn_attacks = as_constant(create_pawn_attacks<Color::white>());
-    inline constexpr std::array<Bitboard,64> black_pawn_attacks = as_constant(create_pawn_attacks<Color::black>());
+    inline constexpr std::array<Bitboard, 64> white_pawn_attacks = as_constant(create_pawn_attacks<Color::white>());
+    inline constexpr std::array<Bitboard, 64> black_pawn_attacks = as_constant(create_pawn_attacks<Color::black>());
 }
 
 
@@ -144,7 +158,7 @@ namespace Constants {
  * King attacks
  *********************************************************************************/
 
-constexpr Bitboard create_king_attacks_for(const Position& position) {
+constexpr Bitboard create_king_attacks_for(const Position &position) {
     Bitboard attacks = 0ULL;
 
     const Bitboard bitboard = set_bit(attacks, position);
@@ -163,7 +177,6 @@ constexpr Bitboard create_king_attacks_for(const Position& position) {
 }
 
 
-
 constexpr std::array<Bitboard, 64> create_king_attacks() {
     std::array<Bitboard, 64> attacks = {};
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
@@ -174,9 +187,7 @@ constexpr std::array<Bitboard, 64> create_king_attacks() {
 }
 
 namespace Constants {
-
     inline constexpr std::array<Bitboard, 64> king_attacks = as_constant(create_king_attacks());
-
 }
 
 /**********************************************************************************
@@ -211,9 +222,7 @@ constexpr std::array<Bitboard, 64> create_knight_attacks() {
 }
 
 namespace Constants {
-
-    inline constexpr std::array<Bitboard,64> knight_attacks = as_constant(create_knight_attacks());
-
+    inline constexpr std::array<Bitboard, 64> knight_attacks = as_constant(create_knight_attacks());
 }
 
 #endif //ATTACK_TABLES_H

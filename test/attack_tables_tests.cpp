@@ -10,6 +10,28 @@
 #include "catch2/catch_test_macros.hpp"
 
 
+/******************************************************************************************
+ * Slider attack tests
+ *****************************************************************************************/
+
+
+TEST_CASE("Slider Attack Test", "[slider_attack_test]") {
+    constexpr Bitboard occupancy = set_bit(0ULL, Position::E7);
+    constexpr auto position = Position::E4;
+
+    constexpr std::size_t hash_index = create_magic_hash_index<Slider::rook>(position, occupancy);
+
+    print_bitboard(Constants::rook_attack_table[hash_index]);
+
+    REQUIRE(true);
+
+
+}
+
+/******************************************************************************************
+ * king attack tests
+ *****************************************************************************************/
+
 
 Bitboard create_king_attacks_(const Position& position) {
     Bitboard attacks = 0ULL;
@@ -37,6 +59,10 @@ TEST_CASE("King Attacks", "[king_attacks]") {
     }
 }
 
+/******************************************************************************************
+ * Knight attack tests
+ *****************************************************************************************/
+
 
 Bitboard create_knight_attacks_(Position position) {
     Bitboard attacks = 0ULL;
@@ -63,7 +89,9 @@ TEST_CASE("Knight Attacks", "[knight_attacks]") {
     }
 }
 
-
+/******************************************************************************************
+ * Pawn attack tests
+ *****************************************************************************************/
 
 Bitboard create_pawn_attacks_(const Color color, const Position position) {
     Bitboard attacks = 0ULL;
