@@ -118,7 +118,7 @@ void parce_en_passant_notation(const std::string_view &str) {
     }
 }
 
-void process_fen_board_setup( Chess_Board *board, const std::string_view &str) {
+[[nodiscard]] std::unique_ptr<Chess_Board> process_fen_board_setup( std::unique_ptr<Chess_Board> &&board, const std::string_view &str) {
 
     std::size_t rank = 0;
     std::size_t file = 0;
@@ -172,6 +172,7 @@ void process_fen_board_setup( Chess_Board *board, const std::string_view &str) {
             default: break;
         }
     }
+    return board;
 }
 
 bool parse_player_to_move(const std::string_view &str) {
@@ -205,7 +206,7 @@ bool parse_castling_information(const std::string_view &str) {
     return true;
 }
 
-void parse_half_move_number( Chess_Board *board, const std::string_view &str) {
+[[nodiscard]] std::unique_ptr<Chess_Board> parse_half_move_number( std::unique_ptr<Chess_Board> &&board, const std::string_view &str) {
     for (const auto &c: str) {
         switch (c) {
             case '0':
@@ -225,9 +226,10 @@ void parse_half_move_number( Chess_Board *board, const std::string_view &str) {
         }
     }
     std::cout << "Half move number: " << board->half_move_number << "\n";
+    return board;
 }
 
-void parse_full_move_number( Chess_Board *board, const std::string_view &str) {
+[[nodiscard]]std::unique_ptr<Chess_Board> parse_full_move_number(std::unique_ptr<Chess_Board> &&board, const std::string_view &str) {
     for (const auto &c: str) {
         switch (c) {
             case '0':
@@ -247,6 +249,8 @@ void parse_full_move_number( Chess_Board *board, const std::string_view &str) {
         }
     }
     std::cout << "Full move number: " << board->full_move_number << "\n";
+
+    return board;
 }
 
 std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string_view &fen) {
@@ -262,7 +266,7 @@ std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string_view 
         return nullptr;
     }
 
-    process_fen_board_setup(board.get(), tokens[0]);
+    board = process_fen_board_setup(std::move(board), tokens[0]);
 
     if (!parse_player_to_move(tokens[1])) return nullptr;
 
@@ -270,9 +274,9 @@ std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string_view 
 
     parce_en_passant_notation(tokens[3]);
 
-    parse_half_move_number(board.get(), tokens[4]);
+    board = parse_half_move_number(std::move(board), tokens[4]);
 
-    parse_full_move_number(board.get(), tokens[5]);
+    board = parse_full_move_number(std::move(board), tokens[5]);
 
     board->white_pieces = board->white_pawns | board->white_knights | board->white_bishops | board->white_rooks | board
                           ->white_queens | board->white_king;
