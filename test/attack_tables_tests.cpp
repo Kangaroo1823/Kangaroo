@@ -27,6 +27,8 @@ TEST_CASE("Slider Attack Test", "[slider_attack_test]") {
 
 
 }
+// 　　　　　　　　________________|
+// ♗♗♗♗♗♗♗♗________________|
 
 /******************************************************************************************
  * king attack tests
@@ -55,7 +57,7 @@ TEST_CASE("King Attacks", "[king_attacks]") {
     for (const Position &position : All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_king_attacks_(position);
-        REQUIRE(create_king_attacks_for(position) == attacks);
+        REQUIRE(create_king_attacks_for(set_bit(0ULL, position)) == attacks);
     }
 }
 
@@ -85,7 +87,7 @@ TEST_CASE("Knight Attacks", "[knight_attacks]") {
     for (const Position &position : All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_knight_attacks_(position);
-        REQUIRE(create_knight_attacks_for(position) == attacks);
+        REQUIRE(create_knight_attacks_for(set_bit(0ULL, position)) == attacks);
     }
 }
 
@@ -115,13 +117,13 @@ TEST_CASE("Pawn Attacks", "[Pawn_Attacks]") {
     for (const Position &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_pawn_attacks_(Color::black, position);
-        REQUIRE(create_pawn_attacks_for<Color::black>(position) == attacks);
+        REQUIRE(create_pawn_attacks_for<Color::black>(set_bit(0ULL, position)) == attacks);
     }
 
     for (const Position &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_pawn_attacks_(Color::white, position);
-        REQUIRE(create_pawn_attacks_for<Color::white>(position) == attacks);
+        REQUIRE(create_pawn_attacks_for<Color::white>(set_bit(0ULL, position)) == attacks);
     }
 
 }

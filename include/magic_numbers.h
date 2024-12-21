@@ -10,6 +10,8 @@
 #include <algorithm>                       // for for_each
 #include <array>                           // for array
 #include <cstdint>                         // for int64_t, uint64_t
+#include <iostream>
+#include <ostream>
 #include <utility>                         // for to_underlying
 #include "attack_masks.h"                  // for bishop_attack_masks
 #include "bitboard.h"                      // for Bitboard, Bitcount, Position
@@ -172,13 +174,14 @@ namespace Constants {
          * \param occupancy_table An array used to store all possible occupancy bitboards generated
          *        based on the given mask.
          */
-        void populate_occupancy_with_mask(const Bitboard mask,
+        constexpr void populate_occupancy_with_mask(const Bitboard mask,
                                           std::array<Bitboard, slider == Slider::bishop
                                                                    ? 512
                                                                    : 4096> &occupancy_table) {
-            typename std::array<Bitboard, slider == Slider::bishop ? 512 : 4096>::size_type index = 0;
+            std::size_t index = 0;
             for (auto &occupancy: occupancy_table) {
                 occupancy = create_occupancy_from_mask(index, mask);
+
                 ++index;
             }
         }
@@ -196,14 +199,13 @@ namespace Constants {
          * \param occupancy_table A precomputed table of all possible occupancies for the relevant squares.
          * \param attack_table A table that will be populated with the possible attack bitboards for the given occupancies.
          */
-        void fill_attack_table_from_occupancy(const Position position_of_figure,
+        constexpr void fill_attack_table_from_occupancy(const Position position_of_figure,
                                               const std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> &occupancy_table,
                                               std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> &attack_table) {
             typename std::array<Bitboard, slider == Slider::bishop ? 512 : 4096>::size_type index = 0;
             for (auto &attack: attack_table) {
                 // compute the attacks corresponding to index given occupancy.
                 attack = create_possible_slider_moves<slider>(occupancy_table[index], position_of_figure);
-
                 ++index;
             }
         }
@@ -247,6 +249,7 @@ namespace Constants {
                                            std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> used_attack_table,
                                            MagicNumber magic_number) {
             for (std::size_t index = 0; index < number_of_occupancies; index++) {
+
                 Bitboard magic_index = occupancy_table[index] * magic_number >> (64 - relevant_bits_in_mask);
 
                 if (used_attack_table[magic_index] == 0) {

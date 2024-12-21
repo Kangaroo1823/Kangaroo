@@ -15,17 +15,17 @@ void print_bitboard(const Bitboard bitboard) {
     fmt::print("/*\n");
 
     for (int rank = 7; rank >= 0 ; rank--) {
-        fmt::print( "    {}  ", rank + 1);
+        fmt::print( "  {}   ", rank + 1);
         for (int file = 0; file < 8 ; file++) {
             if (bitboard & (1ULL << (rank * 8 + file))) {
                 fmt::print(" 1 ");
             } else {
-                fmt::print(" 0 ");
+                fmt::print(" . ");
             }
         }
         fmt::print("\n");
     }
-    fmt::print("        A  B  C  D  E  F  G  H\n\n");
+    fmt::print("\n       A  B  C  D  E  F  G  H\n\n");
     fmt::print("       bitboard as 64 bit integer: */\n");
     fmt::print( "       0x{0:x},\n", bitboard);
 }

@@ -6,7 +6,10 @@
 #define ATTACK_TABLES_H
 
 #include <array>
+#include <iostream>
+
 #include "bitboard.h"
+#include "chess_board.h"
 #include "magic_numbers.h"
 #include "colors.h"
 
@@ -28,7 +31,6 @@ constexpr std::size_t create_hash_index(const Position &position, const Bitboard
 
 template<Slider slider>
 constexpr std::size_t create_magic_hash_index(const Position &position, const Bitboard &occupancy) {
-
     const std::size_t offset = (slider == Slider::bishop ? 512 : 4096) * std::to_underlying(position);
 
     const size_t mask = slider == Slider::bishop
@@ -39,7 +41,6 @@ constexpr std::size_t create_magic_hash_index(const Position &position, const Bi
 
     return offset + create_hash_index<slider>(position, occupancy, relevant_bits);
 }
-
 
 
 template<Slider slider>
@@ -119,17 +120,15 @@ namespace Constants {
  *********************************************************************************/
 
 template<Color color>
-constexpr Bitboard create_pawn_attacks_for(const Position &position) {
+constexpr Bitboard create_pawn_attacks_for(const Bitboard bitboard) {
     Bitboard attacks = 0ULL;
 
-    const Bitboard bitboard = set_bit(0ULL, position);
-
-    if constexpr (color == Color_t::black) {
-        // color = black
+    if constexpr (color == Color_t::white) {
+        // color = white
         attacks = (bitboard >> 7 & not_a_file);
         attacks = attacks | (bitboard >> 9 & not_h_file);
     } else {
-        // color = white
+        // color = black
         attacks = (bitboard << 7 & not_h_file);
         attacks = attacks | (bitboard << 9 & not_a_file);
     }
@@ -142,7 +141,7 @@ template<Color color>
 constexpr std::array<Bitboard, 64> create_pawn_attacks() {
     std::array<Bitboard, 64> attacks = {};
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
-        *iter = create_pawn_attacks_for<color>(position);
+        *iter = create_pawn_attacks_for<color>(set_bit(0ULL, position));
         iter++;
     }
     return attacks;
@@ -158,10 +157,8 @@ namespace Constants {
  * King attacks
  *********************************************************************************/
 
-constexpr Bitboard create_king_attacks_for(const Position &position) {
+constexpr Bitboard create_king_attacks_for(const Bitboard bitboard) {
     Bitboard attacks = 0ULL;
-
-    const Bitboard bitboard = set_bit(attacks, position);
 
     attacks |= bitboard << 1 & not_a_file;
     attacks |= bitboard << 9 & not_a_file;
@@ -180,7 +177,7 @@ constexpr Bitboard create_king_attacks_for(const Position &position) {
 constexpr std::array<Bitboard, 64> create_king_attacks() {
     std::array<Bitboard, 64> attacks = {};
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
-        *iter = create_king_attacks_for(position);
+        *iter = create_king_attacks_for(set_bit(0ULL, position));
         ++iter;
     }
     return attacks;
@@ -195,9 +192,8 @@ namespace Constants {
  *********************************************************************************/
 
 
-constexpr Bitboard create_knight_attacks_for(Position position) {
+constexpr Bitboard create_knight_attacks_for(const Bitboard bitboard) {
     Bitboard attacks = 0ULL;
-    const Bitboard bitboard = set_bit(0ULL, position);
 
     // generate knight attacks
     attacks |= bitboard >> 17 & not_h_file;
@@ -215,7 +211,7 @@ constexpr Bitboard create_knight_attacks_for(Position position) {
 constexpr std::array<Bitboard, 64> create_knight_attacks() {
     std::array<Bitboard, 64> attacks = {};
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
-        *iter = create_knight_attacks_for(position);
+        *iter = create_knight_attacks_for(set_bit(0ULL, position));
         ++iter;
     }
     return attacks;
@@ -224,5 +220,79 @@ constexpr std::array<Bitboard, 64> create_knight_attacks() {
 namespace Constants {
     inline constexpr std::array<Bitboard, 64> knight_attacks = as_constant(create_knight_attacks());
 }
+
+
+template<Slider slider>
+constexpr Bitboard get_attacks_for(const Bitboard occupancy, const Bitboard piece_positions) {
+    Bitboard result = 0ULL;
+
+    Bitloop(piece_positions, [&](Bitboard p) {
+        auto position = All_Positions[square_of(p)];
+
+        const Bitboard mask = slider == Slider::rook
+                                  ? Constants::rook_attack_masks[std::to_underlying(position)]
+                                  : Constants::bishop_attack_masks[std::to_underlying(position)];
+
+        const Bitboard masked_occupancy = occupancy & mask;
+
+        const size_t hash_index = create_magic_hash_index<slider>(position, masked_occupancy);
+
+        const Bitboard hash_result = slider == Slider::rook
+                      ? Constants::rook_attack_table[hash_index]
+                      : Constants::bishop_attack_table[hash_index];
+
+        result |= hash_result;
+    });
+
+    return result;
+}
+
+
+template<Color color>
+constexpr bool is_square_attacked_by(const Position &position, const Chess_Board *board) {
+
+    using enum Color_t;
+
+    const Bitboard square = set_bit(0ULL, position);
+
+    // check for pawns to attack the given position
+    const Bitboard pawn_attacks = create_pawn_attacks_for<color == white ? white : black>(
+        color == white ? board->white_pawns : board->black_pawns
+    );
+    Bitboard attacks = pawn_attacks;
+
+    // check whether the king attacks the given position
+    const Bitboard king_attacks = create_king_attacks_for(color == white ? board->white_king : board->black_king);
+    attacks |= king_attacks;
+
+    // check whether a knight attacks the given position.
+    const Bitboard knight_attacks = create_knight_attacks_for(color == white
+                                                            ? board->white_knights
+                                                            : board->black_knights);
+    attacks |= knight_attacks;
+
+    const Bitboard rook_attacks = get_attacks_for<Slider::rook>(board->all_pieces,
+                                                                color == white
+                                                                    ? board->white_rooks
+                                                                    : board->black_rooks);
+    attacks |= rook_attacks;
+
+    const Bitboard bishop_attacks = get_attacks_for<Slider::bishop>(board->all_pieces,
+                                                              color == white
+                                                                  ? board->white_bishops
+                                                                  : board->black_bishops);
+    attacks |= bishop_attacks;
+
+    Bitboard queen_attacks = get_attacks_for<Slider_t::bishop>(board->all_pieces,
+                                                               color == white
+                                                                   ? board->white_queens
+                                                                   : board->black_queens);
+    queen_attacks |= get_attacks_for<Slider_t::rook>(board->all_pieces,
+                                                     color == white ? board->white_queens : board->black_queens);
+    attacks |= queen_attacks;
+
+    return (square & attacks) ? true : false;
+}
+
 
 #endif //ATTACK_TABLES_H

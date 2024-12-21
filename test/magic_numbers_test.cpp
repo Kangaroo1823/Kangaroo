@@ -40,12 +40,11 @@ bool check_magic_number(const Position position_of_figure, const Constants::Magi
 
 TEST_CASE("MagicNumbers", "[magic_numbers]") {
     for (const auto &position: All_Positions) {
-        fmt::print("Rook: Position: {}\n", print_position(position));
+
         // cppcheck-suppress unreadVariable
         bool flag = check_magic_number<Slider::rook>(position, Constants::Rook_Magic_Numbers[std::to_underlying(position)]);
         REQUIRE(flag);
 
-        fmt::print("Bishop: Position: {}\n", print_position(position));
         // cppcheck-suppress unreadVariable
         bool flag2 = check_magic_number<Slider::bishop>(position, Constants::Bishop_Magic_Numbers[std::to_underlying(position)]);
         REQUIRE(flag2);

@@ -81,7 +81,8 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/create_possible_slider_moves.h
         ../include/base.h
         ../include/magic_numbers.h
-        magic_numbers.cpp)
+        magic_numbers.cpp
+)
 target_link_libraries(Kangaroo_library
         PUBLIC
         fmt::fmt
