@@ -47,7 +47,7 @@ using Chess_Board = struct Chess_Board_t {
 };
 
 
-std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string &fen);
+std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string_view &fen);
 
 
 std::unique_ptr<Chess_Board> create_chess_board();

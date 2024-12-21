@@ -249,7 +249,7 @@ void parse_full_move_number( Chess_Board *board, const std::string_view &str) {
     std::cout << "Full move number: " << board->full_move_number << "\n";
 }
 
-std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string &fen) {
+std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string_view &fen) {
     auto board = std::make_unique<Chess_Board>();
 
     std::vector<std::string_view> tokens;
