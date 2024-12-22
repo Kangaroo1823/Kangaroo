@@ -1,20 +1,10 @@
+project("Kangaroo_benchmark")
 
-
-##################################################
-#
-# make GoogleBenchmark available
-#
-##################################################
-#Include(FetchContent)
-
-#FetchContent_Declare(
-#        GoogleBenchmark
-#        GIT_REPOSITORY https://github.com/google/benchmark.git
-#        GIT_TAG        v1.9.1 # or a later release
-#)
-
-#set(HAVE_STD_REGEX ON)
-#set(RUN_HAVE_STD_REGEX 1)
-#set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
-#set(BENCHMARK_DOWNLOAD_DEPENDENCIES ON)
-#FetchContent_MakeAvailable(GoogleBenchmark)
+add_executable(Kangaroo_benchmark attack_mask_benchmarks.cpp)
+target_link_libraries(Kangaroo_benchmark PRIVATE
+        Kangaroo_library
+        Kangaroo_options
+        Kangaroo_warnings
+        benchmark::benchmark
+)
+target_include_directories(Kangaroo_benchmark PRIVATE ../include)

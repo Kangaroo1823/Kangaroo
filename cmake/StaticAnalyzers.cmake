@@ -13,6 +13,7 @@ macro(Kangaroo_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
             # style should enable the other 3, but we'll be explicit just in case
             #set(SUPPRESS_DIR "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*.h *:${CMAKE_SOURCE_DIR}/cpm_source_cache/*.hpp")
             set(SUPPRESS_DIR "*:${CMAKE_SOURCE_DIR}/cpm_source_cache/*.hpp")
+            set(SUPPRESS_DIR2 "*:${CMAKE_SOURCE_DIR}/cpm_source_cache/*.h")
 
             set(CMAKE_CXX_CPPCHECK
                     ${CPPCHECK}
@@ -33,7 +34,8 @@ macro(Kangaroo_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
                     --force
                     --check-level=exhaustive
                     --platform=win64
-                    --suppress=${SUPPRESS_DIR})
+                    --suppress=${SUPPRESS_DIR}
+                    --suppress=${SUPPRESS_DIR2})
             message(STATUS "CPPCHECK command: ${CMAKE_CXX_CPPCHECK}")
         else ()
             # if the user provides a CPPCHECK_OPTIONS with a template specified, it will override this template

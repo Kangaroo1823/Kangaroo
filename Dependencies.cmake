@@ -1,4 +1,5 @@
 set(CPM_SOURCE_CACHE "${CMAKE_SOURCE_DIR}/cpm_source_cache")
+set(CPM_USE_NAMED_CACHE_DIRECTORIES ON)
 
 include(cmake/CPM.cmake)
 # Done as a function so that updates to variables like
@@ -36,12 +37,19 @@ function(Kangaroo_setup_dependencies)
         set (CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} PARENT_SCOPE)
     endif ()
 
-    if (NOT TARGET benchmark::benchmark_main)
+    if (NOT TARGET benchmark::benchmark)
         set(HAVE_STD_REGEX ON)
         set(RUN_HAVE_STD_REGEX 1)
         set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
         set(BENCHMARK_DOWNLOAD_DEPENDENCIES ON)
-        cpmaddpackage("gh:google/benchmark@1.9.1")
+        cpmaddpackage(
+                NAME
+                benchmark
+                VERSION
+                1.9.1
+                GITHUB_REPOSITORY
+                "google/benchmark"
+        )
     endif ()
 
     #  if(NOT TARGET spdlog::spdlog)
