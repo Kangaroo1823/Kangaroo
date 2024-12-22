@@ -8,6 +8,9 @@
 #include <utility>                         // for to_underlying
 
 #include "attack_masks.h"
+#include "attack_tables.h"
+#include "chess_board.h"
+#include "colors.h"
 #include "../include/bitboard.h"           // for Bitboard, Position, print_...
 #include "catch2/catch_test_macros.hpp"    // for StringRef, AssertionHandler
 
@@ -58,6 +61,8 @@ TEST_CASE("Rooks Attack Masks", "[rook_attack_masks]") {
         REQUIRE(create_attack_mask_for<Slider_t::bishop>(position) == board);
     }
 }
+
+
 
 
 

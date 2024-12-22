@@ -123,7 +123,7 @@ constexpr Bitboard create_pawn_attacks_for(const Bitboard bitboard) {
         attacks = (bitboard >> 7 & not_a_file);
         attacks = attacks | (bitboard >> 9 & not_h_file);
     } else {
-        // color = black
+        // color =black
         attacks = (bitboard << 7 & not_h_file);
         attacks = attacks | (bitboard << 9 & not_a_file);
     }
@@ -314,24 +314,17 @@ constexpr Bitboard attacked_squares_by(const Chess_Board *board) {
 }
 
 template<Color color>
-constexpr bool is_position_attacked_by(const Position &position, const Chess_Board *board) {
-    const Bitboard square = set_bit(0ULL, position);
-
-    const Bitboard attacks = attacked_squares_by<color>(board);
-
-    return (square & attacks) ? true : false;
-}
-
-template<Color color>
-constexpr Bitboard is_position_attacked_by_1(const Position &position, const Chess_Board *board) {
+constexpr Bitboard is_position_attacked_by(const Position &position, const Chess_Board *board) {
     using enum Color_t;
 
     Bitboard attacks = 0ULL;
 
     // check for pawn attack
-    attacks |= Constants::black_pawn_attacks[std::to_underlying(position)] & (color == white
-                                                                                  ? board->white_pawns
-                                                                                  : board->black_pawns);
+    attacks |= (color == white
+                    ? Constants::black_pawn_attacks[std::to_underlying(position)]
+                    : Constants::white_pawn_attacks[std::to_underlying(position)]) & (color == white
+        ? board->white_pawns
+        : board->black_pawns);
 
     // check for knight attack
     attacks |= Constants::knight_attacks[std::to_underlying(position)] & (color == white
