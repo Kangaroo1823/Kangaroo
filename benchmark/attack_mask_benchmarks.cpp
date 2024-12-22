@@ -14,7 +14,7 @@ static void BM_is_position_attacked_by_1(benchmark::State& state) {
     for ([[maybe_unused]] auto _ : state) {
 
         for (const auto& position : All_Positions ) {
-            is_attacked = is_position_attacked_by_1<Color::white>(position, board.get());
+            is_attacked = is_position_attacked_by<Color::white>(position, board.get());
         }
 
     }
