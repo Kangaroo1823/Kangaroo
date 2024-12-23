@@ -5,7 +5,7 @@
 #ifndef CREATE_POSSIBLE_BISHOP_MOVES_H
 #define CREATE_POSSIBLE_BISHOP_MOVES_H
 
-#include "bitboard.h"
+#include "../include/bitboard.h"
 
 
 template<Slider slider>
@@ -16,7 +16,7 @@ constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const 
     const std::size_t rank = std::to_underlying(position) >> 3;
 
     if constexpr (slider == Slider::bishop) {
-        // slider == Slider::bishop
+        // slider equals Slider::bishop
         for (std::size_t r = rank + 1, f = file + 1; r < 8 && f < 8; r++, f++) {
             const Position pos = rank_file_to_position(r, f);
             moves = set_bit(moves, pos);
@@ -41,7 +41,7 @@ constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const 
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
     } else {
-        // slider == Slider::rook
+        // slider equals Slider::rook
         for (std::size_t r = rank + 1; r < 8; r++) {
             const Position pos = rank_file_to_position(r, file);
             moves = set_bit(moves, pos);

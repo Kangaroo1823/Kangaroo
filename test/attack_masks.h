@@ -6,8 +6,8 @@
 #define ATTACK_MASKS_H
 
 #include <array>
-#include "bitboard.h"
-#include "constants.h"
+#include "../include/bitboard.h"
+#include "../include/constants.h"
 
 /**********************************************************************************
  * Slider attack masks

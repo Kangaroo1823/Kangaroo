@@ -77,12 +77,14 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/colors.h
         chess_board.cpp
         ../include/chess_board.h
-        ../include/attack_masks.h
-        ../include/create_possible_slider_moves.h
+        ../test/attack_masks.h
+        ../test/create_possible_slider_moves.h
         ../include/base.h
-        ../include/magic_numbers.h
+        ../test/magic_numbers.h
         magic_numbers.cpp
         ../include/constants.h
+        ../include/types.h
+        ../include/move_generator.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
@@ -107,9 +109,9 @@ endif ()
 add_executable(Kangaroo
         main.cpp
         ../include/bitboard.h
-        ../include/create_possible_slider_moves.h
+        ../test/create_possible_slider_moves.h
         ../include/base.h
-        ../include/attack_tables.h
+        ../test/attack_tables.h
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
 target_include_directories(Kangaroo PRIVATE ../include)

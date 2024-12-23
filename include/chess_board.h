@@ -7,7 +7,7 @@
 
 #include "bitboard.h"
 #include <memory>
-
+#include "types.h"
 
 constexpr std::string_view fen_empty_board      = "8/8/8/8/8/8/8/8 w - - 0 1 ";
 constexpr std::string_view fen_start_position   = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
@@ -17,17 +17,7 @@ constexpr std::string_view fen_cmk_position     = "r2q1rk1/ppp2ppp/2n1bn2/2b1p3/
 
 
 
-using Castle_Flags = enum class Castle_Flags_t : uint64_t {
-    white_kingside = 1ULL << 0,
-    white_queenside = 1ULL << 1,
-    black_kingside = 1ULL << 2,
-    black_queenside = 1ULL << 3,
-};
 
-using En_Passant_Flags = enum class En_Passant_Flags_t : uint64_t {
-    en_passant_possible = 1ULL << 0,
-    en_passant_impossible = 1ULL << 1,
-};
 
 
 using Chess_Board = struct Chess_Board_t {
