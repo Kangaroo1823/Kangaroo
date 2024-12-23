@@ -5,6 +5,10 @@
 #ifndef BASE_H
 #define BASE_H
 
+#include <functional>
+#include <utility>
+
+
 #ifdef _MSC_VER
 #define _ASSUME(cond) __assume(cond)
 #define _Compiletime __forceinline static constexpr
@@ -44,8 +48,19 @@ using Slider = enum class Slider_t : std::size_t {
  * @param value The value to be marked as a compile-time constant.
  * @return The input value, as a constant expression.
  */
+#if defined(__GNUC__)
 consteval auto as_constant(auto value) {
     return value;
 }
+#endif
+//
+#if defined(__clang__)
+#define as_constant(value) value
+//
+// template< typename ... Param>
+// consteval decltype(auto) as_constant(Param && ... param) {
+//     return std::invoke(std::forward<Param>(param)...);
+// }
+#endif
 
 #endif //BASE_H

@@ -7,12 +7,10 @@
 #include <array>                           // for array
 #include <utility>                         // for to_underlying
 
+
 #include "attack_masks.h"
-#include "attack_tables.h"
-#include "chess_board.h"
-#include "colors.h"
 #include "../include/bitboard.h"           // for Bitboard, Position, print_...
-#include "catch2/catch_test_macros.hpp"    // for StringRef, AssertionHandler
+#include "gtest/gtest.h"    // for StringRef, AssertionHandler
 
 Bitboard create_rook_attack_mask(Position position) {
     Bitboard mask = 0ULL;
@@ -43,14 +41,14 @@ Bitboard create_bishop_attack_mask(const Position position) {
     return mask;
 }
 
-TEST_CASE("Rooks Attack Masks", "[rook_attack_masks]") {
+TEST(Mask_Generator, rook_attack_masks) {
 
     // tests for rooks
     for (const Position &position : All_Positions) {
         const Bitboard board = create_rook_attack_mask(position);
         print_bitboard(board);
 
-        REQUIRE(create_attack_mask_for<Slider::rook>(position) == board);
+        ASSERT_EQ(create_attack_mask_for<Slider::rook>(position), board);
     }
 
     // tests for bishops
@@ -58,7 +56,7 @@ TEST_CASE("Rooks Attack Masks", "[rook_attack_masks]") {
 
         const Bitboard board = create_bishop_attack_mask(position);
         print_bitboard(board);
-        REQUIRE(create_attack_mask_for<Slider_t::bishop>(position) == board);
+        ASSERT_EQ(create_attack_mask_for<Slider_t::bishop>(position), board);
     }
 }
 

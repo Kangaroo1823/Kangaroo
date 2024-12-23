@@ -5,7 +5,7 @@
 #include <magic_numbers.h>
 #include <immintrin.h>                   // for _pdep_u64
 #include <string>                        // for basic_string
-#include "catch2/catch_test_macros.hpp"  // for AssertionHandler, StringRef
+#include "gtest/gtest.h"  // for AssertionHandler, StringRef
 
 
 template<Slider slider>
@@ -38,15 +38,16 @@ bool check_magic_number(const Position position_of_figure, const Constants::Magi
                                                                     used_attack_table, magic_number);
 }
 
-TEST_CASE("MagicNumbers", "[magic_numbers]") {
+TEST(MagicNumbers, magic_numbers) {
+
     for (const auto &position: All_Positions) {
 
         // cppcheck-suppress unreadVariable
         bool flag = check_magic_number<Slider::rook>(position, Constants::Rook_Magic_Numbers[std::to_underlying(position)]);
-        REQUIRE(flag);
+        ASSERT_TRUE(flag);
 
         // cppcheck-suppress unreadVariable
         bool flag2 = check_magic_number<Slider::bishop>(position, Constants::Bishop_Magic_Numbers[std::to_underlying(position)]);
-        REQUIRE(flag2);
+        ASSERT_TRUE(flag2);
     }
 }

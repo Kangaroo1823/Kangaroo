@@ -859,10 +859,7 @@ TEST(Mask_Generator, create_occupation_of_mask) {
     }
 }
 
-
-
-
-TEST_CASE("Create Occupation of Mask2", "[create_occupation_of_mask2]") {
+TEST(Mask_Generator, create_occupation_of_mask2) {
     using enum Position_t;
     Bitboard mask = 0ULL;
 
@@ -880,6 +877,6 @@ TEST_CASE("Create Occupation of Mask2", "[create_occupation_of_mask2]") {
         // cppcheck-suppress unreadVariable
         const Bitboard board_ = create_occupation_from_mask_(index, mask);
 
-        REQUIRE(board_ == board);
+        ASSERT_EQ(board_, board);
     }
 }

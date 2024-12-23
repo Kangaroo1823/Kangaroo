@@ -90,8 +90,14 @@ target_link_libraries(Kangaroo_library
         Kangaroo_options
 )
 target_include_directories(Kangaroo_library PRIVATE ../include)
-target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-ops-limit=10000000000")
 
+if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
+    target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-ops-limit=10000000000")
+endif ()
+
+if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "Clang")
+    target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-steps=2000000000000")
+endif ()
 
 
 # take care of the main executable

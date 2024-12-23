@@ -5,33 +5,33 @@
 
 #include <cstdint>                      // for int64_t
 #include "../include/bitboard.h"         // for set_bit, Bitcount, E4, Bitboard
-#include "catch2/catch_test_macros.hpp"  // for AssertionHandler, operator""...
+#include "gtest/gtest.h"  // for AssertionHandler, operator""...
 
 
 
-TEST_CASE("Bit", "[bit]") {
+TEST(Bitboards, bitcount) {
     for (Bitboard i = 0; i < 64; i++) {
-        REQUIRE(Bitcount(1ULL << i) == 1);
-        REQUIRE(Bitcount_(i) == Bitcount(i));
+        ASSERT_EQ(Bitcount(1ULL << i), 1);
+        ASSERT_EQ(Bitcount_(i), Bitcount(i));
     }
 }
 
 
-TEST_CASE("SquareOf", "[SquareOf]") {
+TEST(Bitboards, square_of) {
     for (unsigned int i = 0; i < 64; i++) {
-        REQUIRE(square_of_(1ULL << i) == square_of(1ULL << i));
+        ASSERT_EQ(square_of_(1ULL << i), square_of(1ULL << i));
     }
 }
 
 
-TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
+TEST(Bitboards, set_bit) {
     // cppcheck-suppress unreadVariable
     Bitboard bitboard = 0ULL;
     // cppcheck-suppress knownConditionTrueFalse
-    REQUIRE(set_bit(bitboard, Position::A1) == 1);
+    ASSERT_EQ(set_bit(bitboard, Position::A1), 1);
 
     // cppcheck-suppress knownConditionTrueFalse
-    REQUIRE(set_bit(bitboard, Position::H8) == /*
+    ASSERT_EQ(set_bit(bitboard, Position::H8), /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
     2   0  0  0  0  0  0  0  0
@@ -46,7 +46,7 @@ TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
         9223372036854775808ULL);
 
     // cppcheck-suppress knownConditionTrueFalse
-    REQUIRE(set_bit(bitboard, Position::E4) == /*
+    ASSERT_EQ(set_bit(bitboard, Position::E4), /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
     2   0  0  0  0  0  0  0  0
@@ -60,5 +60,5 @@ TEST_CASE("Set/Get/Pop Bit", "[set_bit]") {
        bitboard as 64 bit integer: */
         268435456ULL);
 
-    REQUIRE(pop_bit(set_bit(0ULL, Position::E4), Position::E4) == 0);
+    ASSERT_EQ(pop_bit(set_bit(0ULL, Position::E4), Position::E4), 0);
 }

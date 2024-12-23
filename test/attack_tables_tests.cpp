@@ -7,7 +7,7 @@
 
 #include "attack_tables.h"
 
-#include "catch2/catch_test_macros.hpp"
+#include "gtest/gtest.h"
 
 
 /******************************************************************************************
@@ -15,7 +15,7 @@
  *****************************************************************************************/
 
 
-TEST_CASE("Slider Attack Test", "[slider_attack_test]") {
+TEST(Attack_Tables_Generator, slider_attack_test) {
     constexpr Bitboard occupancy = set_bit(0ULL, Position::E7);
     constexpr auto position = Position::E4;
 
@@ -24,7 +24,7 @@ TEST_CASE("Slider Attack Test", "[slider_attack_test]") {
 
     print_bitboard(Constants::rook_attack_table[hash_index]);
 
-    REQUIRE(true);
+    ASSERT_TRUE(true);
 }
 
 /******************************************************************************************
@@ -50,11 +50,11 @@ Bitboard create_king_attacks_(const Position &position) {
     return attacks;
 }
 
-TEST_CASE("King Attacks", "[king_attacks]") {
+TEST(Attack_Tables_Generator, king_attacks) {
     for (const Position &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_king_attacks_(position);
-        REQUIRE(create_king_attacks_for(set_bit(0ULL, position)) == attacks);
+        ASSERT_EQ(create_king_attacks_for(set_bit(0ULL, position)), attacks);
     }
 }
 
@@ -80,11 +80,11 @@ Bitboard create_knight_attacks_(Position position) {
     return attacks;
 }
 
-TEST_CASE("Knight Attacks", "[knight_attacks]") {
+TEST(Attack_Tables_Generator, knight_attacks) {
     for (const Position &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_knight_attacks_(position);
-        REQUIRE(create_knight_attacks_for(set_bit(0ULL, position)) == attacks);
+        ASSERT_EQ(create_knight_attacks_for(set_bit(0ULL, position)), attacks);
     }
 }
 
@@ -97,12 +97,12 @@ Bitboard create_pawn_attacks_(const Color color, const Position position) {
 
     const Bitboard bitboard = set_bit(0ULL, position);
 
-    if (color == Color_t::black) {
-        // color = black
+    if (color == Color_t::white) {
+        // color = white
         attacks = (bitboard >> 7 & not_a_file);
         attacks = attacks | (bitboard >> 9 & not_h_file);
     } else {
-        // color = white
+        // color = black
         attacks = (bitboard << 7 & not_h_file);
         attacks = attacks | (bitboard << 9 & not_a_file);
     }
@@ -110,17 +110,17 @@ Bitboard create_pawn_attacks_(const Color color, const Position position) {
     return attacks;
 }
 
-TEST_CASE("Pawn Attacks", "[Pawn_Attacks]") {
+TEST(Attack_Tables_Generator, pawn_attacks) {
     for (const Position &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_pawn_attacks_(Color::black, position);
-        REQUIRE(create_pawn_attacks_for<Color::black>(set_bit(0ULL, position)) == attacks);
+        ASSERT_EQ(create_pawn_attacks_for<Color::black>(set_bit(0ULL, position)), attacks);
     }
 
     for (const Position &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_pawn_attacks_(Color::white, position);
-        REQUIRE(create_pawn_attacks_for<Color::white>(set_bit(0ULL, position)) == attacks);
+        ASSERT_EQ(create_pawn_attacks_for<Color::white>(set_bit(0ULL, position)), attacks);
     }
 }
 
@@ -143,20 +143,20 @@ Bitboard is_position_attacked_by_test_rig(const std::string_view &fen) {
     return result;
 }
 
-TEST_CASE("Is Position Attacked By", "[is_position_attacked_by]") {
+TEST(Attack_Tables_Generator, is_position_attacked_by) {
     using enum Color;
 
-    REQUIRE(2621440              == is_position_attacked_by_test_rig<white>("8/4p3/8/4P3/5q2/8/8/8 w - - 0 1 "));
-    REQUIRE(1157442769150545920  == is_position_attacked_by_test_rig<white>("8/4p3/8/4R3/5q2/8/8/8 w - - 0 1 "));
-    REQUIRE(44272527353856       == is_position_attacked_by_test_rig<white>("8/4p3/8/4N3/5q2/8/8/8 w - - 0 1 "));
-    REQUIRE(72625113839191170    == is_position_attacked_by_test_rig<white>("8/4p3/8/4B3/5q2/8/8/8 w - - 0 1 "));
-    REQUIRE(1230067882989737090  == is_position_attacked_by_test_rig<white>("8/4p3/8/4Q3/5q2/8/8/8 w - - 0 1 "));
-    REQUIRE(241192927232         == is_position_attacked_by_test_rig<white>("8/4p3/8/4K3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(2621440, is_position_attacked_by_test_rig<white>("8/4p3/8/4P3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(1157442769150545920, is_position_attacked_by_test_rig<white>("8/4p3/8/4R3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(44272527353856, is_position_attacked_by_test_rig<white>("8/4p3/8/4N3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(72625113839191170, is_position_attacked_by_test_rig<white>("8/4p3/8/4B3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(1230067882989737090, is_position_attacked_by_test_rig<white>("8/4p3/8/4Q3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(241192927232, is_position_attacked_by_test_rig<white>("8/4p3/8/4K3/5q2/8/8/8 w - - 0 1 "));
 
-    REQUIRE(171798691840         == is_position_attacked_by_test_rig<black>("8/4P3/8/4p3/5Q2/8/8/8 w - - 0 1 "));
-    REQUIRE(1157442769150545920  == is_position_attacked_by_test_rig<black>("8/4P3/8/4r3/5Q2/8/8/8 w - - 0 1 "));
-    REQUIRE(44272527353856       == is_position_attacked_by_test_rig<black>("8/4P3/8/4n3/5Q2/8/8/8 w - - 0 1 "));
-    REQUIRE(72625113839191170    == is_position_attacked_by_test_rig<black>("8/4P3/8/4b3/5Q2/8/8/8 w - - 0 1 "));
-    REQUIRE(1230067882989737090  == is_position_attacked_by_test_rig<black>("8/4P3/8/4q3/5Q2/8/8/8 w - - 0 1 "));
-    REQUIRE(241192927232         == is_position_attacked_by_test_rig<black>("8/4P3/8/4k3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(171798691840, is_position_attacked_by_test_rig<black>("8/4P3/8/4p3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(1157442769150545920, is_position_attacked_by_test_rig<black>("8/4P3/8/4r3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(44272527353856, is_position_attacked_by_test_rig<black>("8/4P3/8/4n3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(72625113839191170, is_position_attacked_by_test_rig<black>("8/4P3/8/4b3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(1230067882989737090, is_position_attacked_by_test_rig<black>("8/4P3/8/4q3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(241192927232, is_position_attacked_by_test_rig<black>("8/4P3/8/4k3/5Q2/8/8/8 w - - 0 1 "));
 }
