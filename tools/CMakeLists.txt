@@ -8,10 +8,10 @@ set(CONSTANTS_GENERATOR_SOURCES
         ../include/colors.h
         ../src/chess_board.cpp
         ../include/chess_board.h
-        ../test/attack_masks.h
-        ../test/create_possible_slider_moves.h
+        attack_masks.h
+        create_possible_slider_moves.h
         ../include/base.h
-        ../test/magic_numbers.h
+        magic_numbers.h
         ../src/magic_numbers.cpp
         ../include/constants.h
         ../include/types.h
@@ -41,6 +41,13 @@ target_compile_definitions(Kangaroo_constants_generator_masks PUBLIC GENERATE_MA
 add_custom_command(
         OUTPUT "${CMAKE_BINARY_DIR}/constants_masks.h"
         COMMAND Kangaroo_constants_generator_masks ${CMAKE_BINARY_DIR}/constants_masks.h
+        DEPENDS Kangaroo_constants_generator_masks  # Make sure "mytool" is built before this runs
+        COMMENT "Generating 'constants_masks.h' using Kangaroo_constants_generator_masks ..."
+)
+
+add_custom_command(
+        OUTPUT "${CMAKE_BINARY_DIR}/constants_masks.h.gch"
+        COMMAND ${CMAKE_C_COMPILER} -I../include/ ${CMAKE_BINARY_DIR}/constants_masks.h.gch
         DEPENDS Kangaroo_constants_generator_masks  # Make sure "mytool" is built before this runs
         COMMENT "Generating 'constants_masks.h' using Kangaroo_constants_generator_masks ..."
 )

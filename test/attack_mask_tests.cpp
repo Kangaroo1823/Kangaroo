@@ -8,7 +8,7 @@
 #include <utility>                         // for to_underlying
 
 
-#include "attack_masks.h"
+#include "../tools/attack_masks.h"
 #include "../include/bitboard.h"           // for Bitboard, Position, print_...
 #include "gtest/gtest.h"    // for StringRef, AssertionHandler
 

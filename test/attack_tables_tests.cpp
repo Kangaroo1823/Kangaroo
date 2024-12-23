@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "attack_tables.h"
+#include "../tools/attack_tables.h"
 
 #include "gtest/gtest.h"
 

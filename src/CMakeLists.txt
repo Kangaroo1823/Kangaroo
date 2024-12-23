@@ -77,10 +77,10 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/colors.h
         chess_board.cpp
         ../include/chess_board.h
-        ../test/attack_masks.h
-        ../test/create_possible_slider_moves.h
+        ../tools/attack_masks.h
+        ../tools/create_possible_slider_moves.h
         ../include/base.h
-        ../test/magic_numbers.h
+        ../tools/magic_numbers.h
         magic_numbers.cpp
         ../include/constants.h
         ../include/types.h
@@ -96,25 +96,14 @@ target_include_directories(Kangaroo_library PRIVATE ../include)
 target_include_directories(Kangaroo_library PUBLIC ${CMAKE_BINARY_DIR})
 add_dependencies(Kangaroo_library generate_files)
 
-if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
-    target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-ops-limit=10000000000")
-endif ()
-
-if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "Clang")
-    target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-steps=2000000000000")
-endif ()
-
 
 # take care of the main executable
 add_executable(Kangaroo
         main.cpp
-        ../include/bitboard.h
-        ../test/create_possible_slider_moves.h
-        ../include/base.h
-        ../test/attack_tables.h
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
 target_include_directories(Kangaroo PRIVATE ../include)
+
 
 if(Kangaroo_ENABLE_IPO)
     include(../cmake/InterproceduralOptimization.cmake)

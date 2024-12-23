@@ -1,6 +1,6 @@
 
-#include "../test/magic_numbers.h"
-#include <../test/attack_tables.h>
+#include "../tools/magic_numbers.h"
+#include <../tools/attack_tables.h>
 #include "chess_board.h"
 #include "move_generator.h"
 

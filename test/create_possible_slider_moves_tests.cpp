@@ -3,7 +3,7 @@
 //
 
 #include "../include/bitboard.h"
-#include "create_possible_slider_moves.h"
+#include "../tools/create_possible_slider_moves.h"
 #include "gtest/gtest.h"
 
 TEST(Move_Generator, create_possible_bishop_moves) {

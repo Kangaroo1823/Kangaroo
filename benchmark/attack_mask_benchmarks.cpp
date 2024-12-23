@@ -3,7 +3,7 @@
 //
 
 #include "benchmark/benchmark.h"
-#include "../test/attack_tables.h"
+#include "../tools/attack_tables.h"
 
 const std::unique_ptr<Chess_Board> board =  create_chess_board_from_fen( fen_tricky_position );
 

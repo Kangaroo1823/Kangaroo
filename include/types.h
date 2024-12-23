@@ -5,6 +5,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <cstdint>
+
 using MagicNumber = uint64_t;
 using Bitboard = uint64_t;
 

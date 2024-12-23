@@ -4,20 +4,30 @@
 
 #include <fstream>
 
-#include "../test/attack_masks.h"
-#include "../test/attack_tables.h"
-#include "../test/magic_numbers.h"
+#include "attack_masks.h"
+#include "attack_tables.h"
+#include "../tools/magic_numbers.h"
 
 #include "fmt/base.h"
 #include "types.h"
 
 template<typename T, std::size_t N>
 void output_array(std::ofstream &of, const std::array<T, N> &arr, const std::string &name, const std::string &type) {
+
+    std::string guard = name;
+    std::transform(guard.begin(), guard.end(), guard.begin(), [](unsigned char c){ return std::toupper(c); });
+    guard += "__H";
+
+    of << "#ifndef " << guard << "\n";
+    of << "#define " << guard << "\n\n";
+
     of << "inline constexpr std::array<" << type << ", " << N << "> " << name << " = {\n";
     for (const auto &elem: arr) {
         of << "    " << fmt::format("0x{0:x}ULL", elem) << ",\n";
     }
     of << "};\n\n";
+    of << "#endif // " << guard << "\n\n";
+
 }
 
 void generate_masks(std::ofstream &of) {

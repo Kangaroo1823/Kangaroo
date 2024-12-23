@@ -50,7 +50,7 @@ macro(Kangaroo_setup_options)
         option(Kangaroo_ENABLE_INCLUDE_WHAT_YOU_USE_ "Enable include-what-you-use" OFF)
         option(Kangaroo_OPTIMIZE_FOR_NATIVE "Build with -march=native" ON)
         option(Kangaroo_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
-        option(Kangaroo_ENABLE_USER_LINKER "Enable user-selected linker" ON)
+        option(Kangaroo_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
         option(Kangaroo_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
         option(Kangaroo_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" ON)
         option(Kangaroo_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
@@ -156,7 +156,8 @@ macro(Kangaroo_local_options)
                 INTERFACE
                 <vector>
                 <string>
-                <utility>)
+                <utility>
+        )
     endif()
 
     if(Kangaroo_ENABLE_CACHE)

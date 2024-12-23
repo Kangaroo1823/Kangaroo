@@ -2,7 +2,7 @@
 // Created by peter on 15/12/2024.
 //
 
-#include "../test/magic_numbers.h"
+#include "../tools/magic_numbers.h"
 #include <fmt/base.h>   // for print
 #include <random>       // for mt19937_64
 
