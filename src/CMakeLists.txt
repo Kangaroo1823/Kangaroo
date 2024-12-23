@@ -82,6 +82,7 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/base.h
         ../include/magic_numbers.h
         magic_numbers.cpp
+        ../include/constants.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
@@ -90,6 +91,8 @@ target_link_libraries(Kangaroo_library
         Kangaroo_options
 )
 target_include_directories(Kangaroo_library PRIVATE ../include)
+target_include_directories(Kangaroo_library PUBLIC ${CMAKE_BINARY_DIR})
+add_dependencies(Kangaroo_library generate_files)
 
 if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
     target_compile_options(Kangaroo_library PUBLIC "-fconstexpr-ops-limit=10000000000")

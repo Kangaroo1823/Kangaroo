@@ -5,10 +5,11 @@
 #include "benchmark/benchmark.h"
 #include "attack_tables.h"
 
-// cppcheck-suppress constParameterCallback
-static void BM_is_position_attacked_by_1(benchmark::State& state) {
+const std::unique_ptr<Chess_Board> board =  create_chess_board_from_fen( fen_tricky_position );
 
-    std::unique_ptr<Chess_Board> board =  create_chess_board_from_fen( fen_tricky_position );
+// cppcheck-suppress constParameterCallback
+static void BM_is_position_attacked_by(benchmark::State& state) {
+
     Bitboard is_attacked = 0ULL;
 
     for ([[maybe_unused]] auto _ : state) {
@@ -23,6 +24,6 @@ static void BM_is_position_attacked_by_1(benchmark::State& state) {
 
 }
 
-BENCHMARK(BM_is_position_attacked_by_1);
+BENCHMARK(BM_is_position_attacked_by);
 
 BENCHMARK_MAIN();

@@ -6,8 +6,8 @@
 #define ATTACK_MASKS_H
 
 #include <array>
-
 #include "bitboard.h"
+#include "constants.h"
 
 /**********************************************************************************
  * Slider attack masks
@@ -53,13 +53,6 @@ constexpr std::array<Bitboard, 64> create_attack_masks() {
     }
 
     return result;
-}
-
-namespace Constants {
-
-    inline constexpr std::array<Bitboard, 64> bishop_attack_masks = as_constant(create_attack_masks<Slider_t::bishop>());
-    inline constexpr std::array<Bitboard, 64> rook_attack_masks = as_constant(create_attack_masks<Slider_t::rook>());
-
 }
 
 

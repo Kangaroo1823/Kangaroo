@@ -354,6 +354,14 @@ namespace Constants {
             fmt::print("no magic number found\n");
             return 0;
         }
+        template<Slider slider>
+        std::array<MagicNumber, 64> find_magic_numbers_for() {
+            std::array<MagicNumber, 64> magic_numbers{};
+            for (int i = 0; i < 64; i++) {
+                magic_numbers[i] = find_magic_number<slider>(static_cast<Position>(i));
+            }
+            return magic_numbers;
+        }
 
         /**
          * \brief Computes and prints magic numbers for positions on a chessboard.
