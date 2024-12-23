@@ -4,9 +4,9 @@
 
 #include "../include/bitboard.h"
 #include "../include/create_possible_slider_moves.h"
-#include "catch2/catch_test_macros.hpp"
+#include "gtest/gtest.h"
 
-TEST_CASE("Create Possible Bishop Moves", "[create_possible_bishop_moves]") {
+TEST(Move_Generator, create_possible_bishop_moves) {
     using enum Position_t;
     constexpr auto position = E4;
     Bitboard mask = 0ULL;
@@ -19,7 +19,7 @@ TEST_CASE("Create Possible Bishop Moves", "[create_possible_bishop_moves]") {
     // cppcheck-suppress unreadVariable
     const Bitboard board = create_possible_slider_moves<Slider::bishop>(mask, position);
 
-    REQUIRE(board == /*
+    ASSERT_EQ(board, /*
     8   0  0  0  0  0  0  0  0
     7   0  1  0  0  0  0  0  0
     6   0  0  1  0  0  0  1  0
@@ -36,7 +36,7 @@ TEST_CASE("Create Possible Bishop Moves", "[create_possible_bishop_moves]") {
 }
 
 
-TEST_CASE("Create Possible Rook Moves", "[create_possible_rook_moves]") {
+TEST(Move_Generator, create_possible_rook_moves) {
     using enum Position_t;
     constexpr auto position = E4;
     Bitboard mask = 0ULL;
@@ -49,7 +49,7 @@ TEST_CASE("Create Possible Rook Moves", "[create_possible_rook_moves]") {
     // cppcheck-suppress unreadVariable
     const Bitboard board = create_possible_slider_moves<Slider::rook>(mask, position);
 
-    REQUIRE( board ==
+    ASSERT_EQ( board,
 /*
  8   0  0  0  0  0  0  0  0
  7   0  0  0  0  1  0  0  0

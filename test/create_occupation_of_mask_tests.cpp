@@ -3,9 +3,8 @@
 //
 
 #include <array>                         // for array
-#include <cstdint>                       // for int64_t
 #include "../include/bitboard.h"         // for set_bit, Bitboard, Position_t
-#include "catch2/catch_test_macros.hpp"  // for StringRef, AssertionHandler
+#include "gtest/gtest.h"  // for StringRef, AssertionHandler
 
 constexpr std::array<Bitboard, 64> occupancy_test_table = {
     /*
@@ -842,7 +841,7 @@ constexpr std::array<Bitboard, 64> occupancy_test_table = {
     16843022ULL
 };
 
-TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
+TEST(Mask_Generator, create_occupation_of_mask) {
     using enum Position_t;
     Bitboard mask = 0ULL;
 
@@ -856,7 +855,7 @@ TEST_CASE("Create Occupation of Mask", "[create_occupation_of_mask]") {
     for (unsigned int occupancy = 0; occupancy < 64; occupancy++) {
         // cppcheck-suppress unreadVariable
         const Bitboard board = create_occupancy_from_mask(occupancy, mask);
-        REQUIRE(occupancy_test_table[occupancy] == board);
+        ASSERT_EQ(occupancy_test_table[occupancy], board);
     }
 }
 

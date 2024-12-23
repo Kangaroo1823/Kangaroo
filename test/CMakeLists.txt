@@ -16,10 +16,10 @@ add_executable(Kangaroo_tests
         create_occupation_of_mask_tests.cpp
         magic_numbers_test.cpp
         attack_tables_tests.cpp)
-target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings Catch2::Catch2WithMain)
+target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
 target_include_directories(Kangaroo_tests PRIVATE ../include)
 
-include(CTest)
-include(Catch)
-catch_discover_tests(Kangaroo_tests)
+#include(CTest)
+#include(Catch)
+#catch_discover_tests(Kangaroo_tests)
 

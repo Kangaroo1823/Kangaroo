@@ -24,18 +24,29 @@ function(Kangaroo_setup_dependencies)
 #        )
 #    endif ()
 
-    if (NOT TARGET Catch2::Catch2WithMain)
-        cpmaddpackage(
-                NAME
-                Catch2
-                VERSION
-                3.4.0
-                GITHUB_REPOSITORY
-                "catchorg/Catch2"
+#    if (NOT TARGET Catch2::Catch2WithMain)
+#        cpmaddpackage(
+#                NAME
+#                Catch2
+#                VERSION
+#                3.4.0
+#                GITHUB_REPOSITORY
+#                "catchorg/Catch2"
+#        )
+#        list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
+#        set (CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+#    endif ()
+
+    if(NOT TARGET gtest_main)
+        CPMAddPackage(
+                NAME googletest
+                GITHUB_REPOSITORY google/googletest
+                GIT_TAG release-1.12.1
+                VERSION 1.15.2
+                OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
         )
-        list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
-        set (CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} PARENT_SCOPE)
     endif ()
+
 
     if (NOT TARGET benchmark::benchmark)
         set(HAVE_STD_REGEX ON)
