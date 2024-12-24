@@ -6,11 +6,12 @@
 #define MAGIC_NUMBERS_H
 
 
-#include <../cpm_source_cache/fmt/5f09254357fb8bee45f04ab378d837c7207abb0e/fmt/include/fmt/base.h>
 #include <algorithm>                       // for for_each
 #include <array>                           // for array
 #include <cstdint>                         // for int64_t, uint64_t
-#include <utility>                         // for to_underlying
+#include <utility>
+#include <print>
+
 
 #include "../include/bitboard.h"
 #include "create_possible_slider_moves.h"
@@ -216,7 +217,7 @@ namespace Constants::Impl {
             return value1;
         }
 
-        fmt::print("no magic number found\n");
+        std::print("no magic number found\n");
         return 0;
     }
 

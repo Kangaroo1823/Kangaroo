@@ -3,7 +3,7 @@
 //
 
 #include "../include/chess_board.h"
-#include <fmt/base.h>             // for print
+#include <print>             // for print
 #include <array>                  // for array
 #include <cstddef>                // for size_t
 #include <iostream>
@@ -308,38 +308,38 @@ void print_chess_board(const Chess_Board *board) {
 
     if (board == nullptr) return;
 
-    fmt::print("\n\n       A  B  C  D  E  F  G  H\n\n");
+    std::print("\n\n       A  B  C  D  E  F  G  H\n\n");
     for (std::size_t rank = 8; rank > 0; --rank) {
-        fmt::print("  {}   ", rank);
+        std::print("  {}   ", rank);
         for (std::size_t file = 0; file < 8; ++file) {
             if (get_bit(board->black_king, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", black_king_c);
+                std::print("{}", black_king_c);
             else if (get_bit(board->black_queens, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", black_queen_c);
+                std::print("{}", black_queen_c);
             else if (get_bit(board->black_rooks, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", black_rook_c);
+                std::print("{}", black_rook_c);
             else if (get_bit(board->black_knights, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", black_knight_c);
+                std::print("{}", black_knight_c);
             else if (get_bit(board->black_bishops, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", black_bishop_c);
+                std::print("{}", black_bishop_c);
             else if (get_bit(board->black_pawns, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", black_pawn_c);
+                std::print("{}", black_pawn_c);
 
             else if (get_bit(board->white_king, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", white_king_c);
+                std::print("{}", white_king_c);
             else if (get_bit(board->white_queens, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", white_queen_c);
+                std::print("{}", white_queen_c);
             else if (get_bit(board->white_rooks, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", white_rook_c);
+                std::print("{}", white_rook_c);
             else if (get_bit(board->white_knights, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", white_knight_c);
+                std::print("{}", white_knight_c);
             else if (get_bit(board->white_bishops, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", white_bishop_c);
+                std::print("{}", white_bishop_c);
             else if (get_bit(board->white_pawns, rank_file_to_position(rank - 1, file)))
-                fmt::print("{}", white_pawn_c);
-            else fmt::print("{}", empty_c);
+                std::print("{}", white_pawn_c);
+            else std::print("{}", empty_c);
         }
-        fmt::print("\n");
+        std::print("\n");
     }
-    fmt::print("\n       A  B  C  D  E  F  G  H\n\n");
+    std::print("\n       A  B  C  D  E  F  G  H\n\n");
 }

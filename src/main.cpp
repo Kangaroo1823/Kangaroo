@@ -3,7 +3,7 @@
 #include <../tools/attack_tables.h>
 #include "chess_board.h"
 #include "move_generator.h"
-
+#include <print>
 
 
 int main() {
@@ -14,22 +14,22 @@ int main() {
     Bitboard result = 0ULL;
 
     for (std::size_t rank = 0; rank < 8; ++rank) {
-        fmt::print( "  {}   ", 8 - rank );
+        std::print( "  {}   ", 8 - rank );
         for (std::size_t file = 0; file < 8; ++file) {
             auto position = rank_file_to_position(7-rank, file);
             const auto r = is_position_attacked_by<Color::black>(position, board.get());
 
             if (r) {
-                fmt::print( " 1 ");
+                std::print( " 1 ");
                 result = set_bit(result, position);
             } else {
-                fmt::print( " . ");
+                std::print( " . ");
             }
         }
-        fmt::print("\n");
+        std::print("\n");
     }
-    fmt::print("\n       A  B  C  D  E  F  G  H");
-    fmt::print("\n\n   Result: {}\n\n", result);
+    std::print("\n       A  B  C  D  E  F  G  H");
+    std::print("\n\n   Result: {}\n\n", result);
 
     return 0;
 }

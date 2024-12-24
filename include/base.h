@@ -5,10 +5,6 @@
 #ifndef BASE_H
 #define BASE_H
 
-#include <functional>
-#include <utility>
-
-
 #ifdef _MSC_VER
 #define _ASSUME(cond) __assume(cond)
 #define _Compiletime __forceinline static constexpr

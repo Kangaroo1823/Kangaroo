@@ -1,9 +1,6 @@
 #include "../include/bitboard.h"
-#include <fmt/base.h>  // for print
+#include <print>
 #include <array>       // for array
-
-#include "fmt/color.h"
-
 
 /**
  * print a bitboard
@@ -12,22 +9,22 @@
  */
 void print_bitboard(const Bitboard bitboard) {
 
-    fmt::print("/*\n");
+    std::print("/*\n");
 
     for (int rank = 7; rank >= 0 ; rank--) {
-        fmt::print( "  {}   ", rank + 1);
+        std::print( "  {}   ", rank + 1);
         for (int file = 0; file < 8 ; file++) {
             if (bitboard & (1ULL << (rank * 8 + file))) {
-                fmt::print(" 1 ");
+                std::print(" 1 ");
             } else {
-                fmt::print(" . ");
+                std::print(" . ");
             }
         }
-        fmt::print("\n");
+        std::print("\n");
     }
-    fmt::print("\n       A  B  C  D  E  F  G  H\n\n");
-    fmt::print("       bitboard as 64 bit integer: */\n");
-    fmt::print( "       0x{0:x},\n", bitboard);
+    std::print("\n       A  B  C  D  E  F  G  H\n\n");
+    std::print("       bitboard as 64 bit integer: */\n");
+    std::print( "       0x{0:x},\n", bitboard);
 }
 
 std::string print_position(const Position position) {

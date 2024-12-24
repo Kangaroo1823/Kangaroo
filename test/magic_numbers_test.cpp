@@ -2,14 +2,16 @@
 // Created by peter on 15/12/2024.
 //
 
-#include <magic_numbers.h>
 #include <immintrin.h>                   // for _pdep_u64
 #include <string>                        // for basic_string
 #include "gtest/gtest.h"  // for AssertionHandler, StringRef
 
+#include "bitboard.h"
+#include "magic_numbers.h"
+#include "constants_masks.h"
 
 template<Slider slider>
-bool check_magic_number(const Position position_of_figure, const Constants::MagicNumber magic_number) {
+bool check_magic_number(const Position position_of_figure, const MagicNumber magic_number) {
     // get the mask corresponding to the position of the figure.
     const Bitboard mask = slider == Slider::bishop
                               ? Constants::bishop_attack_masks[std::to_underlying(position_of_figure)]
@@ -43,11 +45,11 @@ TEST(MagicNumbers, magic_numbers) {
     for (const auto &position: All_Positions) {
 
         // cppcheck-suppress unreadVariable
-        bool flag = check_magic_number<Slider::rook>(position, Constants::Rook_Magic_Numbers[std::to_underlying(position)]);
+        bool flag = check_magic_number<Slider::rook>(position, Constants::rook_magic_numbers[std::to_underlying(position)]);
         ASSERT_TRUE(flag);
 
         // cppcheck-suppress unreadVariable
-        bool flag2 = check_magic_number<Slider::bishop>(position, Constants::Bishop_Magic_Numbers[std::to_underlying(position)]);
+        bool flag2 = check_magic_number<Slider::bishop>(position, Constants::bishop_magic_numbers[std::to_underlying(position)]);
         ASSERT_TRUE(flag2);
     }
 }

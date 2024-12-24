@@ -4,8 +4,7 @@
 
 #ifndef MOVE_GENERATOR_H
 #define MOVE_GENERATOR_H
-#include "types.h"
-#include "constants.h"
+#include "constants_attacks.h"
 
 template<Slider slider>
 constexpr Bitboard get_attacks_for_position(const Position &position, const Bitboard occupancy) {

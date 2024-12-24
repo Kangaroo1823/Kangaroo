@@ -19,12 +19,10 @@
 #include <array>           // for array
 #include <cstddef>         // for size_t
 #include <cstdint>         // for int64_t, uint64_t
+#include <format>
 #include <string>          // for string
 #include <utility>         // for to_underlying
 #include "types.h"
-#include "fmt/format.h"
-
-
 
 
 
@@ -248,7 +246,7 @@ void print_bitboard(Bitboard bitboard);
 std::string print_position(Position position);
 
 inline std::string format_bitboard(Bitboard bitboard) {
-    return fmt::format("0x{0:x}, ", bitboard);
+    return std::format("0x{0:x}, ", bitboard);
 }
 
 

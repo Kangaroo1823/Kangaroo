@@ -10,9 +10,9 @@ function(Kangaroo_setup_dependencies)
     # For each dependency, see if it's
     # already been provided to us by a parent project
 
-    if (NOT TARGET fmt::fmt)
-        cpmaddpackage("gh:fmtlib/fmt#11.0.2")
-    endif ()
+#    if (NOT TARGET fmt::fmt)
+#        cpmaddpackage("gh:fmtlib/fmt#11.0.2")
+#    endif ()
 
 #    if (NOT TARGET Boost::boost)
 #        CPMAddPackage(

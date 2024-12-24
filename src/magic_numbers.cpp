@@ -3,7 +3,7 @@
 //
 
 #include "../tools/magic_numbers.h"
-#include <fmt/base.h>   // for print
+#include <print>   // for print
 #include <random>       // for mt19937_64
 
 
@@ -24,18 +24,18 @@ namespace Constants::Impl {
 
     void compute_magic_numbers() {
         // loop over all 64 board squares
-        fmt::print("// rooks:\n");
+        std::print("// rooks:\n");
         for (const auto square: All_Positions) {
             const MagicNumber m = find_magic_number<Slider::rook>(square);
-            fmt::print("/* magic number found for {}: */", print_position(square));
-            fmt::print(" 0x{0:x},\n", m);
+            std::print("/* magic number found for {}: */", print_position(square));
+            std::print(" 0x{0:x},\n", m);
         }
-        fmt::print("\n");
-        fmt::print("// bishops:\n");
+        std::print("\n");
+        std::print("// bishops:\n");
         for (const auto square: All_Positions) {
             const MagicNumber m = find_magic_number<Slider::bishop>(square);
-            fmt::print("/* magic number found for {}: */", print_position(square));
-            fmt::print(" 0x{0:x},\n", m);
+            std::print("/* magic number found for {}: */", print_position(square));
+            std::print(" 0x{0:x},\n", m);
         }
     }
 }

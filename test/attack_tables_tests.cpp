@@ -4,10 +4,11 @@
 
 #include <fstream>
 #include <iostream>
+#include <gtest/gtest.h>
 
-#include "../tools/attack_tables.h"
+#include "attack_tables.h"
+#include "move_generator.h"
 
-#include "gtest/gtest.h"
 
 
 /******************************************************************************************
