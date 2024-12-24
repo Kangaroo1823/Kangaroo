@@ -14,7 +14,7 @@ template<typename T, std::size_t N>
 void output_array(std::ofstream &of, const std::array<T, N> &arr, const std::string &name, const std::string &type) {
 
     std::string guard = name;
-    std::transform(guard.begin(), guard.end(), guard.begin(), [](unsigned char c){ return std::toupper(c); });
+    std::ranges::transform(guard, guard.begin(), [](unsigned char c){ return std::toupper(c); });
     guard += "__H";
 
     of << "#ifndef " << guard << "\n";
@@ -22,7 +22,7 @@ void output_array(std::ofstream &of, const std::array<T, N> &arr, const std::str
 
     of << "inline constexpr std::array<" << type << ", " << N << "> " << name << " = {\n";
     for (const auto &elem: arr) {
-        of << "    " << std::format("0x{0:x}ULL", elem) << ",\n";
+        of << "    " << std::format("0x{:x}ULL", elem) << ",\n";
     }
     of << "};\n\n";
     of << "#endif // " << guard << "\n\n";
