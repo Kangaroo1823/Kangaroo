@@ -1,3 +1,5 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com//
 //
 // Created by peter on 23/12/2024.
 //
@@ -137,6 +139,22 @@ constexpr Bitboard is_position_attacked_by(const Position &position, const Chess
                                                                        ? board->white_queens
                                                                        : board->black_queens));
     return attacks;
+}
+
+
+template<Color color, WhiteKingSideCastle white_king_side_castle, WhiteQueenSideCastle white_queen_side_castle,
+    BlackKingSideCastle black_king_side_castle, BlackQueenSideCastle black_queen_side_castle, En_Passant en_passant,
+    typename CallBackType>
+uint64_t generate_moves(const Chess_Board *board, CallBackType callback) {
+    uint64_t moves = 0ULL;
+
+    // generate moves for pawns
+    Bitboard pawn_moves = (color == Color::white ? board->white_pawns >> 8 : board->black_pawns << 8) ^ board->
+                          all_pieces;
+    moves += Bitcount(pawn_moves);
+    Bitloop(pawn_moves, callback);
+
+    return moves;
 }
 
 #endif //MOVE_GENERATOR_H

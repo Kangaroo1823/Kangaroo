@@ -1,3 +1,8 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com//
+//
 //
 // Created by peter on 01/12/2024.
 //
@@ -56,43 +61,42 @@ std::unique_ptr<Chess_Board> create_chess_board() {
 
 
 void parce_en_passant_notation(const std::string_view &str) {
-
     std::size_t rank = 8;
     std::size_t file = 8;
 
-    for ( const auto &c: str) {
+    for (const auto &c: str) {
         switch (c) {
-            case 'A': file = 0;
+            case 'A':
+            case 'a':
+                file = 0;
                 break;
-            case 'B': file = 1;
+            case 'B':
+            case 'b':
+                file = 1;
                 break;
-            case 'C': file = 2;
+            case 'C':
+            case 'c':
+                file = 2;
                 break;
-            case 'D': file = 3;
+            case 'D':
+            case 'd':
+                file = 3;
                 break;
-            case 'E': file = 4;
+            case 'E':
+            case 'e':
+                file = 4;
                 break;
-            case 'F': file = 5;
+            case 'F':
+            case 'f':
+                file = 5;
                 break;
-            case 'G': file = 6;
+            case 'G':
+            case 'g':
+                file = 6;
                 break;
-            case 'H': file = 7;
-                break;
-            case 'a': file = 0;
-                break;
-            case 'b': file = 1;
-                break;
-            case 'c': file = 2;
-                break;
-            case 'd': file = 3;
-                break;
-            case 'e': file = 4;
-                break;
-            case 'f': file = 5;
-                break;
-            case 'g': file = 6;
-                break;
-            case 'h': file = 7;
+            case 'H':
+            case 'h':
+                file = 7;
                 break;
             case '1': rank = 0;
                 break;
@@ -118,8 +122,8 @@ void parce_en_passant_notation(const std::string_view &str) {
     }
 }
 
-[[nodiscard]] std::unique_ptr<Chess_Board> process_fen_board_setup( std::unique_ptr<Chess_Board> &&board, const std::string_view &str) {
-
+[[nodiscard]] std::unique_ptr<Chess_Board> process_fen_board_setup(std::unique_ptr<Chess_Board> &&board,
+                                                                   const std::string_view &str) {
     std::size_t rank = 0;
     std::size_t file = 0;
 
@@ -206,7 +210,8 @@ bool parse_castling_information(const std::string_view &str) {
     return true;
 }
 
-[[nodiscard]] std::unique_ptr<Chess_Board> parse_half_move_number( std::unique_ptr<Chess_Board> &&board, const std::string_view &str) {
+[[nodiscard]] std::unique_ptr<Chess_Board> parse_half_move_number(std::unique_ptr<Chess_Board> &&board,
+                                                                  const std::string_view &str) {
     for (const auto &c: str) {
         switch (c) {
             case '0':
@@ -229,7 +234,8 @@ bool parse_castling_information(const std::string_view &str) {
     return board;
 }
 
-[[nodiscard]]std::unique_ptr<Chess_Board> parse_full_move_number(std::unique_ptr<Chess_Board> &&board, const std::string_view &str) {
+[[nodiscard]] std::unique_ptr<Chess_Board> parse_full_move_number(std::unique_ptr<Chess_Board> &&board,
+                                                                  const std::string_view &str) {
     for (const auto &c: str) {
         switch (c) {
             case '0':

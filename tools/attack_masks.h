@@ -49,7 +49,7 @@ constexpr std::array<Bitboard, 64> create_attack_masks() {
     std::array<Bitboard, 64> result = {};
     for (auto board = result.begin(); const auto &position : All_Positions) {
         *board = create_attack_mask_for<slider>(position);
-        board++;
+        ++board;
     }
 
     return result;

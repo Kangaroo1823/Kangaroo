@@ -116,7 +116,7 @@ namespace Constants::Impl {
                                        std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> used_attack_table,
                                        MagicNumber magic_number) {
         for (std::size_t index = 0; index < number_of_occupancies; index++) {
-            Bitboard magic_index = occupancy_table[index] * magic_number >> (64 - relevant_bits_in_mask);
+            Bitboard magic_index = (occupancy_table[index] * magic_number) >> (64 - relevant_bits_in_mask);
 
             if (used_attack_table[magic_index] == 0) {
                 used_attack_table[magic_index] = attack_table[index];

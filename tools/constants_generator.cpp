@@ -1,3 +1,5 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 //
 // Created by U439644 on 12/23/2024.
 //
@@ -9,20 +11,21 @@
 #include "../tools/magic_numbers.h"
 #include <print>
 #include "types.h"
+#include <vector>
 
-template<typename T, std::size_t N>
-void output_array(std::ofstream &of, const std::array<T, N> &arr, const std::string &name, const std::string &type) {
+template<typename T>
+void output_array(std::ofstream &of, const T &arr, const std::string &name, const std::string &type) {
 
     std::string guard = name;
-    std::transform(guard.begin(), guard.end(), guard.begin(), [](unsigned char c){ return std::toupper(c); });
+    std::ranges::transform(guard, guard.begin(), [](unsigned char c){ return std::toupper(c); });
     guard += "__H";
 
     of << "#ifndef " << guard << "\n";
     of << "#define " << guard << "\n\n";
 
-    of << "inline constexpr std::array<" << type << ", " << N << "> " << name << " = {\n";
+    of << "inline constexpr std::array<" << type << ", " << arr.size() << "> " << name << " = {\n";
     for (const auto &elem: arr) {
-        of << "    " << std::format("0x{0:x}ULL", elem) << ",\n";
+        of << "    " << std::format("0x{:x}ULL", elem) << ",\n";
     }
     of << "};\n\n";
     of << "#endif // " << guard << "\n\n";
@@ -33,39 +36,48 @@ void generate_masks(std::ofstream &of) {
     constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider_t::bishop>();
     constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Slider_t::rook>();
 
-    output_array<Bitboard, 64>(of, bishop_attack_masks, "bishop_attack_masks", "Bitboard");
-    output_array<Bitboard, 64>(of, rook_attack_masks, "rook_attack_masks", "Bitboard");
+    output_array(of, bishop_attack_masks, "bishop_attack_masks", "Bitboard");
+    output_array(of, rook_attack_masks, "rook_attack_masks", "Bitboard");
 }
 
 void generate_magic_numbers(std::ofstream &of) {
     const std::array<MagicNumber, 64> Bishop_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::bishop>();
     const std::array<MagicNumber, 64> Rook_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::rook>();
 
-    output_array<MagicNumber, 64>(of, Bishop_Magic_Numbers, "bishop_magic_numbers", "MagicNumber");
-    output_array<MagicNumber, 64>(of, Rook_Magic_Numbers, "rook_magic_numbers", "MagicNumber");
+    output_array(of, Bishop_Magic_Numbers, "bishop_magic_numbers", "MagicNumber");
+    output_array(of, Rook_Magic_Numbers, "rook_magic_numbers", "MagicNumber");
 }
 
 #ifdef GENERATE_ATTACKS
 void generate_attacks(std::ofstream &of) {
-    const std::array<Bitboard, 64 * 4096> rook_attack_table = create_attack_table<Slider::rook>();
-    const std::array<Bitboard, 64 * 512> bishop_attack_table = create_attack_table<Slider::bishop>();
+    std::vector<Bitboard> rook_attack_table(64 * 4096, 0ULL);
+    create_attack_table<Slider::rook>(rook_attack_table);
 
-    constexpr std::array<Bitboard, 64> white_pawn_attacks = create_pawn_attacks<Color::white>();
-    constexpr std::array<Bitboard, 64> black_pawn_attacks = create_pawn_attacks<Color::black>();
+    std::vector<Bitboard> bishop_attack_table(64 * 512, 0ULL);
+    create_attack_table<Slider::bishop>(bishop_attack_table);
 
-    constexpr std::array<Bitboard, 64> king_attacks = create_king_attacks();
-    constexpr std::array<Bitboard, 64> knight_attacks = create_knight_attacks();
+    std::vector<Bitboard> white_pawn_attacks(64, 0ULL);
+    create_pawn_attacks<Color::white>(white_pawn_attacks);
+
+    std::vector<Bitboard> black_pawn_attacks(64, 0ULL);
+    create_pawn_attacks<Color::black>(black_pawn_attacks);
+
+    std::vector<Bitboard> king_attacks(64, 0ULL);
+    create_king_attacks(king_attacks);
+
+    std::vector<Bitboard> knight_attacks(64, 0ULL);
+    create_knight_attacks(knight_attacks);
 
 
-    output_array<Bitboard, 64 * 4096>(of, rook_attack_table, "rook_attack_table", "Bitboard");
-    output_array<Bitboard, 64 * 512>(of, bishop_attack_table, "bishop_attack_table", "Bitboard");
+    output_array(of, rook_attack_table, "rook_attack_table", "Bitboard");
+    output_array(of, bishop_attack_table, "bishop_attack_table", "Bitboard");
 
-    output_array<Bitboard, 64>(of, white_pawn_attacks, "white_pawn_attacks", "Bitboard");
-    output_array<Bitboard, 64>(of, black_pawn_attacks, "black_pawn_attacks", "Bitboard");
+    output_array(of, white_pawn_attacks, "white_pawn_attacks", "Bitboard");
+    output_array(of, black_pawn_attacks, "black_pawn_attacks", "Bitboard");
 
-    output_array<Bitboard, 64>(of, king_attacks, "king_attacks", "Bitboard");
+    output_array(of, king_attacks, "king_attacks", "Bitboard");
 
-    output_array<Bitboard, 64>(of, knight_attacks, "knight_attacks", "Bitboard");
+    output_array(of, knight_attacks, "knight_attacks", "Bitboard");
 }
 #endif
 
@@ -101,4 +113,6 @@ int main(const int argc, const char **argv) {
 
     of << "} // namespace Constants\n";
     of.close();
+
+    return 0;
 }
