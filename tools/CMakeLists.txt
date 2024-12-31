@@ -64,7 +64,8 @@ add_custom_target(
 add_executable(Kangaroo_constants_generator_magics ${CONSTANTS_GENERATOR_SOURCES})
 target_link_libraries(Kangaroo_constants_generator_magics
         PUBLIC
-        Kangaroo_warnings)
+        Kangaroo_warnings
+)
 
 target_include_directories(Kangaroo_constants_generator_magics
         PRIVATE
@@ -99,7 +100,8 @@ add_dependencies(Kangaroo_constants_generator_magics generate_masks)
 add_executable(Kangaroo_constants_generator_attacks ${CONSTANTS_GENERATOR_SOURCES})
 target_link_libraries(Kangaroo_constants_generator_attacks
         PUBLIC
-        Kangaroo_warnings)
+        Kangaroo_warnings
+)
 
 target_include_directories(Kangaroo_constants_generator_attacks
         PRIVATE
@@ -134,14 +136,4 @@ add_custom_target(
         ${CMAKE_BINARY_DIR}/constants_attacks.h
 )
 
-target_precompile_headers(Kangaroo_options INTERFACE
-        ${CMAKE_BINARY_DIR}/constants_masks.h
-        ${CMAKE_BINARY_DIR}/constants_magics.h
-        ${CMAKE_BINARY_DIR}/constants_attacks.h
-)
-
 add_dependencies(Kangaroo_options generate_files)
-
-target_compile_definitions(Kangaroo_options INTERFACE
-        USE_PRECOMPILED_GENERATED_HEADERS
-)

@@ -6,7 +6,8 @@
 #define ATTACK_TABLES_H
 
 #include <array>
-#include <iostream>
+#include <assert.h>
+#include <vector>
 
 #include "../include/bitboard.h"
 #include "../include/chess_board.h"
@@ -22,9 +23,9 @@ template<Slider slider>
 constexpr std::size_t create_hash_index(const Position &position, const Bitboard &occupancy,
                                         const int64_t &relevant_bits) {
     if constexpr (slider == Slider::bishop) {
-        return occupancy * Constants::bishop_magic_numbers[std::to_underlying(position)] >> (64 - relevant_bits);
+        return (occupancy * Constants::bishop_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
     } else {
-        return occupancy * Constants::rook_magic_numbers[std::to_underlying(position)] >> (64 - relevant_bits);
+        return (occupancy * Constants::rook_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
     }
 }
 
@@ -88,9 +89,9 @@ template<Slider slider>
  * @return A data structure representing the precomputed attack patterns for all positions
  *         on the board for sliding pieces.
  */
-constexpr std::array<Bitboard, slider == Slider::bishop ? 64 * 512 : 64 * 4096>
-create_attack_table() {
-    std::array<Bitboard, slider == Slider::bishop ? 64 * 512 : 64 * 4096> result = {0};
+void create_attack_table(std::vector<Bitboard> &result) {
+
+    assert(result.size() >= 64 * (slider == Slider::bishop ? 512 : 4096));
 
     auto iter = result.begin();
     for (const auto &position: All_Positions) {
@@ -98,8 +99,6 @@ create_attack_table() {
         std::ranges::copy(r, iter);
         iter += r.size();
     }
-
-    return result;
 }
 
 
@@ -126,13 +125,14 @@ constexpr Bitboard create_pawn_attacks_for(const Bitboard bitboard) {
 
 
 template<Color color>
-constexpr std::array<Bitboard, 64> create_pawn_attacks() {
-    std::array<Bitboard, 64> attacks = {};
+constexpr void create_pawn_attacks(std::vector<Bitboard> &attacks) {
+
+    assert(attacks.size() >= 64);
+
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
         *iter = create_pawn_attacks_for<color>(set_bit(0ULL, position));
-        iter++;
+        ++iter;
     }
-    return attacks;
 }
 
 
@@ -157,13 +157,14 @@ constexpr Bitboard create_king_attacks_for(const Bitboard bitboard) {
 }
 
 
-constexpr std::array<Bitboard, 64> create_king_attacks() {
-    std::array<Bitboard, 64> attacks = {};
+constexpr void create_king_attacks( std::vector<Bitboard> &attacks) {
+
+    assert(attacks.size() >= 64);
+
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
         *iter = create_king_attacks_for(set_bit(0ULL, position));
         ++iter;
     }
-    return attacks;
 }
 
 
@@ -188,13 +189,14 @@ constexpr Bitboard create_knight_attacks_for(const Bitboard bitboard) {
     return attacks;
 }
 
-constexpr std::array<Bitboard, 64> create_knight_attacks() {
-    std::array<Bitboard, 64> attacks = {};
+constexpr void create_knight_attacks( std::vector<Bitboard> &attacks) {
+
+    assert(attacks.size() >= 64);
+
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
         *iter = create_knight_attacks_for(set_bit(0ULL, position));
         ++iter;
     }
-    return attacks;
 }
 
 

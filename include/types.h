@@ -6,6 +6,7 @@
 #define TYPES_H
 
 #include <cstdint>
+#include <array>
 
 using MagicNumber = uint64_t;
 using Bitboard = uint64_t;
@@ -97,14 +98,27 @@ constexpr std::array<Position, 64> All_Positions = {
 };
 
 
-using Castle_Flags = enum class Castle_Flags_t : uint64_t {
-    white_kingside = 1ULL << 0,
-    white_queenside = 1ULL << 1,
-    black_kingside = 1ULL << 2,
-    black_queenside = 1ULL << 3,
+using WhiteQueenSideCastle = enum class WhiteQueenSideCastle_t : uint64_t {
+    white_queen_side_castle_possible = 1ULL << 0,
+    white_queen_side_castle_impossible = 1ULL << 1,
 };
 
-using En_Passant_Flags = enum class En_Passant_Flags_t : uint64_t {
+using WhiteKingSideCastle = enum class WhiteKingSideCastle_t : uint64_t {
+    white_king_side_castle_possible = 1ULL << 0,
+    white_king_side_castle_impossible = 1ULL << 1,
+};
+
+using BlackQueenSideCastle = enum class BlackQueenSideCastle_t : uint64_t {
+    black_queen_side_castle_possible = 1ULL << 0,
+    black_queen_side_castle_impossible = 1ULL << 1,
+};
+
+using BlackKingSideCastle = enum class BlackKingSideCastle_t : uint64_t {
+    black_king_side_castle_possible = 1ULL << 0,
+    black_king_side_castle_impossible = 1ULL << 1,
+};
+
+using En_Passant = enum class En_Passant_t : uint64_t {
     en_passant_possible = 1ULL << 0,
     en_passant_impossible = 1ULL << 1,
 };

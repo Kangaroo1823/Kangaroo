@@ -178,9 +178,9 @@ template<typename Fn>
  * @param x The Bitboard to iterate through. Each set bit (1) in `x` will be visited once.
  * @param f The callable to apply to each set bit. It must accept a single parameter of type Bitboard.
  */
-constexpr void Bitloop(Bitboard x, Fn f) {
-    for(;x;x=_blsr_u64(x)) {
-        f(x);
+constexpr void Bitloop(const Bitboard x, Fn f) {
+    for(Bitboard y = x; y != 0; y = _blsr_u64(y)) {
+        f(y);
     }
 }
 

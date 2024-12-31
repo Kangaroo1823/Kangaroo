@@ -1,3 +1,5 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 //
 // Created by peter on 22/12/2024.
 //
@@ -15,7 +17,7 @@ static void BM_is_position_attacked_by(benchmark::State& state) {
     for ([[maybe_unused]] auto _ : state) {
 
         for (const auto& position : All_Positions ) {
-            is_attacked = is_position_attacked_by<Color::white>(position, board.get());
+         //   is_attacked = is_position_attacked_by<Color::white>(position, board.get());
         }
 
     }
