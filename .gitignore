@@ -4,4 +4,4 @@ cpm_source_cache
 libs
 .idea
 .sonarlint
-
+.PVS-Studio
