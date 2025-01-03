@@ -9,58 +9,14 @@
 
 #include "../include/chess_board.h"
 #include <print>             // for print
-#include <array>                  // for array
 #include <cstddef>                // for size_t
-#include <iostream>
-#include <memory>                 // for unique_ptr, make_unique, operator==
 #include <numeric>                // for accumulate
 #include <ranges>
 #include <vector>
-#include <string>                 // for basic_string, string
 #include "../include/bitboard.h"  // for Position_t, set_bit, get_bit, rank_...
 
 
-std::unique_ptr<Chess_Board> create_chess_board() {
-    // Helper function to generate bitboard for a set of positions
-    auto generate_bitboard = [](const std::array<Position, 8> &positions) {
-        return std::accumulate(positions.begin(), positions.end(), 0ULL, set_bit);
-    };
-
-    auto board = std::make_unique<Chess_Board>();
-
-    // Initialize black pieces
-    board->black_king = set_bit(0ULL, Position_t::E8);
-    board->black_queens = set_bit(0ULL, Position_t::D8);
-    board->black_rooks = set_bit(0ULL, Position_t::A8) | set_bit(0ULL, Position_t::H8);
-    board->black_knights = set_bit(0ULL, Position_t::B8) | set_bit(0ULL, Position_t::G8);
-    board->black_bishops = set_bit(0ULL, Position_t::C8) | set_bit(0ULL, Position_t::F8);
-
-    // Define black pawn positions
-    std::array<Position, 8> black_pawn_positions = {
-        Position_t::A7, Position_t::B7, Position_t::C7, Position_t::D7,
-        Position_t::E7, Position_t::F7, Position_t::G7, Position_t::H7
-    };
-    board->black_pawns = generate_bitboard(black_pawn_positions);
-
-    // Initialize white pieces
-    board->white_king = set_bit(0ULL, Position_t::E1);
-    board->white_queens = set_bit(0ULL, Position_t::D1);
-    board->white_rooks = set_bit(0ULL, Position_t::A1) | set_bit(0ULL, Position_t::H1);
-    board->white_knights = set_bit(0ULL, Position_t::B1) | set_bit(0ULL, Position_t::G1);
-    board->white_bishops = set_bit(0ULL, Position_t::C1) | set_bit(0ULL, Position_t::F1);
-
-    // Define white pawn positions
-    std::array<Position, 8> white_pawn_positions = {
-        Position_t::A2, Position_t::B2, Position_t::C2, Position_t::D2,
-        Position_t::E2, Position_t::F2, Position_t::G2, Position_t::H2
-    };
-    board->white_pawns = generate_bitboard(white_pawn_positions);
-
-    return board;
-}
-
-
-void parce_en_passant_notation(const std::string_view &str) {
+uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_view &str) {
     std::size_t rank = 8;
     std::size_t file = 8;
 
@@ -117,43 +73,44 @@ void parce_en_passant_notation(const std::string_view &str) {
             default: break;
         }
         if (rank < 8 && file < 8) {
-            std::cout << "En Passant @ " << print_position(rank_file_to_position(rank, file)) << "\n";
+            set_en_passant_square(rank_file_to_position(rank, file));
+            return 1ULL << 1;
         }
     }
+    return 0ULL;
 }
 
-[[nodiscard]] std::unique_ptr<Chess_Board> process_fen_board_setup(std::unique_ptr<Chess_Board> &&board,
-                                                                   const std::string_view &str) {
+void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view &str) {
     std::size_t rank = 0;
     std::size_t file = 0;
 
     for (const auto &c: str) {
-        Position position = rank_file_to_position(rank, file);
+        Position position = rank_file_to_position(7-rank, file);
         file = (file + 1) & 7;
         switch (c) {
-            case 'p': board->black_pawns = set_bit(board->black_pawns, position);
+            case 'p': set_black_pawns(set_bit(black_pawns(), position));
                 break;
-            case 'P': board->white_pawns = set_bit(board->white_pawns, position);
+            case 'P': set_white_pawns(set_bit(white_pawns(), position));
                 break;
-            case 'n': board->black_knights = set_bit(board->black_knights, position);
+            case 'n': set_black_knights(set_bit(black_knights(), position));
                 break;
-            case 'N': board->white_knights = set_bit(board->white_knights, position);
+            case 'N': set_white_knights(set_bit(white_knights(), position));
                 break;
-            case 'b': board->black_bishops = set_bit(board->black_bishops, position);
+            case 'b': set_black_bishops(set_bit(black_bishops(), position));
                 break;
-            case 'B': board->white_bishops = set_bit(board->white_bishops, position);
+            case 'B': set_white_bishops(set_bit(white_bishops(), position));
                 break;
-            case 'r': board->black_rooks = set_bit(board->black_rooks, position);
+            case 'r': set_black_rooks(set_bit(black_rooks(), position));
                 break;
-            case 'R': board->white_rooks = set_bit(board->white_rooks, position);
+            case 'R': set_white_rooks(set_bit(white_rooks(), position));
                 break;
-            case 'q': board->black_queens = set_bit(board->black_queens, position);
+            case 'q': set_black_queens(set_bit(black_queens(), position));
                 break;
-            case 'Q': board->white_queens = set_bit(board->white_queens, position);
+            case 'Q': set_white_queens(set_bit(white_queens(), position));
                 break;
-            case 'k': board->black_king = set_bit(board->black_king, position);
+            case 'k': set_black_king(set_bit(black_king(), position));
                 break;
-            case 'K': board->white_king = set_bit(board->white_king, position);
+            case 'K': set_white_king(set_bit(white_king(), position));
                 break;
             case '/': if (++rank > 7) break;
                 file = 0;
@@ -176,43 +133,54 @@ void parce_en_passant_notation(const std::string_view &str) {
             default: break;
         }
     }
-    return board;
 }
 
-bool parse_player_to_move(const std::string_view &str) {
-    if (str == "w") {
-        std::cout << "white to move\n";
-    } else if (str == "b") {
-        std::cout << "black to move\n";
-    } else {
-        std::cout << "Invalid FEN string\n";
-        return false;
+void Kangaroo::Chess_Board::parse_fen_player_to_move(const std::string_view &str) {
+
+    if (str == "-") {
+        set_color_to_move(Color::white);
+        return;
     }
-    return true;
+
+    if (str == "w" || str == "W") {
+        set_color_to_move(Color::white);
+        return;
+    }
+
+    if (str == "b" || str == "B") {
+        set_color_to_move(Color::black);
+        return;
+    }
+
+    throw ReadFENException();
 }
 
-bool parse_castling_information(const std::string_view &str) {
-    for (const auto &c: str) {
+void Kangaroo::Chess_Board::parse_fen_castling_information(const std::string_view &fen) {
+
+    set_white_king_castle(false);
+    set_white_queen_castle(false);
+    set_black_king_castle(false);
+    set_black_queen_castle(false);
+
+    for (const auto &c: fen) {
         switch (c) {
-            case 'K': std::cout << "White king can castle to the king-side\n";
+            case 'K': set_white_king_castle(true);
                 break;
-            case 'Q': std::cout << "White king can castle to the queen-side\n";
+            case 'Q': set_white_queen_castle(true);
                 break;
-            case 'k': std::cout << "Black king can castle to the king-side\n";
+            case 'k': set_black_king_castle(true);
                 break;
-            case 'q': std::cout << "Black king can castle to the queen-side\n";
+            case 'q': set_black_queen_castle(true);
                 break;
             case '-': break;
-            default: std::cout << "Invalid FEN string\n";
-                return false;
+            default: throw ReadFENException();
         }
     }
-    return true;
 }
 
-[[nodiscard]] std::unique_ptr<Chess_Board> parse_half_move_number(std::unique_ptr<Chess_Board> &&board,
-                                                                  const std::string_view &str) {
-    for (const auto &c: str) {
+void Kangaroo::Chess_Board::parse_fen_half_move_number(const std::string_view &fen) {
+    set_half_move_number(0);
+    for (const auto &c: fen) {
         switch (c) {
             case '0':
             case '1':
@@ -224,19 +192,17 @@ bool parse_castling_information(const std::string_view &str) {
             case '7':
             case '8':
             case '9':
-                board->half_move_number *= 10;
-                board->half_move_number += static_cast<std::size_t>(c) - static_cast<std::size_t>('0');
+                set_half_move_number(
+                    half_move_number() * 10 + (static_cast<std::size_t>(c) - static_cast<std::size_t>('0')));
                 break;
             default: break;
         }
     }
-    std::cout << "Half move number: " << board->half_move_number << "\n";
-    return board;
 }
 
-[[nodiscard]] std::unique_ptr<Chess_Board> parse_full_move_number(std::unique_ptr<Chess_Board> &&board,
-                                                                  const std::string_view &str) {
-    for (const auto &c: str) {
+void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view &fen) {
+    set_full_move_number(0);
+    for (const auto &c: fen) {
         switch (c) {
             case '0':
             case '1':
@@ -248,53 +214,47 @@ bool parse_castling_information(const std::string_view &str) {
             case '7':
             case '8':
             case '9':
-                board->full_move_number *= 10;
-                board->full_move_number += static_cast<std::size_t>(c) - static_cast<std::size_t>('0');
+                set_full_move_number(
+                    10 * full_move_number() + (static_cast<std::size_t>(c) - static_cast<std::size_t>('0')));
                 break;
             default: break;
         }
     }
-    std::cout << "Full move number: " << board->full_move_number << "\n";
-
-    return board;
 }
 
-std::unique_ptr<Chess_Board> create_chess_board_from_fen(const std::string_view &fen) {
-    auto board = std::make_unique<Chess_Board>();
-
+Kangaroo::Chess_Board::Chess_Board(const std::string_view &fen) {
     std::vector<std::string_view> tokens;
     for (auto &&part: std::views::split(fen, ' ')) {
         tokens.emplace_back(std::to_address(part.begin()), std::ranges::distance(part));
     }
 
-    if (tokens.size() < 6) {
-        std::cout << "Invalid FEN string\n";
-        return nullptr;
+    if (tokens.size() < 3) {
+        throw ReadFENException();
     }
 
-    board = process_fen_board_setup(std::move(board), tokens[0]);
+    process_fen_board_setup(tokens[0]);
+    parse_fen_player_to_move(tokens[1]);
+    parse_fen_castling_information(tokens[2]);
 
-    if (!parse_player_to_move(tokens[1])) return nullptr;
+    if (tokens.size() >= 4) {
+        flags |= parce_fen_en_passant_notation(tokens[3]);
+    }
 
-    if (!parse_castling_information(tokens[2])) return nullptr;
+    if (tokens.size() >= 5) {
+        parse_fen_half_move_number(tokens[4]);
+    }
 
-    parce_en_passant_notation(tokens[3]);
+    if (tokens.size() >= 6) {
+        parse_fen_full_move_number(tokens[5]);
+    }
 
-    board = parse_half_move_number(std::move(board), tokens[4]);
+    set_white_pieces(white_pawns() | white_knights() | white_bishops() | white_rooks() | white_queens() | white_king());
+    set_black_pieces(black_pawns() | black_knights() | black_bishops() | black_rooks() | black_queens() | black_king());
 
-    board = parse_full_move_number(std::move(board), tokens[5]);
-
-    board->white_pieces = board->white_pawns | board->white_knights | board->white_bishops | board->white_rooks | board
-                          ->white_queens | board->white_king;
-    board->black_pieces = board->black_pawns | board->black_knights | board->black_bishops | board->black_rooks | board
-                          ->black_queens | board->black_king;
-
-    board->all_pieces = board->white_pieces | board->black_pieces;
-
-    return board;
+    set_all_pieces(white_pieces() | black_pieces());
 }
 
-void print_chess_board(const Chess_Board *board) {
+void Kangaroo::print_chess_board(const Chess_Board *board) {
     constexpr std::string_view black_king_c = " \u{2654} ";
     constexpr std::string_view black_queen_c = " \u{2655} ";
     constexpr std::string_view black_rook_c = " \u{2656} ";
@@ -318,30 +278,30 @@ void print_chess_board(const Chess_Board *board) {
     for (std::size_t rank = 8; rank > 0; --rank) {
         std::print("  {}   ", rank);
         for (std::size_t file = 0; file < 8; ++file) {
-            if (get_bit(board->black_king, rank_file_to_position(rank - 1, file)))
+            if (get_bit(board->black_king(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", black_king_c);
-            else if (get_bit(board->black_queens, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->black_queens(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", black_queen_c);
-            else if (get_bit(board->black_rooks, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->black_rooks(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", black_rook_c);
-            else if (get_bit(board->black_knights, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->black_knights(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", black_knight_c);
-            else if (get_bit(board->black_bishops, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->black_bishops(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", black_bishop_c);
-            else if (get_bit(board->black_pawns, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->black_pawns(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", black_pawn_c);
 
-            else if (get_bit(board->white_king, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->white_king(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", white_king_c);
-            else if (get_bit(board->white_queens, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->white_queens(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", white_queen_c);
-            else if (get_bit(board->white_rooks, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->white_rooks(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", white_rook_c);
-            else if (get_bit(board->white_knights, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->white_knights(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", white_knight_c);
-            else if (get_bit(board->white_bishops, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->white_bishops(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", white_bishop_c);
-            else if (get_bit(board->white_pawns, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(board->white_pawns(), rank_file_to_position(rank - 1, file)))
                 std::print("{}", white_pawn_c);
             else std::print("{}", empty_c);
         }

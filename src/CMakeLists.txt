@@ -85,6 +85,8 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/constants.h
         ../include/types.h
         ../include/move_generator.h
+        Board_Status.cpp
+        ../include/Board_Status.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC

@@ -10,10 +10,41 @@
 
 using MagicNumber = uint64_t;
 using Bitboard = uint64_t;
+using Move = uint64_t;
 
 using Slider = enum class Slider_t : std::size_t {
     rook = 0,
     bishop = 1,
+};
+
+using Chess_Pieces = enum class Chess_Pieces_t : std::size_t {
+    white_pawn = 0,
+    black_pawn = 1,
+    white_knight = 2,
+    black_knight = 3,
+    white_bishop = 4,
+    black_bishop = 5,
+    white_rook = 6,
+    black_rook = 7,
+    white_queen = 8,
+    black_queen = 9,
+    white_king = 10,
+    black_king = 11
+};
+
+inline constexpr std::array All_Pieces = {
+    Chess_Pieces::white_pawn,
+    Chess_Pieces::black_pawn,
+    Chess_Pieces::white_knight,
+    Chess_Pieces::black_knight,
+    Chess_Pieces::white_bishop,
+    Chess_Pieces::black_bishop,
+    Chess_Pieces::white_rook,
+    Chess_Pieces::black_rook,
+    Chess_Pieces::white_queen,
+    Chess_Pieces::black_queen,
+    Chess_Pieces::white_king,
+    Chess_Pieces::black_king
 };
 
 /**
@@ -86,7 +117,7 @@ using Position = enum class Position_t  : std::size_t {
     H8 = 63
 };
 
-constexpr std::array<Position, 64> All_Positions = {
+inline constexpr std::array<Position, 64> All_Positions = {
     Position_t::A1, Position_t::B1, Position_t::C1, Position_t::D1, Position_t::E1, Position_t::F1, Position_t::G1, Position_t::H1,
     Position_t::A2, Position_t::B2, Position_t::C2, Position_t::D2, Position_t::E2, Position_t::F2, Position_t::G2, Position_t::H2,
     Position_t::A3, Position_t::B3, Position_t::C3, Position_t::D3, Position_t::E3, Position_t::F3, Position_t::G3, Position_t::H3,

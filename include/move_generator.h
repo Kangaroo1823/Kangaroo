@@ -6,6 +6,8 @@
 
 #ifndef MOVE_GENERATOR_H
 #define MOVE_GENERATOR_H
+#include <filesystem>
+#include "Board_Status.h"
 #include "constants_attacks.h"
 
 template<Slider slider>
@@ -62,41 +64,41 @@ template<Color color>
  * @return A Bitboard representing all the squares that the specified piece can attack
  *         from its given position.
  */
-constexpr Bitboard attacked_squares_by(const Chess_Board *board) {
+constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
     using enum Color_t;
 
     // create attack mask for pawns
     const Bitboard pawn_attacks = create_pawn_attacks_for<color == white ? white : black>(
-        color == white ? board->white_pawns : board->black_pawns
+        color == white ? board->white_pawns() : board->black_pawns()
     );
 
     // create the attack mask for kings
-    const Bitboard king_attacks = create_king_attacks_for(color == white ? board->white_king : board->black_king);
+    const Bitboard king_attacks = create_king_attacks_for(color == white ? board->white_king() : board->black_king());
 
     // ... for knights
     const Bitboard knight_attacks = create_knight_attacks_for(color == white
-                                                                  ? board->white_knights
-                                                                  : board->black_knights);
+                                                                  ? board->white_knights()
+                                                                  : board->black_knights());
 
     // ... for rooks
-    const Bitboard rook_attacks = get_attacks_for<Slider::rook>(board->all_pieces,
+    const Bitboard rook_attacks = get_attacks_for<Slider::rook>(board->all_pieces(),
                                                                 color == white
-                                                                    ? board->white_rooks
-                                                                    : board->black_rooks);
+                                                                    ? board->white_rooks()
+                                                                    : board->black_rooks());
 
     // ... for bishops
-    const Bitboard bishop_attacks = get_attacks_for<Slider::bishop>(board->all_pieces,
+    const Bitboard bishop_attacks = get_attacks_for<Slider::bishop>(board->all_pieces(),
                                                                     color == white
-                                                                        ? board->white_bishops
-                                                                        : board->black_bishops);
+                                                                        ? board->white_bishops()
+                                                                        : board->black_bishops());
 
     // ... and for queens
-    Bitboard queen_attacks = get_attacks_for<Slider_t::bishop>(board->all_pieces,
+    Bitboard queen_attacks = get_attacks_for<Slider_t::bishop>(board->all_pieces(),
                                                                color == white
-                                                                   ? board->white_queens
-                                                                   : board->black_queens);
-    queen_attacks |= get_attacks_for<Slider_t::rook>(board->all_pieces,
-                                                     color == white ? board->white_queens : board->black_queens);
+                                                                   ? board->white_queens()
+                                                                   : board->black_queens());
+    queen_attacks |= get_attacks_for<Slider_t::rook>(board->all_pieces(),
+                                                     color == white ? board->white_queens() : board->black_queens());
 
     const Bitboard attacks = pawn_attacks | knight_attacks | rook_attacks | bishop_attacks | king_attacks |
                              queen_attacks;
@@ -105,7 +107,7 @@ constexpr Bitboard attacked_squares_by(const Chess_Board *board) {
 }
 
 template<Color color>
-constexpr Bitboard is_position_attacked_by(const Position &position, const Chess_Board *board) {
+constexpr Bitboard is_position_attacked_by(const Position &position, const Kangaroo::Chess_Board *board) {
     using enum Color_t;
 
     Bitboard attacks = 0ULL;
@@ -114,47 +116,33 @@ constexpr Bitboard is_position_attacked_by(const Position &position, const Chess
     attacks |= (color == white
                     ? Constants::black_pawn_attacks[std::to_underlying(position)]
                     : Constants::white_pawn_attacks[std::to_underlying(position)]) & (color == white
-        ? board->white_pawns
-        : board->black_pawns);
+        ? board->white_pawns()
+        : board->black_pawns());
 
     // check for knight attack
     attacks |= Constants::knight_attacks[std::to_underlying(position)] & (color == white
-                                                                              ? board->white_knights
-                                                                              : board->black_knights);
+                                                                              ? board->white_knights()
+                                                                              : board->black_knights());
 
     // check for king attack
     attacks |= Constants::king_attacks[std::to_underlying(position)] & (color == white
-                                                                            ? board->white_king
-                                                                            : board->black_king);
+                                                                            ? board->white_king()
+                                                                            : board->black_king());
 
     // check for bishop and queen attack
-    attacks |= get_attacks_for_position<Slider::bishop>(position, board->all_pieces) &
-    ((color == white ? board->white_bishops : board->black_bishops) | (color == white
-                                                                           ? board->white_queens
-                                                                           : board->black_queens));
+    attacks |= get_attacks_for_position<Slider::bishop>(position, board->all_pieces()) &
+    ((color == white ? board->white_bishops() : board->black_bishops()) | (color == white
+                                                                               ? board->white_queens()
+                                                                               : board->black_queens()));
 
     // check for rook and queen attack
-    attacks |= get_attacks_for_position<Slider::rook>(position, board->all_pieces) &
-    ((color == white ? board->white_rooks : board->black_rooks) | (color == white
-                                                                       ? board->white_queens
-                                                                       : board->black_queens));
+    attacks |= get_attacks_for_position<Slider::rook>(position, board->all_pieces()) &
+    ((color == white ? board->white_rooks() : board->black_rooks()) | (color == white
+                                                                           ? board->white_queens()
+                                                                           : board->black_queens()));
     return attacks;
 }
 
 
-template<Color color, WhiteKingSideCastle white_king_side_castle, WhiteQueenSideCastle white_queen_side_castle,
-    BlackKingSideCastle black_king_side_castle, BlackQueenSideCastle black_queen_side_castle, En_Passant en_passant,
-    typename CallBackType>
-uint64_t generate_moves(const Chess_Board *board, CallBackType callback) {
-    uint64_t moves = 0ULL;
-
-    // generate moves for pawns
-    Bitboard pawn_moves = (color == Color::white ? board->white_pawns >> 8 : board->black_pawns << 8) ^ board->
-                          all_pieces;
-    moves += Bitcount(pawn_moves);
-    Bitloop(pawn_moves, callback);
-
-    return moves;
-}
 
 #endif //MOVE_GENERATOR_H
