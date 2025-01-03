@@ -6,11 +6,8 @@
 #define CHESS_BOARD_H
 
 #include <memory>
-#include <ostream>
-#include <print>
 
 #include "types.h"
-
 #include "base.h"
 #include "bitboard.h"
 #include "Board_Status.h"
@@ -28,7 +25,7 @@ inline constexpr std::string_view fen_cmk_position =
 
 namespace Kangaroo {
     template<Color color>
-    constexpr _Inline Bitboard regular_pawn_move(const Bitboard mask) {
+    constexpr _Inline Bitboard regular_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
         if constexpr (color == Color::white) {
@@ -40,12 +37,44 @@ namespace Kangaroo {
         return pawn_move;
     }
 
-    constexpr _Inline bool is_pawn_mode_admissible(Bitboard pawn_move, const Bitboard &occupied_squares) {
-        bool ret = (pawn_move & occupied_squares) == 0;
+    template<Color color>
+    constexpr _Inline Bitboard double_pawn_push(const Bitboard mask) {
+        Bitboard pawn_move;
+
+        if constexpr (color == Color::white) {
+            pawn_move = mask << 16;
+        } else {
+            pawn_move = mask >> 16;
+        }
+
+        return pawn_move;
+    }
+
+    template<Color color>
+    constexpr _Inline Bitboard pawn_base_row() {
+        if constexpr (color == Color::white) {
+            return 0x000000000000FF00ULL;
+        } else {
+            return 0x00FF000000000000ULL;
+        }
+    }
+
+    template<Color color>
+    [[nodiscard]] constexpr _Inline bool is_double_pawn_push_admissible(const Bitboard pawn, const Bitboard pawn_move,
+                                                          const Bitboard &occupied_squares) {
+        if (pawn & pawn_base_row<color>()) {
+            return (pawn_move & occupied_squares) == 0;
+        }
+
+        return false;
+    }
+
+    [[nodiscard]] constexpr _Inline bool is_pawn_move_admissible(Bitboard pawn_move, const Bitboard &occupied_squares) {
+        const bool ret = (pawn_move & occupied_squares) == 0;
         return ret;
     }
 
-    constexpr _Inline Bitboard make_move(const Bitboard from, const Bitboard to) {
+    [[nodiscard]] constexpr _Inline Bitboard make_move(const Bitboard from, const Bitboard to) {
         const Bitboard ret = from | to;
         return ret;
     }
@@ -214,11 +243,16 @@ namespace Kangaroo {
             Bitloop(pawns, [&](Bitboard pawns_remaining) {
                 const Bitboard pawn = 1ULL << square_of(pawns_remaining);
 
-                const Bitboard moved_pawn = regular_pawn_move<status.color>(pawn);
+                const Bitboard moved_pawn = regular_pawn_push<status.color>(pawn);
 
-                if (is_pawn_mode_admissible(moved_pawn, all_pieces())) {
+                if (is_pawn_move_admissible(moved_pawn, all_pieces())) {
                     callback(status.color == white ? white_pawn : black_pawn,
                              make_move(pawn, moved_pawn));
+                    const Bitboard moved_pawn_2 = double_pawn_push<status.color>(pawn);
+                    if (is_double_pawn_push_admissible<status.color>(pawn, moved_pawn_2, all_pieces())) {
+                        callback(status.color == white ? white_pawn : black_pawn,
+                                 make_move(pawn, moved_pawn_2));
+                    }
                 }
             });
 
