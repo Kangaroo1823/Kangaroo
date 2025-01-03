@@ -12,6 +12,7 @@
 #include "bitboard.h"
 #include "Board_Status.h"
 #include "colors.h"
+#include "constants.h"
 
 inline constexpr std::string_view fen_empty_board = "8/8/8/8/8/8/8/8 w - - 0 1 ";
 inline constexpr std::string_view fen_start_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
@@ -61,7 +62,7 @@ namespace Kangaroo {
 
     template<Color color>
     [[nodiscard]] constexpr _Inline bool is_double_pawn_push_admissible(const Bitboard pawn, const Bitboard pawn_move,
-                                                          const Bitboard &occupied_squares) {
+                                                                        const Bitboard &occupied_squares) {
         if (pawn & pawn_base_row<color>()) {
             return (pawn_move & occupied_squares) == 0;
         }
@@ -69,7 +70,7 @@ namespace Kangaroo {
         return false;
     }
 
-    [[nodiscard]] constexpr _Inline bool is_pawn_move_admissible(Bitboard pawn_move, const Bitboard &occupied_squares) {
+    [[nodiscard]] constexpr _Inline bool is_pawn_push_admissible(Bitboard pawn_move, const Bitboard &occupied_squares) {
         const bool ret = (pawn_move & occupied_squares) == 0;
         return ret;
     }
@@ -241,19 +242,31 @@ namespace Kangaroo {
             const Bitboard pawns = status.color == white ? white_pawns() : black_pawns();
 
             Bitloop(pawns, [&](Bitboard pawns_remaining) {
-                const Bitboard pawn = 1ULL << square_of(pawns_remaining);
+                const std::size_t pawn_square = square_of(pawns_remaining);
+                const Bitboard pawn = 1ULL << pawn_square;
 
-                const Bitboard moved_pawn = regular_pawn_push<status.color>(pawn);
-
-                if (is_pawn_move_admissible(moved_pawn, all_pieces())) {
+                // single move for pawns
+                if (const Bitboard moved_pawn = regular_pawn_push<status.color>(pawn); is_pawn_push_admissible(
+                    moved_pawn, all_pieces())) {
                     callback(status.color == white ? white_pawn : black_pawn,
                              make_move(pawn, moved_pawn));
-                    const Bitboard moved_pawn_2 = double_pawn_push<status.color>(pawn);
-                    if (is_double_pawn_push_admissible<status.color>(pawn, moved_pawn_2, all_pieces())) {
-                        callback(status.color == white ? white_pawn : black_pawn,
-                                 make_move(pawn, moved_pawn_2));
+
+                    // double move for pawns in base row
+                    if (pawn & pawn_base_row<status.color>()) {
+                        if (const Bitboard moved_pawn_2 = double_pawn_push<status.color>(pawn); is_pawn_push_admissible(
+                            moved_pawn_2, all_pieces())) {
+                            callback(status.color == white ? white_pawn : black_pawn,
+                                     make_move(pawn, moved_pawn_2));
+                        }
                     }
                 }
+
+                // see if we can capture anything
+                Bitloop(Constants::black_pawn_attacks[pawn_square] & (status.color == white ? black_pieces() : white_pieces()),[&](Bitboard pawn_attacks) {
+                    Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
+                    callback(status.color == white ? white_pawn : black_pawn, pawn, pawn_attack);
+                });
+
             });
 
             return 0ULL;
