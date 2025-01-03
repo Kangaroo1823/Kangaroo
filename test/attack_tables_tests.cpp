@@ -132,7 +132,7 @@ TEST(Attack_Tables_Generator, pawn_attacks) {
 
 template<Color color>
 Bitboard is_position_attacked_by_test_rig(const std::string_view &fen) {
-    std::unique_ptr<Chess_Board> board = create_chess_board_from_fen(fen);
+    const auto board = std::make_unique<Kangaroo::Chess_Board>(fen);;
 
     Bitboard result = 0ULL;
 

@@ -9,6 +9,7 @@
 #include <filesystem>
 #include "Board_Status.h"
 #include "constants_attacks.h"
+#include "attack_tables.h"
 
 template<Slider slider>
 constexpr Bitboard get_attacks_for_position(const Position &position, const Bitboard occupancy) {
