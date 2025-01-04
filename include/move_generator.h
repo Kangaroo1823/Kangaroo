@@ -38,7 +38,7 @@ constexpr Bitboard get_attacks_for(const Bitboard occupancy, const Bitboard piec
     Bitboard result = 0ULL;
 
     // loop over all set bits
-    Bitloop(piece_positions, [&result, &occupancy](Bitboard p) {
+    Bitloop(piece_positions, p) {
         // this is the inner part of the loop. It is being called for each set bit with |p| having its
         // lowest set bit equal to the bit for which the interation was called.
 
@@ -48,7 +48,7 @@ constexpr Bitboard get_attacks_for(const Bitboard occupancy, const Bitboard piec
 
         // add the attacked squares (=bits set to 1 (one)) to the result.
         result |= get_attacks_for_position<slider>(position, occupancy);
-    });
+    }
 
     return result;
 }

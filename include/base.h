@@ -31,28 +31,4 @@
 
 
 
-/**
- * @brief Returns the given value as a compile-time constant.
- *
- * This function can be used to force evaluation at compile
- * time of its argument
- *
- * @param value The value to be marked as a compile-time constant.
- * @return The input value, as a constant expression.
- */
-#if defined(__GNUC__)
-consteval auto as_constant(auto value) {
-    return value;
-}
-#endif
-//
-#if defined(__clang__)
-#define as_constant(value) value
-//
-// template< typename ... Param>
-// consteval decltype(auto) as_constant(Param && ... param) {
-//     return std::invoke(std::forward<Param>(param)...);
-// }
-#endif
-
 #endif //BASE_H

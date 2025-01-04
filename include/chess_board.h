@@ -6,13 +6,14 @@
 #define CHESS_BOARD_H
 
 #include <memory>
+#include <boost/bind/bind.hpp>
 
 #include "types.h"
-#include "base.h"
 #include "bitboard.h"
 #include "Board_Status.h"
 #include "colors.h"
 #include "constants.h"
+#include "../cpm_source_cache/googletest/c89ee04fa01138c2db034b2627b51a145ba09878/googletest/googletest/include/gtest/gtest_prod.h"
 
 inline constexpr std::string_view fen_empty_board = "8/8/8/8/8/8/8/8 w - - 0 1 ";
 inline constexpr std::string_view fen_start_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
@@ -29,7 +30,7 @@ inline constexpr std::string_view fen_cmk_position =
 
 namespace Kangaroo {
     template<Color color>
-    constexpr _Inline Bitboard regular_pawn_push(const Bitboard mask) {
+    constexpr Bitboard regular_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
         if constexpr (color == Color::white) {
@@ -42,7 +43,7 @@ namespace Kangaroo {
     }
 
     template<Color color>
-    constexpr _Inline Bitboard double_pawn_push(const Bitboard mask) {
+    constexpr Bitboard double_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
         if constexpr (color == Color::white) {
@@ -55,7 +56,7 @@ namespace Kangaroo {
     }
 
     template<Color color>
-    constexpr _Inline Bitboard pawn_base_row() {
+    constexpr Bitboard pawn_base_row() {
         if constexpr (color == Color::white) {
             return 0x000000000000FF00ULL;
         } else {
@@ -64,8 +65,8 @@ namespace Kangaroo {
     }
 
     template<Color color>
-    [[nodiscard]] constexpr _Inline bool is_double_pawn_push_admissible(const Bitboard pawn, const Bitboard pawn_move,
-                                                                        const Bitboard &occupied_squares) {
+    [[nodiscard]] constexpr bool is_double_pawn_push_admissible(const Bitboard pawn, const Bitboard pawn_move,
+                                                                const Bitboard &occupied_squares) {
         if (pawn & pawn_base_row<color>()) {
             return (pawn_move & occupied_squares) == 0;
         }
@@ -73,12 +74,12 @@ namespace Kangaroo {
         return false;
     }
 
-    [[nodiscard]] constexpr _Inline bool is_pawn_push_admissible(Bitboard pawn_move, const Bitboard &occupied_squares) {
+    [[nodiscard]] constexpr bool is_pawn_push_admissible(Bitboard pawn_move, const Bitboard &occupied_squares) {
         const bool ret = (pawn_move & occupied_squares) == 0;
         return ret;
     }
 
-    [[nodiscard]] constexpr _Inline Bitboard make_move(const Bitboard from, const Bitboard to) {
+    [[nodiscard]] constexpr Bitboard make_move(const Bitboard from, const Bitboard to) {
         const Bitboard ret = from | to;
         return ret;
     }
@@ -91,6 +92,11 @@ namespace Kangaroo {
 
 
     class Chess_Board {
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
+
     public:
         explicit Chess_Board(const std::string_view &fen);
 
@@ -236,15 +242,17 @@ namespace Kangaroo {
             return (flags & 0x40) != 0;
         }
 
-
         template<Kangaroo::Board_Status status, typename CallBackType>
-        constexpr uint64_t generate_pawn_moves([[maybe_unused]] CallBackType callback) {
+        constexpr uint64_t generate_pawn_moves(CallBackType callback) {
             using enum Color_t;
             using enum Chess_Pieces;
 
-            const Bitboard pawns = status.color == white ? white_pawns() : black_pawns();
+            Bitboard pawns = status.color == white ? white_pawns() : black_pawns();
 
-            Bitloop(pawns, [&](Bitboard pawns_remaining) {
+            Bitloop(pawns, pawns_remaining) {
+                using enum Color_t;
+                using enum Chess_Pieces;
+
                 const std::size_t pawn_square = square_of(pawns_remaining);
                 const Bitboard pawn = 1ULL << pawn_square;
 
@@ -264,18 +272,19 @@ namespace Kangaroo {
                     }
                 }
 
-                // see if we can capture anything
-                Bitloop((status.color == white
-                             ? Constants::white_pawn_attacks[pawn_square]
-                             : Constants::black_pawn_attacks[pawn_square]) & (status.color == white
-                                                                                  ? black_pieces()
-                                                                                  : white_pieces()),
-                        [&](Bitboard pawn_attacks) {
-                            Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
-                            callback(status.color == white ? white_pawn : black_pawn, make_move(pawn, pawn_attack));
-                        });
-            });
+                Bitboard mask = (status.color == white
+                                     ? Constants::white_pawn_attacks[pawn_square]
+                                     : Constants::black_pawn_attacks[pawn_square]);
+                mask &= (status.color == white
+                             ? black_pieces()
+                             : white_pieces());
 
+                // see if we can capture anything
+                Bitloop(mask, pawn_attacks) {
+                    Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
+                    callback(status.color == white ? white_pawn : black_pawn, make_move(pawn, pawn_attack));
+                }
+            }
             return 0ULL;
         }
 

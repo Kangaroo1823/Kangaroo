@@ -7,25 +7,26 @@
 #include "benchmark/benchmark.h"
 #include "../tools/attack_tables.h"
 
-const std::unique_ptr<Chess_Board> board =  create_chess_board_from_fen( fen_tricky_position_w );
+const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
 
 // cppcheck-suppress constParameterCallback
-static void BM_is_position_attacked_by(benchmark::State& state) {
+static void BM_move_generator(benchmark::State &state) {
 
-    Bitboard is_attacked = 0ULL;
+    for ([[maybe_unused]] auto _: state) {
 
-    for ([[maybe_unused]] auto _ : state) {
+        uint64_t cntr = 0ULL;
 
-        for (const auto& position : All_Positions ) {
-         //   is_attacked = is_position_attacked_by<Color::white>(position, board.get());
-        }
+        board->generate_moves<Kangaroo::Board_Status(0x3d)>([&cntr]([[maybe_unused]] const Chess_Pieces chess_piece,
+                                           [[maybe_unused]] const Bitboard is_attacked) {
+            ++cntr;
+        });
+
+        benchmark::DoNotOptimize(cntr);
 
     }
 
-    benchmark::DoNotOptimize(is_attacked);
-
 }
 
-BENCHMARK(BM_is_position_attacked_by);
+BENCHMARK(BM_move_generator);
 
 BENCHMARK_MAIN();

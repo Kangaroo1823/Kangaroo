@@ -165,24 +165,14 @@ constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bit
     }
 }
 
-template<typename Fn>
-/**
- * @brief Iterates through the bits set in a Bitboard and applies a function to each.
- *
- * This function iterates over each bit that is set (1) in the given Bitboard `x`.
- * During each iteration, the provided callable `f` is invoked with the current bit
- * represented as a Bitboard. The loop operates by successively clearing the least
- * significant set bit using the `_blsr_u64` intrinsic.
- *
- * @tparam Fn The type of the callable object. Must be invokable with a Bitboard.
- * @param x The Bitboard to iterate through. Each set bit (1) in `x` will be visited once.
- * @param f The callable to apply to each set bit. It must accept a single parameter of type Bitboard.
- */
-constexpr void Bitloop(const Bitboard x, Fn f) {
-    for(Bitboard y = x; y != 0; y = _blsr_u64(y)) {
-        f(y);
-    }
-}
+
+#define Bitloop(x,y) for(std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
+
+// constexpr void Bitloop(const Bitboard x, Fn f) {
+//     for(Bitboard y = x; y != 0; y = _blsr_u64(y)) {
+//         f(y);
+//     }
+// }
 
 
 
