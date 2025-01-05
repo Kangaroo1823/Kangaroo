@@ -14,6 +14,7 @@
 #include "bitboard.h"
 #include "magic_numbers.h"
 #include "constants_masks.h"
+#include "constants_magics.h"
 
 template<Slider slider>
 bool check_magic_number(const Position position_of_figure, const MagicNumber magic_number) {

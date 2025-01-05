@@ -2,20 +2,7 @@ project(KangarooConstantsGenerator)
 
 
 set(CONSTANTS_GENERATOR_SOURCES
-        constants_generator.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
-        ../include/colors.h
-        ../src/chess_board.cpp
-        ../include/chess_board.h
-        attack_masks.h
-        create_possible_slider_moves.h
-        ../include/base.h
-        magic_numbers.h
-        ../src/magic_numbers.cpp
-        ../include/constants.h
-        ../include/types.h
-        ../include/move_generator.h
+
 )
 
 ################################
@@ -23,7 +10,17 @@ set(CONSTANTS_GENERATOR_SOURCES
 # masks-generator
 #
 ################################
-add_executable(Kangaroo_constants_generator_masks ${CONSTANTS_GENERATOR_SOURCES})
+add_executable(Kangaroo_constants_generator_masks
+        constants_generator.cpp
+        ../include/bitboard.h
+        ../src/bitboard.cpp
+        ../include/colors.h
+        attack_masks.h
+        create_possible_slider_moves.h
+        ../include/base.h
+        ../include/constants.h
+        ../include/types.h
+        ../include/move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_masks
         PUBLIC
         Kangaroo_warnings
@@ -66,7 +63,18 @@ add_custom_target(
 # magics-generator
 #
 ################################
-add_executable(Kangaroo_constants_generator_magics ${CONSTANTS_GENERATOR_SOURCES})
+add_executable(Kangaroo_constants_generator_magics constants_generator.cpp
+        ../include/bitboard.h
+        ../src/bitboard.cpp
+        ../include/colors.h
+        attack_masks.h
+        create_possible_slider_moves.h
+        ../include/base.h
+        magic_numbers.h
+        magic_numbers.cpp
+        ../include/constants.h
+        ../include/types.h
+        ../include/move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_magics
         PUBLIC
         Kangaroo_warnings
@@ -96,10 +104,7 @@ add_custom_target(
         DEPENDS "${CMAKE_BINARY_DIR}/constants_magics.h"
 
 )
-
-
 add_dependencies(Kangaroo_constants_generator_magics generate_masks)
-
 
 
 ################################
@@ -107,7 +112,19 @@ add_dependencies(Kangaroo_constants_generator_magics generate_masks)
 # attacks-generator
 #
 ################################
-add_executable(Kangaroo_constants_generator_attacks ${CONSTANTS_GENERATOR_SOURCES})
+add_executable(Kangaroo_constants_generator_attacks
+        constants_generator.cpp
+        ../include/bitboard.h
+        ../src/bitboard.cpp
+        ../include/colors.h
+        attack_masks.h
+        create_possible_slider_moves.h
+        ../include/base.h
+        magic_numbers.h
+        magic_numbers.cpp
+        ../include/constants.h
+        ../include/types.h
+        ../include/move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_attacks
         PUBLIC
         Kangaroo_warnings
@@ -138,6 +155,14 @@ add_custom_target(
         DEPENDS "${CMAKE_BINARY_DIR}/constants_attacks.h"
 
 )
+
+##################################################
+#
+# pin-table-generator
+#
+##################################################
+
+
 
 ##################################################
 #

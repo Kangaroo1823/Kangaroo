@@ -77,11 +77,7 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/colors.h
         chess_board.cpp
         ../include/chess_board.h
-        ../tools/attack_masks.h
-        ../tools/create_possible_slider_moves.h
         ../include/base.h
-        ../tools/magic_numbers.h
-        magic_numbers.cpp
         ../include/constants.h
         ../include/types.h
         ../include/move_generator.h

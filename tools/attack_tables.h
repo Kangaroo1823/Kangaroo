@@ -12,6 +12,7 @@
 #include "../include/bitboard.h"
 #include "magic_numbers.h"
 #include "../include/colors.h"
+#include "constants_magics.h"
 
 /**********************************************************************************
  * Slider attacks

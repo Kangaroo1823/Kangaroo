@@ -7,11 +7,23 @@
 #include <vector>
 #include <fstream>
 #include <print>
+#include <ranges>
+#include <algorithm>
 
 #include "attack_masks.h"
-#include "attack_tables.h"
-#include "magic_numbers.h"
 #include "types.h"
+
+#ifdef GENERATE_ATTACKS
+#include "attack_tables.h"
+#endif
+
+#ifdef GENERATE_MAGICS
+#include "magic_numbers.h"
+#endif
+
+#ifdef GENERATE_MASKS
+#include "attack_masks.h"
+#endif
 
 
 template<typename T>
@@ -41,6 +53,7 @@ void generate_masks(std::ofstream &of) {
     output_array(of, rook_attack_masks, "rook_attack_masks", "Bitboard");
 }
 
+#ifdef GENERATE_MAGICS
 void generate_magic_numbers(std::ofstream &of) {
     const std::array<MagicNumber, 64> Bishop_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::bishop>();
     const std::array<MagicNumber, 64> Rook_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::rook>();
@@ -48,6 +61,7 @@ void generate_magic_numbers(std::ofstream &of) {
     output_array(of, Bishop_Magic_Numbers, "bishop_magic_numbers", "MagicNumber");
     output_array(of, Rook_Magic_Numbers, "rook_magic_numbers", "MagicNumber");
 }
+#endif
 
 #ifdef GENERATE_ATTACKS
 void generate_attacks(std::ofstream &of) {

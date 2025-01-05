@@ -7,7 +7,7 @@
 // Created by peter on 15/12/2024.
 //
 
-#include "../tools/magic_numbers.h"
+#include "magic_numbers.h"
 #include <print>   // for print
 #include <random>       // for mt19937_64
 

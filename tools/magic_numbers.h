@@ -16,7 +16,7 @@
 #include "../include/bitboard.h"
 #include "create_possible_slider_moves.h"
 #include "../include/types.h"
-#include "../include/constants.h"
+#include "constants_masks.h"
 
 
 namespace Constants::Impl {

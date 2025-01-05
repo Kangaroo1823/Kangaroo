@@ -7,7 +7,7 @@
 
 #include <array>
 #include "../include/bitboard.h"
-#include "../include/constants.h"
+
 
 /**********************************************************************************
  * Slider attack masks
