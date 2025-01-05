@@ -1,7 +1,5 @@
 // This is an independent project of an individual developer. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com//
 //
 //
 // Created by peter on 17/12/2024.
@@ -25,8 +23,8 @@ TEST(Attack_Tables_Generator, slider_attack_test) {
     constexpr Bitboard occupancy = set_bit(0ULL, Position::E7);
     constexpr auto position = Position::E4;
 
-    constexpr auto mask = Constants::rook_attack_masks[std::to_underlying(position)];
-    constexpr std::size_t hash_index = create_magic_hash_index<Slider::rook>(position, occupancy, Bitcount(mask));
+    constexpr Bitboard mask = Constants::rook_attack_masks[std::to_underlying(position)];
+    const std::size_t hash_index = create_magic_hash_index<Slider::rook>(position, occupancy, Bitcount(mask));
 
     print_bitboard(Constants::rook_attack_table[hash_index]);
 
@@ -104,11 +102,11 @@ Bitboard create_pawn_attacks_(const Color color, const Position position) {
     const Bitboard bitboard = set_bit(0ULL, position);
 
     if (color == Color_t::black) {
-        // color is equal to black
+        // color_p is equal to black
         attacks = (bitboard >> 7 & not_a_file);
         attacks = attacks | (bitboard >> 9 & not_h_file);
     } else {
-        // color is equal to white
+        // color_p is equal to white
         attacks = (bitboard << 7 & not_h_file);
         attacks = attacks | (bitboard << 9 & not_a_file);
     }
@@ -134,6 +132,8 @@ template<Color color>
 Bitboard is_position_attacked_by_test_rig(const std::string_view &fen) {
     const auto board = std::make_unique<Kangaroo::Chess_Board>(fen);;
 
+    Kangaroo::print_chess_board(board.get());
+
     Bitboard result = 0ULL;
 
     for (std::size_t rank = 0; rank < 8; ++rank) {
@@ -146,23 +146,25 @@ Bitboard is_position_attacked_by_test_rig(const std::string_view &fen) {
         }
     }
 
+    print_bitboard(result);
+
     return result;
 }
 
 TEST(Attack_Tables_Generator, is_position_attacked_by) {
     using enum Color;
 
-    ASSERT_EQ(2621440, is_position_attacked_by_test_rig<white>("8/4p3/8/4P3/5q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(1157442769150545920, is_position_attacked_by_test_rig<white>("8/4p3/8/4R3/5q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(44272527353856, is_position_attacked_by_test_rig<white>("8/4p3/8/4N3/5q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(72625113839191170, is_position_attacked_by_test_rig<white>("8/4p3/8/4B3/5q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(1230067882989737090, is_position_attacked_by_test_rig<white>("8/4p3/8/4Q3/5q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(241192927232, is_position_attacked_by_test_rig<white>("8/4p3/8/4K3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x0000280000000000, is_position_attacked_by_test_rig<white>("8/4p3/5q2/4P3/8/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x001010ef10101010, is_position_attacked_by_test_rig<white>("8/4p3/8/4R3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x0028440044280000, is_position_attacked_by_test_rig<white>("8/4p3/8/4N3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x8244280028040201, is_position_attacked_by_test_rig<white>("8/4p3/8/4B3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x825438ef38141211, is_position_attacked_by_test_rig<white>("8/4p3/8/4Q3/5q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x0000382838000000, is_position_attacked_by_test_rig<white>("8/4p3/8/4K3/5q2/8/8/8 w - - 0 1 "));
 
-    ASSERT_EQ(171798691840, is_position_attacked_by_test_rig<black>("8/4P3/8/4p3/5Q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(1157442769150545920, is_position_attacked_by_test_rig<black>("8/4P3/8/4r3/5Q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(44272527353856, is_position_attacked_by_test_rig<black>("8/4P3/8/4n3/5Q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(72625113839191170, is_position_attacked_by_test_rig<black>("8/4P3/8/4b3/5Q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(1230067882989737090, is_position_attacked_by_test_rig<black>("8/4P3/8/4q3/5Q2/8/8/8 w - - 0 1 "));
-    ASSERT_EQ(241192927232, is_position_attacked_by_test_rig<black>("8/4P3/8/4k3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x0000000028000000, is_position_attacked_by_test_rig<black>("8/4P3/8/4p3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x001010ef10101010, is_position_attacked_by_test_rig<black>("8/4P3/8/4r3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x0028440044280000, is_position_attacked_by_test_rig<black>("8/4P3/8/4n3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x8244280028040201, is_position_attacked_by_test_rig<black>("8/4P3/8/4b3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x825438ef38141211, is_position_attacked_by_test_rig<black>("8/4P3/8/4q3/5Q2/8/8/8 w - - 0 1 "));
+    ASSERT_EQ(0x0000382838000000, is_position_attacked_by_test_rig<black>("8/4P3/8/4k3/5Q2/8/8/8 w - - 0 1 "));
 }

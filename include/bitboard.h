@@ -25,7 +25,6 @@
 #include "types.h"
 
 
-
 constexpr Position rank_file_to_position(const std::size_t rank, const std::size_t file) {
     return All_Positions[rank * 8 + file];
 }
@@ -66,8 +65,9 @@ constexpr int64_t Bitcount_(Bitboard bitboard) {
 }
 
 constexpr int64_t Bitcount(const Bitboard board) {
+
     if consteval {
-        return Bitcount_(board);
+        Bitcount_(board);
     } else {
 #ifdef _MSC_VER
         return static_cast<int64_t>(__popcnt64(board));
@@ -97,11 +97,7 @@ constexpr Bitboard square_of_(const Bitboard bitboard) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Bitboard square_of(const Bitboard bitboard) {
-    if consteval {
-        return square_of_(bitboard);
-    } else {
-        return _tzcnt_u64(bitboard);
-    }
+    return _tzcnt_u64(bitboard);
 }
 
 /**
@@ -117,7 +113,7 @@ constexpr Bitboard square_of(const Bitboard bitboard) {
  * @return A Bitboard containing the extracted bits, densely packed.
  */
 constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
-    return _pext_u64(bitboard,mask);
+    return _pext_u64(bitboard, mask);
 }
 
 /**
@@ -133,7 +129,7 @@ constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
  *             in the occupancy creation.
  * @return A Bitboard representing the calculated occupancy based on the index and mask.
  */
-constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask ) {
+constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask) {
     Bitboard occupancy = 0ULL;
     Bitboard mask_copy = mask;
 
@@ -157,12 +153,8 @@ constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const B
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask ) {
-    if consteval {
-        return create_occupation_from_mask_(index, mask);
-    } else {
-        return _pdep_u64(index, mask);
-    }
+constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask) {
+    return _pdep_u64(index, mask);
 }
 
 
@@ -173,7 +165,6 @@ constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bit
 //         f(y);
 //     }
 // }
-
 
 
 constexpr Bitboard not_a_file = /*
@@ -188,7 +179,7 @@ constexpr Bitboard not_a_file = /*
     8   0  1  1  1  1  1  1  1
 
        bitboard as 64 bit integer: */
-       18374403900871474942ULL;
+        18374403900871474942ULL;
 
 constexpr Bitboard not_ab_file = /*
         A  B  C  D  E  F  G  H
@@ -202,7 +193,7 @@ constexpr Bitboard not_ab_file = /*
     8   0  0  1  1  1  1  1  1
 
        bitboard as 64 bit integer: */
-       18229723555195321596ULL;
+        18229723555195321596ULL;
 
 constexpr Bitboard not_h_file = /*
         A  B  C  D  E  F  G  H
@@ -216,7 +207,7 @@ constexpr Bitboard not_h_file = /*
     8   1  1  1  1  1  1  1  0
 
        bitboard as 64 bit integer: */
-       9187201950435737471ULL;
+        9187201950435737471ULL;
 
 constexpr Bitboard not_gh_file = /*
         A  B  C  D  E  F  G  H
@@ -230,9 +221,10 @@ constexpr Bitboard not_gh_file = /*
     8   1  1  1  1  1  1  0  0
 
        bitboard as 64 bit integer: */
-       4557430888798830399ULL;
+        4557430888798830399ULL;
 
 void print_bitboard(Bitboard bitboard);
+
 std::string print_position(Position position);
 
 inline std::string format_bitboard(Bitboard bitboard) {

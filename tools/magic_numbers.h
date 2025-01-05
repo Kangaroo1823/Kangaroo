@@ -89,7 +89,7 @@ namespace Constants::Impl {
      * depends on whether it is for bishops (512) or rooks (4096).
      */
     void reset_used_attack_table(std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> used_attack_table) {
-        // set the array used_attack_table to zero. We need it to check if we have a
+        // set the array used_attack_table to zero. We need it to check_p if we have a
         // collision using magic_number.
         std::ranges::for_each(used_attack_table, [](auto &i) { i = 0; });
     }
@@ -110,7 +110,7 @@ namespace Constants::Impl {
      * \return True if there are no collisions using the magic number, false otherwise.
      */
     bool check_magic_number_collisions(const int64_t relevant_bits_in_mask,
-                                       const unsigned long number_of_occupancies,
+                                       const std::size_t number_of_occupancies,
                                        std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> occupancy_table,
                                        std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> attack_table,
                                        std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> used_attack_table,
@@ -148,7 +148,7 @@ namespace Constants::Impl {
      * \return True if a valid magic number is found; otherwise, false.
      */
     bool generate_magic_number(const Bitboard mask, const int64_t relevant_bits_in_mask,
-                               const unsigned long number_of_occupancies,
+                               const std::size_t number_of_occupancies,
                                const std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> &occupancy_table,
                                const std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> &attack_table,
                                MagicNumber &value1) {
@@ -201,7 +201,7 @@ namespace Constants::Impl {
         const int64_t relevant_bits_in_mask = Bitcount(mask);
 
         // compute the number of positions that can be created within the given mask.
-        const auto number_of_occupancies = 1UL << relevant_bits_in_mask;
+        const auto number_of_occupancies = static_cast<std::size_t>(1 << relevant_bits_in_mask);
 
         // holds every possible occupation within mask
         std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> occupancy_table{};

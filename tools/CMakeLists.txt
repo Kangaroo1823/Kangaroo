@@ -26,9 +26,13 @@ set(CONSTANTS_GENERATOR_SOURCES
 add_executable(Kangaroo_constants_generator_masks ${CONSTANTS_GENERATOR_SOURCES})
 target_link_libraries(Kangaroo_constants_generator_masks
         PUBLIC
-        Boost::bind
         Kangaroo_warnings
 )
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_constants_generator_masks PRIVATE stdc++exp)
+endif ()
+
 
 target_include_directories(Kangaroo_constants_generator_masks
         PRIVATE
@@ -65,9 +69,13 @@ add_custom_target(
 add_executable(Kangaroo_constants_generator_magics ${CONSTANTS_GENERATOR_SOURCES})
 target_link_libraries(Kangaroo_constants_generator_magics
         PUBLIC
-        Boost::bind
         Kangaroo_warnings
 )
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_constants_generator_magics PRIVATE stdc++exp)
+endif ()
+
 
 target_include_directories(Kangaroo_constants_generator_magics
         PRIVATE
@@ -102,9 +110,13 @@ add_dependencies(Kangaroo_constants_generator_magics generate_masks)
 add_executable(Kangaroo_constants_generator_attacks ${CONSTANTS_GENERATOR_SOURCES})
 target_link_libraries(Kangaroo_constants_generator_attacks
         PUBLIC
-        Boost::bind
         Kangaroo_warnings
 )
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_constants_generator_attacks PRIVATE stdc++exp)
+endif ()
+
 
 target_include_directories(Kangaroo_constants_generator_attacks
         PRIVATE

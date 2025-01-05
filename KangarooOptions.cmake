@@ -99,6 +99,13 @@ macro(Kangaroo_global_options)
         Kangaroo_optimize_for_native()
     endif ()
 
+
+    include(cmake/CompilerOptions.cmake)
+    setup_compiler_options()
+
+
+
+
     Kangaroo_supports_sanitizers()
 
 #    if(Kangaroo_ENABLE_HARDENING AND Kangaroo_ENABLE_GLOBAL_HARDENING)

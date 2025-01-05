@@ -1,4 +1,4 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// This is an independent project of an individual developer. Dear PVS-Studio, please check_p it.
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com//
 //
 // Created by peter on 23/12/2024.
@@ -10,6 +10,7 @@
 #include "Board_Status.h"
 #include "constants_attacks.h"
 #include "attack_tables.h"
+#include "chess_board.h"
 
 template<Slider slider>
 constexpr Bitboard get_attacks_for_position(const Position &position, const Bitboard occupancy) {
@@ -113,30 +114,30 @@ constexpr Bitboard is_position_attacked_by(const Position &position, const Kanga
 
     Bitboard attacks = 0ULL;
 
-    // check for pawn attack
+    // check_p for pawn attack
     attacks |= (color == white
                     ? Constants::black_pawn_attacks[std::to_underlying(position)]
                     : Constants::white_pawn_attacks[std::to_underlying(position)]) & (color == white
         ? board->white_pawns()
         : board->black_pawns());
 
-    // check for knight attack
+    // check_p for knight attack
     attacks |= Constants::knight_attacks[std::to_underlying(position)] & (color == white
                                                                               ? board->white_knights()
                                                                               : board->black_knights());
 
-    // check for king attack
+    // check_p for king attack
     attacks |= Constants::king_attacks[std::to_underlying(position)] & (color == white
                                                                             ? board->white_king()
                                                                             : board->black_king());
 
-    // check for bishop and queen attack
+    // check_p for bishop and queen attack
     attacks |= get_attacks_for_position<Slider::bishop>(position, board->all_pieces()) &
     ((color == white ? board->white_bishops() : board->black_bishops()) | (color == white
                                                                                ? board->white_queens()
                                                                                : board->black_queens()));
 
-    // check for rook and queen attack
+    // check_p for rook and queen attack
     attacks |= get_attacks_for_position<Slider::rook>(position, board->all_pieces()) &
     ((color == white ? board->white_rooks() : board->black_rooks()) | (color == white
                                                                            ? board->white_queens()

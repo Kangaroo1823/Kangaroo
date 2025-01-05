@@ -6,7 +6,6 @@
 #define CHESS_BOARD_H
 
 #include <memory>
-#include <boost/bind/bind.hpp>
 
 #include "types.h"
 #include "bitboard.h"
@@ -159,95 +158,97 @@ namespace Kangaroo {
 
         void set_color_to_move(const Color &color) {
             if (color == Color::white) {
-                flags |= 0x1;
+                flags |= 0x1ULL;
             } else {
-                flags &= ~0x1;
+                flags &= ~0x1ULL;
             }
         };
 
         [[nodiscard]] Color color_to_move() const {
-            return (flags & 0x1) ? Color::white : Color::black;
+            return (flags & 0x1ULL) ? Color::white : Color::black;
         }
 
         void set_en_passant(const bool &en_passant) {
             if (en_passant) {
-                flags |= 0x2;
+                flags |= 0x2ULL;
             } else {
-                flags &= ~0x2;
+                flags &= ~0x2ULL;
             }
         };
 
         [[nodiscard]] bool en_passant() const {
-            return (flags & 0x2) != 0;
+            return (flags & 0x2ULL) != 0;
         }
 
         void set_white_queen_castle(const bool &white_queen_castle) {
             if (white_queen_castle) {
-                flags |= 0x04;
+                flags |= 0x04ULL;
             } else {
-                flags &= ~0x04;
+                flags &= ~0x04ULL;
             }
         };
 
         [[nodiscard]] bool white_queen_castle() const {
-            return (flags & 0x04) != 0;
+            return (flags & 0x04ULL) != 0;
         }
 
         void set_white_king_castle(const bool &white_king_castle) {
             if (white_king_castle) {
-                flags |= 0x08;
+                flags |= 0x08ULL;
             } else {
-                flags &= ~0x08;
+                flags &= ~0x08ULL;
             }
         };
 
         [[nodiscard]] bool white_king_castle() const {
-            return (flags & 0x08) != 0;
+            return (flags & 0x08ULL) != 0;
         }
 
         void set_black_queen_castle(const bool &black_queen_castle) {
             if (black_queen_castle) {
-                flags |= 0x10;
+                flags |= 0x10ULL;
             } else {
-                flags &= ~0x10;
+                flags &= ~0x10ULL;
             }
         };
 
         [[nodiscard]] bool black_queen_castle() const {
-            return (flags & 0x10) != 0;
+            return (flags & 0x10ULL) != 0;
         }
 
 
         void set_black_king_castle(const bool &black_king_castle) {
             if (black_king_castle) {
-                flags |= 0x20;
+                flags |= 0x20ULL;
             } else {
-                flags &= ~0x20;
+                flags &= ~0x20ULL;
             }
         };
 
         [[nodiscard]] bool black_king_castle() const {
-            return (flags & 0x20) != 0;
+            return (flags & 0x20ULL) != 0;
         }
 
         void set_check(const bool &check) {
             if (check) {
-                flags |= 0x40;
+                flags |= 0x40ULL;
             } else {
-                flags &= ~0x40;
+                flags &= ~0x40ULL;
             }
         };
 
         [[nodiscard]] bool check() const {
-            return (flags & 0x40) != 0;
+            return (flags & 0x40ULL) != 0;
         }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
-        constexpr uint64_t generate_pawn_moves(CallBackType callback) {
+        constexpr uint64_t generate_pawn_moves(CallBackType callback) const {
             using enum Color_t;
             using enum Chess_Pieces;
 
-            Bitboard pawns = status.color == white ? white_pawns() : black_pawns();
+            uint64_t moves = 0ULL;
+
+            Bitboard pawns = status.color_p == white ? white_pawns() : black_pawns();
 
             Bitloop(pawns, pawns_remaining) {
                 using enum Color_t;
@@ -257,35 +258,35 @@ namespace Kangaroo {
                 const Bitboard pawn = 1ULL << pawn_square;
 
                 // single move for pawns
-                if (const Bitboard moved_pawn = regular_pawn_push<status.color>(pawn); is_pawn_push_admissible(
+                if (const Bitboard moved_pawn = regular_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(
                     moved_pawn, all_pieces())) {
-                    callback(status.color == white ? white_pawn : black_pawn,
+                    callback(status.color_p == white ? white_pawn : black_pawn,
                              make_move(pawn, moved_pawn));
+                    ++moves;
 
                     // double move for pawns in base row
-                    if (pawn & pawn_base_row<status.color>()) {
-                        if (const Bitboard moved_pawn_2 = double_pawn_push<status.color>(pawn); is_pawn_push_admissible(
+                    if (pawn & pawn_base_row<status.color_p>()) {
+                        if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(
                             moved_pawn_2, all_pieces())) {
-                            callback(status.color == white ? white_pawn : black_pawn,
+                            callback(status.color_p == white ? white_pawn : black_pawn,
                                      make_move(pawn, moved_pawn_2));
+                            ++moves;
                         }
                     }
                 }
 
-                Bitboard mask = (status.color == white
-                                     ? Constants::white_pawn_attacks[pawn_square]
-                                     : Constants::black_pawn_attacks[pawn_square]);
-                mask &= (status.color == white
-                             ? black_pieces()
-                             : white_pieces());
+                Bitboard mask = (status.color_p == white
+                                     ? Constants::white_pawn_attacks[pawn_square] & black_pieces()
+                                     : Constants::black_pawn_attacks[pawn_square] & white_pieces());
 
                 // see if we can capture anything
                 Bitloop(mask, pawn_attacks) {
                     Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
-                    callback(status.color == white ? white_pawn : black_pawn, make_move(pawn, pawn_attack));
+                    callback(status.color_p == white ? white_pawn : black_pawn, make_move(pawn, pawn_attack));
+                    ++moves;
                 }
             }
-            return 0ULL;
+            return moves;
         }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
@@ -298,138 +299,73 @@ namespace Kangaroo {
         }
 
         template<typename CallBack>
-        constexpr void run_move_generation(CallBack callback) {
+        constexpr uint64_t run_move_generation(CallBack callback) {
             switch (flags) {
-                case 0x00: generate_moves<Board_Status(0x00)>(callback);
-                    break;
-                case 0x01: generate_moves<Board_Status(0x01)>(callback);
-                    break;
-                case 0x02: generate_moves<Board_Status(0x02)>(callback);
-                    break;
-                case 0x03: generate_moves<Board_Status(0x03)>(callback);
-                    break;
-                case 0x04: generate_moves<Board_Status(0x04)>(callback);
-                    break;
-                case 0x05: generate_moves<Board_Status(0x05)>(callback);
-                    break;
-                case 0x06: generate_moves<Board_Status(0x06)>(callback);
-                    break;
-                case 0x07: generate_moves<Board_Status(0x07)>(callback);
-                    break;
-                case 0x08: generate_moves<Board_Status(0x08)>(callback);
-                    break;
-                case 0x09: generate_moves<Board_Status(0x09)>(callback);
-                    break;
-                case 0x0a: generate_moves<Board_Status(0x0a)>(callback);
-                    break;
-                case 0x0b: generate_moves<Board_Status(0x0b)>(callback);
-                    break;
-                case 0x0c: generate_moves<Board_Status(0x0c)>(callback);
-                    break;
-                case 0x0d: generate_moves<Board_Status(0x0d)>(callback);
-                    break;
-                case 0x0e: generate_moves<Board_Status(0x0e)>(callback);
-                    break;
-                case 0x0f: generate_moves<Board_Status(0x0f)>(callback);
-                    break;
-                case 0x10: generate_moves<Board_Status(0x10)>(callback);
-                    break;
-                case 0x11: generate_moves<Board_Status(0x11)>(callback);
-                    break;
-                case 0x12: generate_moves<Board_Status(0x12)>(callback);
-                    break;
-                case 0x13: generate_moves<Board_Status(0x13)>(callback);
-                    break;
-                case 0x14: generate_moves<Board_Status(0x14)>(callback);
-                    break;
-                case 0x15: generate_moves<Board_Status(0x15)>(callback);
-                    break;
-                case 0x16: generate_moves<Board_Status(0x16)>(callback);
-                    break;
-                case 0x17: generate_moves<Board_Status(0x17)>(callback);
-                    break;
-                case 0x18: generate_moves<Board_Status(0x18)>(callback);
-                    break;
-                case 0x19: generate_moves<Board_Status(0x19)>(callback);
-                    break;
-                case 0x1a: generate_moves<Board_Status(0x1a)>(callback);
-                    break;
-                case 0x1b: generate_moves<Board_Status(0x1b)>(callback);
-                    break;
-                case 0x1c: generate_moves<Board_Status(0x1c)>(callback);
-                    break;
-                case 0x1d: generate_moves<Board_Status(0x1d)>(callback);
-                    break;
-                case 0x1e: generate_moves<Board_Status(0x1e)>(callback);
-                    break;
-                case 0x1f: generate_moves<Board_Status(0x1f)>(callback);
-                    break;
-                case 0x20: generate_moves<Board_Status(0x20)>(callback);
-                    break;
-                case 0x21: generate_moves<Board_Status(0x21)>(callback);
-                    break;
-                case 0x22: generate_moves<Board_Status(0x22)>(callback);
-                    break;
-                case 0x23: generate_moves<Board_Status(0x23)>(callback);
-                    break;
-                case 0x24: generate_moves<Board_Status(0x24)>(callback);
-                    break;
-                case 0x25: generate_moves<Board_Status(0x25)>(callback);
-                    break;
-                case 0x26: generate_moves<Board_Status(0x26)>(callback);
-                    break;
-                case 0x27: generate_moves<Board_Status(0x27)>(callback);
-                    break;
-                case 0x28: generate_moves<Board_Status(0x28)>(callback);
-                    break;
-                case 0x29: generate_moves<Board_Status(0x29)>(callback);
-                    break;
-                case 0x2a: generate_moves<Board_Status(0x2a)>(callback);
-                    break;
-                case 0x2b: generate_moves<Board_Status(0x2b)>(callback);
-                    break;
-                case 0x2c: generate_moves<Board_Status(0x2c)>(callback);
-                    break;
-                case 0x2d: generate_moves<Board_Status(0x2d)>(callback);
-                    break;
-                case 0x2e: generate_moves<Board_Status(0x2e)>(callback);
-                    break;
-                case 0x2f: generate_moves<Board_Status(0x2f)>(callback);
-                    break;
-                case 0x30: generate_moves<Board_Status(0x30)>(callback);
-                    break;
-                case 0x31: generate_moves<Board_Status(0x31)>(callback);
-                    break;
-                case 0x32: generate_moves<Board_Status(0x32)>(callback);
-                    break;
-                case 0x33: generate_moves<Board_Status(0x33)>(callback);
-                    break;
-                case 0x34: generate_moves<Board_Status(0x34)>(callback);
-                    break;
-                case 0x35: generate_moves<Board_Status(0x35)>(callback);
-                    break;
-                case 0x36: generate_moves<Board_Status(0x36)>(callback);
-                    break;
-                case 0x37: generate_moves<Board_Status(0x37)>(callback);
-                    break;
-                case 0x38: generate_moves<Board_Status(0x38)>(callback);
-                    break;
-                case 0x39: generate_moves<Board_Status(0x39)>(callback);
-                    break;
-                case 0x3a: generate_moves<Board_Status(0x3a)>(callback);
-                    break;
-                case 0x3b: generate_moves<Board_Status(0x3b)>(callback);
-                    break;
-                case 0x3c: generate_moves<Board_Status(0x3c)>(callback);
-                    break;
-                case 0x3d: generate_moves<Board_Status(0x3d)>(callback);
-                    break;
-                case 0x3e: generate_moves<Board_Status(0x3e)>(callback);
-                    break;
-                case 0x3f: generate_moves<Board_Status(0x3f)>(callback);
-                    break;
-                case 0x40: generate_moves<Board_Status(0x40)>(callback);
-                    break;
+                case 0x00: return generate_moves<Board_Status(0x00)>(callback);
+                case 0x01: return generate_moves<Board_Status(0x01)>(callback);
+                case 0x02: return generate_moves<Board_Status(0x02)>(callback);
+                case 0x03: return generate_moves<Board_Status(0x03)>(callback);
+                case 0x04: return generate_moves<Board_Status(0x04)>(callback);
+                case 0x05: return generate_moves<Board_Status(0x05)>(callback);
+                case 0x06: return generate_moves<Board_Status(0x06)>(callback);
+                case 0x07: return generate_moves<Board_Status(0x07)>(callback);
+                case 0x08: return generate_moves<Board_Status(0x08)>(callback);
+                case 0x09: return generate_moves<Board_Status(0x09)>(callback);
+                case 0x0a: return generate_moves<Board_Status(0x0a)>(callback);
+                case 0x0b: return generate_moves<Board_Status(0x0b)>(callback);
+                case 0x0c: return generate_moves<Board_Status(0x0c)>(callback);
+                case 0x0d: return generate_moves<Board_Status(0x0d)>(callback);
+                case 0x0e: return generate_moves<Board_Status(0x0e)>(callback);
+                case 0x0f: return generate_moves<Board_Status(0x0f)>(callback);
+                case 0x10: return generate_moves<Board_Status(0x10)>(callback);
+                case 0x11: return generate_moves<Board_Status(0x11)>(callback);
+                case 0x12: return generate_moves<Board_Status(0x12)>(callback);
+                case 0x13: return generate_moves<Board_Status(0x13)>(callback);
+                case 0x14: return generate_moves<Board_Status(0x14)>(callback);
+                case 0x15: return generate_moves<Board_Status(0x15)>(callback);
+                case 0x16: return generate_moves<Board_Status(0x16)>(callback);
+                case 0x17: return generate_moves<Board_Status(0x17)>(callback);
+                case 0x18: return generate_moves<Board_Status(0x18)>(callback);
+                case 0x19: return generate_moves<Board_Status(0x19)>(callback);
+                case 0x1a: return generate_moves<Board_Status(0x1a)>(callback);
+                case 0x1b: return generate_moves<Board_Status(0x1b)>(callback);
+                case 0x1c: return generate_moves<Board_Status(0x1c)>(callback);
+                case 0x1d: return generate_moves<Board_Status(0x1d)>(callback);
+                case 0x1e: return generate_moves<Board_Status(0x1e)>(callback);
+                case 0x1f: return generate_moves<Board_Status(0x1f)>(callback);
+                case 0x20: return generate_moves<Board_Status(0x20)>(callback);
+                case 0x21: return generate_moves<Board_Status(0x21)>(callback);
+                case 0x22: return generate_moves<Board_Status(0x22)>(callback);
+                case 0x23: return generate_moves<Board_Status(0x23)>(callback);
+                case 0x24: return generate_moves<Board_Status(0x24)>(callback);
+                case 0x25: return generate_moves<Board_Status(0x25)>(callback);
+                case 0x26: return generate_moves<Board_Status(0x26)>(callback);
+                case 0x27: return generate_moves<Board_Status(0x27)>(callback);
+                case 0x28: return generate_moves<Board_Status(0x28)>(callback);
+                case 0x29: return generate_moves<Board_Status(0x29)>(callback);
+                case 0x2a: return generate_moves<Board_Status(0x2a)>(callback);
+                case 0x2b: return generate_moves<Board_Status(0x2b)>(callback);
+                case 0x2c: return generate_moves<Board_Status(0x2c)>(callback);
+                case 0x2d: return generate_moves<Board_Status(0x2d)>(callback);
+                case 0x2e: return generate_moves<Board_Status(0x2e)>(callback);
+                case 0x2f: return generate_moves<Board_Status(0x2f)>(callback);
+                case 0x30: return generate_moves<Board_Status(0x30)>(callback);
+                case 0x31: return generate_moves<Board_Status(0x31)>(callback);
+                case 0x32: return generate_moves<Board_Status(0x32)>(callback);
+                case 0x33: return generate_moves<Board_Status(0x33)>(callback);
+                case 0x34: return generate_moves<Board_Status(0x34)>(callback);
+                case 0x35: return generate_moves<Board_Status(0x35)>(callback);
+                case 0x36: return generate_moves<Board_Status(0x36)>(callback);
+                case 0x37: return generate_moves<Board_Status(0x37)>(callback);
+                case 0x38: return generate_moves<Board_Status(0x38)>(callback);
+                case 0x39: return generate_moves<Board_Status(0x39)>(callback);
+                case 0x3a: return generate_moves<Board_Status(0x3a)>(callback);
+                case 0x3b: return generate_moves<Board_Status(0x3b)>(callback);
+                case 0x3c: return generate_moves<Board_Status(0x3c)>(callback);
+                case 0x3d: return generate_moves<Board_Status(0x3d)>(callback);
+                case 0x3e: return generate_moves<Board_Status(0x3e)>(callback);
+                case 0x3f: return generate_moves<Board_Status(0x3f)>(callback);
+                case 0x40: return generate_moves<Board_Status(0x40)>(callback);
                 default: throw std::runtime_error("Invalid board status");
             }
         }

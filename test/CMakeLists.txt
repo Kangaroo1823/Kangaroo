@@ -1,11 +1,11 @@
 
 
-if(NOT TARGET Kangaroo_options)
+if (NOT TARGET Kangaroo_options)
     message(ERROR " Need target 'Kangaroo_options' to build tests")
 endif ()
 
-if(NOT TARGET Kangaroo_warnings)
-    message( ERROR " Need target 'Kangaroo_warnings to build tests")
+if (NOT TARGET Kangaroo_warnings)
+    message(ERROR " Need target 'Kangaroo_warnings to build tests")
 endif ()
 
 # take care of the test executable
@@ -17,5 +17,10 @@ add_executable(Kangaroo_tests
         magic_numbers_test.cpp
         attack_tables_tests.cpp
         generate_pawn_moves_tests.cpp)
-target_link_libraries(Kangaroo_tests PRIVATE Boost::bind Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
+target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_tests PRIVATE stdc++exp)
+endif ()
+
 target_include_directories(Kangaroo_tests PUBLIC ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/tools)

@@ -6,11 +6,10 @@
 #define ATTACK_TABLES_H
 
 #include <array>
-#include <assert.h>
+#include <cassert>
 #include <vector>
 
 #include "../include/bitboard.h"
-#include "../include/chess_board.h"
 #include "magic_numbers.h"
 #include "../include/colors.h"
 
@@ -61,7 +60,7 @@ create_attack_table_for(const Position &position) {
     const Bitboard mask = get_attack_mask_for_slider<slider>(position);
 
     const int64_t relevant_bits = Bitcount(mask);
-    const std::size_t number_of_masks = 1UL << relevant_bits;
+    const auto number_of_masks = static_cast<std::size_t>(1 << relevant_bits);
 
     std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> attack_table = {0};
 
@@ -90,7 +89,6 @@ template<Slider slider>
  *         on the board for sliding pieces.
  */
 void create_attack_table(std::vector<Bitboard> &result) {
-
     assert(result.size() >= 64 * (slider == Slider::bishop ? 512 : 4096));
 
     auto iter = result.begin();
@@ -126,7 +124,6 @@ constexpr Bitboard create_pawn_attacks_for(const Bitboard bitboard) {
 
 template<Color color>
 constexpr void create_pawn_attacks(std::vector<Bitboard> &attacks) {
-
     assert(attacks.size() >= 64);
 
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
@@ -157,8 +154,7 @@ constexpr Bitboard create_king_attacks_for(const Bitboard bitboard) {
 }
 
 
-constexpr void create_king_attacks( std::vector<Bitboard> &attacks) {
-
+constexpr void create_king_attacks(std::vector<Bitboard> &attacks) {
     assert(attacks.size() >= 64);
 
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
@@ -189,8 +185,7 @@ constexpr Bitboard create_knight_attacks_for(const Bitboard bitboard) {
     return attacks;
 }
 
-constexpr void create_knight_attacks( std::vector<Bitboard> &attacks) {
-
+constexpr void create_knight_attacks(std::vector<Bitboard> &attacks) {
     assert(attacks.size() >= 64);
 
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
@@ -198,9 +193,6 @@ constexpr void create_knight_attacks( std::vector<Bitboard> &attacks) {
         ++iter;
     }
 }
-
-
-
 
 
 #endif //ATTACK_TABLES_H

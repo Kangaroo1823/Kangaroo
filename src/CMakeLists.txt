@@ -89,10 +89,15 @@ add_library(Kangaroo_library ../include/bitboard.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
-        Boost::bind
         Kangaroo_warnings
         Kangaroo_options
 )
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_library PRIVATE stdc++exp)
+endif ()
+
+
 target_include_directories(Kangaroo_library PRIVATE ../include)
 target_include_directories(Kangaroo_library PUBLIC ${CMAKE_BINARY_DIR})
 add_dependencies(Kangaroo_library generate_files)
@@ -103,6 +108,11 @@ add_executable(Kangaroo
         main.cpp
 )
 target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo PRIVATE stdc++exp)
+endif ()
+
 target_include_directories(Kangaroo PRIVATE ../include)
 
 

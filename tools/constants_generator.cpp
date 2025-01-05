@@ -4,14 +4,15 @@
 // Created by U439644 on 12/23/2024.
 //
 
+#include <vector>
 #include <fstream>
+#include <print>
 
 #include "attack_masks.h"
 #include "attack_tables.h"
-#include "../tools/magic_numbers.h"
-#include <print>
+#include "magic_numbers.h"
 #include "types.h"
-#include <vector>
+
 
 template<typename T>
 void output_array(std::ofstream &of, const T &arr, const std::string &name, const std::string &type) {

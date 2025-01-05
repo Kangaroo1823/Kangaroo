@@ -13,10 +13,6 @@ namespace Kangaroo {
     public:
         Board_Status() = delete;
 
-        Board_Status(const Board_Status &) = delete;
-
-        Board_Status &operator=(const Board_Status &) = delete;
-
         /**
          * Constructor to initialize the board status with specific game state parameters.
          *
@@ -31,9 +27,9 @@ namespace Kangaroo {
         constexpr Board_Status(const Color color, const bool en_passant, const bool white_left_castle,
                                const bool white_right_castle,
                                const bool black_left_castle, const bool black_right_castle, const bool check)
-            : color(color), check(check), en_passant(en_passant),
-              white_left_castle(white_left_castle), white_right_castle(white_right_castle),
-              black_left_castle(black_left_castle), black_right_castle(black_right_castle) {
+            : color_p(color), check_p(check), en_passant_p(en_passant),
+              white_left_castle_p(white_left_castle), white_right_castle_p(white_right_castle),
+              black_left_castle_p(black_left_castle), black_right_castle_p(black_right_castle) {
         }
 
 
@@ -53,54 +49,54 @@ namespace Kangaroo {
          * @return An instance of the `Board_Status` class initialized with the game state parameters
          *         derived from the encoded flags.
          */
-        explicit constexpr Board_Status(const uint64_t flags) : color((flags & 0x1) ? Color::white : Color::black),
-                                                                check((flags & 0x40) != 0),
-                                                                en_passant((flags & 0x2) != 0),
-                                                                white_left_castle((flags & 0x04) != 0),
-                                                                white_right_castle((flags & 0x08) != 0),
-                                                                black_left_castle((flags & 0x10) != 0),
-                                                                black_right_castle((flags & 0x20) != 0) {
+        explicit constexpr Board_Status(const uint64_t flags) : color_p((flags & 0x1) ? Color::white : Color::black),
+                                                                check_p((flags & 0x40) != 0),
+                                                                en_passant_p((flags & 0x2) != 0),
+                                                                white_left_castle_p((flags & 0x04) != 0),
+                                                                white_right_castle_p((flags & 0x08) != 0),
+                                                                black_left_castle_p((flags & 0x10) != 0),
+                                                                black_right_castle_p((flags & 0x20) != 0) {
         }
 
         /**
          * Who's turn is it?
          */
-        Color color = Color::white;
+        Color color_p = Color::white;
 
         /**
-         * Is it a check?
+         * Is it a check_p?
          */
-        bool check = false;
+        bool check_p = false;
 
         /**
          * Indicates whether an en passant move is possible.
          * True if en passant is allowed, false otherwise.
          */
-        bool en_passant = false;
+        bool en_passant_p = false;
 
         /**
          * Indicates whether white is allowed to castle on the left (queen's side).
          * True if castling is still possible, false otherwise.
          */
-        bool white_left_castle = true;
+        bool white_left_castle_p = true;
 
         /**
          * Indicates whether white is allowed to castle on the right (king's side).
          * True if castling is still possible, false otherwise.
          */
-        bool white_right_castle = true;
+        bool white_right_castle_p = true;
 
         /**
          * Indicates whether black is allowed to castle on the left (queen's side).
          * True if castling is still possible, false otherwise.
          */
-        bool black_left_castle = true;
+        bool black_left_castle_p = true;
 
         /**
          * Indicates whether black is allowed to castle on the right (king's side).
          * True if castling is still possible, false otherwise.
          */
-        bool black_right_castle = true;
+        bool black_right_castle_p = true;
     };
 } // Kangaroo
 
