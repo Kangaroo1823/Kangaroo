@@ -160,12 +160,6 @@ constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bit
 
 #define Bitloop(x,y) for(std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
 
-// constexpr void Bitloop(const Bitboard x, Fn f) {
-//     for(Bitboard y = x; y != 0; y = _blsr_u64(y)) {
-//         f(y);
-//     }
-// }
-
 
 constexpr Bitboard not_a_file = /*
         A  B  C  D  E  F  G  H
@@ -224,6 +218,11 @@ constexpr Bitboard not_gh_file = /*
         4557430888798830399ULL;
 
 void print_bitboard(Bitboard bitboard);
+
+constexpr Bitboard Bitboard_from_hex(const std::string &hex) {
+    return std::stoull(hex, nullptr, 16);
+}
+
 
 std::string print_position(Position position);
 

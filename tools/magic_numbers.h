@@ -201,7 +201,8 @@ namespace Constants::Impl {
         const int64_t relevant_bits_in_mask = Bitcount(mask);
 
         // compute the number of positions that can be created within the given mask.
-        const auto number_of_occupancies = static_cast<std::size_t>(1 << relevant_bits_in_mask);
+        const std::size_t number_of_occupancies =
+                static_cast<std::size_t>(1) << static_cast<std::size_t>(relevant_bits_in_mask);
 
         // holds every possible occupation within mask
         std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> occupancy_table{};

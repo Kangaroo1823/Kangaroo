@@ -161,7 +161,58 @@ add_custom_target(
 # pin-table-generator
 #
 ##################################################
+add_executable(Kangaroo_constants_generator_pin_tables
+        constants_generator.cpp
+        ../include/bitboard.h
+        ../src/bitboard.cpp
+        ../include/colors.h)
+target_link_libraries(Kangaroo_constants_generator_pin_tables
+        PUBLIC
+        Kangaroo_warnings
+)
 
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_constants_generator_pin_tables PRIVATE stdc++exp)
+endif ()
+
+
+target_include_directories(Kangaroo_constants_generator_pin_tables
+        PRIVATE
+        ../include/
+        ${CMAKE_BINARY_DIR}
+)
+target_compile_definitions(Kangaroo_constants_generator_pin_tables PUBLIC GENERATE_PIN_TABLES)
+
+add_custom_command(
+        OUTPUT "${CMAKE_BINARY_DIR}/constants_pin_tables.h"
+        COMMAND ${CMAKE_BINARY_DIR}/tools/Kangaroo_constants_generator_pin_tables ${CMAKE_BINARY_DIR}/constants_pin_tables.h
+        DEPENDS Kangaroo_constants_generator_pin_tables  # Make sure "mytool" is built before this runs
+        COMMENT "Generating 'constants_pin_tables.h' using Kangaroo_constants_generator_pin_tables ... (this might take a while)"
+)
+
+add_custom_target(
+        generate_pin_tables
+        DEPENDS "${CMAKE_BINARY_DIR}/constants_pin_tables.h"
+)
+
+
+####################################
+#
+# hex_to_bitboard
+#
+# tool that reads a hex number from
+# std::cin and outputs it as a
+# bitboard
+#
+####################################
+
+add_executable( hex_to_bitboard
+        hex_to_bitboard.cpp
+        ../include/bitboard.h
+        ../src/bitboard.cpp
+)
+target_link_libraries( hex_to_bitboard PRIVATE Kangaroo_warnings )
+target_include_directories( hex_to_bitboard PRIVATE ../include )
 
 
 ##################################################
@@ -174,6 +225,7 @@ add_custom_target(
         ${CMAKE_BINARY_DIR}/constants_masks.h
         ${CMAKE_BINARY_DIR}/constants_magics.h
         ${CMAKE_BINARY_DIR}/constants_attacks.h
+        ${CMAKE_BINARY_DIR}/constants_pin_tables.h
 )
 
 add_dependencies(Kangaroo_options generate_files)

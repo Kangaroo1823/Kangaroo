@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base.h"
 #include "types.h"
 #include "bitboard.h"
 #include "Board_Status.h"
@@ -241,12 +242,42 @@ namespace Kangaroo {
             return (flags & 0x40ULL) != 0;
         }
 
+        template <Kangaroo::Board_Status status, typename CallBackType>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(CallBackType callback, const Bitboard pawn) const {
+            std::size_t moves = 0ULL;
+            if (pawn & pawn_base_row<status.color_p>()) {
+                if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(
+                    moved_pawn_2, all_pieces())) {
+                    callback(status.color_p == Color_t::white ? Chess_Pieces_t::white_pawn : Chess_Pieces_t::black_pawn,
+                             make_move(pawn, moved_pawn_2));
+                    ++moves;
+                }
+            }
+            return moves;
+        }
+
+        template <Kangaroo::Board_Status status, typename CallBackType>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(CallBackType callback, const std::size_t pawn_square, const Bitboard pawn) const {
+            std::size_t moves = 0ULL;
+            Bitboard mask = (status.color_p == Color_t::white
+                                 ? Constants::white_pawn_attacks[pawn_square] & black_pieces()
+                                 : Constants::black_pawn_attacks[pawn_square] & white_pieces());
+
+            // see if we can capture anything
+            Bitloop(mask, pawn_attacks) {
+                Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
+                callback(status.color_p == Color_t::white ? Chess_Pieces_t::white_pawn : Chess_Pieces_t::black_pawn, make_move(pawn, pawn_attack));
+                ++moves;
+            }
+            return moves;
+        }
+
         template<Kangaroo::Board_Status status, typename CallBackType>
-        constexpr uint64_t generate_pawn_moves(CallBackType callback) const {
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_moves(CallBackType callback) const {
             using enum Color_t;
             using enum Chess_Pieces;
 
-            uint64_t moves = 0ULL;
+            std::size_t moves = 0ULL;
 
             Bitboard pawns = status.color_p == white ? white_pawns() : black_pawns();
 
@@ -265,41 +296,21 @@ namespace Kangaroo {
                     ++moves;
 
                     // double move for pawns in base row
-                    if (pawn & pawn_base_row<status.color_p>()) {
-                        if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(
-                            moved_pawn_2, all_pieces())) {
-                            callback(status.color_p == white ? white_pawn : black_pawn,
-                                     make_move(pawn, moved_pawn_2));
-                            ++moves;
-                        }
-                    }
+                    moves += generate_double_pawn_pushs<status, CallBackType>(callback,  pawn);
                 }
 
-                Bitboard mask = (status.color_p == white
-                                     ? Constants::white_pawn_attacks[pawn_square] & black_pieces()
-                                     : Constants::black_pawn_attacks[pawn_square] & white_pieces());
-
-                // see if we can capture anything
-                Bitloop(mask, pawn_attacks) {
-                    Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
-                    callback(status.color_p == white ? white_pawn : black_pawn, make_move(pawn, pawn_attack));
-                    ++moves;
-                }
+                moves += generate_pawn_captures<status, CallBackType>(callback,  pawn_square, pawn);
             }
             return moves;
         }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
-        constexpr uint64_t generate_moves(CallBackType callback) {
-            uint64_t moves = 0ULL;
-
-            moves += generate_pawn_moves<status>(callback);
-
-            return moves;
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(CallBackType callback) {
+          return generate_pawn_moves<status>(callback);
         }
 
         template<typename CallBack>
-        constexpr uint64_t run_move_generation(CallBack callback) {
+        [[nodiscard]] constexpr std::size_t run_move_generation(CallBack callback) {
             switch (flags) {
                 case 0x00: return generate_moves<Board_Status(0x00)>(callback);
                 case 0x01: return generate_moves<Board_Status(0x01)>(callback);

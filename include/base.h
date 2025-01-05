@@ -22,7 +22,7 @@
 #define _Compiletime __attribute__((always_inline)) static constexpr
 #define _NoInline __attribute__ ((noinline))
 #define _Inline inline
-#define _ForceInline __attribute__((always_inline)) inline
+#define _ForceInline __attribute__((always_inline))
 #else
 #define _ASSUME(cond) static_cast<void>(!!(cond))
 #define _Compiletime static constexpr

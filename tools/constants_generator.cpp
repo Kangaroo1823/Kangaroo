@@ -28,9 +28,8 @@
 
 template<typename T>
 void output_array(std::ofstream &of, const T &arr, const std::string &name, const std::string &type) {
-
     std::string guard = name;
-    std::ranges::transform(guard, guard.begin(), [](unsigned char c){ return std::toupper(c); });
+    std::ranges::transform(guard, guard.begin(), [](unsigned char c) { return std::toupper(c); });
     guard += "__H";
 
     of << "#ifndef " << guard << "\n";
@@ -42,8 +41,133 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
     }
     of << "};\n\n";
     of << "#endif // " << guard << "\n\n";
-
 }
+
+
+template<Slider slider>
+constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, const int64_t king_file, const int64_t piece_rank,
+                                             const int64_t piece_file) {
+    auto r = piece_rank;
+    auto f = piece_file;
+    Bitboard ray = 1ULL << (r * 8 + f);
+
+
+    if (king_file == piece_file) {
+        if (king_rank > piece_rank) {
+            for (; r < king_rank; ++r) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        } else {
+            for (; r > king_rank; --r) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        }
+    } else if (king_rank == piece_rank) {
+        if (king_file > piece_file) {
+            for (; f < king_file; ++f) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        } else {
+            for (; f >= king_file; --f) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        }
+    }
+    return 0x0ULL;
+}
+
+template<Slider slider>
+constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64_t king_file, const int64_t piece_rank,
+                                  const int64_t piece_file) {
+    auto r = piece_rank;
+    auto f = piece_file;
+
+    Bitboard ray = 1ULL << (r * 8 + f);
+
+    if (piece_rank - piece_file == king_rank - king_file) {
+        if (piece_rank < king_rank) {
+            for (; r < king_rank && f < king_file; ++r, ++f) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        } else {
+            for (; r > king_rank && f > king_file; --r, --f) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        }
+    }
+
+    if (piece_rank + piece_file == king_rank + king_file) {
+        if (piece_rank > king_rank) {
+            for (; r > king_rank && f > king_file; --r, --f) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        } else {
+            for (; r < king_rank && f < king_file; ++r, ++f) {
+                ray |= 1ULL << (r * 8 + f);
+            }
+            return ray;
+        }
+    }
+    return 0x0ULL;
+}
+
+template<Slider slider>
+constexpr Bitboard generate_pin_mask_for_position(Position piece_position, Position king_position) {
+
+    using enum Slider_t;
+
+    static_assert(slider == rook || slider == bishop);
+
+    const auto king_rank = static_cast<int64_t>(std::to_underlying(king_position) / 8);
+    const auto king_file = static_cast<int64_t>(std::to_underlying(king_position) % 8);
+    const auto piece_rank = static_cast<int64_t>(std::to_underlying(piece_position) / 8);
+    const auto piece_file = static_cast<int64_t>(std::to_underlying(piece_position) % 8);
+
+    if constexpr (slider == rook) {
+        return generate_rook_pin_mask_towards_king<slider>(king_rank, king_file, piece_rank, piece_file);
+    } else if constexpr (slider == bishop) {
+        return generate_bishop_pin_mask<slider>(king_rank, king_file, piece_rank, piece_file);
+    }
+
+    return 0x0ULL;
+}
+
+
+template<Slider slider>
+constexpr std::vector<Bitboard> generate_pin_table() {
+    std::vector<Bitboard> pin_table(4096, 0ULL);
+
+    for (const auto &piece_position: All_Positions) {
+        for (const auto &king_position: All_Positions) {
+            const std::size_t index = std::to_underlying(piece_position) * 64 + std::to_underlying(
+                                          king_position);
+            if (piece_position == king_position) {
+                pin_table[index] = 0xFFFFFFFFFFFFFFFFULL;
+                continue;
+            }
+
+            pin_table[index] = generate_pin_mask_for_position<slider>(piece_position, king_position);
+        }
+    }
+    return pin_table;
+}
+
+void generate_pin_tables(std::ofstream &of) {
+    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Slider_t::rook>();
+    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Slider_t::bishop>();
+
+    output_array(of, rook_pin_table, "rook_pin_table", "Bitboard");
+    output_array(of, bishop_pin_table, "bishop_pin_table", "Bitboard");
+}
+
+
 
 void generate_masks(std::ofstream &of) {
     constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider_t::bishop>();
@@ -123,6 +247,8 @@ int main(const int argc, const char **argv) {
     generate_magic_numbers(of);
 #elif GENERATE_ATTACKS
     generate_attacks(of);
+#elif GENERATE_PIN_TABLES
+    generate_pin_tables(of);
 #endif
 
 

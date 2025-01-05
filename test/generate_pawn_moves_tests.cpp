@@ -237,10 +237,12 @@ TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base) {
         0x80008000,
     };
 
-    board->generate_pawn_moves<Kangaroo::Board_Status(0x3d)>([&moves](const Chess_Pieces chess_piece, const Move move) {
+    const auto s = board->generate_pawn_moves<Kangaroo::Board_Status(0x3d)>([&moves](const Chess_Pieces chess_piece, const Move move) {
         ASSERT_EQ(chess_piece, Chess_Pieces::white_pawn);
         ASSERT_TRUE(std::ranges::contains(moves, move));
     });
+
+    ASSERT_EQ(moves.size(), s);
 }
 
 
@@ -473,11 +475,13 @@ TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base) {
         0x80008000000000,
     };
 
-    board->generate_pawn_moves<Kangaroo::Board_Status(0x3c)>([&moves](const Chess_Pieces chess_piece, const Move move) {
+    const auto s = board->generate_pawn_moves<Kangaroo::Board_Status(0x3c)>([&moves](const Chess_Pieces chess_piece, const Move move) {
         ASSERT_EQ(chess_piece, Chess_Pieces::black_pawn);
         ASSERT_TRUE(std::ranges::contains(moves, move));
         print_bitboard(move);
     });
+
+    ASSERT_EQ(s, moves.size());
 }
 
 
@@ -600,11 +604,13 @@ TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture) {
 
     print_chess_board(board.get());
 
-    board->generate_pawn_moves<Kangaroo::Board_Status(0x3d)>([&moves](const Chess_Pieces chess_piece, const Move move) {
+    const auto s = board->generate_pawn_moves<Kangaroo::Board_Status(0x3d)>([&moves](const Chess_Pieces chess_piece, const Move move) {
         ASSERT_EQ(chess_piece, Chess_Pieces::white_pawn);
         ASSERT_TRUE(std::ranges::contains(moves, move));
         print_bitboard(move);
     });
+
+    ASSERT_EQ(s, moves.size());
 }
 
 
@@ -727,9 +733,11 @@ TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture) {
 
     print_chess_board(board.get());
 
-    board->generate_pawn_moves<Kangaroo::Board_Status(0x3c)>([&moves](const Chess_Pieces chess_piece, const Move move) {
+    const auto s = board->generate_pawn_moves<Kangaroo::Board_Status(0x3c)>([&moves](const Chess_Pieces chess_piece, const Move move) {
         ASSERT_EQ(chess_piece, Chess_Pieces::black_pawn);
         ASSERT_TRUE(std::ranges::contains(moves, move));
         print_bitboard(move);
     });
+
+    ASSERT_EQ(s, moves.size());
 }

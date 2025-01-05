@@ -61,7 +61,7 @@ create_attack_table_for(const Position &position) {
     const Bitboard mask = get_attack_mask_for_slider<slider>(position);
 
     const int64_t relevant_bits = Bitcount(mask);
-    const auto number_of_masks = static_cast<std::size_t>(1 << relevant_bits);
+    const std::size_t number_of_masks = static_cast<std::size_t>(1) << static_cast<std::size_t>(relevant_bits);
 
     std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> attack_table = {0};
 
