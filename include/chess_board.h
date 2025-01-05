@@ -416,6 +416,12 @@ namespace Kangaroo {
         std::size_t half_move_number_p = 0;
         std::size_t full_move_number_p = 0;
 
+        // pin-mask to secure black king
+        Bitboard black_pin_mask = 0ULL;
+
+        // pin-mask to secure white king
+        Bitboard white_pin_mask = 0ULL;
+
         uint64_t flags = 0;
     };
 
