@@ -45,57 +45,57 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
 
 /*************************************************************************
  *
- * visibility table generator
+ * xray_visibility table generator
  *
  ************************************************************************/
 
-[[nodiscard]] constexpr Bitboard generate_rook_visibility_for(const Position position) {
-    Bitboard rook_visibility = 0ULL;
+[[nodiscard]] constexpr Bitboard generate_rook_xray_visibility_for(const Position position) {
+    Bitboard rook_xray_visibility = 0ULL;
 
     const auto position_rank = static_cast<int64_t>(std::to_underlying(position) / 8);
     const auto position_file = static_cast<int64_t>(std::to_underlying(position) % 8);
 
-    for (auto r = position_rank + 1; r < 8; ++r) { rook_visibility |= 1ULL << (r * 8 + position_file); }
-    for (auto r = position_rank - 1; r >= 0; --r) { rook_visibility |= 1ULL << (r * 8 + position_file); }
-    for (auto f = position_file + 1; f < 8; ++f) { rook_visibility |= 1ULL << (position_rank * 8 + f); }
-    for (auto f = position_file - 1; f >= 0; --f) { rook_visibility |= 1ULL << (position_rank * 8 + f); }
+    for (auto r = position_rank + 1; r < 8; ++r) { rook_xray_visibility |= 1ULL << (r * 8 + position_file); }
+    for (auto r = position_rank - 1; r >= 0; --r) { rook_xray_visibility |= 1ULL << (r * 8 + position_file); }
+    for (auto f = position_file + 1; f < 8; ++f) { rook_xray_visibility |= 1ULL << (position_rank * 8 + f); }
+    for (auto f = position_file - 1; f >= 0; --f) { rook_xray_visibility |= 1ULL << (position_rank * 8 + f); }
 
-    return rook_visibility;
+    return rook_xray_visibility;
 }
 
-[[nodiscard]] constexpr Bitboard generate_bishop_visibility_for(const Position position) {
-    Bitboard bishop_visibility = 0ULL;
+[[nodiscard]] constexpr Bitboard generate_bishop_xray_visibility_for(const Position position) {
+    Bitboard bishop_xray_visibility = 0ULL;
 
     const auto position_rank = static_cast<int64_t>(std::to_underlying(position) / 8);
     const auto position_file = static_cast<int64_t>(std::to_underlying(position) % 8);
 
     for (auto r = position_rank + 1, f = position_file + 1; r < 8 && f < 8; ++r, ++f) {
-        bishop_visibility |= 1ULL << (r * 8 + f);
+        bishop_xray_visibility |= 1ULL << (r * 8 + f);
     }
     for (auto r = position_rank - 1, f = position_file + 1; r >= 0 && f < 8; --r, ++f) {
-        bishop_visibility |= 1ULL << (r * 8 + f);
+        bishop_xray_visibility |= 1ULL << (r * 8 + f);
     }
     for (auto r = position_rank + 1, f = position_file - 1; r < 8 && f >= 0; ++r, --f) {
-        bishop_visibility |= 1ULL << (r * 8 + f);
+        bishop_xray_visibility |= 1ULL << (r * 8 + f);
     }
     for (auto r = position_rank - 1, f = position_file - 1; r >= 0 && f >= 0; --r, --f) {
-        bishop_visibility |= 1ULL << (r * 8 + f);
+        bishop_xray_visibility |= 1ULL << (r * 8 + f);
     }
 
-    return bishop_visibility;
+    return bishop_xray_visibility;
 }
 
 template<Slider slider>
-[[nodiscard]] constexpr Bitboard generate_slider_visibility_for(const Position position) {
+[[nodiscard]] constexpr Bitboard generate_slider_xray_visibility_for(const Position position) {
 
     using enum Slider_t;
 
     static_assert(slider == rook || slider == bishop);
 
     if constexpr (slider == rook) {
-        return generate_rook_visibility_for(position);
+        return generate_rook_xray_visibility_for(position);
     } else if constexpr (slider == bishop) {
-        return generate_bishop_visibility_for(position);
+        return generate_bishop_xray_visibility_for(position);
     }
 
     return 0ULL;
@@ -106,18 +106,18 @@ template<Slider slider>
     std::array<Bitboard, All_Positions.size()> visibilities{};
 
     for ( const auto position : All_Positions) {
-        visibilities[std::to_underlying(position)] = generate_slider_visibility_for<slider>(position);
+        visibilities[std::to_underlying(position)] = generate_slider_xray_visibility_for<slider>(position);
     }
 
     return visibilities;
 }
 
-void generate_visibility_tables(std::ofstream &of) {
-    constexpr std::array<Bitboard, All_Positions.size()> rook_visibility_table = generate_slider_visibilities<Slider_t::rook>();
-    constexpr std::array<Bitboard, All_Positions.size()> bishop_visibility_table = generate_slider_visibilities<Slider_t::bishop>();
+void generate_xray_visibility_tables(std::ofstream &of) {
+    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Slider_t::rook>();
+    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Slider_t::bishop>();
 
-    output_array(of, rook_visibility_table, "rook_visibility_table", "Bitboard");
-    output_array(of, bishop_visibility_table, "bishop_visibility_table", "Bitboard");
+    output_array(of, rook_xray_visibility_table, "rook_xray_visibility_table", "Bitboard");
+    output_array(of, bishop_xray_visibility_table, "bishop_xray_visibility_table", "Bitboard");
 }
 
 
@@ -332,8 +332,8 @@ int main(const int argc, const char **argv) {
     generate_attacks(of);
 #elif GENERATE_PIN_TABLES
     generate_pin_tables(of);
-#elif GENERATE_VISIBILITY_TABLES
-    generate_visibility_tables(of);
+#elif GENERATE_XRAY_VISIBILITY_TABLES
+    generate_xray_visibility_tables(of);
 #endif
 
 
