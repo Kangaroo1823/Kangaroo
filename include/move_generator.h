@@ -45,7 +45,7 @@ constexpr Bitboard get_attacks_for(const Bitboard occupancy, const Bitboard piec
 
         // compute the position corresponding to the lowest set bit in p; i.e, the position of the chess piece
         // in question.
-        auto position = All_Positions[square_of(p)];
+        auto position = square_of(p);
 
         // add the attacked squares (=bits set to 1 (one)) to the result.
         result |= get_attacks_for_position<slider>(position, occupancy);

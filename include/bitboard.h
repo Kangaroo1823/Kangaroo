@@ -64,10 +64,17 @@ constexpr int64_t Bitcount_(Bitboard bitboard) {
     return count;
 }
 
+/**
+ * Counts the number of set bits in a bitboard using architecture-specific instructions
+ * when available, or a constexpr fallback otherwise.
+ *
+ * @param board The bitboard whose set bits are to be counted.
+ * @return The number of set bits in the given bitboard.
+ */
 constexpr int64_t Bitcount(const Bitboard board) {
 
     if consteval {
-        Bitcount_(board);
+        return Bitcount_(board);
     } else {
 #ifdef _MSC_VER
         return static_cast<int64_t>(__popcnt64(board));
@@ -79,10 +86,10 @@ constexpr int64_t Bitcount(const Bitboard board) {
     }
 }
 
-constexpr Bitboard square_of_(const Bitboard bitboard) {
+constexpr Position square_of_(const Bitboard bitboard) {
     // count the bits before the first 1 bit.
     const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
-    return static_cast<Bitboard>(Bitcount((bitboard & b) - 1));
+    return All_Positions[static_cast<std::size_t>(Bitcount((bitboard & b) - 1))];
 }
 
 
@@ -96,8 +103,8 @@ constexpr Bitboard square_of_(const Bitboard bitboard) {
  * @param bitboard The bitboard to extract the least significant bit's index from.
  * @return The index of the least significant set bit in the input bitboard.
  */
-constexpr Bitboard square_of(const Bitboard bitboard) {
-    return _tzcnt_u64(bitboard);
+constexpr Position square_of(const Bitboard bitboard) {
+    return All_Positions[_tzcnt_u64(bitboard)];
 }
 
 /**
@@ -135,9 +142,9 @@ constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const B
 
     const int64_t count = Bitcount(mask_copy);
     for (unsigned int i = 0; i < count; i++) {
-        const Bitboard s = square_of(mask_copy);
+        const Position s = square_of(mask_copy);
         mask_copy &= mask_copy - 1ULL;
-        if (index & 1ULL << i) occupancy |= 1ULL << s;
+        if (index & 1ULL << i) occupancy |= 1ULL << std::to_underlying(s);
     }
 
     return occupancy;

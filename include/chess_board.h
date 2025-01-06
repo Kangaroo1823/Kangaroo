@@ -100,64 +100,68 @@ namespace Kangaroo {
     public:
         explicit Chess_Board(const std::string_view &fen);
 
-        [[nodiscard]] Bitboard white_king() const { return white_king_p; }
-        void set_white_king(const Bitboard &white_king) { white_king_p = white_king; };
+        [[nodiscard]] _ForceInline Bitboard white_king() const { return white_king_p; }
+        _ForceInline void set_white_king(const Bitboard &white_king) { white_king_p = white_king; };
 
-        [[nodiscard]] Bitboard white_queens() const { return white_queens_p; }
-        void set_white_queens(const Bitboard &white_queens) { white_queens_p = white_queens; };
+        [[nodiscard]] _ForceInline Bitboard white_queens() const { return white_queens_p; }
+        _ForceInline void set_white_queens(const Bitboard &white_queens) { white_queens_p = white_queens; };
 
-        [[nodiscard]] Bitboard white_rooks() const { return white_rooks_p; }
-        void set_white_rooks(const Bitboard &white_rooks) { white_rooks_p = white_rooks; };
+        [[nodiscard]] _ForceInline Bitboard white_rooks() const { return white_rooks_p; }
+        _ForceInline void set_white_rooks(const Bitboard &white_rooks) { white_rooks_p = white_rooks; };
 
-        [[nodiscard]] Bitboard white_knights() const { return white_knights_p; }
-        void set_white_knights(const Bitboard &white_knights) { white_knights_p = white_knights; };
+        [[nodiscard]] _ForceInline Bitboard white_knights() const { return white_knights_p; }
+        _ForceInline void set_white_knights(const Bitboard &white_knights) { white_knights_p = white_knights; };
 
-        [[nodiscard]] Bitboard white_bishops() const { return white_bishops_p; }
-        void set_white_bishops(const Bitboard &white_bishops) { white_bishops_p = white_bishops; };
+        [[nodiscard]] _ForceInline Bitboard white_bishops() const { return white_bishops_p; }
+        _ForceInline void set_white_bishops(const Bitboard &white_bishops) { white_bishops_p = white_bishops; };
 
-        [[nodiscard]] Bitboard white_pawns() const { return white_pawns_p; }
-        void set_white_pawns(const Bitboard &white_pawns) { white_pawns_p = white_pawns; };
-
-
-        [[nodiscard]] Bitboard black_king() const { return black_king_p; }
-        void set_black_king(const Bitboard &black_king) { black_king_p = black_king; };
-
-        [[nodiscard]] Bitboard black_queens() const { return black_queens_p; }
-        void set_black_queens(const Bitboard &black_queens) { black_queens_p = black_queens; };
-
-        [[nodiscard]] Bitboard black_rooks() const { return black_rooks_p; }
-        void set_black_rooks(const Bitboard &black_rooks) { black_rooks_p = black_rooks; };
-
-        [[nodiscard]] Bitboard black_knights() const { return black_knights_p; }
-        void set_black_knights(const Bitboard &black_knights) { black_knights_p = black_knights; };
-
-        [[nodiscard]] Bitboard black_bishops() const { return black_bishops_p; }
-        void set_black_bishops(const Bitboard &black_bishops) { black_bishops_p = black_bishops; };
-
-        [[nodiscard]] Bitboard black_pawns() const { return black_pawns_p; }
-        void set_black_pawns(const Bitboard &black_pawns) { black_pawns_p = black_pawns; };
+        [[nodiscard]] _ForceInline Bitboard white_pawns() const { return white_pawns_p; }
+        _ForceInline void set_white_pawns(const Bitboard &white_pawns) { white_pawns_p = white_pawns; };
 
 
-        [[nodiscard]] Bitboard black_pieces() const { return black_pieces_p; }
-        void set_black_pieces(const Bitboard &black_pieces) { black_pieces_p = black_pieces; };
+        [[nodiscard]] _ForceInline Bitboard black_king() const { return black_king_p; }
+        _ForceInline void set_black_king(const Bitboard &black_king) { black_king_p = black_king; };
 
-        [[nodiscard]] Bitboard white_pieces() const { return white_pieces_p; }
-        void set_white_pieces(const Bitboard &white_pieces) { white_pieces_p = white_pieces; };
+        [[nodiscard]] _ForceInline Bitboard black_queens() const { return black_queens_p; }
+        _ForceInline void set_black_queens(const Bitboard &black_queens) { black_queens_p = black_queens; };
 
-        [[nodiscard]] Bitboard all_pieces() const { return all_pieces_p; }
-        void set_all_pieces(const Bitboard &all_pieces) { all_pieces_p = all_pieces; };
+        [[nodiscard]] _ForceInline Bitboard black_rooks() const { return black_rooks_p; }
+        _ForceInline void set_black_rooks(const Bitboard &black_rooks) { black_rooks_p = black_rooks; };
+
+        [[nodiscard]] _ForceInline Bitboard black_knights() const { return black_knights_p; }
+        _ForceInline void set_black_knights(const Bitboard &black_knights) { black_knights_p = black_knights; };
+
+        [[nodiscard]] _ForceInline Bitboard black_bishops() const { return black_bishops_p; }
+        _ForceInline void set_black_bishops(const Bitboard &black_bishops) { black_bishops_p = black_bishops; };
+
+        [[nodiscard]] _ForceInline Bitboard black_pawns() const { return black_pawns_p; }
+        _ForceInline void set_black_pawns(const Bitboard &black_pawns) { black_pawns_p = black_pawns; };
 
 
-        [[nodiscard]] const Position &en_passant_square() const { return en_passant_square_p; }
-        void set_en_passant_square(const Position &en_passant_square) { en_passant_square_p = en_passant_square; };
+        [[nodiscard]] _ForceInline Bitboard black_pieces() const { return black_pieces_p; }
+        _ForceInline void set_black_pieces(const Bitboard &black_pieces) { black_pieces_p = black_pieces; };
 
-        [[nodiscard]] std::size_t half_move_number() const { return half_move_number_p; }
-        void set_half_move_number(std::size_t half_move_number) { half_move_number_p = half_move_number; };
+        [[nodiscard]] _ForceInline Bitboard white_pieces() const { return white_pieces_p; }
+        _ForceInline void set_white_pieces(const Bitboard &white_pieces) { white_pieces_p = white_pieces; };
 
-        [[nodiscard]] std::size_t full_move_number() const { return full_move_number_p; }
-        void set_full_move_number(const std::size_t &full_move_number) { full_move_number_p = full_move_number; };
+        [[nodiscard]] _ForceInline Bitboard all_pieces() const { return all_pieces_p; }
+        _ForceInline void set_all_pieces(const Bitboard &all_pieces) { all_pieces_p = all_pieces; };
 
-        void set_color_to_move(const Color &color) {
+
+        [[nodiscard]] _ForceInline const Position &en_passant_square() const { return en_passant_square_p; }
+        _ForceInline void set_en_passant_square(const Position &en_passant_square) {
+            en_passant_square_p = en_passant_square;
+        };
+
+        [[nodiscard]] _ForceInline std::size_t half_move_number() const { return half_move_number_p; }
+        _ForceInline void set_half_move_number(std::size_t half_move_number) { half_move_number_p = half_move_number; };
+
+        [[nodiscard]] _ForceInline std::size_t full_move_number() const { return full_move_number_p; }
+        _ForceInline void set_full_move_number(const std::size_t &full_move_number) {
+            full_move_number_p = full_move_number;
+        };
+
+        _ForceInline void set_color_to_move(const Color &color) {
             if (color == Color::white) {
                 flags |= 0x1ULL;
             } else {
@@ -165,11 +169,11 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] Color color_to_move() const {
+        [[nodiscard]] _ForceInline Color color_to_move() const {
             return (flags & 0x1ULL) ? Color::white : Color::black;
         }
 
-        void set_en_passant(const bool &en_passant) {
+        _ForceInline void set_en_passant(const bool &en_passant) {
             if (en_passant) {
                 flags |= 0x2ULL;
             } else {
@@ -177,11 +181,11 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] bool en_passant() const {
+        [[nodiscard]] _ForceInline bool en_passant() const {
             return (flags & 0x2ULL) != 0;
         }
 
-        void set_white_queen_castle(const bool &white_queen_castle) {
+        _ForceInline void set_white_queen_castle(const bool &white_queen_castle) {
             if (white_queen_castle) {
                 flags |= 0x04ULL;
             } else {
@@ -189,11 +193,11 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] bool white_queen_castle() const {
+        [[nodiscard]] _ForceInline bool white_queen_castle() const {
             return (flags & 0x04ULL) != 0;
         }
 
-        void set_white_king_castle(const bool &white_king_castle) {
+        _ForceInline void set_white_king_castle(const bool &white_king_castle) {
             if (white_king_castle) {
                 flags |= 0x08ULL;
             } else {
@@ -201,11 +205,11 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] bool white_king_castle() const {
+        [[nodiscard]] _ForceInline bool white_king_castle() const {
             return (flags & 0x08ULL) != 0;
         }
 
-        void set_black_queen_castle(const bool &black_queen_castle) {
+        _ForceInline void set_black_queen_castle(const bool &black_queen_castle) {
             if (black_queen_castle) {
                 flags |= 0x10ULL;
             } else {
@@ -213,12 +217,12 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] bool black_queen_castle() const {
+        [[nodiscard]] _ForceInline bool black_queen_castle() const {
             return (flags & 0x10ULL) != 0;
         }
 
 
-        void set_black_king_castle(const bool &black_king_castle) {
+        _ForceInline void set_black_king_castle(const bool &black_king_castle) {
             if (black_king_castle) {
                 flags |= 0x20ULL;
             } else {
@@ -226,11 +230,11 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] bool black_king_castle() const {
+        [[nodiscard]] _ForceInline bool black_king_castle() const {
             return (flags & 0x20ULL) != 0;
         }
 
-        void set_check(const bool &check) {
+        _ForceInline void set_check(const bool &check) {
             if (check) {
                 flags |= 0x40ULL;
             } else {
@@ -238,12 +242,13 @@ namespace Kangaroo {
             }
         };
 
-        [[nodiscard]] bool check() const {
+        [[nodiscard]] _ForceInline bool check() const {
             return (flags & 0x40ULL) != 0;
         }
 
-        template <Kangaroo::Board_Status status, typename CallBackType>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(CallBackType callback, const Bitboard pawn) const {
+        template<Kangaroo::Board_Status status, typename CallBackType>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(
+            CallBackType callback, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
             if (pawn & pawn_base_row<status.color_p>()) {
                 if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(
@@ -256,8 +261,9 @@ namespace Kangaroo {
             return moves;
         }
 
-        template <Kangaroo::Board_Status status, typename CallBackType>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(CallBackType callback, const std::size_t pawn_square, const Bitboard pawn) const {
+        template<Kangaroo::Board_Status status, typename CallBackType>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(
+            CallBackType callback, const std::size_t pawn_square, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
             Bitboard mask = (status.color_p == Color_t::white
                                  ? Constants::white_pawn_attacks[pawn_square] & black_pieces()
@@ -265,8 +271,9 @@ namespace Kangaroo {
 
             // see if we can capture anything
             Bitloop(mask, pawn_attacks) {
-                Bitboard pawn_attack = 1ULL << square_of(pawn_attacks);
-                callback(status.color_p == Color_t::white ? Chess_Pieces_t::white_pawn : Chess_Pieces_t::black_pawn, make_move(pawn, pawn_attack));
+                Bitboard pawn_attack = 1ULL << std::to_underlying(square_of(pawn_attacks));
+                callback(status.color_p == Color_t::white ? Chess_Pieces_t::white_pawn : Chess_Pieces_t::black_pawn,
+                         make_move(pawn, pawn_attack));
                 ++moves;
             }
             return moves;
@@ -285,7 +292,7 @@ namespace Kangaroo {
                 using enum Color_t;
                 using enum Chess_Pieces;
 
-                const std::size_t pawn_square = square_of(pawns_remaining);
+                const std::size_t pawn_square = std::to_underlying(square_of(pawns_remaining));
                 const Bitboard pawn = 1ULL << pawn_square;
 
                 // single move for pawns
@@ -296,21 +303,21 @@ namespace Kangaroo {
                     ++moves;
 
                     // double move for pawns in base row
-                    moves += generate_double_pawn_pushs<status, CallBackType>(callback,  pawn);
+                    moves += generate_double_pawn_pushs<status, CallBackType>(callback, pawn);
                 }
 
-                moves += generate_pawn_captures<status, CallBackType>(callback,  pawn_square, pawn);
+                moves += generate_pawn_captures<status, CallBackType>(callback, pawn_square, pawn);
             }
             return moves;
         }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(CallBackType callback) {
-          return generate_pawn_moves<status>(callback);
+            return generate_pawn_moves<status>(callback);
         }
 
         template<typename CallBack>
-        [[nodiscard]] constexpr std::size_t run_move_generation(CallBack callback) {
+        [[nodiscard]] _ForceInline constexpr std::size_t run_move_generation(CallBack callback) {
             switch (flags) {
                 case 0x00: return generate_moves<Board_Status(0x00)>(callback);
                 case 0x01: return generate_moves<Board_Status(0x01)>(callback);
@@ -394,6 +401,110 @@ namespace Kangaroo {
 
         void parse_fen_full_move_number(const std::string_view &fen);
 
+
+        template<Slider slider, Pin_Masks_Suitable_For purpose>
+        _ForceInline constexpr void update_pin_mask_for_movement_like(const Position king_position,
+                                                                      const Bitboard rooks_remaining) {
+            using enum Slider;
+
+            static_assert(
+                purpose == Pin_Masks_Suitable_For::detecting_pins ||
+                purpose == Pin_Masks_Suitable_For::detecting_check);
+
+            // compute position of current rook
+            const Position rook_position = square_of(rooks_remaining);
+
+            // compute the pin-ray between the rook and the king
+            const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
+
+            // check if count of set bits in the intersection of the ray with all_pieces is two.
+            if (const auto pieces_in_intersection = Bitcount(ray & all_pieces());
+                pieces_in_intersection == std::to_underlying(purpose)) {
+                if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
+                    // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
+                    // - one is at piece_position (rook or queen)
+                    // - and one other piece.
+                    // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
+
+                    if constexpr (slider == rook) {
+                        pin_mask_HV |= ray;
+                    } else if (slider == bishop) {
+                        pin_mask_D |= ray;
+                    }
+                } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
+                    // When the Bitcount equals one, it means that it is a check situation!
+                    check_mask |= ray;
+                }
+            }
+        }
+
+
+        template<Color color, Pin_Masks_Suitable_For purpose>
+        /**
+         * @brief Computes the pin masks for the current board state.
+         *
+         * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_pins` this method
+         * calculates the horizontal/vertical (HV) and diagonal (D) pin masks
+         * for the specified color of the king based on the positions and possible movements
+         * of rooks, bishops, and queens of the opposite color.
+         *
+         * These pin masks are used to identify pieces on the same line or diagonal as the
+         * king which cannot move freely due to the threat of exposing the king to a check.
+         *
+         * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_check` this method computes
+         * if a sliding piece of the opposite color poses check to the king of color `color`.
+         *
+         * @tparam color The color of the king for which the pin masks are being calculated.
+         *               Must be either `Color::white` or `Color::black`.
+         * @tparam purpose A purpose or configuration type that defines special pin-mask
+         *                 requirements.
+         *
+         * @note This method assumes the presence of a valid board configuration where all
+         *       game rules are respected.
+         *
+         * @throws static_assert if `color` or `purpose` is not valid.
+         */
+        _ForceInline constexpr void build_pin_masks() {
+            using enum Color;
+            using enum Slider;
+
+            static_assert(color == white || color == black, "Invalid color");
+            static_assert(
+                purpose == Pin_Masks_Suitable_For::detecting_pins ||
+                purpose == Pin_Masks_Suitable_For::detecting_check, "Invalid purpose");
+
+            // reset the pin masks
+            if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
+                pin_mask_D = pin_mask_HV = 0ULL;
+            } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
+                check_mask = 0ULL;
+            }
+
+            // compute king position
+            const Position king_position = square_of(color == white ? white_king() : black_king());
+
+            // loop over all the rooks of opposite color
+            Bitloop(color == white ? black_rooks() : white_rooks, rooks_remaining) {
+                // change the HV-pin-mask, if necessary
+                update_pin_mask_for_movement_like<rook, purpose>(king_position, rooks_remaining);
+            }
+
+            // loop over all the queens of opposite color
+            Bitloop(color == white ? black_queens() : white_queens(), queens_remaining) {
+                // change the HV-pin-mask, if necessary
+                update_pin_mask_for_movement_like<rook, purpose>(king_position, queens_remaining);
+
+                // change the D-pin-mask, if necessary
+                update_pin_mask_for_movement_like<bishop, purpose>(king_position, queens_remaining);
+            }
+
+            // loop over all the bishops of opposite color
+            Bitloop(color == white ? black_bishops() : white_bishops(), bishops_remaining) {
+                // change the D-pin-mask, if necessary
+                update_pin_mask_for_movement_like<bishop, purpose>(king_position, bishops_remaining);
+            }
+        }
+
         Bitboard white_king_p = 0ULL;
         Bitboard white_queens_p = 0ULL;
         Bitboard white_rooks_p = 0ULL;
@@ -416,13 +527,13 @@ namespace Kangaroo {
         std::size_t half_move_number_p = 0;
         std::size_t full_move_number_p = 0;
 
-        // pin-masks to secure black king
-        Bitboard black_pin_mask_HV = 0ULL;
-        Bitboard black_pin_mask_D = 0ULL;
 
-        // pin-masks to secure white king
-        Bitboard white_pin_mask_HV = 0ULL;
-        Bitboard white_pin_mask_D = 0ULL;
+        // pin-masks to detect pinned pieces
+        Bitboard pin_mask_HV = 0ULL;
+        Bitboard pin_mask_D = 0ULL;
+
+        // Bitboard to detect if a king is in check.
+        Bitboard check_mask = 0ULL;
 
         uint64_t flags = 0;
     };
