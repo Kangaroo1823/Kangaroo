@@ -32,7 +32,7 @@ constexpr std::size_t create_hash_index(const Position &position, const Bitboard
 
 template<Slider slider>
 constexpr std::size_t create_magic_hash_index(const Position &position, const Bitboard &occupancy,
-                                              int64_t relevant_bits) {
+                                              const int64_t relevant_bits) {
     const std::size_t offset = (slider == Slider::bishop ? 512 : 4096) * std::to_underlying(position);
 
     return offset + create_hash_index<slider>(position, occupancy, relevant_bits);
