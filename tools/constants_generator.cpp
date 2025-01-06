@@ -88,11 +88,13 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
 template<Slider slider>
 [[nodiscard]] constexpr Bitboard generate_slider_visibility_for(const Position position) {
 
-    static_assert(slider == Slider::rook || slider == Slider::bishop);
+    using enum Slider_t;
 
-    if constexpr (slider == Slider::rook) {
+    static_assert(slider == rook || slider == bishop);
+
+    if constexpr (slider == rook) {
         return generate_rook_visibility_for(position);
-    } else if constexpr (slider == Slider::bishop) {
+    } else if constexpr (slider == bishop) {
         return generate_bishop_visibility_for(position);
     }
 
