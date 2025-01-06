@@ -43,10 +43,93 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
     of << "#endif // " << guard << "\n\n";
 }
 
+/*************************************************************************
+ *
+ * visibility table generator
+ *
+ ************************************************************************/
+
+[[nodiscard]] constexpr Bitboard generate_rook_visibility_for(const Position position) {
+    Bitboard rook_visibility = 0ULL;
+
+    const auto position_rank = static_cast<int64_t>(std::to_underlying(position) / 8);
+    const auto position_file = static_cast<int64_t>(std::to_underlying(position) % 8);
+
+    for (auto r = position_rank + 1; r < 8; ++r) { rook_visibility |= 1ULL << (r * 8 + position_file); }
+    for (auto r = position_rank - 1; r >= 0; --r) { rook_visibility |= 1ULL << (r * 8 + position_file); }
+    for (auto f = position_file + 1; f < 8; ++f) { rook_visibility |= 1ULL << (position_rank * 8 + f); }
+    for (auto f = position_file - 1; f >= 0; --f) { rook_visibility |= 1ULL << (position_rank * 8 + f); }
+
+    return rook_visibility;
+}
+
+[[nodiscard]] constexpr Bitboard generate_bishop_visibility_for(const Position position) {
+    Bitboard bishop_visibility = 0ULL;
+
+    const auto position_rank = static_cast<int64_t>(std::to_underlying(position) / 8);
+    const auto position_file = static_cast<int64_t>(std::to_underlying(position) % 8);
+
+    for (auto r = position_rank + 1, f = position_file + 1; r < 8 && f < 8; ++r, ++f) {
+        bishop_visibility |= 1ULL << (r * 8 + f);
+    }
+    for (auto r = position_rank - 1, f = position_file + 1; r >= 0 && f < 8; --r, ++f) {
+        bishop_visibility |= 1ULL << (r * 8 + f);
+    }
+    for (auto r = position_rank + 1, f = position_file - 1; r < 8 && f >= 0; ++r, --f) {
+        bishop_visibility |= 1ULL << (r * 8 + f);
+    }
+    for (auto r = position_rank - 1, f = position_file - 1; r >= 0 && f >= 0; --r, --f) {
+        bishop_visibility |= 1ULL << (r * 8 + f);
+    }
+
+    return bishop_visibility;
+}
 
 template<Slider slider>
-constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, const int64_t king_file, const int64_t piece_rank,
-                                             const int64_t piece_file) {
+[[nodiscard]] constexpr Bitboard generate_slider_visibility_for(const Position position) {
+
+    static_assert(slider == Slider::rook || slider == Slider::bishop);
+
+    if constexpr (slider == Slider::rook) {
+        return generate_rook_visibility_for(position);
+    } else if constexpr (slider == Slider::bishop) {
+        return generate_bishop_visibility_for(position);
+    }
+
+    return 0ULL;
+}
+
+template<Slider slider>
+[[nodiscard]] constexpr std::array<Bitboard, All_Positions.size()> generate_slider_visibilities() {
+    std::array<Bitboard, All_Positions.size()> visibilities{};
+
+    for ( const auto position : All_Positions) {
+        visibilities[std::to_underlying(position)] = generate_slider_visibility_for<slider>(position);
+    }
+
+    return visibilities;
+}
+
+void generate_visibility_tables(std::ofstream &of) {
+    constexpr std::array<Bitboard, All_Positions.size()> rook_visibility_table = generate_slider_visibilities<Slider_t::rook>();
+    constexpr std::array<Bitboard, All_Positions.size()> bishop_visibility_table = generate_slider_visibilities<Slider_t::bishop>();
+
+    output_array(of, rook_visibility_table, "rook_visibility_table", "Bitboard");
+    output_array(of, bishop_visibility_table, "bishop_visibility_table", "Bitboard");
+}
+
+
+
+/*************************************************************************
+ *
+ * pin table generator
+ *
+ ************************************************************************/
+
+template<Slider slider>
+constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, const int64_t king_file,
+                                                       const int64_t piece_rank,
+                                                       const int64_t piece_file) {
     auto r = piece_rank;
     auto f = piece_file;
     Bitboard ray = 1ULL << (r * 8 + f);
@@ -82,7 +165,7 @@ constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, 
 
 template<Slider slider>
 constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64_t king_file, const int64_t piece_rank,
-                                  const int64_t piece_file) {
+                                            const int64_t piece_file) {
     auto r = piece_rank;
     auto f = piece_file;
 
@@ -120,7 +203,6 @@ constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64
 
 template<Slider slider>
 constexpr Bitboard generate_pin_mask_for_position(Position piece_position, Position king_position) {
-
     using enum Slider_t;
 
     static_assert(slider == rook || slider == bishop);
@@ -166,7 +248,6 @@ void generate_pin_tables(std::ofstream &of) {
     output_array(of, rook_pin_table, "rook_pin_table", "Bitboard");
     output_array(of, bishop_pin_table, "bishop_pin_table", "Bitboard");
 }
-
 
 
 void generate_masks(std::ofstream &of) {
@@ -249,6 +330,8 @@ int main(const int argc, const char **argv) {
     generate_attacks(of);
 #elif GENERATE_PIN_TABLES
     generate_pin_tables(of);
+#elif GENERATE_VISIBILITY_TABLES
+    generate_visibility_tables(of);
 #endif
 
 

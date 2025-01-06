@@ -196,6 +196,45 @@ add_custom_target(
 )
 
 
+##################################################
+#
+# visibility-table-generator
+#
+##################################################
+add_executable(Kangaroo_constants_generator_visibility_tables
+        constants_generator.cpp
+        ../include/bitboard.h
+        ../src/bitboard.cpp
+        ../include/colors.h)
+target_link_libraries(Kangaroo_constants_generator_visibility_tables
+        PUBLIC
+        Kangaroo_warnings
+)
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Kangaroo_constants_generator_visibility_tables PRIVATE stdc++exp)
+endif ()
+
+
+target_include_directories(Kangaroo_constants_generator_visibility_tables
+        PRIVATE
+        ../include/
+        ${CMAKE_BINARY_DIR}
+)
+target_compile_definitions(Kangaroo_constants_generator_visibility_tables PUBLIC GENERATE_VISIBILITY_TABLES)
+
+add_custom_command(
+        OUTPUT "${CMAKE_BINARY_DIR}/constants_visibility_tables.h"
+        COMMAND ${CMAKE_BINARY_DIR}/tools/Kangaroo_constants_generator_visibility_tables ${CMAKE_BINARY_DIR}/constants_visibility_tables.h
+        DEPENDS Kangaroo_constants_generator_visibility_tables  # Make sure "mytool" is built before this runs
+        COMMENT "Generating 'constants_visibility_tables.h' using Kangaroo_constants_generator_visibility_tables ... (this might take a while)"
+)
+
+add_custom_target(
+        generate_visibility_tables
+        DEPENDS "${CMAKE_BINARY_DIR}/constants_visibility_tables.h"
+)
+
 ####################################
 #
 # hex_to_bitboard
@@ -226,6 +265,7 @@ add_custom_target(
         ${CMAKE_BINARY_DIR}/constants_magics.h
         ${CMAKE_BINARY_DIR}/constants_attacks.h
         ${CMAKE_BINARY_DIR}/constants_pin_tables.h
+        ${CMAKE_BINARY_DIR}/constants_visibility_tables.h
 )
 
 add_dependencies(Kangaroo_options generate_files)
