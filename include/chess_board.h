@@ -420,11 +420,12 @@ namespace Kangaroo {
 
             const auto pieces_in_intersection = Bitcount(ray & all_pieces());
 
-            const auto player_pieces_in_intersection = Bitcount(ray & color == white ? black_pieces() : white_pieces());
+            const auto player_pieces_in_intersection = Bitcount(ray & color == white ? white_pieces() : black_pieces());
 
-            // check if count of set bits in the intersection of the ray with all_pieces is two.
+            // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
+            // between is of the same color as the king.
             if (pieces_in_intersection == std::to_underlying(purpose) &&
-                player_pieces_in_intersection == std::to_underlying(purpose)) {
+                player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
 
                 if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
                     // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
