@@ -148,8 +148,8 @@ namespace Kangaroo {
         _ForceInline void set_all_pieces(const Bitboard &all_pieces) { all_pieces_p = all_pieces; };
 
 
-        [[nodiscard]] _ForceInline const Position &en_passant_square() const { return en_passant_square_p; }
-        _ForceInline void set_en_passant_square(const Position &en_passant_square) {
+        [[nodiscard]] _ForceInline const Square &en_passant_square() const { return en_passant_square_p; }
+        _ForceInline void set_en_passant_square(const Square &en_passant_square) {
             en_passant_square_p = en_passant_square;
         };
 
@@ -403,7 +403,7 @@ namespace Kangaroo {
 
 
         template<Slider slider, Pin_Masks_Suitable_For purpose>
-        _ForceInline constexpr void update_pin_mask_for_movement_like(const Position king_position,
+        _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
                                                                       const Bitboard rooks_remaining) {
             using enum Slider;
 
@@ -412,14 +412,15 @@ namespace Kangaroo {
                 purpose == Pin_Masks_Suitable_For::detecting_check);
 
             // compute position of current rook
-            const Position rook_position = square_of(rooks_remaining);
+            const Square rook_position = square_of(rooks_remaining);
 
             // compute the pin-ray between the rook and the king
             const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
 
             // check if count of set bits in the intersection of the ray with all_pieces is two.
-            if (const auto pieces_in_intersection = Bitcount(ray & all_pieces());
-                pieces_in_intersection == std::to_underlying(purpose)) {
+            if (const auto pieces_in_intersection = Bitcount(ray & all_pieces()),
+                player_pieces_in_intersection = Bitcount(ray & color == white ? black_pieces() : white_pieces());
+                pieces_in_intersection == std::to_underlying(purpose) && player_pieces_in_intersection == 1) {
                 if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
                     // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
                     // - one is at piece_position (rook or queen)
@@ -481,10 +482,10 @@ namespace Kangaroo {
             }
 
             // compute king position
-            const Position king_position = square_of(color == white ? white_king() : black_king());
+            const Square king_position = square_of(color == white ? white_king() : black_king());
 
             // loop over all the rooks of opposite color
-            Bitloop(color == white ? black_rooks() : white_rooks, rooks_remaining) {
+            Bitloop(color == white ? black_rooks() : white_rooks(), rooks_remaining) {
                 // change the HV-pin-mask, if necessary
                 update_pin_mask_for_movement_like<rook, purpose>(king_position, rooks_remaining);
             }
@@ -523,7 +524,7 @@ namespace Kangaroo {
         Bitboard white_pieces_p = 0ULL;
         Bitboard all_pieces_p = 0ULL;
 
-        Position en_passant_square_p = Position::A1;
+        Square en_passant_square_p = Square::A1;
         std::size_t half_move_number_p = 0;
         std::size_t full_move_number_p = 0;
 

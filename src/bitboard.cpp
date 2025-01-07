@@ -31,7 +31,7 @@ void print_bitboard(const Bitboard bitboard) {
     std::print( "       0x{0:x},\n", bitboard);
 }
 
-std::string print_position(const Position position) {
+std::string print_position(const Square position) {
     // An example of using a look-up table
     static const std::array<std::string, 64> position_table = {
         "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",
@@ -43,7 +43,7 @@ std::string print_position(const Position position) {
         "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7",
         "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
     };
-    if (position >= Position_t::A1 && position <= Position_t::H8) {
+    if (position >= Square_t::A1 && position <= Square_t::H8) {
         return position_table[std::to_underlying(position)];
     }
     return "unknown";

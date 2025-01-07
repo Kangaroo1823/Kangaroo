@@ -844,7 +844,7 @@ constexpr std::array<Bitboard, 64> occupancy_test_table = {
 };
 
 TEST(Mask_Generator, create_occupation_of_mask) {
-    using enum Position_t;
+    using enum Square_t;
     Bitboard mask = 0ULL;
 
     mask = set_bit(mask, A2);
@@ -862,7 +862,7 @@ TEST(Mask_Generator, create_occupation_of_mask) {
 }
 
 TEST(Mask_Generator, create_occupation_of_mask2) {
-    using enum Position_t;
+    using enum Square_t;
     Bitboard mask = 0ULL;
 
     mask = set_bit(mask, A2);

@@ -9,7 +9,7 @@
 #include "gtest/gtest.h"
 
 TEST(Move_Generator, create_possible_bishop_moves) {
-    using enum Position_t;
+    using enum Square_t;
     constexpr auto position = E4;
     Bitboard mask = 0ULL;
 
@@ -39,7 +39,7 @@ TEST(Move_Generator, create_possible_bishop_moves) {
 
 
 TEST(Move_Generator, create_possible_rook_moves) {
-    using enum Position_t;
+    using enum Square_t;
     constexpr auto position = E4;
     Bitboard mask = 0ULL;
 

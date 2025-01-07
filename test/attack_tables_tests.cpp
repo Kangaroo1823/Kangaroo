@@ -20,8 +20,8 @@
 
 
 TEST(Attack_Tables_Generator, slider_attack_test) {
-    constexpr Bitboard occupancy = set_bit(0ULL, Position::E7);
-    constexpr auto position = Position::E4;
+    constexpr Bitboard occupancy = set_bit(0ULL, Square::E7);
+    constexpr auto position = Square::E4;
 
     constexpr Bitboard mask = Constants::rook_attack_masks[std::to_underlying(position)];
     const std::size_t hash_index = create_magic_hash_index<Slider::rook>(position, occupancy, Bitcount(mask));
@@ -36,7 +36,7 @@ TEST(Attack_Tables_Generator, slider_attack_test) {
  *****************************************************************************************/
 
 
-Bitboard create_king_attacks_(const Position &position) {
+Bitboard create_king_attacks_(const Square &position) {
     Bitboard attacks = 0ULL;
 
     const Bitboard bitboard = set_bit(attacks, position);
@@ -55,7 +55,7 @@ Bitboard create_king_attacks_(const Position &position) {
 }
 
 TEST(Attack_Tables_Generator, king_attacks) {
-    for (const Position &position: All_Positions) {
+    for (const Square &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_king_attacks_(position);
         ASSERT_EQ(create_king_attacks_for(set_bit(0ULL, position)), attacks);
@@ -67,7 +67,7 @@ TEST(Attack_Tables_Generator, king_attacks) {
  *****************************************************************************************/
 
 
-Bitboard create_knight_attacks_(Position position) {
+Bitboard create_knight_attacks_(Square position) {
     Bitboard attacks = 0ULL;
     Bitboard bitboard = set_bit(0ULL, position);
 
@@ -85,7 +85,7 @@ Bitboard create_knight_attacks_(Position position) {
 }
 
 TEST(Attack_Tables_Generator, knight_attacks) {
-    for (const Position &position: All_Positions) {
+    for (const Square &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_knight_attacks_(position);
         ASSERT_EQ(create_knight_attacks_for(set_bit(0ULL, position)), attacks);
@@ -96,7 +96,7 @@ TEST(Attack_Tables_Generator, knight_attacks) {
  * Pawn attack tests
  *****************************************************************************************/
 
-Bitboard create_pawn_attacks_(const Color color, const Position position) {
+Bitboard create_pawn_attacks_(const Color color, const Square position) {
     Bitboard attacks = 0ULL;
 
     const Bitboard bitboard = set_bit(0ULL, position);
@@ -115,13 +115,13 @@ Bitboard create_pawn_attacks_(const Color color, const Position position) {
 }
 
 TEST(Attack_Tables_Generator, pawn_attacks) {
-    for (const Position &position: All_Positions) {
+    for (const Square &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_pawn_attacks_(Color::black, position);
         ASSERT_EQ(create_pawn_attacks_for<Color::black>(set_bit(0ULL, position)), attacks);
     }
 
-    for (const Position &position: All_Positions) {
+    for (const Square &position: All_Positions) {
         // cppcheck-suppress unreadVariable
         const Bitboard attacks = create_pawn_attacks_(Color::white, position);
         ASSERT_EQ(create_pawn_attacks_for<Color::white>(set_bit(0ULL, position)), attacks);

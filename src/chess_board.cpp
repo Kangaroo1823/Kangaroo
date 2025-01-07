@@ -83,7 +83,7 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view &str)
     std::size_t file = 0;
 
     for (const auto &c: str) {
-        Position position = rank_file_to_position(7-rank, file);
+        Square position = rank_file_to_position(7-rank, file);
         file = (file + 1) & 7;
         switch (c) {
             case 'p': set_black_pawns(set_bit(black_pawns(), position));

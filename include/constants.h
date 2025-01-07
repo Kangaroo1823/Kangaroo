@@ -14,7 +14,7 @@
 #include "constants_xray_visibility_tables.h"
 
 template<Slider slider>
-[[nodiscard]] _ForceInline constexpr Bitboard get_attack_mask_for(const Position position) {
+[[nodiscard]] _ForceInline constexpr Bitboard get_attack_mask_for(const Square position) {
     static_assert(slider == Slider::bishop || slider == Slider::rook);
 
     const std::size_t index = std::to_underlying(position);
@@ -29,7 +29,7 @@ template<Slider slider>
 }
 
 template<Slider slider>
-[[nodiscard]] _ForceInline constexpr MagicNumber get_magic_number_for(const Position position) {
+[[nodiscard]] _ForceInline constexpr MagicNumber get_magic_number_for(const Square position) {
     static_assert(slider == Slider::bishop || slider == Slider::rook);
 
     const std::size_t index = std::to_underlying(position);
@@ -45,7 +45,7 @@ template<Slider slider>
 
 
 template<Slider slider>
-[[nodiscard]] _ForceInline constexpr Bitboard get_attacks_for(const Position &position, const Bitboard &occupancy,
+[[nodiscard]] _ForceInline constexpr Bitboard get_attacks_for(const Square &position, const Bitboard &occupancy,
                                                               const int64_t &relevant_bits) {
     static_assert(slider == Slider::bishop || slider == Slider::rook);
 
@@ -63,7 +63,7 @@ template<Slider slider>
 }
 
 template<Slider slider>
-[[nodiscard]] _ForceInline constexpr Bitboard get_attacks_for(const Position &position, const Bitboard &all_pieces) {
+[[nodiscard]] _ForceInline constexpr Bitboard get_attacks_for(const Square &position, const Bitboard &all_pieces) {
     static_assert(slider == Slider::bishop || slider == Slider::rook);
 
     if constexpr (slider == Slider::rook) {
@@ -80,7 +80,7 @@ template<Slider slider>
 }
 
 template<Slider slider>
-[[nodiscard]] _ForceInline constexpr Bitboard get_xray_for(const Position position) {
+[[nodiscard]] _ForceInline constexpr Bitboard get_xray_for(const Square position) {
     static_assert(slider == Slider::bishop || slider == Slider::rook);
 
     const std::size_t index = std::to_underlying(position);
@@ -95,8 +95,8 @@ template<Slider slider>
 }
 
 template<Slider slider>
-[[nodiscard]] _ForceInline constexpr Bitboard get_pin_ray_for(const Position king_position,
-                                                              const Position slider_position) {
+[[nodiscard]] _ForceInline constexpr Bitboard get_pin_ray_for(const Square king_position,
+                                                              const Square slider_position) {
     static_assert(slider == Slider::bishop || slider == Slider::rook);
 
     const std::size_t index = std::to_underlying(slider_position) * 64 + std::to_underlying(king_position);

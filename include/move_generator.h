@@ -13,7 +13,7 @@
 #include "chess_board.h"
 
 template<Slider slider>
-constexpr Bitboard get_attacks_for_position(const Position &position, const Bitboard occupancy) {
+constexpr Bitboard get_attacks_for_position(const Square &position, const Bitboard occupancy) {
     // retrieve the mask for the given piece type and position
     const Bitboard mask = slider == Slider::rook
                               ? Constants::rook_attack_masks[std::to_underlying(position)]
@@ -109,7 +109,7 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
 }
 
 template<Color color>
-constexpr Bitboard is_position_attacked_by(const Position &position, const Kangaroo::Chess_Board *board) {
+constexpr Bitboard is_position_attacked_by(const Square &position, const Kangaroo::Chess_Board *board) {
     using enum Color_t;
 
     Bitboard attacks = 0ULL;

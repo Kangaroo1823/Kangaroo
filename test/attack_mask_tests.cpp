@@ -17,7 +17,7 @@
 #include "../include/bitboard.h"           // for Bitboard, Position, print_...
 #include "gtest/gtest.h"    // for StringRef, AssertionHandler
 
-Bitboard create_rook_attack_mask(Position position) {
+Bitboard create_rook_attack_mask(Square position) {
     Bitboard mask = 0ULL;
 
     const auto rank = static_cast<int64_t>(std::to_underlying(position) >> 3);
@@ -32,7 +32,7 @@ Bitboard create_rook_attack_mask(Position position) {
 }
 
 
-Bitboard create_bishop_attack_mask(const Position position) {
+Bitboard create_bishop_attack_mask(const Square position) {
     Bitboard mask = 0ULL;
 
     const auto rank = static_cast<int64_t>(std::to_underlying(position) >> 3);
@@ -49,7 +49,7 @@ Bitboard create_bishop_attack_mask(const Position position) {
 TEST(Mask_Generator, rook_attack_masks) {
 
     // tests for rooks
-    for (const Position &position : All_Positions) {
+    for (const Square &position : All_Positions) {
         const Bitboard board = create_rook_attack_mask(position);
         print_bitboard(board);
 
@@ -57,7 +57,7 @@ TEST(Mask_Generator, rook_attack_masks) {
     }
 
     // tests for bishops
-    for (const Position &position : All_Positions) {
+    for (const Square &position : All_Positions) {
 
         const Bitboard board = create_bishop_attack_mask(position);
         print_bitboard(board);

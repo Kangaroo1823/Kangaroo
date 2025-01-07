@@ -33,10 +33,10 @@ TEST(Bitboards, set_bit) {
     // cppcheck-suppress unreadVariable
     Bitboard bitboard = 0ULL;
     // cppcheck-suppress knownConditionTrueFalse
-    ASSERT_EQ(set_bit(bitboard, Position::A1), 1);
+    ASSERT_EQ(set_bit(bitboard, Square::A1), 1);
 
     // cppcheck-suppress knownConditionTrueFalse
-    ASSERT_EQ(set_bit(bitboard, Position::H8), /*
+    ASSERT_EQ(set_bit(bitboard, Square::H8), /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
     2   0  0  0  0  0  0  0  0
@@ -51,7 +51,7 @@ TEST(Bitboards, set_bit) {
         9223372036854775808ULL);
 
     // cppcheck-suppress knownConditionTrueFalse
-    ASSERT_EQ(set_bit(bitboard, Position::E4), /*
+    ASSERT_EQ(set_bit(bitboard, Square::E4), /*
         A  B  C  D  E  F  G  H
     1   0  0  0  0  0  0  0  0
     2   0  0  0  0  0  0  0  0
@@ -65,5 +65,5 @@ TEST(Bitboards, set_bit) {
        bitboard as 64 bit integer: */
         268435456ULL);
 
-    ASSERT_EQ(pop_bit(set_bit(0ULL, Position::E4), Position::E4), 0);
+    ASSERT_EQ(pop_bit(set_bit(0ULL, Square::E4), Square::E4), 0);
 }

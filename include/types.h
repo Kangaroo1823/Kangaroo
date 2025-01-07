@@ -50,7 +50,7 @@ inline constexpr std::array All_Pieces = {
 /**
  * Have a convenient way of naming positions
  */
-using Position = enum class Position_t  : std::size_t {
+using Square = enum class Square_t  : std::size_t {
     A1 = 0,
     B1 = 1,
     C1 = 2,
@@ -117,15 +117,15 @@ using Position = enum class Position_t  : std::size_t {
     H8 = 63
 };
 
-inline constexpr std::array<Position, 64> All_Positions = {
-    Position_t::A1, Position_t::B1, Position_t::C1, Position_t::D1, Position_t::E1, Position_t::F1, Position_t::G1, Position_t::H1,
-    Position_t::A2, Position_t::B2, Position_t::C2, Position_t::D2, Position_t::E2, Position_t::F2, Position_t::G2, Position_t::H2,
-    Position_t::A3, Position_t::B3, Position_t::C3, Position_t::D3, Position_t::E3, Position_t::F3, Position_t::G3, Position_t::H3,
-    Position_t::A4, Position_t::B4, Position_t::C4, Position_t::D4, Position_t::E4, Position_t::F4, Position_t::G4, Position_t::H4,
-    Position_t::A5, Position_t::B5, Position_t::C5, Position_t::D5, Position_t::E5, Position_t::F5, Position_t::G5, Position_t::H5,
-    Position_t::A6, Position_t::B6, Position_t::C6, Position_t::D6, Position_t::E6, Position_t::F6, Position_t::G6, Position_t::H6,
-    Position_t::A7, Position_t::B7, Position_t::C7, Position_t::D7, Position_t::E7, Position_t::F7, Position_t::G7, Position_t::H7,
-    Position_t::A8, Position_t::B8, Position_t::C8, Position_t::D8, Position_t::E8, Position_t::F8, Position_t::G8, Position_t::H8
+inline constexpr std::array<Square, 64> All_Positions = {
+    Square_t::A1, Square_t::B1, Square_t::C1, Square_t::D1, Square_t::E1, Square_t::F1, Square_t::G1, Square_t::H1,
+    Square_t::A2, Square_t::B2, Square_t::C2, Square_t::D2, Square_t::E2, Square_t::F2, Square_t::G2, Square_t::H2,
+    Square_t::A3, Square_t::B3, Square_t::C3, Square_t::D3, Square_t::E3, Square_t::F3, Square_t::G3, Square_t::H3,
+    Square_t::A4, Square_t::B4, Square_t::C4, Square_t::D4, Square_t::E4, Square_t::F4, Square_t::G4, Square_t::H4,
+    Square_t::A5, Square_t::B5, Square_t::C5, Square_t::D5, Square_t::E5, Square_t::F5, Square_t::G5, Square_t::H5,
+    Square_t::A6, Square_t::B6, Square_t::C6, Square_t::D6, Square_t::E6, Square_t::F6, Square_t::G6, Square_t::H6,
+    Square_t::A7, Square_t::B7, Square_t::C7, Square_t::D7, Square_t::E7, Square_t::F7, Square_t::G7, Square_t::H7,
+    Square_t::A8, Square_t::B8, Square_t::C8, Square_t::D8, Square_t::E8, Square_t::F8, Square_t::G8, Square_t::H8
 };
 
 

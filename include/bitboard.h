@@ -25,19 +25,19 @@
 #include "types.h"
 
 
-constexpr Position rank_file_to_position(const std::size_t rank, const std::size_t file) {
+constexpr Square rank_file_to_position(const std::size_t rank, const std::size_t file) {
     return All_Positions[rank * 8 + file];
 }
 
-constexpr Bitboard set_bit(const Bitboard bitboard, const Position &position) {
+constexpr Bitboard set_bit(const Bitboard bitboard, const Square &position) {
     return bitboard | (1ULL << std::to_underlying(position));
 }
 
-constexpr Bitboard get_bit(const Bitboard bitboard, const Position &position) {
+constexpr Bitboard get_bit(const Bitboard bitboard, const Square &position) {
     return bitboard & (1ULL << std::to_underlying(position));
 }
 
-constexpr Bitboard pop_bit(const Bitboard bitboard, const Position &position) {
+constexpr Bitboard pop_bit(const Bitboard bitboard, const Square &position) {
     return bitboard & ~(1ULL << std::to_underlying(position));
 }
 
@@ -86,7 +86,7 @@ constexpr int64_t Bitcount(const Bitboard board) {
     }
 }
 
-constexpr Position square_of_(const Bitboard bitboard) {
+constexpr Square square_of_(const Bitboard bitboard) {
     // count the bits before the first 1 bit.
     const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
     return All_Positions[static_cast<std::size_t>(Bitcount((bitboard & b) - 1))];
@@ -103,7 +103,7 @@ constexpr Position square_of_(const Bitboard bitboard) {
  * @param bitboard The bitboard to extract the least significant bit's index from.
  * @return The index of the least significant set bit in the input bitboard.
  */
-constexpr Position square_of(const Bitboard bitboard) {
+constexpr Square square_of(const Bitboard bitboard) {
     return All_Positions[_tzcnt_u64(bitboard)];
 }
 
@@ -142,7 +142,7 @@ constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const B
 
     const int64_t count = Bitcount(mask_copy);
     for (unsigned int i = 0; i < count; i++) {
-        const Position s = square_of(mask_copy);
+        const Square s = square_of(mask_copy);
         mask_copy &= mask_copy - 1ULL;
         if (index & 1ULL << i) occupancy |= 1ULL << std::to_underlying(s);
     }
@@ -165,7 +165,7 @@ constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bit
 }
 
 
-#define Bitloop(x,y) for(std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
+#define Bitloop(x,y) for(typename std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
 
 
 constexpr Bitboard not_a_file = /*
@@ -231,7 +231,7 @@ constexpr Bitboard Bitboard_from_hex(const std::string &hex) {
 }
 
 
-std::string print_position(Position position);
+std::string print_position(Square position);
 
 inline std::string format_bitboard(Bitboard bitboard) {
     return std::format("0x{:x}, ", bitboard);

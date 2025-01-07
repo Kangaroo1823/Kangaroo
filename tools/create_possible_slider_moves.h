@@ -9,7 +9,7 @@
 
 
 template<Slider slider>
-constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const Position position) {
+constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const Square position) {
     Bitboard moves = 0ULL;
 
     const std::size_t file = std::to_underlying(position) & 7;
@@ -18,50 +18,50 @@ constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const 
     if constexpr (slider == Slider::bishop) {
         // slider equals Slider::bishop
         for (std::size_t r = rank + 1, f = file + 1; r < 8 && f < 8; r++, f++) {
-            const Position pos = rank_file_to_position(r, f);
+            const Square pos = rank_file_to_position(r, f);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
 
         for (std::size_t r = rank + 1, f = file; r < 8 && f > 0; r++, f--) {
-            const Position pos = rank_file_to_position(r, f - 1);
+            const Square pos = rank_file_to_position(r, f - 1);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
 
         for (std::size_t r = rank, f = file; r > 0 && f > 0; r--, f--) {
-            const Position pos = rank_file_to_position(r - 1, f - 1);
+            const Square pos = rank_file_to_position(r - 1, f - 1);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
 
         for (std::size_t r = rank, f = file + 1; r > 0 && f < 8; r--, f++) {
-            const Position pos = rank_file_to_position(r - 1, f);
+            const Square pos = rank_file_to_position(r - 1, f);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
     } else {
         // slider equals Slider::rook
         for (std::size_t r = rank + 1; r < 8; r++) {
-            const Position pos = rank_file_to_position(r, file);
+            const Square pos = rank_file_to_position(r, file);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
 
         for (std::size_t r = rank; r > 0; r--) {
-            const Position pos = rank_file_to_position(r - 1, file);
+            const Square pos = rank_file_to_position(r - 1, file);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
 
         for (std::size_t f = file + 1; f < 8; f++) {
-            const Position pos = rank_file_to_position(rank, f);
+            const Square pos = rank_file_to_position(rank, f);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
 
         for (std::size_t f = file; f > 0; f--) {
-            const Position pos = rank_file_to_position(rank, f - 1);
+            const Square pos = rank_file_to_position(rank, f - 1);
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }

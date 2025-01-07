@@ -17,7 +17,7 @@
 #include "constants_magics.h"
 
 template<Slider slider>
-bool check_magic_number(const Position position_of_figure, const MagicNumber magic_number) {
+bool check_magic_number(const Square position_of_figure, const MagicNumber magic_number) {
     // get the mask corresponding to the position of the figure.
     const Bitboard mask = slider == Slider::bishop
                               ? Constants::bishop_attack_masks[std::to_underlying(position_of_figure)]

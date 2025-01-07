@@ -64,7 +64,7 @@ namespace Constants::Impl {
      * \param occupancy_table A precomputed table of all possible occupancies for the relevant squares.
      * \param attack_table A table that will be populated with the possible attack bitboards for the given occupancies.
      */
-    constexpr void fill_attack_table_from_occupancy(const Position position_of_figure,
+    constexpr void fill_attack_table_from_occupancy(const Square position_of_figure,
                                                     const std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> &
                                                     occupancy_table,
                                                     std::array<Bitboard, slider == Slider::bishop ? 512 : 4096> &
@@ -191,7 +191,7 @@ namespace Constants::Impl {
      * \param position_of_figure The position of the chess piece on the board.
      * \return The computed magic number or 0 if no valid number is found.
      */
-    MagicNumber find_magic_number(const Position position_of_figure) {
+    MagicNumber find_magic_number(const Square position_of_figure) {
         // get the mask corresponding to the position of the figure.
         const Bitboard mask = slider == Slider::bishop
                                   ? Constants::bishop_attack_masks[std::to_underlying(position_of_figure)]
@@ -226,7 +226,7 @@ namespace Constants::Impl {
     std::array<MagicNumber, 64> find_magic_numbers_for() {
         std::array<MagicNumber, 64> magic_numbers{};
         for (std::size_t i = 0; i < 64; i++) {
-            magic_numbers[i] = find_magic_number<slider>(static_cast<Position>(i));
+            magic_numbers[i] = find_magic_number<slider>(static_cast<Square>(i));
         }
         return magic_numbers;
     }

@@ -49,7 +49,7 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
  *
  ************************************************************************/
 
-[[nodiscard]] constexpr Bitboard generate_rook_xray_visibility_for(const Position position) {
+[[nodiscard]] constexpr Bitboard generate_rook_xray_visibility_for(const Square position) {
     Bitboard rook_xray_visibility = 0ULL;
 
     const auto position_rank = static_cast<int64_t>(std::to_underlying(position) / 8);
@@ -63,7 +63,7 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
     return rook_xray_visibility;
 }
 
-[[nodiscard]] constexpr Bitboard generate_bishop_xray_visibility_for(const Position position) {
+[[nodiscard]] constexpr Bitboard generate_bishop_xray_visibility_for(const Square position) {
     Bitboard bishop_xray_visibility = 0ULL;
 
     const auto position_rank = static_cast<int64_t>(std::to_underlying(position) / 8);
@@ -86,7 +86,7 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
 }
 
 template<Slider slider>
-[[nodiscard]] constexpr Bitboard generate_slider_xray_visibility_for(const Position position) {
+[[nodiscard]] constexpr Bitboard generate_slider_xray_visibility_for(const Square position) {
 
     using enum Slider_t;
 
@@ -204,7 +204,7 @@ constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64
 }
 
 template<Slider slider>
-constexpr Bitboard generate_pin_mask_for_position(Position piece_position, Position king_position) {
+constexpr Bitboard generate_pin_mask_for_position(Square piece_position, Square king_position) {
     using enum Slider_t;
 
     static_assert(slider == rook || slider == bishop);
