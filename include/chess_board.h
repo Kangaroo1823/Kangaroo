@@ -402,10 +402,11 @@ namespace Kangaroo {
         void parse_fen_full_move_number(const std::string_view &fen);
 
 
-        template<Slider slider, Pin_Masks_Suitable_For purpose>
+        template<Slider slider, Pin_Masks_Suitable_For purpose, Color color>
         _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
                                                                       const Bitboard rooks_remaining) {
             using enum Slider;
+            using enum Color;
 
             static_assert(
                 purpose == Pin_Masks_Suitable_For::detecting_pins ||
@@ -417,10 +418,14 @@ namespace Kangaroo {
             // compute the pin-ray between the rook and the king
             const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
 
+            const auto pieces_in_intersection = Bitcount(ray & all_pieces());
+
+            const auto player_pieces_in_intersection = Bitcount(ray & color == white ? black_pieces() : white_pieces());
+
             // check if count of set bits in the intersection of the ray with all_pieces is two.
-            if (const auto pieces_in_intersection = Bitcount(ray & all_pieces()),
-                player_pieces_in_intersection = Bitcount(ray & color == white ? black_pieces() : white_pieces());
-                pieces_in_intersection == std::to_underlying(purpose) && player_pieces_in_intersection == 1) {
+            if (pieces_in_intersection == std::to_underlying(purpose) &&
+                player_pieces_in_intersection == std::to_underlying(purpose)) {
+
                 if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
                     // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
                     // - one is at piece_position (rook or queen)
