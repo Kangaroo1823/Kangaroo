@@ -82,9 +82,12 @@ add_library(Kangaroo_library ../include/bitboard.h
         ../include/types.h
         ../include/move_generator.h
         ../include/Board_Status.h
+        Movement_Generator.cpp
+        ../include/Movement_Generator.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
+        gtest
         Kangaroo_warnings
         Kangaroo_options
 )

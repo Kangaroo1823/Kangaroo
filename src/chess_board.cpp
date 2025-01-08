@@ -5,13 +5,27 @@
 // Created by peter on 01/12/2024.
 //
 
-#include "../include/chess_board.h"
+#include "chess_board.h"
 #include <print>             // for print
 #include <cstddef>                // for size_t
 #include <numeric>                // for accumulate
 #include <ranges>
 #include <vector>
-#include "../include/bitboard.h"  // for Position_t, set_bit, get_bit, rank_...
+#include "bitboard.h"  // for Position_t, set_bit, get_bit, rank_...
+#include "types.h"
+
+
+
+
+
+namespace Kangaroo {
+
+    TEST(Position_Checker_Test, test_pin_masks_for_king_in_check) {
+
+
+
+    }
+}
 
 
 uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_view &str) {

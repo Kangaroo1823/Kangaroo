@@ -16,7 +16,8 @@ add_executable(Kangaroo_tests
         create_occupation_of_mask_tests.cpp
         magic_numbers_test.cpp
         attack_tables_tests.cpp
-        generate_pawn_moves_tests.cpp)
+        generate_pawn_moves_tests.cpp
+        movement_generator_tests.cpp)
 target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

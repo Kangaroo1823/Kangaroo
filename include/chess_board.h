@@ -13,7 +13,7 @@
 #include "Board_Status.h"
 #include "colors.h"
 #include "constants.h"
-#include "../cpm_source_cache/googletest/c89ee04fa01138c2db034b2627b51a145ba09878/googletest/googletest/include/gtest/gtest_prod.h"
+#include "gtest/gtest.h"
 
 inline constexpr std::string_view fen_empty_board = "8/8/8/8/8/8/8/8 w - - 0 1 ";
 inline constexpr std::string_view fen_start_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
@@ -96,6 +96,7 @@ namespace Kangaroo {
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
+        FRIEND_TEST(Chess_Board, test1);
 
     public:
         explicit Chess_Board(const std::string_view &fen);
@@ -402,116 +403,6 @@ namespace Kangaroo {
         void parse_fen_full_move_number(const std::string_view &fen);
 
 
-        template<Slider slider, Pin_Masks_Suitable_For purpose, Color color>
-        _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
-                                                                      const Bitboard rooks_remaining) {
-            using enum Slider;
-            using enum Color;
-
-            static_assert(
-                purpose == Pin_Masks_Suitable_For::detecting_pins ||
-                purpose == Pin_Masks_Suitable_For::detecting_check);
-
-            // compute position of current rook
-            const Square rook_position = square_of(rooks_remaining);
-
-            // compute the pin-ray between the rook and the king
-            const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
-
-            const auto pieces_in_intersection = Bitcount(ray & all_pieces());
-
-            const auto player_pieces_in_intersection = Bitcount(ray & color == white ? white_pieces() : black_pieces());
-
-            // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
-            // between is of the same color as the king.
-            if (pieces_in_intersection == std::to_underlying(purpose) &&
-                player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
-
-                if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
-                    // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
-                    // - one is at piece_position (rook or queen)
-                    // - and one other piece.
-                    // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
-
-                    if constexpr (slider == rook) {
-                        pin_mask_HV |= ray;
-                    } else if (slider == bishop) {
-                        pin_mask_D |= ray;
-                    }
-                } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
-                    // When the Bitcount equals one, it means that it is a check situation!
-                    check_mask |= ray;
-                }
-            }
-        }
-
-
-        template<Color color, Pin_Masks_Suitable_For purpose>
-        /**
-         * @brief Computes the pin masks for the current board state.
-         *
-         * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_pins` this method
-         * calculates the horizontal/vertical (HV) and diagonal (D) pin masks
-         * for the specified color of the king based on the positions and possible movements
-         * of rooks, bishops, and queens of the opposite color.
-         *
-         * These pin masks are used to identify pieces on the same line or diagonal as the
-         * king which cannot move freely due to the threat of exposing the king to a check.
-         *
-         * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_check` this method computes
-         * if a sliding piece of the opposite color poses check to the king of color `color`.
-         *
-         * @tparam color The color of the king for which the pin masks are being calculated.
-         *               Must be either `Color::white` or `Color::black`.
-         * @tparam purpose A purpose or configuration type that defines special pin-mask
-         *                 requirements.
-         *
-         * @note This method assumes the presence of a valid board configuration where all
-         *       game rules are respected.
-         *
-         * @throws static_assert if `color` or `purpose` is not valid.
-         */
-        _ForceInline constexpr void build_pin_masks() {
-            using enum Color;
-            using enum Slider;
-
-            static_assert(color == white || color == black, "Invalid color");
-            static_assert(
-                purpose == Pin_Masks_Suitable_For::detecting_pins ||
-                purpose == Pin_Masks_Suitable_For::detecting_check, "Invalid purpose");
-
-            // reset the pin masks
-            if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
-                pin_mask_D = pin_mask_HV = 0ULL;
-            } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
-                check_mask = 0ULL;
-            }
-
-            // compute king position
-            const Square king_position = square_of(color == white ? white_king() : black_king());
-
-            // loop over all the rooks of opposite color
-            Bitloop(color == white ? black_rooks() : white_rooks(), rooks_remaining) {
-                // change the HV-pin-mask, if necessary
-                update_pin_mask_for_movement_like<rook, purpose>(king_position, rooks_remaining);
-            }
-
-            // loop over all the queens of opposite color
-            Bitloop(color == white ? black_queens() : white_queens(), queens_remaining) {
-                // change the HV-pin-mask, if necessary
-                update_pin_mask_for_movement_like<rook, purpose>(king_position, queens_remaining);
-
-                // change the D-pin-mask, if necessary
-                update_pin_mask_for_movement_like<bishop, purpose>(king_position, queens_remaining);
-            }
-
-            // loop over all the bishops of opposite color
-            Bitloop(color == white ? black_bishops() : white_bishops(), bishops_remaining) {
-                // change the D-pin-mask, if necessary
-                update_pin_mask_for_movement_like<bishop, purpose>(king_position, bishops_remaining);
-            }
-        }
-
         Bitboard white_king_p = 0ULL;
         Bitboard white_queens_p = 0ULL;
         Bitboard white_rooks_p = 0ULL;
@@ -535,13 +426,6 @@ namespace Kangaroo {
         std::size_t full_move_number_p = 0;
 
 
-        // pin-masks to detect pinned pieces
-        Bitboard pin_mask_HV = 0ULL;
-        Bitboard pin_mask_D = 0ULL;
-
-        // Bitboard to detect if a king is in check.
-        Bitboard check_mask = 0ULL;
-
         uint64_t flags = 0;
     };
 
@@ -552,5 +436,19 @@ namespace Kangaroo {
     std::unique_ptr<Chess_Board> create_chess_board();
 
     void print_chess_board(const Chess_Board *board);
+
+   class Position_Checker {
+
+    public:
+        explicit Position_Checker(const Kangaroo::Chess_Board *board) : board_p(board) {
+        };
+
+    private:
+        const Kangaroo::Chess_Board *board_p;
+
+
+    };
+
 }
+
 #endif //CHESS_BOARD_H
