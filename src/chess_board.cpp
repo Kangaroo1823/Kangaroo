@@ -222,7 +222,34 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view &f
     }
 }
 
-Kangaroo::Chess_Board::Chess_Board(const std::string_view &fen) {
+
+void Kangaroo::Chess_Board::reset_board(const std::string_view &fen) {
+
+    set_white_pawns(0ULL);
+    set_white_knights(0ULL);
+    set_white_bishops(0ULL);
+    set_white_rooks(0ULL);
+    set_white_queens(0ULL);
+    set_white_king(0ULL);
+
+    set_black_pawns(0ULL);
+    set_black_knights(0ULL);
+    set_black_bishops(0ULL);
+    set_black_rooks(0ULL);
+    set_black_queens(0ULL);
+    set_black_king(0ULL);
+
+    set_white_pieces(0ULL);
+    set_black_pieces(0ULL);
+
+    set_all_pieces(0ULL);
+
+    set_en_passant_square (Square::A1);
+    set_half_move_number(0);
+    set_full_move_number(0);
+
+    flags = 0;
+
     std::vector<std::string_view> tokens;
     for (auto &&part: std::views::split(fen, ' ')) {
         tokens.emplace_back(std::to_address(part.begin()), std::ranges::distance(part));
@@ -252,6 +279,10 @@ Kangaroo::Chess_Board::Chess_Board(const std::string_view &fen) {
     set_black_pieces(black_pawns() | black_knights() | black_bishops() | black_rooks() | black_queens() | black_king());
 
     set_all_pieces(white_pieces() | black_pieces());
+}
+
+Kangaroo::Chess_Board::Chess_Board(const std::string_view &fen) {
+    reset_board(fen);
 }
 
 void Kangaroo::print_chess_board(const Chess_Board *board) {

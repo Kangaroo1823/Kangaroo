@@ -156,7 +156,7 @@ constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, 
             }
             return ray;
         } else {
-            for (; f >= king_file; --f) {
+            for (; f > king_file; --f) {
                 ray |= 1ULL << (r * 8 + f);
             }
             return ray;
@@ -189,12 +189,12 @@ constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64
 
     if (piece_rank + piece_file == king_rank + king_file) {
         if (piece_rank > king_rank) {
-            for (; r > king_rank && f > king_file; --r, --f) {
+            for (; r >= 0 && f < king_file; --r, ++f) {
                 ray |= 1ULL << (r * 8 + f);
             }
             return ray;
         } else {
-            for (; r < king_rank && f < king_file; ++r, ++f) {
+            for (; r < king_rank && f >= 0; ++r, --f) {
                 ray |= 1ULL << (r * 8 + f);
             }
             return ray;

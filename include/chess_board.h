@@ -101,6 +101,8 @@ namespace Kangaroo {
     public:
         explicit Chess_Board(const std::string_view &fen);
 
+        void reset_board(const std::string_view &fen);
+
         [[nodiscard]] _ForceInline Bitboard white_king() const { return white_king_p; }
         _ForceInline void set_white_king(const Bitboard &white_king) { white_king_p = white_king; };
 
