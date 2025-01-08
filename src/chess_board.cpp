@@ -116,19 +116,19 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view &str)
                 file = 0;
                 break;
             case '1': break;
-            case '2': file += 1;
+            case '2': file = (file + 1) & 7;
                 break;
-            case '3': file += 2;
+            case '3': file = (file + 2) & 7;
                 break;
-            case '4': file += 3;
+            case '4': file = (file + 3) & 7;
                 break;
-            case '5': file += 4;
+            case '5': file = (file + 4) & 7;
                 break;
-            case '6': file += 5;
+            case '6': file = (file + 5) & 7;
                 break;
-            case '7': file += 6;
+            case '7': file = (file + 6) & 7;
                 break;
-            case '8': file += 7;
+            case '8': file = (file + 7) & 7;
                 break;
             default: break;
         }

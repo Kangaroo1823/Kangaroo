@@ -104,7 +104,8 @@ constexpr Square square_of_(const Bitboard bitboard) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Square square_of(const Bitboard bitboard) {
-    return All_Positions[_tzcnt_u64(bitboard)];
+    const auto index = _tzcnt_u64(bitboard);
+    return All_Positions[index];
 }
 
 /**

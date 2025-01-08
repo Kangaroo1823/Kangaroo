@@ -46,7 +46,7 @@ namespace Kangaroo {
             const auto pieces_in_intersection = Bitcount(ray & board_p->all_pieces());
 
             const auto player_pieces_in_intersection = Bitcount(
-                ray & (color == white ? board_p->all_pieces() : board_p->all_pieces()));
+                ray & (color == white ? board_p->white_pieces() : board_p->black_pieces()));
 
             // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
             // between is of the same color as the king.
@@ -85,7 +85,7 @@ namespace Kangaroo {
          * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_check` this method computes
          * if a sliding piece of the opposite color poses check to the king of color `color`.
          *
-         * @tparam color The color of the king for which the pin masks are being calculated.
+         * @tparam color_of_king The color of the king for which the pin masks are being calculated.
          *               Must be either `Color::white` or `Color::black`.
          * @tparam purpose A purpose or configuration type that defines special pin-mask
          *                 requirements.
@@ -95,12 +95,12 @@ namespace Kangaroo {
          *
          * @throws static_assert if `color` or `purpose` is not valid.
          */
-        template<Color color, Pin_Masks_Suitable_For purpose>
+        template<Color color_of_king, Pin_Masks_Suitable_For purpose>
         _ForceInline constexpr void build_pin_masks() {
             using enum Color;
             using enum Slider;
 
-            static_assert(color == white || color == black, "Invalid color");
+            static_assert(color_of_king == white || color_of_king == black, "Invalid color");
             static_assert(
                 purpose == Pin_Masks_Suitable_For::detecting_pins ||
                 purpose == Pin_Masks_Suitable_For::detecting_check, "Invalid purpose");
@@ -113,27 +113,27 @@ namespace Kangaroo {
             }
 
             // compute king position
-            const Square king_position = square_of(color == white ? board_p->all_pieces() : board_p->all_pieces());
+            const Square king_position = square_of(color_of_king == white ? board_p->white_king() : board_p->black_king());
 
             // loop over all the rooks of opposite color
-            Bitloop(color == white ? board_p->all_pieces() : board_p->all_pieces(), rooks_remaining) {
+            Bitloop(color_of_king == white ? board_p->black_rooks() : board_p->white_rooks(), rooks_remaining) {
                 // change the HV-pin-mask, if necessary
-                update_pin_mask_for_movement_like<rook, purpose, color>(king_position, rooks_remaining);
+                update_pin_mask_for_movement_like<rook, purpose, color_of_king>(king_position, rooks_remaining);
             }
 
             // loop over all the queens of opposite color
-            Bitloop(color == white ? board_p->all_pieces() : board_p->all_pieces(), queens_remaining) {
+            Bitloop(color_of_king == white ? board_p->black_queens() : board_p->white_queens(), queens_remaining) {
                 // change the HV-pin-mask, if necessary
-                update_pin_mask_for_movement_like<rook, purpose, color>(king_position, queens_remaining);
+                update_pin_mask_for_movement_like<rook, purpose, color_of_king>(king_position, queens_remaining);
 
                 // change the D-pin-mask, if necessary
-                update_pin_mask_for_movement_like<bishop, purpose, color>(king_position, queens_remaining);
+                update_pin_mask_for_movement_like<bishop, purpose, color_of_king>(king_position, queens_remaining);
             }
 
             // loop over all the bishops of opposite color
-            Bitloop(color == white ? board_p->all_pieces() : board_p->white_bishops(), bishops_remaining) {
+            Bitloop(color_of_king == white ? board_p->black_bishops() : board_p->white_bishops(), bishops_remaining) {
                 // change the D-pin-mask, if necessary
-                update_pin_mask_for_movement_like<bishop, purpose, color>(king_position, bishops_remaining);
+                update_pin_mask_for_movement_like<bishop, purpose, color_of_king>(king_position, bishops_remaining);
             }
         }
     };
