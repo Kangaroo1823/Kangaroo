@@ -16,18 +16,6 @@
 
 
 
-
-
-namespace Kangaroo {
-
-    TEST(Position_Checker_Test, test_pin_masks_for_king_in_check) {
-
-
-
-    }
-}
-
-
 uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_view &str) {
     std::size_t rank = 8;
     std::size_t file = 8;
