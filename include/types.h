@@ -154,7 +154,7 @@ using En_Passant = enum class En_Passant_t : uint64_t {
     en_passant_impossible = 1ULL << 1,
 };
 
-using Pin_Masks_Suitable_For = enum class Pin_Masks_Suitable_For_t : uint64_t {
+using Pin_Masks_Suitable_For = enum class Pin_Masks_Suitable_For_t : int64_t {
     detecting_pins = 2,
     detecting_check = 1,
 };

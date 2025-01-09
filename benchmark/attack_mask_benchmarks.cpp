@@ -20,7 +20,7 @@ static void BM_move_generator(benchmark::State &state) {
     for ([[maybe_unused]] auto _: state) {
         uint64_t cntr = 0ULL;
 
-        auto s = board->generate_moves<Kangaroo::Board_Status(0x3d)>([&cntr]([[maybe_unused]] const Chess_Pieces chess_piece,
+        auto s = movement_generator->generate_moves<Kangaroo::Board_Status(0x3d)>([&cntr]([[maybe_unused]] const Chess_Pieces chess_piece,
                                                                     [[maybe_unused]] const Bitboard is_attacked) {
             ++cntr;
         });
