@@ -22,54 +22,15 @@ namespace Kangaroo {
         Bitboard check_mask = 0ULL;
 
     public:
-        explicit Movement_Generator(Chess_Board *board) : board_p(board) {
+        explicit Movement_Generator(Chess_Board *board) : board_p(board) {}
+
+        _ForceInline constexpr Bitboard get_pin_mask_HV () const {
+            return pin_mask_HV;
         }
 
-    private:
-
-        template<Slider slider, Pin_Masks_Suitable_For purpose, Color color>
-        _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
-                                                                      const Bitboard rooks_remaining) {
-            using enum Slider;
-            using enum Color;
-
-            static_assert(
-                purpose == Pin_Masks_Suitable_For::detecting_pins ||
-                purpose == Pin_Masks_Suitable_For::detecting_check);
-
-            // compute position of current rook
-            const Square rook_position = square_of(rooks_remaining);
-
-            // compute the pin-ray between the rook and the king
-            const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
-
-            const auto pieces_in_intersection = Bitcount(ray & board_p->all_pieces());
-
-            const auto player_pieces_in_intersection = Bitcount(
-                ray & (color == white ? board_p->white_pieces() : board_p->black_pieces()));
-
-            // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
-            // between is of the same color as the king.
-            if (pieces_in_intersection == std::to_underlying(purpose) &&
-                player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
-                if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
-                    // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
-                    // - one is at piece_position (rook or queen)
-                    // - and one other piece.
-                    // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
-
-                    if constexpr (slider == rook) {
-                        pin_mask_HV |= ray;
-                    } else if (slider == bishop) {
-                        pin_mask_D |= ray;
-                    }
-                } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
-                    // When the Bitcount equals one, it means that it is a check situation!
-                    check_mask |= ray;
-                }
-            }
+        _ForceInline constexpr Bitboard get_pin_mask_D () const {
+            return pin_mask_D;
         }
-
 
         /**
          * @brief Computes the pin masks for the current board state.
@@ -134,6 +95,51 @@ namespace Kangaroo {
             Bitloop(color_of_king == white ? board_p->black_bishops() : board_p->white_bishops(), bishops_remaining) {
                 // change the D-pin-mask, if necessary
                 update_pin_mask_for_movement_like<bishop, purpose, color_of_king>(king_position, bishops_remaining);
+            }
+        }
+
+    private:
+
+        template<Slider slider, Pin_Masks_Suitable_For purpose, Color color>
+        _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
+                                                                      const Bitboard rooks_remaining) {
+            using enum Slider;
+            using enum Color;
+
+            static_assert(
+                purpose == Pin_Masks_Suitable_For::detecting_pins ||
+                purpose == Pin_Masks_Suitable_For::detecting_check);
+
+            // compute position of current rook
+            const Square rook_position = square_of(rooks_remaining);
+
+            // compute the pin-ray between the rook and the king
+            const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
+
+            const auto pieces_in_intersection = Bitcount(ray & board_p->all_pieces());
+
+            const auto player_pieces_in_intersection = Bitcount(
+                ray & (color == white ? board_p->white_pieces() : board_p->black_pieces()));
+
+            // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
+            // between is of the same color as the king.
+            if (pieces_in_intersection == std::to_underlying(purpose) &&
+                player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
+                if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
+                    // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
+                    // - one is at piece_position (rook or queen)
+                    // - and one other piece.
+                    // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
+
+                    if constexpr (slider == rook) {
+                        pin_mask_HV |= ray;
+                    } else if (slider == bishop) {
+                        pin_mask_D |= ray;
+                    }
+                } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
+                    // When the Bitcount equals one, it means that it is a check situation!
+                    check_mask |= ray;
+                }
             }
         }
     };

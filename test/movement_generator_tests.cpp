@@ -147,37 +147,46 @@ namespace Kangaroo {
 
 
         // TODO ...
-        board.reset_board("8/1k6/8/3p4/4p3/8/6B/8 w - - 0 1 ");
+        board.reset_board("8/6k1/8/4p3/3p4/8/1B6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::black, Pin_Masks_Suitable_For::detecting_pins>();
         ASSERT_EQ(gen.pin_mask_D, 0x00) << "25th test not true";
 
-        board.reset_board("8/1k6/8/3p4/8/8/6B/8 w - - 0 1 ");
+        board.reset_board("8/6k1/8/8/3p4/8/1B6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::black, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x40810204000) << "26th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x201008040200) << "25th test not true";
 
-        board.reset_board("8/1K6/8/3P4/4P3/8/6b/8 w - - 0 1 ");
+        board.reset_board("8/6K1/8/4P3/3P4/8/1b6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x00) << "27th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x00) << "25th test not true";
 
-        board.reset_board("8/1K6/8/3P4/8/8/6b/8 w - - 0 1 ");
+        board.reset_board("8/6K1/8/8/3P4/8/1b6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x40810204000) << "28th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x201008040200) << "25th test not true";
 
-        board.reset_board("8/1k6/8/3p4/4p3/8/6Q/8 w - - 0 1 ");
+        board.reset_board("8/6k1/8/4p3/3p4/8/1Q6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::black, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x00) << "29th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x00) << "25th test not true";
 
-        board.reset_board("8/1k6/8/3p4/8/8/6Q/8 w - - 0 1 ");
+        board.reset_board("8/6k1/8/8/3p4/8/1Q6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::black, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x40810204000) << "30th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x201008040200) << "25th test not true";
 
-        board.reset_board("8/1K6/8/3P4/4P3/8/6q/8 w - - 0 1 ");
+        board.reset_board("8/6K1/8/4P3/3P4/8/1q6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x00) << "31th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x00) << "25th test not true";
 
-        board.reset_board("8/1K6/8/3P4/8/8/6q/8 w - - 0 1 ");
+        board.reset_board("8/6K1/8/8/3P4/8/1q6/8 w - - 0 1 ");
         gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
-        ASSERT_EQ(gen.pin_mask_D, 0x40810204000) << "32th test not true";
+        ASSERT_EQ(gen.pin_mask_D, 0x201008040200) << "25th test not true";
+
+        // should be zero
+        board.reset_board("8/6K1/8/4p3/3P4/8/1q6/8 w - - 0 1 ");
+        gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
+        ASSERT_EQ(gen.pin_mask_D, 0x0) << "25th test not true";
+
+        board.reset_board("8/6K1/8/8/3P4/8/q7/8 w - - 0 1 ");
+        gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
+        ASSERT_EQ(gen.pin_mask_D, 0x0) << "25th test not true";
 
     }
 }

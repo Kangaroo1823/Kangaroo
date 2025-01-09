@@ -9,8 +9,11 @@
 #include "benchmark/benchmark.h"
 #include "../tools/attack_tables.h"
 #include "chess_board.h"
+#include "Movement_Generator.h"
+
 
 const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
+const auto movement_generator = std::make_unique<Kangaroo::Movement_Generator>(board.get());
 
 // cppcheck-suppress constParameterCallback
 static void BM_move_generator(benchmark::State &state) {
@@ -27,7 +30,21 @@ static void BM_move_generator(benchmark::State &state) {
         benchmark::DoNotOptimize(s);
     }
 }
-
 BENCHMARK(BM_move_generator);
+
+
+static void BM_pin_mask_generator(benchmark::State &state) {
+    for ([[maybe_unused]] auto _: state) {
+        Bitboard cntr = 0ULL;
+
+        movement_generator->build_pin_masks<Color::black, Pin_Masks_Suitable_For_t::detecting_pins>();
+        cntr = movement_generator->get_pin_mask_HV();
+
+        benchmark::DoNotOptimize(cntr);
+    }
+}
+
+BENCHMARK(BM_pin_mask_generator);
+
 
 BENCHMARK_MAIN();
