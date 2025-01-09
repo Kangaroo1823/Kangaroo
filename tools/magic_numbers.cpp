@@ -15,7 +15,7 @@
 namespace Constants::Impl {
 
     MagicNumber magic_candidate(const Bitboard occupation) {
-        static std::mt19937_64 rng;
+        static std::mt19937_64 rng; // -V1057
 
         MagicNumber res;
 
