@@ -35,12 +35,15 @@ BENCHMARK(BM_move_generator);
 
 static void BM_pin_mask_generator(benchmark::State &state) {
     for ([[maybe_unused]] auto _: state) {
-        Bitboard cntr = 0ULL;
+        Bitboard cntr1 = 0ULL;
+        Bitboard cntr2 = 0ULL;
 
         movement_generator->build_pin_masks<Color::black, Pin_Masks_Suitable_For_t::detecting_pins>();
-        cntr = movement_generator->get_pin_mask_HV();
+        cntr1 = movement_generator->get_pin_mask_HV();
+        cntr2 = movement_generator->get_pin_mask_D();
 
-        benchmark::DoNotOptimize(cntr);
+        benchmark::DoNotOptimize(cntr1);
+        benchmark::DoNotOptimize(cntr2);
     }
 }
 
