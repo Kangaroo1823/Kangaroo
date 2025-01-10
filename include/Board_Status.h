@@ -107,6 +107,12 @@ namespace Kangaroo {
          * - check_move_generation: Mode for generating only those moves that resolve a check.
          */
         Move_Generation_Mode mode = Move_Generation_Mode::normal_move_generation;
+
+        [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_mode(const Move_Generation_Mode mode) const {
+            Board_Status copy = *this;
+            copy.mode = mode;
+            return copy;
+        }
     };
 } // Kangaroo
 

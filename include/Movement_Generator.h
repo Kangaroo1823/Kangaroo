@@ -271,19 +271,23 @@ namespace Kangaroo {
                 const std::size_t pawn_square = std::to_underlying(square_of(pawns_remaining));
                 const Bitboard pawn = 1ULL << pawn_square;
 
-                // single move for pawns
-                const Bitboard moved_pawn = regular_pawn_push<status.color_p>(pawn);
+                if constexpr (status.mode == Move_Generation_Mode::normal_move_generation || status.mode == Move_Generation_Mode_t::pin_HV_move_generation) {
+                    // single move for pawns
+                    const Bitboard moved_pawn = regular_pawn_push<status.color_p>(pawn);
 
-                if (is_pawn_push_admissible<status.mode>(pawn, moved_pawn, board_p->all_pieces())) {
-                    callback(status.color_p == white ? white_pawn : black_pawn,
-                             make_move(pawn, moved_pawn));
-                    ++moves;
+                    if (is_pawn_push_admissible<status.mode>(pawn, moved_pawn, board_p->all_pieces())) {
+                        callback(status.color_p == white ? white_pawn : black_pawn,
+                                 make_move(pawn, moved_pawn));
+                        ++moves;
 
-                    // double move for pawns in base row
-                    moves += generate_double_pawn_pushs<status, CallBackType>(callback, pawn);
+                        // double move for pawns in base row
+                        moves += generate_double_pawn_pushs<status, CallBackType>(callback, pawn);
+                    }
                 }
 
-                moves += generate_pawn_captures<status, CallBackType>(callback, pawn_square, pawn);
+                if constexpr (status.mode == Move_Generation_Mode_t::normal_move_generation || status.mode == Move_Generation_Mode_t::pin_D_move_generation) {
+                    moves += generate_pawn_captures<status, CallBackType>(callback, pawn_square, pawn);
+                }
             }
             return moves;
         }
