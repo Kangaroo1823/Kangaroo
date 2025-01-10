@@ -159,4 +159,11 @@ using Pin_Masks_Suitable_For = enum class Pin_Masks_Suitable_For_t : int64_t {
     detecting_check = 1,
 };
 
+using Move_Generation_Mode = enum class Move_Generation_Mode_t : uint64_t {
+    normal_move_generation = 0,
+    pin_HV_move_generation = 1,
+    pin_D_move_generation = 2,
+    check_move_generation = 3,
+};
+
 #endif //TYPES_H

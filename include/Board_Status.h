@@ -97,6 +97,16 @@ namespace Kangaroo {
          * True if castling is still possible, false otherwise.
          */
         bool black_right_castle_p = true;
+
+        /**
+         * Represents the mode in which move generation is conducted during gameplay.
+         *
+         * The possible modes include:
+         * - normal_move_generation: Default mode for generating legal moves under standard rules.
+         * - pin_move_generation: Mode for generating moves while considering pin constraints.
+         * - check_move_generation: Mode for generating only those moves that resolve a check.
+         */
+        Move_Generation_Mode mode = Move_Generation_Mode::normal_move_generation;
     };
 } // Kangaroo
 

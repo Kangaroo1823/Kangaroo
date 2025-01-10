@@ -190,11 +190,27 @@ namespace Kangaroo {
         //     return false;
         // }
 
+        template<Move_Generation_Mode mode>
         [[nodiscard]] _ForceInline constexpr bool is_pawn_push_admissible(
-            Bitboard pawn_origin, Bitboard pawn_move, const Bitboard &occupied_squares) const {
+            const Bitboard pawn_origin, const Bitboard pawn_move, const Bitboard &occupied_squares) const {
+
+            static_assert(mode == Move_Generation_Mode::normal_move_generation ||
+                mode == Move_Generation_Mode::check_move_generation ||
+                mode == Move_Generation_Mode::pin_HV_move_generation ||
+                mode == Move_Generation_Mode::pin_D_move_generation );
+
             const bool ret = (pawn_move & occupied_squares) == 0;
-            const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
-            return ret && p && (pawn_origin & pin_mask_D) == 0;
+            if constexpr (mode == Move_Generation_Mode::normal_move_generation || mode == Move_Generation_Mode::check_move_generation) {
+                return ret;
+            } else if constexpr (mode == Move_Generation_Mode::pin_HV_move_generation) {
+                const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
+                return ret && p && (pawn_origin & pin_mask_D) == 0;
+            } else if constexpr (mode == Move_Generation_Mode::pin_D_move_generation) {
+                return false;
+            }
+
+            // never should get here ...
+            throw std::runtime_error("Invalid mode in is_pawn_push_admissible()");
         }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
@@ -202,7 +218,7 @@ namespace Kangaroo {
             CallBackType callback, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
             if (pawn & pawn_base_row<status.color_p>()) {
-                if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(pawn,
+                if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible<status.mode>(pawn,
                     moved_pawn_2, board_p->all_pieces())) {
                     callback(status.color_p == Color_t::white ? Chess_Pieces_t::white_pawn : Chess_Pieces_t::black_pawn,
                              make_move(pawn, moved_pawn_2));
@@ -239,6 +255,15 @@ namespace Kangaroo {
 
             Bitboard pawns = status.color_p == white ? board_p->white_pawns() : board_p->black_pawns();
 
+            if constexpr (status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
+                          Move_Generation_Mode::check_move_generation) {
+                pawns &= ~(pin_mask_D | pin_mask_HV);
+            } else if constexpr (status.mode == Move_Generation_Mode::pin_HV_move_generation) {
+                pawns &= pin_mask_HV;
+            } else if constexpr (status.mode == Move_Generation_Mode::pin_D_move_generation) {
+                pawns &= pin_mask_D;
+            }
+
             Bitloop(pawns, pawns_remaining) {
                 using enum Color_t;
                 using enum Chess_Pieces;
@@ -247,8 +272,9 @@ namespace Kangaroo {
                 const Bitboard pawn = 1ULL << pawn_square;
 
                 // single move for pawns
-                if (const Bitboard moved_pawn = regular_pawn_push<status.color_p>(pawn); is_pawn_push_admissible(pawn,
-                    moved_pawn, board_p->all_pieces())) {
+                const Bitboard moved_pawn = regular_pawn_push<status.color_p>(pawn);
+
+                if (is_pawn_push_admissible<status.mode>(pawn, moved_pawn, board_p->all_pieces())) {
                     callback(status.color_p == white ? white_pawn : black_pawn,
                              make_move(pawn, moved_pawn));
                     ++moves;
