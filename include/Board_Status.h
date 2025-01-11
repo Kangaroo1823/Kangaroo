@@ -108,9 +108,9 @@ namespace Kangaroo {
          */
         Move_Generation_Mode mode = Move_Generation_Mode::normal_move_generation;
 
-        [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_mode(const Move_Generation_Mode mode) const {
+        [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_mode(const Move_Generation_Mode _mode) const {
             Board_Status copy = *this;
-            copy.mode = mode;
+            copy.mode = _mode;
             return copy;
         }
     };

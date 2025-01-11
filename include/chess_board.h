@@ -285,17 +285,6 @@ namespace Kangaroo {
 
     void print_chess_board(const Chess_Board *board);
 
-   class Position_Checker {
-
-    public:
-        explicit Position_Checker(const Kangaroo::Chess_Board *board) : board_p(board) {
-        };
-
-    private:
-        const Kangaroo::Chess_Board *board_p;
-
-
-    };
 
 }
 

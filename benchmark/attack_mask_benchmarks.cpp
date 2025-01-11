@@ -30,7 +30,7 @@ static void BM_move_generator(benchmark::State &state) {
         benchmark::DoNotOptimize(s);
     }
 }
-BENCHMARK(BM_move_generator);
+BENCHMARK(BM_move_generator)->Iterations(1000000000);
 
 
 static void BM_pin_mask_generator(benchmark::State &state) {

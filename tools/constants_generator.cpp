@@ -29,7 +29,7 @@
 template<typename T>
 void output_array(std::ofstream &of, const T &arr, const std::string &name, const std::string &type) {
     std::string guard = name;
-    std::ranges::transform(guard, guard.begin(), [](unsigned char c) { return std::toupper(c); });
+    std::ranges::transform(guard, guard.begin(), [](unsigned char c) { return static_cast<unsigned char>(std::toupper(c)); });
     guard += "__H";
 
     of << "#ifndef " << guard << "\n";
@@ -219,8 +219,6 @@ constexpr Bitboard generate_pin_mask_for_position(Square piece_position, Square 
     } else if constexpr (slider == bishop) {
         return generate_bishop_pin_mask<slider>(king_rank, king_file, piece_rank, piece_file);
     }
-
-    return 0x0ULL;
 }
 
 

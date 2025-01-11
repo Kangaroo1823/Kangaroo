@@ -22,6 +22,8 @@
 #include <format>
 #include <string>          // for string
 #include <utility>         // for to_underlying
+
+#include "base.h"
 #include "types.h"
 
 
@@ -72,18 +74,7 @@ constexpr int64_t Bitcount_(Bitboard bitboard) {
  * @return The number of set bits in the given bitboard.
  */
 constexpr int64_t Bitcount(const Bitboard board) {
-
-    if consteval {
-        return Bitcount_(board);
-    } else {
-#ifdef _MSC_VER
-        return static_cast<int64_t>(__popcnt64(board));
-#elif defined(__clang__)
-        return _mm_popcnt_u64(board);
-#elif defined(__GNUC__)
-        return _mm_popcnt_u64(board);
-#endif
-    }
+    return std::popcount(board);
 }
 
 constexpr Square square_of_(const Bitboard bitboard) {
@@ -104,7 +95,8 @@ constexpr Square square_of_(const Bitboard bitboard) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Square square_of(const Bitboard bitboard) {
-    const auto index = _tzcnt_u64(bitboard);
+
+    const auto index = static_cast<std::size_t>(std::countr_zero(bitboard));
     return All_Positions[index];
 }
 
@@ -120,7 +112,7 @@ constexpr Square square_of(const Bitboard bitboard) {
  * @param mask The Bitboard mask that specifies which bits to extract.
  * @return A Bitboard containing the extracted bits, densely packed.
  */
-constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
+_ForceInline Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
     return _pext_u64(bitboard, mask);
 }
 
@@ -137,7 +129,7 @@ constexpr Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
  *             in the occupancy creation.
  * @return A Bitboard representing the calculated occupancy based on the index and mask.
  */
-constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask) {
+_ForceInline Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask) {
     Bitboard occupancy = 0ULL;
     Bitboard mask_copy = mask;
 
@@ -161,7 +153,7 @@ constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const B
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask) {
+_ForceInline Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask) {
     return _pdep_u64(index, mask);
 }
 
@@ -227,7 +219,7 @@ constexpr Bitboard not_gh_file = /*
 
 void print_bitboard(Bitboard bitboard);
 
-constexpr Bitboard Bitboard_from_hex(const std::string &hex) {
+_ForceInline Bitboard Bitboard_from_hex(const std::string &hex) {
     return std::stoull(hex, nullptr, 16);
 }
 
