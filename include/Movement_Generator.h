@@ -6,10 +6,15 @@
 #define MOVEMENT_GENERATOR_H
 #include "chess_board.h"
 #include "types.h"
+#include "Move_Receiver.h"
 
 namespace Kangaroo {
     class Movement_Generator {
         FRIEND_TEST(Movement_Generator_Test, test_pin_masks_generator);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture);
+        FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture);
 
         Chess_Board *board_p;
 
@@ -177,10 +182,10 @@ namespace Kangaroo {
             build_pin_masks<status.color_p, Pin_Masks_Suitable_For::detecting_pins>();
 
             uint64_t moves = generate_pawn_moves<status.copy_and_set_mode(
-                Move_Generation_Mode_t::normal_move_generation)>(callback);
-            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode_t::pin_HV_move_generation)>(
+                Move_Generation_Mode::normal_move_generation)>(callback);
+            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::pin_HV_move_generation)>(
                 callback);
-            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode_t::pin_D_move_generation)>(
+            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::pin_D_move_generation)>(
                 callback);
 
             return moves;
@@ -211,15 +216,18 @@ namespace Kangaroo {
         [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(
             CallBackType callback, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
+
             if (pawn & pawn_base_row<status.color_p>()) {
-                if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn); is_pawn_push_admissible<status
-                    .mode>(pawn,
-                           moved_pawn_2, board_p->all_pieces())) {
-                    callback(status.color_p == Color_t::white ? Chess_Pieces_t::white_pawn : Chess_Pieces_t::black_pawn,
-                             make_move(pawn, moved_pawn_2));
+                if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn);
+                    is_pawn_push_admissible<status.mode>(pawn,
+                                                         moved_pawn_2, board_p->all_pieces())) {
+                    Move_Receiver<status, Move_Type::Normal, Chess_Pieces::pawn,
+                        CallBackType>::evaluate_and_perform_move(board_p, callback, pawn, moved_pawn_2);
+
                     ++moves;
                 }
             }
+
             return moves;
         }
 
@@ -227,7 +235,6 @@ namespace Kangaroo {
         [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(
             CallBackType callback, const std::size_t pawn_square, const Bitboard pawn) const {
             using enum Color_t;
-            using enum Chess_Pieces_t;
             static_assert(status.mode == Move_Generation_Mode::normal_move_generation);
 
             std::size_t moves = 0ULL;
@@ -238,8 +245,9 @@ namespace Kangaroo {
             // see if we can capture anything
             Bitloop(mask, pawn_attacks) {
                 Bitboard pawn_attack = 1ULL << std::to_underlying(square_of(pawn_attacks));
-                callback(status.color_p == white ? white_pawn : black_pawn,
-                         make_move(pawn, pawn_attack));
+
+                Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn, CallBackType>::evaluate_and_perform_move(
+                    board_p, callback, pawn, pawn_attack);
                 ++moves;
             }
 
@@ -250,29 +258,27 @@ namespace Kangaroo {
         [[nodiscard]] _ForceInline constexpr std::size_t generate_en_passant_captures(
             CallBackType callback, std::size_t pawn_square, Bitboard pawn) const {
             using enum Color_t;
-            using enum Chess_Pieces_t;
+
             static_assert(status.mode == Move_Generation_Mode::normal_move_generation && status.en_passant_p == true);
             static_assert(status.color_p == white || status.color_p == black);
 
             std::size_t moves = 0ULL;
 
-            const std::size_t pawn_file = pawn_square % 7;
+            const std::size_t pawn_file = pawn_square & 7;
 
             if constexpr (status.color_p == white) {
-
-                if (pawn_square == std::to_underlying(board_p->en_passant_square())-1 && pawn_file != 7 ) {
-                    callback(white_pawn, make_move(pawn, pawn | (1ULL << (pawn_square + 7))));
+                if (pawn_square == std::to_underlying(board_p->en_passant_square()) - 1 && pawn_file != 7) {
+                    callback(Chess_Pieces::pawn, make_move(pawn, pawn | (1ULL << (pawn_square + 7))));
                     ++moves;
-                } else if (pawn_square == std::to_underlying(board_p->en_passant_square())+1 && pawn_file != 0 ) {
-                    callback(white_pawn, make_move(pawn, pawn | (1ULL << (pawn_square + 9))));
+                } else if (pawn_square == std::to_underlying(board_p->en_passant_square()) + 1 && pawn_file != 0) {
+                    callback(Chess_Pieces::pawn, make_move(pawn, pawn | (1ULL << (pawn_square + 9))));
                     ++moves;
                 }
             } else if constexpr (status.color_p == black) {
-
-                if (pawn_square == std::to_underlying(board_p->en_passant_square())-1 && pawn_file != 0 ) {
-                    callback(black_pawn, make_move(pawn, pawn | (1ULL >> (pawn_square - 7))));
-                } else if (pawn_square == std::to_underlying(board_p->en_passant_square())+1 && pawn_file != 7 ) {
-                    callback(black_pawn, make_move(pawn, pawn | (1ULL >> (pawn_square - 9))));
+                if (pawn_square == std::to_underlying(board_p->en_passant_square()) - 1 && pawn_file != 0) {
+                    callback(Chess_Pieces::pawn, make_move(pawn, pawn | (1ULL >> (pawn_square - 7))));
+                } else if (pawn_square == std::to_underlying(board_p->en_passant_square()) + 1 && pawn_file != 7) {
+                    callback(Chess_Pieces::pawn, make_move(pawn, pawn | (1ULL >> (pawn_square - 9))));
                 }
             }
             return moves;
@@ -299,19 +305,18 @@ namespace Kangaroo {
 
             Bitloop(pawns, pawns_remaining) {
                 using enum Color_t;
-                using enum Chess_Pieces_t;
-
+                [[maybe_unused]] const Square s = square_of(pawns_remaining);
                 const std::size_t pawn_square = std::to_underlying(square_of(pawns_remaining));
                 const Bitboard pawn = 1ULL << pawn_square;
 
                 if constexpr (status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
-                              Move_Generation_Mode_t::pin_HV_move_generation) {
+                              Move_Generation_Mode::pin_HV_move_generation) {
                     // single move for pawns
                     const Bitboard moved_pawn = regular_pawn_push<status.color_p>(pawn);
 
                     if (is_pawn_push_admissible<status.mode>(pawn, moved_pawn, board_p->all_pieces())) {
-                        callback(status.color_p == white ? white_pawn : black_pawn,
-                                 make_move(pawn, moved_pawn));
+                        Move_Receiver<status, Move_Type::Normal, Chess_Pieces::pawn,
+                            CallBackType>::evaluate_and_perform_move(board_p, callback, pawn, moved_pawn);
                         ++moves;
 
                         // double move for pawns in base row
@@ -319,12 +324,12 @@ namespace Kangaroo {
                     }
                 }
 
-                if constexpr (status.mode == Move_Generation_Mode_t::normal_move_generation) {
+                if constexpr (status.mode == Move_Generation_Mode::normal_move_generation) {
                     moves += generate_pawn_captures<status, CallBackType>(callback, pawn_square, pawn);
                 }
 
                 if constexpr (status.en_passant_p == true && status.mode ==
-                              Move_Generation_Mode_t::normal_move_generation) {
+                              Move_Generation_Mode::normal_move_generation) {
                     moves += generate_en_passant_captures<status, CallBackType>(callback, pawn_square, pawn);
                 }
             }

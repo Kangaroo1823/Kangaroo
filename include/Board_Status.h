@@ -4,9 +4,10 @@
 
 #ifndef BOARD_STATUS_H
 #define BOARD_STATUS_H
-#include <string_view>
-
+#include "base.h"
 #include "colors.h"
+#include "types.h"
+
 
 namespace Kangaroo {
     class Board_Status {

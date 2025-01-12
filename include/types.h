@@ -17,40 +17,28 @@ using Slider = enum class Slider_t : std::size_t {
     bishop = 1,
 };
 
-using Chess_Pieces = enum class Chess_Pieces_t : std::size_t {
-    white_pawn = 0,
-    black_pawn = 1,
-    white_knight = 2,
-    black_knight = 3,
-    white_bishop = 4,
-    black_bishop = 5,
-    white_rook = 6,
-    black_rook = 7,
-    white_queen = 8,
-    black_queen = 9,
-    white_king = 10,
-    black_king = 11
+enum class Chess_Pieces : std::size_t {
+    pawn = 0,
+    knight = 1,
+    bishop = 2,
+    rook = 3,
+    queen = 4,
+    king = 5
 };
 
 inline constexpr std::array All_Pieces = {
-    Chess_Pieces::white_pawn,
-    Chess_Pieces::black_pawn,
-    Chess_Pieces::white_knight,
-    Chess_Pieces::black_knight,
-    Chess_Pieces::white_bishop,
-    Chess_Pieces::black_bishop,
-    Chess_Pieces::white_rook,
-    Chess_Pieces::black_rook,
-    Chess_Pieces::white_queen,
-    Chess_Pieces::black_queen,
-    Chess_Pieces::white_king,
-    Chess_Pieces::black_king
+    Chess_Pieces::pawn,
+    Chess_Pieces::knight,
+    Chess_Pieces::bishop,
+    Chess_Pieces::rook,
+    Chess_Pieces::queen,
+    Chess_Pieces::king
 };
 
 /**
  * Have a convenient way of naming positions
  */
-using Square = enum class Square_t  : std::size_t {
+enum class Square  : std::size_t {
     A1 = 0,
     B1 = 1,
     C1 = 2,
@@ -118,52 +106,41 @@ using Square = enum class Square_t  : std::size_t {
 };
 
 inline constexpr std::array<Square, 64> All_Positions = {
-    Square_t::A1, Square_t::B1, Square_t::C1, Square_t::D1, Square_t::E1, Square_t::F1, Square_t::G1, Square_t::H1,
-    Square_t::A2, Square_t::B2, Square_t::C2, Square_t::D2, Square_t::E2, Square_t::F2, Square_t::G2, Square_t::H2,
-    Square_t::A3, Square_t::B3, Square_t::C3, Square_t::D3, Square_t::E3, Square_t::F3, Square_t::G3, Square_t::H3,
-    Square_t::A4, Square_t::B4, Square_t::C4, Square_t::D4, Square_t::E4, Square_t::F4, Square_t::G4, Square_t::H4,
-    Square_t::A5, Square_t::B5, Square_t::C5, Square_t::D5, Square_t::E5, Square_t::F5, Square_t::G5, Square_t::H5,
-    Square_t::A6, Square_t::B6, Square_t::C6, Square_t::D6, Square_t::E6, Square_t::F6, Square_t::G6, Square_t::H6,
-    Square_t::A7, Square_t::B7, Square_t::C7, Square_t::D7, Square_t::E7, Square_t::F7, Square_t::G7, Square_t::H7,
-    Square_t::A8, Square_t::B8, Square_t::C8, Square_t::D8, Square_t::E8, Square_t::F8, Square_t::G8, Square_t::H8
+    Square::A1, Square::B1, Square::C1, Square::D1, Square::E1, Square::F1, Square::G1, Square::H1,
+    Square::A2, Square::B2, Square::C2, Square::D2, Square::E2, Square::F2, Square::G2, Square::H2,
+    Square::A3, Square::B3, Square::C3, Square::D3, Square::E3, Square::F3, Square::G3, Square::H3,
+    Square::A4, Square::B4, Square::C4, Square::D4, Square::E4, Square::F4, Square::G4, Square::H4,
+    Square::A5, Square::B5, Square::C5, Square::D5, Square::E5, Square::F5, Square::G5, Square::H5,
+    Square::A6, Square::B6, Square::C6, Square::D6, Square::E6, Square::F6, Square::G6, Square::H6,
+    Square::A7, Square::B7, Square::C7, Square::D7, Square::E7, Square::F7, Square::G7, Square::H7,
+    Square::A8, Square::B8, Square::C8, Square::D8, Square::E8, Square::F8, Square::G8, Square::H8
 };
 
 
-using WhiteQueenSideCastle = enum class WhiteQueenSideCastle_t : uint64_t {
-    white_queen_side_castle_possible = 1ULL << 0,
-    white_queen_side_castle_impossible = 1ULL << 1,
-};
-
-using WhiteKingSideCastle = enum class WhiteKingSideCastle_t : uint64_t {
-    white_king_side_castle_possible = 1ULL << 0,
-    white_king_side_castle_impossible = 1ULL << 1,
-};
-
-using BlackQueenSideCastle = enum class BlackQueenSideCastle_t : uint64_t {
-    black_queen_side_castle_possible = 1ULL << 0,
-    black_queen_side_castle_impossible = 1ULL << 1,
-};
-
-using BlackKingSideCastle = enum class BlackKingSideCastle_t : uint64_t {
-    black_king_side_castle_possible = 1ULL << 0,
-    black_king_side_castle_impossible = 1ULL << 1,
-};
-
-using En_Passant = enum class En_Passant_t : uint64_t {
+enum class En_Passant : uint64_t {
     en_passant_possible = 1ULL << 0,
     en_passant_impossible = 1ULL << 1,
 };
 
-using Pin_Masks_Suitable_For = enum class Pin_Masks_Suitable_For_t : int64_t {
+enum class Pin_Masks_Suitable_For : int64_t {
     detecting_pins = 2,
     detecting_check = 1,
 };
 
-using Move_Generation_Mode = enum class Move_Generation_Mode_t : uint64_t {
+enum class Move_Generation_Mode : uint64_t {
     normal_move_generation = 0,
     pin_HV_move_generation = 1,
     pin_D_move_generation = 2,
     check_move_generation = 3,
 };
+
+enum class Move_Type : uint64_t {
+    Normal = 1,
+    Castling = 2,
+    En_Passant = 3,
+    Promotion = 4,
+    Capture = 5,
+};
+
 
 #endif //TYPES_H

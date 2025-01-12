@@ -20,16 +20,22 @@ static void BM_move_generator(benchmark::State &state) {
     for ([[maybe_unused]] auto _: state) {
         uint64_t cntr = 0ULL;
 
-        auto s = movement_generator->generate_moves<Kangaroo::Board_Status(0x3d)>([&cntr]([[maybe_unused]] const Chess_Pieces chess_piece,
-                                                                    [[maybe_unused]] const Bitboard is_attacked) {
-            ++cntr;
-        });
+        auto s = movement_generator->generate_moves<Kangaroo::Board_Status(0x3d)>(
+            [&cntr](const Kangaroo::Chess_Board *board, const Move move, const Color color,
+                    const Chess_Pieces chess_piece) {
+                ++cntr;
+                benchmark::DoNotOptimize(board);
+                benchmark::DoNotOptimize(&move);
+                benchmark::DoNotOptimize(&color);
+                benchmark::DoNotOptimize(&chess_piece);
+            });
 
 
         benchmark::DoNotOptimize(cntr);
         benchmark::DoNotOptimize(s);
     }
 }
+
 BENCHMARK(BM_move_generator)->Iterations(1000000000);
 
 
@@ -38,7 +44,7 @@ static void BM_pin_mask_generator(benchmark::State &state) {
         Bitboard cntr1 = 0ULL;
         Bitboard cntr2 = 0ULL;
 
-        movement_generator->build_pin_masks<Color::black, Pin_Masks_Suitable_For_t::detecting_pins>();
+        movement_generator->build_pin_masks<Color::black, Pin_Masks_Suitable_For::detecting_pins>();
         cntr1 = movement_generator->get_pin_mask_HV();
         cntr2 = movement_generator->get_pin_mask_D();
 
