@@ -192,13 +192,25 @@ namespace Kangaroo {
         }
 
     private:
+        /**
+         * checks if a move is admissible.
+         * 
+         * @tparam mode current phase of movement generation. Valid values are:
+         *                      -   pin_HV_move_generation. Generation of moves of HV pinned pieces.
+         *                      -   check_move_generation. Generation of moves in a check situation.
+         *                      -   normal_move_generation. Generation of regular moves.
+         *
+         * @param pawn_origin  a bitboard with a single set bit at the position where the pawn 'starts' its move
+         * @param pawn_move a bitboard with a single set bit at the position where the pawn 'ends' its move.
+         * @param occupied_squares a bitboard with bits set where pieces are on the chess board.
+         * @return true if and only if the move is admissible.
+         */
         template<Move_Generation_Mode mode>
         [[nodiscard]] _ForceInline constexpr bool is_pawn_push_admissible(
             const Bitboard pawn_origin, const Bitboard pawn_move, const Bitboard &occupied_squares) const {
             static_assert(mode == Move_Generation_Mode::normal_move_generation ||
                           mode == Move_Generation_Mode::check_move_generation ||
-                          mode == Move_Generation_Mode::pin_HV_move_generation ||
-                          mode == Move_Generation_Mode::pin_D_move_generation);
+                          mode == Move_Generation_Mode::pin_HV_move_generation);
 
             const bool ret = (pawn_move & occupied_squares) == 0;
             if constexpr (mode == Move_Generation_Mode::normal_move_generation || mode ==
@@ -207,63 +219,115 @@ namespace Kangaroo {
             } else if constexpr (mode == Move_Generation_Mode::pin_HV_move_generation) {
                 const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
                 return ret && p && (pawn_origin & pin_mask_D) == 0;
-            } else if constexpr (mode == Move_Generation_Mode::pin_D_move_generation) {
-                return false;
             }
+            return false;
         }
 
+        /**
+         * Generates a double pawn push if admissible. Assumes that a single pawn push is admissible.
+         *
+         * @tparam status an instances of the Board_Status class indicating the status of move generation
+         * @tparam CallBackType type of the callback function.
+         * @param callback the call function
+         * @param pawn a Bitboard with a single set bit at the position corresponding to the square where the
+         *              pawn in question is currently located.
+         * @return Returns the number of moves generated.
+         */
         template<Kangaroo::Board_Status status, typename CallBackType>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(
             CallBackType callback, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
 
+            // check if the pawn is in the base row.
             if (pawn & pawn_base_row<status.color_p>()) {
+                // if so, check if a double pawn push is admissible.
                 if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn);
                     is_pawn_push_admissible<status.mode>(pawn,
                                                          moved_pawn_2, board_p->all_pieces())) {
+                    // make the move and call the callback function.
                     Move_Receiver<status, Move_Type::Normal, Chess_Pieces::pawn,
                         CallBackType>::evaluate_and_perform_move(board_p, callback, pawn, moved_pawn_2);
 
+                    // increment the number of moves generated.
                     ++moves;
                 }
             }
 
+            // return the number of moves generated.
             return moves;
         }
 
+        /**
+         * Generates pawn captures.
+         * @tparam status an instance of the Board_Status class indicating the current state of move generation.
+         * @tparam CallBackType The type of the callback function. Should return void.
+         * @param callback The callback function.
+         * @param pawn_square The square of the pawn in question as a number between 0 and 63 (including).
+         * @param pawn A bitboard with a single set bit at the position of the pawn.
+         * @return Returns the number of moves generated.
+         */
         template<Kangaroo::Board_Status status, typename CallBackType>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(
             CallBackType callback, const std::size_t pawn_square, const Bitboard pawn) const {
             using enum Color_t;
-            static_assert(status.mode == Move_Generation_Mode::normal_move_generation);
 
+            // this method is only supposed to be called in normal_move_generation mode or in
+            // check_move_generation mode.
+            static_assert(
+                status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
+                Move_Generation_Mode::check_move_generation);
+
+            // initialize the number of generated moves with zero.
             std::size_t moves = 0ULL;
+
+            // the squares the pawn in question can move to should be occupied by the opposite color.
             Bitboard mask = (status.color_p == white
                                  ? Constants::white_pawn_attacks[pawn_square] & board_p->black_pieces()
                                  : Constants::black_pawn_attacks[pawn_square] & board_p->white_pieces());
 
-            // see if we can capture anything
+            // loop over all such squares
             Bitloop(mask, pawn_attacks) {
+                // generate a Bitboard with a single bit set where the pawn is attacking
                 Bitboard pawn_attack = 1ULL << std::to_underlying(square_of(pawn_attacks));
 
+                // perform the move and call the callback
                 Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn, CallBackType>::evaluate_and_perform_move(
                     board_p, callback, pawn, pawn_attack);
+
+                // increment the number of moves generated
                 ++moves;
             }
 
+            // return the number of moves generated
             return moves;
         }
 
+        /**
+         * Generates en passant captures. Only supposed to be called when en passant captures are possible
+         * _and_ during normal- or check-move-generation.
+         *
+         * @tparam status An instance of the class Board_Status indicating the state of move generation this method was called in.
+         * @tparam CallBackType The type of the callback
+         * @param callback The callback itself
+         * @param pawn_square The number of the square where the pawn is located.
+         * @param pawn A Bitboard with a single bit set where the pawn is located.
+         * @return Returns the number of moves generated.
+         */
         template<Kangaroo::Board_Status status, typename CallBackType>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_en_passant_captures(
-            CallBackType callback, std::size_t pawn_square, Bitboard pawn) const {
+            CallBackType callback, const std::size_t pawn_square, const Bitboard pawn) const {
             using enum Color_t;
 
-            static_assert(status.mode == Move_Generation_Mode::normal_move_generation && status.en_passant_p == true);
+            static_assert(
+                (status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
+                 Move_Generation_Mode::check_move_generation) && status.en_passant_p == true);
+
             static_assert(status.color_p == white || status.color_p == black);
 
+            // initialize the number of generated moves with zero.
             std::size_t moves = 0ULL;
 
+            // compute the file of the pawn in question
             const std::size_t pawn_file = pawn_square & 7;
 
             if constexpr (status.color_p == white) {
@@ -277,8 +341,10 @@ namespace Kangaroo {
             } else if constexpr (status.color_p == black) {
                 if (pawn_square == std::to_underlying(board_p->en_passant_square()) - 1 && pawn_file != 0) {
                     callback(Chess_Pieces::pawn, make_move(pawn, pawn | (1ULL >> (pawn_square - 7))));
+                    ++moves;
                 } else if (pawn_square == std::to_underlying(board_p->en_passant_square()) + 1 && pawn_file != 7) {
                     callback(Chess_Pieces::pawn, make_move(pawn, pawn | (1ULL >> (pawn_square - 9))));
+                    ++moves;
                 }
             }
             return moves;
