@@ -77,10 +77,14 @@ constexpr int64_t Bitcount(const Bitboard board) {
     return std::popcount(board);
 }
 
+constexpr Bitboard bitboard_square_of(const Bitboard bitboard) {
+    return bitboard & -bitboard ;
+}
+
 constexpr Square square_of_(const Bitboard bitboard) {
     // count the bits before the first 1 bit.
     const auto b = static_cast<Bitboard>(-static_cast<int64_t>(bitboard));
-    return All_Positions[static_cast<std::size_t>(Bitcount((bitboard & b) - 1))];
+    return static_cast<Square>(Bitcount((bitboard & b) - 1));
 }
 
 
@@ -95,9 +99,8 @@ constexpr Square square_of_(const Bitboard bitboard) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Square square_of(const Bitboard bitboard) {
+    return static_cast<Square>(std::countr_zero(bitboard));
 
-    const auto index = static_cast<std::size_t>(std::countr_zero(bitboard));
-    return All_Positions[index];
 }
 
 /**
@@ -159,7 +162,7 @@ _ForceInline Bitboard create_occupancy_from_mask(const std::size_t index, const 
 
 
 #define Bitloop(x,y) for(typename std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
-
+//#define Bitloop(x,y) for(typename std::remove_const<decltype(x)>::type y = x;y;y=(y & (y - 1)))
 
 constexpr Bitboard not_a_file = /*
         A  B  C  D  E  F  G  H

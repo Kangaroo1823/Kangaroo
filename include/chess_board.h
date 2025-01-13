@@ -137,8 +137,8 @@ namespace Kangaroo {
         _ForceInline void set_all_pieces(const Bitboard &all_pieces) { all_pieces_p = all_pieces; };
 
 
-        [[nodiscard]] _ForceInline const Square &en_passant_square() const { return en_passant_square_p; }
-        _ForceInline void set_en_passant_square(const Square &en_passant_square) {
+        [[nodiscard]] _ForceInline const Bitboard &en_passant_square() const { return en_passant_square_p; }
+        _ForceInline void set_en_passant_square(const Bitboard &en_passant_square) {
             en_passant_square_p = en_passant_square;
         };
 
@@ -269,7 +269,7 @@ namespace Kangaroo {
         Bitboard white_pieces_p = 0ULL;
         Bitboard all_pieces_p = 0ULL;
 
-        Square en_passant_square_p = Square::A1;
+        Bitboard en_passant_square_p = 0ULL;
         std::size_t half_move_number_p = 0;
         std::size_t full_move_number_p = 0;
 

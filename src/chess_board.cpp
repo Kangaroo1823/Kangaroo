@@ -73,7 +73,7 @@ uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_
             default: break;
         }
         if (rank < 8 && file < 8) {
-            set_en_passant_square(rank_file_to_position(rank, file));
+            set_en_passant_square(1 << std::to_underlying(rank_file_to_position(rank, file)));
             return 1ULL << 1;
         }
     }
@@ -244,9 +244,9 @@ void Kangaroo::Chess_Board::reset_board(const std::string_view &fen) {
 
     set_all_pieces(0ULL);
 
-    set_en_passant_square (Square::A1);
-    set_half_move_number(0);
-    set_full_move_number(0);
+    set_en_passant_square (0ULL);
+    set_half_move_number(0ULL);
+    set_full_move_number(0ULL);
 
     flags = 0;
 
