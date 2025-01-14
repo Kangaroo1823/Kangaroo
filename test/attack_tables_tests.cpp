@@ -101,7 +101,7 @@ Bitboard create_pawn_attacks_(const Color color, const Square position) {
 
     const Bitboard bitboard = set_bit(0ULL, position);
 
-    if (color == Color_t::black) {
+    if (color == Color::black) {
         // color_p is equal to black
         attacks = (bitboard >> 7 & not_a_file);
         attacks = attacks | (bitboard >> 9 & not_h_file);

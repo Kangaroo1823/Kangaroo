@@ -12,6 +12,14 @@ using MagicNumber = uint64_t;
 using Bitboard = uint64_t;
 using Move = uint64_t;
 
+enum class Color : std::size_t {
+    white = 0,
+    black = 16,
+};
+
+constexpr std::array<Color, 2> All_Colors = {Color::white, Color::black};
+
+
 using Slider = enum class Slider_t : std::size_t {
     rook = 0,
     bishop = 1,

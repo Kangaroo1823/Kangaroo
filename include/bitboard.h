@@ -78,7 +78,7 @@ constexpr int64_t Bitcount(const Bitboard board) {
 }
 
 constexpr Bitboard bitboard_square_of(const Bitboard bitboard) {
-    return bitboard & -bitboard ;
+    return _blsi_u64(bitboard);
 }
 
 constexpr Square square_of_(const Bitboard bitboard) {
@@ -222,7 +222,28 @@ constexpr Bitboard not_gh_file = /*
 
 void print_bitboard(Bitboard bitboard);
 
-_ForceInline Bitboard Bitboard_from_hex(const std::string &hex) {
+/**
+ * Returns a Bitboard with all bits set in
+ *   - the first rank iff color == white
+ *   - the 8th rank iff color == black
+ *
+ */
+template<Color color>
+[[nodiscard]] _ForceInline constexpr Bitboard get_promotion_rank() {
+    using enum Color;
+
+    static_assert(color == white || color == black);
+
+    return color == white ? 0xFF00000000000000ULL : 0x00000000000000FFULL;
+};
+
+/**
+ * parses a hex string in a Bitboard.
+ *
+ * @param hex a string representation of the number to be parsed. A leading '0x' is optional.
+ * @return Returns the parsed bitboard.
+ */
+[[nodiscard]] _ForceInline constexpr Bitboard  Bitboard_from_hex(const std::string &hex) {
     return std::stoull(hex, nullptr, 16);
 }
 

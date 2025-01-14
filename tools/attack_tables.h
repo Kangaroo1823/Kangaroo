@@ -109,7 +109,7 @@ template<Color color>
 constexpr Bitboard create_pawn_attacks_for(const Bitboard bitboard) {
     Bitboard attacks = 0ULL;
 
-    if constexpr (color == Color_t::black) {
+    if constexpr (color == Color::black) {
         // color is sequal to black
         attacks = (bitboard >> 7 & not_a_file);
         attacks = attacks | (bitboard >> 9 & not_h_file);

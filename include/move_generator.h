@@ -67,7 +67,7 @@ template<Color color>
  *         from its given position.
  */
 constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
-    using enum Color_t;
+    using enum Color;
 
     // create attack mask for pawns
     const Bitboard pawn_attacks = create_pawn_attacks_for<color == white ? white : black>(
@@ -110,7 +110,7 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
 
 template<Color color>
 constexpr Bitboard is_position_attacked_by(const Square &position, const Kangaroo::Chess_Board *board) {
-    using enum Color_t;
+    using enum Color;
 
     Bitboard attacks = 0ULL;
 

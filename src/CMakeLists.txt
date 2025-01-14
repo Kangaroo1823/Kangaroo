@@ -71,6 +71,8 @@ else()
 
 endif()
 
+find_package(OpenMP)
+
 # create a library to hold the tested logic of the ChessEngine
 add_library(Kangaroo_library ../include/bitboard.h
         bitboard.cpp
@@ -93,6 +95,10 @@ target_link_libraries(Kangaroo_library
         Kangaroo_warnings
         Kangaroo_options
 )
+
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(Kangaroo_library PUBLIC OpenMP::OpenMP_CXX)
+endif()
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_link_libraries(Kangaroo_library PRIVATE stdc++exp)

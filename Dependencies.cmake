@@ -48,6 +48,7 @@ function(Kangaroo_setup_dependencies)
     endif ()
 
 
+
     if (NOT TARGET benchmark::benchmark)
         set(HAVE_STD_REGEX ON)
         set(RUN_HAVE_STD_REGEX 1)
