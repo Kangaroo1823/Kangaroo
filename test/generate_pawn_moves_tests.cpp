@@ -245,8 +245,8 @@ namespace Kangaroo {
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
             [&moves]([[maybe_unused]] const Chess_Board *old_board, const Move &move, const Color color,
                      const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::white);
-                ASSERT_EQ(chess_piece, Chess_Pieces::pawn);
+                ASSERT_EQ(color, Color::White);
+                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
                 ASSERT_TRUE(std::ranges::contains(moves, move));
             });
 
@@ -489,8 +489,8 @@ namespace Kangaroo {
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board *old_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::black);
-                ASSERT_EQ(chess_piece, Chess_Pieces::pawn);
+                ASSERT_EQ(color, Color::Black);
+                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
                 ASSERT_TRUE(std::ranges::contains(moves, move));
                 print_bitboard(move);
             });
@@ -623,8 +623,8 @@ namespace Kangaroo {
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
             [&moves]([[maybe_unused]] const Chess_Board *old_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::white);
-                ASSERT_EQ(chess_piece, Chess_Pieces::pawn);
+                ASSERT_EQ(color, Color::White);
+                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
                 ASSERT_TRUE(std::ranges::contains(moves, move));
                 print_bitboard(move);
             });
@@ -756,8 +756,8 @@ namespace Kangaroo {
 
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board *old_board, const Move move, const Color color, const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::black);
-                ASSERT_EQ(chess_piece, Chess_Pieces::pawn);
+                ASSERT_EQ(color, Color::Black);
+                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
                 ASSERT_TRUE(std::ranges::contains(moves, move));
                 print_bitboard(move);
             });

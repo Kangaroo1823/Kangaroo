@@ -232,9 +232,9 @@ template<Color color>
 [[nodiscard]] _ForceInline constexpr Bitboard get_promotion_rank() {
     using enum Color;
 
-    static_assert(color == white || color == black);
+    static_assert(color == White || color == Black);
 
-    return color == white ? 0x00FF000000000000ULL : 0x000000000000FF00ULL;
+    return color == White ? 0x00FF000000000000ULL : 0x000000000000FF00ULL;
 };
 
 /**

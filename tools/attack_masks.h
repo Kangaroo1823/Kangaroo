@@ -22,7 +22,7 @@ constexpr Bitboard create_attack_mask_for(const Square position) {
     const auto rank = static_cast<int64_t>(std::to_underlying(position) >> 3);
     const auto file = static_cast<int64_t>(std::to_underlying(position) & 7);
 
-    if constexpr (slider == Slider::bishop) {
+    if constexpr (slider == Slider::Bishop) {
 
         for (int64_t r = rank + 1, f = file + 1; r < 7 && f < 7; ++r, ++f) mask |= 1ULL << (r * 8 + f);
         for (int64_t r = rank + 1, f = file - 1; r < 7 && f > 0; ++r, --f) mask |= 1ULL << (r * 8 + f);

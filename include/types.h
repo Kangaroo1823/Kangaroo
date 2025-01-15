@@ -13,34 +13,34 @@ using Bitboard = uint64_t;
 using Move = uint64_t;
 
 enum class Color : std::size_t {
-    white = 0,
-    black = 16,
+    White = 0,
+    Black = 16,
 };
 
-constexpr std::array<Color, 2> All_Colors = {Color::white, Color::black};
+constexpr std::array<Color, 2> All_Colors = {Color::White, Color::Black};
 
 
 enum class Slider : std::size_t {
-    rook = 0,
-    bishop = 1,
+    Rook = 0,
+    Bishop = 1,
 };
 
 enum class Chess_Pieces : std::size_t {
-    pawn = 0,
-    knight = 1,
-    bishop = 2,
-    rook = 3,
-    queen = 4,
-    king = 5
+    Pawn = 0,
+    Knight = 1,
+    Bishop = 2,
+    Rook = 3,
+    Queen = 4,
+    King = 5
 };
 
 inline constexpr std::array All_Pieces = {
-    Chess_Pieces::pawn,
-    Chess_Pieces::knight,
-    Chess_Pieces::bishop,
-    Chess_Pieces::rook,
-    Chess_Pieces::queen,
-    Chess_Pieces::king
+    Chess_Pieces::Pawn,
+    Chess_Pieces::Knight,
+    Chess_Pieces::Bishop,
+    Chess_Pieces::Rook,
+    Chess_Pieces::Queen,
+    Chess_Pieces::King
 };
 
 /**
@@ -125,22 +125,18 @@ inline constexpr std::array<Square, 64> All_Positions = {
 };
 
 
-enum class En_Passant : uint64_t {
-    en_passant_possible = 1ULL << 0,
-    en_passant_impossible = 1ULL << 1,
-};
 
 enum class Pin_Masks_Suitable_For : int64_t {
-    detecting_pins = 2,
-    detecting_check = 1,
+    Detecting_Pins = 2,
+    Detecting_Check = 1,
 };
 
 enum class Move_Generation_Mode : uint64_t {
-    normal_move_generation = 0,
-    pin_HV_move_generation = 1,
-    pin_D_move_generation = 2,
-    check_move_generation = 3,
-    promotion_move_generation = 4,
+    Normal_Move_Generation = 0,
+    Pin_HV_Move_Generation = 1,
+    Pin_D_Move_Generation = 2,
+    Check_Move_Generation = 3,
+    Promotion_Move_Generation = 4,
 };
 
 enum class Move_Type : uint64_t {

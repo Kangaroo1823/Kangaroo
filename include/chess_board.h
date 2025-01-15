@@ -33,7 +33,7 @@ namespace Kangaroo {
     constexpr Bitboard regular_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
-        if constexpr (color == Color::white) {
+        if constexpr (color == Color::White) {
             pawn_move = mask << 8;
         } else {
             pawn_move = mask >> 8;
@@ -46,7 +46,7 @@ namespace Kangaroo {
     constexpr Bitboard double_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
-        if constexpr (color == Color::white) {
+        if constexpr (color == Color::White) {
             pawn_move = mask << 16;
         } else {
             pawn_move = mask >> 16;
@@ -57,7 +57,7 @@ namespace Kangaroo {
 
     template<Color color>
     constexpr Bitboard pawn_base_row() {
-        if constexpr (color == Color::white) {
+        if constexpr (color == Color::White) {
             return 0x000000000000FF00ULL;
         } else {
             return 0x00FF000000000000ULL;
@@ -151,7 +151,7 @@ namespace Kangaroo {
         };
 
         _ForceInline void set_color_to_move(const Color color) {
-            if (color == Color::white) {
+            if (color == Color::White) {
                 flags |= 0x1ULL;
             } else {
                 flags &= ~0x1ULL;
@@ -159,7 +159,7 @@ namespace Kangaroo {
         };
 
         [[nodiscard]] _ForceInline Color color_to_move() const {
-            return (flags & 0x1ULL) ? Color::white : Color::black;
+            return (flags & 0x1ULL) ? Color::White : Color::Black;
         }
 
         _ForceInline void set_en_passant(const bool en_passant) {

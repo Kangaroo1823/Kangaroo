@@ -53,7 +53,7 @@ TEST(Mask_Generator, rook_attack_masks) {
         const Bitboard board = create_rook_attack_mask(position);
         print_bitboard(board);
 
-        ASSERT_EQ(create_attack_mask_for<Slider::rook>(position), board);
+        ASSERT_EQ(create_attack_mask_for<Slider::Rook>(position), board);
     }
 
     // tests for bishops
@@ -61,7 +61,7 @@ TEST(Mask_Generator, rook_attack_masks) {
 
         const Bitboard board = create_bishop_attack_mask(position);
         print_bitboard(board);
-        ASSERT_EQ(create_attack_mask_for<Slider::bishop>(position), board);
+        ASSERT_EQ(create_attack_mask_for<Slider::Bishop>(position), board);
     }
 }
 

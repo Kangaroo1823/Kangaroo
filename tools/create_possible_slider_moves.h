@@ -8,15 +8,14 @@
 #include "../include/bitboard.h"
 
 
-template<Slider slider>
-constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const Square position) {
-    Bitboard moves = 0ULL;
+namespace Kangaroo {
+    [[nodiscard]] _ForceInline constexpr  Bitboard calculate_bishop_moves(const Bitboard occupancy, const Square position) {
+        Bitboard moves = 0ULL;
 
-    const std::size_t file = std::to_underlying(position) & 7;
-    const std::size_t rank = std::to_underlying(position) >> 3;
+        const std::size_t file = std::to_underlying(position) & 7;
+        const std::size_t rank = std::to_underlying(position) >> 3;
 
-    if constexpr (slider == Slider::bishop) {
-        // slider equals Slider::bishop
+        // slider equals Slider::Bishop
         for (std::size_t r = rank + 1, f = file + 1; r < 8 && f < 8; r++, f++) {
             const Square pos = rank_file_to_position(r, f);
             moves = set_bit(moves, pos);
@@ -40,8 +39,18 @@ constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const 
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
-    } else {
-        // slider equals Slider::rook
+
+        return moves;
+    }
+
+
+    [[nodiscard]] _ForceInline constexpr Bitboard create_rook_moves(const Bitboard occupancy, const Square position) {
+
+        Bitboard moves = 0ULL;
+        const std::size_t file = std::to_underlying(position) & 7;
+        const std::size_t rank = std::to_underlying(position) >> 3;
+
+        // slider equals Slider::Rook
         for (std::size_t r = rank + 1; r < 8; r++) {
             const Square pos = rank_file_to_position(r, file);
             moves = set_bit(moves, pos);
@@ -65,10 +74,24 @@ constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const 
             moves = set_bit(moves, pos);
             if (1ULL << std::to_underlying(pos) & occupancy) break;
         }
+
+        return moves;
     }
 
-    return moves;
-}
+    template<Slider slider>
+    [[nodiscard]] constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const Square position) {
+        using enum Slider;
 
+        static_assert(slider == Bishop || slider == Rook);
+
+        if constexpr (slider == Bishop) {
+            const Bitboard moves = calculate_bishop_moves(occupancy, position);
+            return moves;
+        } else {
+            const Bitboard moves = create_rook_moves(occupancy, position);
+            return moves;
+        }
+    }
+}
 
 #endif //CREATE_POSSIBLE_BISHOP_MOVES_H

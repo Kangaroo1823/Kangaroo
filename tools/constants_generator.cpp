@@ -90,11 +90,11 @@ template<Slider slider>
 
     using enum Slider;
 
-    static_assert(slider == rook || slider == bishop);
+    static_assert(slider == Rook || slider == Bishop);
 
-    if constexpr (slider == rook) {
+    if constexpr (slider == Rook) {
         return generate_rook_xray_visibility_for(position);
-    } else if constexpr (slider == bishop) {
+    } else if constexpr (slider == Bishop) {
         return generate_bishop_xray_visibility_for(position);
     }
 
@@ -113,8 +113,8 @@ template<Slider slider>
 }
 
 void generate_xray_visibility_tables(std::ofstream &of) {
-    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Slider::rook>();
-    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Slider::bishop>();
+    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Slider::Rook>();
+    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Slider::Bishop>();
 
     output_array(of, rook_xray_visibility_table, "rook_xray_visibility_table", "Bitboard");
     output_array(of, bishop_xray_visibility_table, "bishop_xray_visibility_table", "Bitboard");
@@ -207,16 +207,16 @@ template<Slider slider>
 constexpr Bitboard generate_pin_mask_for_position(Square piece_position, Square king_position) {
     using enum Slider;
 
-    static_assert(slider == rook || slider == bishop);
+    static_assert(slider == Rook || slider == Bishop);
 
     const auto king_rank = static_cast<int64_t>(std::to_underlying(king_position) / 8);
     const auto king_file = static_cast<int64_t>(std::to_underlying(king_position) % 8);
     const auto piece_rank = static_cast<int64_t>(std::to_underlying(piece_position) / 8);
     const auto piece_file = static_cast<int64_t>(std::to_underlying(piece_position) % 8);
 
-    if constexpr (slider == rook) {
+    if constexpr (slider == Rook) {
         return generate_rook_pin_mask_towards_king<slider>(king_rank, king_file, piece_rank, piece_file);
-    } else if constexpr (slider == bishop) {
+    } else if constexpr (slider == Bishop) {
         return generate_bishop_pin_mask<slider>(king_rank, king_file, piece_rank, piece_file);
     }
 }
@@ -242,8 +242,8 @@ constexpr std::vector<Bitboard> generate_pin_table() {
 }
 
 void generate_pin_tables(std::ofstream &of) {
-    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Slider::rook>();
-    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Slider::bishop>();
+    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Slider::Rook>();
+    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Slider::Bishop>();
 
     output_array(of, rook_pin_table, "rook_pin_table", "Bitboard");
     output_array(of, bishop_pin_table, "bishop_pin_table", "Bitboard");
@@ -251,8 +251,8 @@ void generate_pin_tables(std::ofstream &of) {
 
 
 void generate_masks(std::ofstream &of) {
-    constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider::bishop>();
-    constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Slider::rook>();
+    constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider::Bishop>();
+    constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Slider::Rook>();
 
     output_array(of, bishop_attack_masks, "bishop_attack_masks", "Bitboard");
     output_array(of, rook_attack_masks, "rook_attack_masks", "Bitboard");
@@ -260,8 +260,8 @@ void generate_masks(std::ofstream &of) {
 
 #ifdef GENERATE_MAGICS
 void generate_magic_numbers(std::ofstream &of) {
-    const std::array<MagicNumber, 64> Bishop_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::bishop>();
-    const std::array<MagicNumber, 64> Rook_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::rook>();
+    const std::array<MagicNumber, 64> Bishop_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::Bishop>();
+    const std::array<MagicNumber, 64> Rook_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::Rook>();
 
     output_array(of, Bishop_Magic_Numbers, "bishop_magic_numbers", "MagicNumber");
     output_array(of, Rook_Magic_Numbers, "rook_magic_numbers", "MagicNumber");
@@ -271,16 +271,16 @@ void generate_magic_numbers(std::ofstream &of) {
 #ifdef GENERATE_ATTACKS
 void generate_attacks(std::ofstream &of) {
     std::vector<Bitboard> rook_attack_table(64 * 4096, 0ULL);
-    create_attack_table<Slider::rook>(rook_attack_table);
+    create_attack_table<Slider::Rook>(rook_attack_table);
 
     std::vector<Bitboard> bishop_attack_table(64 * 512, 0ULL);
-    create_attack_table<Slider::bishop>(bishop_attack_table);
+    create_attack_table<Slider::Bishop>(bishop_attack_table);
 
     std::vector<Bitboard> white_pawn_attacks(64, 0ULL);
-    create_pawn_attacks<Color::white>(white_pawn_attacks);
+    create_pawn_attacks<Color::White>(white_pawn_attacks);
 
     std::vector<Bitboard> black_pawn_attacks(64, 0ULL);
-    create_pawn_attacks<Color::black>(black_pawn_attacks);
+    create_pawn_attacks<Color::Black>(black_pawn_attacks);
 
     std::vector<Bitboard> king_attacks(64, 0ULL);
     create_king_attacks(king_attacks);

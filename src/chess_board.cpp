@@ -138,17 +138,17 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) 
 void Kangaroo::Chess_Board::parse_fen_player_to_move(const std::string_view str) {
 
     if (str == "-") {
-        set_color_to_move(Color::white);
+        set_color_to_move(Color::White);
         return;
     }
 
     if (str == "w" || str == "W") {
-        set_color_to_move(Color::white);
+        set_color_to_move(Color::White);
         return;
     }
 
     if (str == "b" || str == "B") {
-        set_color_to_move(Color::black);
+        set_color_to_move(Color::Black);
         return;
     }
 

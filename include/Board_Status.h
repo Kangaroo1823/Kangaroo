@@ -50,7 +50,7 @@ namespace Kangaroo {
          * @return An instance of the `Board_Status` class initialized with the game state parameters
          *         derived from the encoded flags.
          */
-        explicit constexpr Board_Status(const uint64_t flags) : color_p((flags & 0x1) ? Color::white : Color::black),
+        explicit constexpr Board_Status(const uint64_t flags) : color_p((flags & 0x1) ? Color::White : Color::Black),
                                                                 check_p((flags & 0x40) != 0),
                                                                 en_passant_p((flags & 0x2) != 0),
                                                                 white_left_castle_p((flags & 0x04) != 0),
@@ -62,7 +62,7 @@ namespace Kangaroo {
         /**
          * Who's turn is it?
          */
-        Color color_p = Color::white;
+        Color color_p = Color::White;
 
         /**
          * Is it a check_p?
@@ -76,25 +76,25 @@ namespace Kangaroo {
         bool en_passant_p = false;
 
         /**
-         * Indicates whether white is allowed to castle on the left (queen's side).
+         * Indicates whether White is allowed to castle on the left (Queen's side).
          * True if castling is still possible, false otherwise.
          */
         bool white_left_castle_p = true;
 
         /**
-         * Indicates whether white is allowed to castle on the right (king's side).
+         * Indicates whether White is allowed to castle on the right (King's side).
          * True if castling is still possible, false otherwise.
          */
         bool white_right_castle_p = true;
 
         /**
-         * Indicates whether black is allowed to castle on the left (queen's side).
+         * Indicates whether Black is allowed to castle on the left (Queen's side).
          * True if castling is still possible, false otherwise.
          */
         bool black_left_castle_p = true;
 
         /**
-         * Indicates whether black is allowed to castle on the right (king's side).
+         * Indicates whether Black is allowed to castle on the right (King's side).
          * True if castling is still possible, false otherwise.
          */
         bool black_right_castle_p = true;
@@ -107,7 +107,7 @@ namespace Kangaroo {
          * - pin_move_generation: Mode for generating moves while considering pin constraints.
          * - check_move_generation: Mode for generating only those moves that resolve a check.
          */
-        Move_Generation_Mode mode = Move_Generation_Mode::normal_move_generation;
+        Move_Generation_Mode mode = Move_Generation_Mode::Normal_Move_Generation;
 
         [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_mode(const Move_Generation_Mode _mode) const {
             Board_Status copy = *this;

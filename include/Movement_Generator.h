@@ -9,6 +9,14 @@
 #include "Move_Receiver.h"
 
 namespace Kangaroo {
+
+    class Invalid_Board_Status final : public std::runtime_error {
+        public:
+        Invalid_Board_Status() : std::runtime_error("Invalid board status") {}
+        ~Invalid_Board_Status() override = default;
+    };
+
+
     class Movement_Generator {
         FRIEND_TEST(Movement_Generator_Test, test_pin_masks_generator);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
@@ -23,7 +31,7 @@ namespace Kangaroo {
         Bitboard pin_mask_HV = 0ULL;
         Bitboard pin_mask_D = 0ULL;
 
-        // Bitboard to detect if a king is in check.
+        // Bitboard to detect if a King is in check.
         Bitboard check_mask = 0ULL;
 
     public:
@@ -41,16 +49,16 @@ namespace Kangaroo {
         /**
          * @brief Computes the pin masks for the current board state.
          *
-         * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_pins` this method
+         * In case `purpose` equals `Pin_Masks_Suitable_For::Detecting_Pins` this method
          * calculates the horizontal/vertical (HV) and diagonal (D) pin masks
-         * for the specified color of the king based on the positions and possible movements
+         * for the specified color of the King based on the positions and possible movements
          * of rooks, bishops, and queens of the opposite color.
          *
          * These pin masks are used to identify pieces on the same line or diagonal as the
-         * king which cannot move freely due to the threat of exposing the king to a check.
+         * King which cannot move freely due to the threat of exposing the King to a check.
          *
-         * In case `purpose` equals `Pin_Masks_Suitable_For::detecting_check` this method computes
-         * if a sliding piece of the opposite color poses check to the king of color `color`.
+         * In case `purpose` equals `Pin_Masks_Suitable_For::Detecting_Check` this method computes
+         * if a sliding piece of the opposite color poses check to the King of color `color`.
          *
          * @tparam color_of_king The color of the king for which the pin masks are being calculated.
          *               Must be either `Color::white` or `Color::black`.
@@ -67,42 +75,42 @@ namespace Kangaroo {
             using enum Color;
             using enum Slider;
 
-            static_assert(color_of_king == white || color_of_king == black, "Invalid color");
+            static_assert(color_of_king == White || color_of_king == Black, "Invalid color");
             static_assert(
-                purpose == Pin_Masks_Suitable_For::detecting_pins ||
-                purpose == Pin_Masks_Suitable_For::detecting_check, "Invalid purpose");
+                purpose == Pin_Masks_Suitable_For::Detecting_Pins ||
+                purpose == Pin_Masks_Suitable_For::Detecting_Check, "Invalid purpose");
 
             // reset the pin masks
-            if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
+            if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Pins) {
                 pin_mask_D = pin_mask_HV = 0ULL;
-            } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
+            } else if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Check) {
                 check_mask = 0ULL;
             }
 
-            // compute king position
-            const Square king_position = square_of(color_of_king == white
+            // compute King position
+            const Square king_position = square_of(color_of_king == White
                                                        ? board_p->white_king()
                                                        : board_p->black_king());
 
             // loop over all the rooks of opposite color
-            Bitloop(color_of_king == white ? board_p->black_rooks() : board_p->white_rooks(), rooks_remaining) {
+            Bitloop(color_of_king == White ? board_p->black_rooks() : board_p->white_rooks(), rooks_remaining) {
                 // change the HV-pin-mask, if necessary
-                update_pin_mask_for_movement_like<rook, purpose, color_of_king>(king_position, rooks_remaining);
+                update_pin_mask_for_movement_like<Rook, purpose, color_of_king>(king_position, rooks_remaining);
             }
 
             // loop over all the queens of opposite color
-            Bitloop(color_of_king == white ? board_p->black_queens() : board_p->white_queens(), queens_remaining) {
+            Bitloop(color_of_king == White ? board_p->black_queens() : board_p->white_queens(), queens_remaining) {
                 // change the HV-pin-mask, if necessary
-                update_pin_mask_for_movement_like<rook, purpose, color_of_king>(king_position, queens_remaining);
+                update_pin_mask_for_movement_like<Rook, purpose, color_of_king>(king_position, queens_remaining);
 
                 // change the D-pin-mask, if necessary
-                update_pin_mask_for_movement_like<bishop, purpose, color_of_king>(king_position, queens_remaining);
+                update_pin_mask_for_movement_like<Bishop, purpose, color_of_king>(king_position, queens_remaining);
             }
 
             // loop over all the bishops of opposite color
-            Bitloop(color_of_king == white ? board_p->black_bishops() : board_p->white_bishops(), bishops_remaining) {
+            Bitloop(color_of_king == White ? board_p->black_bishops() : board_p->white_bishops(), bishops_remaining) {
                 // change the D-pin-mask, if necessary
-                update_pin_mask_for_movement_like<bishop, purpose, color_of_king>(king_position, bishops_remaining);
+                update_pin_mask_for_movement_like<Bishop, purpose, color_of_king>(king_position, bishops_remaining);
             }
         }
 
@@ -174,22 +182,24 @@ namespace Kangaroo {
                 case 0x3e: return generate_moves<Board_Status(0x3e)>(callback);
                 case 0x3f: return generate_moves<Board_Status(0x3f)>(callback);
                 case 0x40: return generate_moves<Board_Status(0x40)>(callback);
-                default: throw std::runtime_error("Invalid board status");
+                default: throw Kangaroo::Invalid_Board_Status();
             }
         }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(CallBackType callback) {
-            build_pin_masks<status.color_p, Pin_Masks_Suitable_For::detecting_pins>();
+            using enum Move_Generation_Mode;
+            using enum Pin_Masks_Suitable_For;
 
-            uint64_t moves = generate_pawn_moves<status.copy_and_set_mode(
-                Move_Generation_Mode::normal_move_generation)>(callback);
-            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::pin_HV_move_generation)>(
-                callback);
-            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::pin_D_move_generation)>(
-                callback);
-            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::promotion_move_generation)>(
-                callback);
+            build_pin_masks<status.color_p, Detecting_Pins>();
+
+            uint64_t moves = generate_pawn_moves<status.copy_and_set_mode(Normal_Move_Generation)>(callback);
+
+            moves += generate_pawn_moves<status.copy_and_set_mode(Pin_HV_Move_Generation)>(callback);
+
+            moves += generate_pawn_moves<status.copy_and_set_mode(Pin_D_Move_Generation)>(callback);
+
+            moves += generate_pawn_moves<status.copy_and_set_mode(Promotion_Move_Generation)>(callback);
 
             return moves;
         }
@@ -213,13 +223,13 @@ namespace Kangaroo {
             const Bitboard pawn_origin, const Bitboard pawn_move, const Bitboard occupied_squares) const {
             using enum Move_Generation_Mode;
 
-            static_assert(mode == normal_move_generation || mode == check_move_generation ||
-                          mode == pin_HV_move_generation);
+            static_assert(mode == Normal_Move_Generation || mode == Check_Move_Generation ||
+                          mode == Pin_HV_Move_Generation);
 
             const bool ret = (pawn_move & occupied_squares) == 0;
-            if constexpr (mode == normal_move_generation || mode == check_move_generation) {
+            if constexpr (mode == Normal_Move_Generation || mode == Check_Move_Generation) {
                 return ret;
-            } else if constexpr (mode == pin_HV_move_generation) {
+            } else if constexpr (mode == Pin_HV_Move_Generation) {
                 const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
                 return ret && p && (pawn_origin & pin_mask_D) == 0;
             }
@@ -227,7 +237,7 @@ namespace Kangaroo {
         }
 
         /**
-         * Generates a double pawn push if admissible. Assumes that a single pawn push is admissible.
+         * Generates a double Pawn push if admissible. Assumes that a single Pawn push is admissible.
          *
          * @tparam status an instances of the Board_Status class indicating the status of move generation
          * @tparam CallBackType type of the callback function.
@@ -241,14 +251,14 @@ namespace Kangaroo {
             CallBackType callback, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
 
-            // check if the pawn is in the base row.
+            // check if the Pawn is in the base row.
             if (pawn & pawn_base_row<status.color_p>()) {
-                // if so, check if a double pawn push is admissible.
+                // if so, check if a double Pawn push is admissible.
                 if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_p>(pawn);
                     is_pawn_push_admissible<status.mode>(pawn,
                                                          moved_pawn_2, board_p->all_pieces())) {
                     // make the move and call the callback function.
-                    Move_Receiver<status, Move_Type::Normal, Chess_Pieces::pawn,
+                    Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn,
                         CallBackType>::evaluate_and_perform_move(board_p, callback, pawn, moved_pawn_2);
 
                     // increment the number of moves generated.
@@ -261,7 +271,7 @@ namespace Kangaroo {
         }
 
         /**
-         * Generates pawn captures.
+         * Generates Pawn captures.
          * @tparam status an instance of the Board_Status class indicating the current state of move generation.
          * @tparam CallBackType The type of the callback function. Should return void.
          * @param callback The callback function.
@@ -273,51 +283,51 @@ namespace Kangaroo {
             CallBackType callback, const Bitboard pawn) const {
             using enum Color;
             using enum Move_Generation_Mode;
-            using enum Chess_Pieces;
             using enum Move_Type;
+            using enum Chess_Pieces;
 
-            // this method is only supposed to be called in normal_move_generation mode or in
-            // check_move_generation mode.
+            // this method is only supposed to be called in Normal_Move_Generation mode or in
+            // Check_Move_Generation mode.
             static_assert(
-                status.mode == normal_move_generation ||
-                status.mode == check_move_generation ||
-                status.mode == promotion_move_generation);
+                status.mode == Normal_Move_Generation ||
+                status.mode == Check_Move_Generation ||
+                status.mode == Promotion_Move_Generation);
 
             // initialize the number of generated moves with zero.
             std::size_t moves = 0ULL;
 
             const auto pawn_square = std::to_underlying(square_of(pawn));
-            // the squares the pawn in question can move to should be occupied by the opposite color.
-            Bitboard mask = status.color_p == white
+            // the squares the Pawn in question can move to should be occupied by the opposite color.
+            Bitboard mask = status.color_p == White
                                 ? Constants::white_pawn_attacks[pawn_square] & board_p->black_pieces()
                                 : Constants::black_pawn_attacks[pawn_square] & board_p->white_pieces();
 
 
             // loop over all such squares
             Bitloop(mask, pawn_attacks) {
-                // generate a Bitboard with a single bit set where the pawn is attacking
+                // generate a Bitboard with a single bit set where the Pawn is attacking
                 Bitboard pawn_attack = 1ULL << std::to_underlying(square_of(pawn_attacks));
 
-                if constexpr (status.mode == promotion_move_generation) {
+                if constexpr (status.mode == Promotion_Move_Generation) {
                     // if so, perform the move and call the callback function.
-                    Move_Receiver<status, Promotion, queen,
+                    Move_Receiver<status, Promotion, Queen,
                         CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn_attack);
 
-                    Move_Receiver<status, Promotion, bishop, CallBackType>::evaluate_and_perform_move(
+                    Move_Receiver<status, Promotion, Bishop, CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn_attack);
 
-                    Move_Receiver<status, Promotion, knight, CallBackType>::evaluate_and_perform_move(
+                    Move_Receiver<status, Promotion, Knight, CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn_attack);
 
-                    Move_Receiver<status, Promotion, rook, CallBackType>::evaluate_and_perform_move(
+                    Move_Receiver<status, Promotion, Rook, CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn_attack);
 
                     // increment the number of moves generated by four.
                     moves += 4ULL; // -V112
                 } else {
                     // perform the move and call the callback
-                    Move_Receiver<status, Capture, pawn, CallBackType>::evaluate_and_perform_move(
+                    Move_Receiver<status, Capture, Pawn, CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn_attack);
 
                     // increment the number of moves generated
@@ -345,30 +355,30 @@ namespace Kangaroo {
             using enum Color;
 
             static_assert(
-                (status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
-                 Move_Generation_Mode::check_move_generation) && status.en_passant_p == true);
+                (status.mode == Move_Generation_Mode::Normal_Move_Generation || status.mode ==
+                 Move_Generation_Mode::Check_Move_Generation) && status.en_passant_p == true);
 
-            static_assert(status.color_p == white || status.color_p == black);
+            static_assert(status.color_p == White || status.color_p == Black);
 
             // initialize the number of generated moves with zero.
             std::size_t moves = 0ULL;
 
-            // when we generate moves for white
-            if constexpr (status.color_p == white) {
-                // if the pawn is left of the en_passant_square
+            // when we generate moves for White
+            if constexpr (status.color_p == White) {
+                // if the Pawn is left of the en_passant_square
                 if (not_a_file & pawn & board_p->en_passant_square() >> 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn,
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
                         CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn << 7);
 
                     // increase move counter by one
                     ++moves;
 
-                    // if the pawn is on the right-hand-side of the en_passant_square
+                    // if the Pawn is on the right-hand-side of the en_passant_square
                 } else if (not_h_file & pawn & board_p->en_passant_square() << 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn,
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
                         CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn << 9);
 
@@ -376,22 +386,22 @@ namespace Kangaroo {
                     ++moves;
                 }
 
-                // when we generate moves for black ...
-            } else if constexpr (status.color_p == black) {
-                // if the pawn is on the right-hand-side of the en_passant_square
+                // when we generate moves for Black ...
+            } else if constexpr (status.color_p == Black) {
+                // if the Pawn is on the right-hand-side of the en_passant_square
                 if (not_a_file & pawn & board_p->en_passant_square() >> 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn,
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
                         CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn >> 7);
 
                     // increase the move-counter by one
                     ++moves;
 
-                    // if the pawn is on the left-hand-side of the en_passant_square
+                    // if the Pawn is on the left-hand-side of the en_passant_square
                 } else if (not_h_file & pawn & board_p->en_passant_square() << 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn,
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
                         CallBackType>::evaluate_and_perform_move(
                         board_p, callback, pawn, pawn >> 9);
 
@@ -408,7 +418,7 @@ namespace Kangaroo {
         [[nodiscard]] static _ForceInline constexpr bool is_pawn_promotion(Bitboard moved_pawn) {
             using enum Color;
 
-            static_assert(color == white || color == black);
+            static_assert(color == White || color == Black);
 
             return moved_pawn & get_promotion_rank<color>() ? true : false;
         }
@@ -416,10 +426,10 @@ namespace Kangaroo {
         /**
          * @brief Generates the possible moves for a pawn in a chess game.
          *
-         * This function calculates all the possible moves for a given pawn
+         * This function calculates all the possible moves for a given Pawn
          * based on its current position, the board state, and its color.
          * It considers normal advances, captures, en passant captures, and
-         * pawn promotion.
+         * Pawn promotion.
          *
          *
          * @tparam status An instance of the class Board_Status indicating the state of move generation we are currently in.
@@ -438,24 +448,24 @@ namespace Kangaroo {
             std::size_t moves = 0ULL;
 
             // select the correct set of pawns.
-            Bitboard pawns = status.color_p == white ? board_p->white_pawns() : board_p->black_pawns();
+            Bitboard pawns = status.color_p == White ? board_p->white_pawns() : board_p->black_pawns();
 
-            // if we are in normal_move_generation-mode or in check_move_generation-mode...
-            if constexpr (status.mode == normal_move_generation || status.mode == check_move_generation) {
+            // if we are in Normal_Move_Generation-mode or in Check_Move_Generation-mode...
+            if constexpr (status.mode == Normal_Move_Generation || status.mode == Check_Move_Generation) {
                 // ... we do not consider pinned pawns
                 pawns &= ~(pin_mask_D | pin_mask_HV) & ~get_promotion_rank<status.color_p>();
 
-                // if we are in pin_HV_move_generation-mode ...
-            } else if constexpr (status.mode == pin_HV_move_generation) {
+                // if we are in Pin_HV_Move_Generation-mode ...
+            } else if constexpr (status.mode == Pin_HV_Move_Generation) {
                 // ... we only consider HV-pinned pawns.
                 pawns &= pin_mask_HV;
 
                 // if we generate the diagonally pinned pawns...
-            } else if constexpr (status.mode == pin_D_move_generation) {
+            } else if constexpr (status.mode == Pin_D_Move_Generation) {
                 // ...there is nothing to be done here.
                 return 0;
-            } else if constexpr (status.mode == promotion_move_generation) {
-                // if we are in promotion_move_generation-mode, we only consider pawns that are in the promotion rank.
+            } else if constexpr (status.mode == Promotion_Move_Generation) {
+                // if we are in Promotion_Move_Generation-mode, we only consider pawns that are in the promotion rank.
                 pawns &= ~(pin_mask_D | pin_mask_HV) & get_promotion_rank<status.color_p>();
             }
 
@@ -464,37 +474,37 @@ namespace Kangaroo {
             Bitloop(pawns, pawns_remaining) {
                 using enum Color;
 
-                // compute the position of the current pawn.
+                // compute the position of the current Pawn.
                 const Bitboard loop_pawn = bitboard_square_of(pawns_remaining);
 
-                // if we are either in normal_move_generation-mode, pin_HV_move_generation-mode,
-                // or check_move_generation-mode
-                if constexpr (status.mode == normal_move_generation || status.mode == pin_HV_move_generation ||
-                              status.mode == check_move_generation) {
-                    // compute the moved pawn
+                // if we are either in Normal_Move_Generation-mode, Pin_HV_Move_Generation-mode,
+                // or Check_Move_Generation-mode
+                if constexpr (status.mode == Normal_Move_Generation || status.mode == Pin_HV_Move_Generation ||
+                              status.mode == Check_Move_Generation) {
+                    // compute the moved Pawn
                     const Bitboard moved_pawn = regular_pawn_push<status.color_p>(loop_pawn);
 
                     // and check if it is admissible.
                     if (is_pawn_push_admissible<status.mode>(loop_pawn, moved_pawn, board_p->all_pieces())) {
-                        // check if we are in promotion_move_generation-mode
-                        if constexpr (status.mode == promotion_move_generation) {
+                        // check if we are in Promotion_Move_Generation-mode
+                        if constexpr (status.mode == Promotion_Move_Generation) {
                             // if so, perform the move and call the callback function.
-                            Move_Receiver<status, Promotion, queen, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Queen, CallBackType>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
-                            Move_Receiver<status, Promotion, bishop, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Bishop, CallBackType>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
-                            Move_Receiver<status, Promotion, knight, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Knight, CallBackType>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
-                            Move_Receiver<status, Promotion, rook, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Rook, CallBackType>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
                             moves += 4ULL; // -V112
                         } else {
                             // perform the move and run the callback
-                            Move_Receiver<status, Normal, pawn, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Normal, Pawn, CallBackType>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
                             // increment the number of moves generated.
@@ -506,14 +516,14 @@ namespace Kangaroo {
                     }
                 }
 
-                if constexpr (status.mode == normal_move_generation || status.mode == check_move_generation ||
-                              status.mode == promotion_move_generation) {
+                if constexpr (status.mode == Normal_Move_Generation || status.mode == Check_Move_Generation ||
+                              status.mode == Promotion_Move_Generation) {
                     moves += generate_pawn_captures<status, CallBackType>(callback, loop_pawn);
                 }
 
                 if constexpr (status.en_passant_p == true && (
-                                  status.mode == normal_move_generation ||
-                                  status.mode == check_move_generation)) {
+                                  status.mode == Normal_Move_Generation ||
+                                  status.mode == Check_Move_Generation)) {
                     moves += generate_en_passant_captures<status, CallBackType>(callback, loop_pawn);
                 }
             }
@@ -528,36 +538,36 @@ namespace Kangaroo {
             using enum Color;
 
             static_assert(
-                purpose == Pin_Masks_Suitable_For::detecting_pins ||
-                purpose == Pin_Masks_Suitable_For::detecting_check);
+                purpose == Pin_Masks_Suitable_For::Detecting_Pins ||
+                purpose == Pin_Masks_Suitable_For::Detecting_Check);
 
-            // compute position of current rook
+            // compute position of current Rook
             const Square rook_position = square_of(rooks_remaining);
 
-            // compute the pin-ray between the rook and the king
+            // compute the pin-ray between the Rook and the King
             const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
 
             const auto pieces_in_intersection = Bitcount(ray & board_p->all_pieces());
 
             const auto player_pieces_in_intersection = Bitcount(
-                ray & (color == white ? board_p->white_pieces() : board_p->black_pieces()));
+                ray & (color == White ? board_p->white_pieces() : board_p->black_pieces()));
 
             // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
-            // between is of the same color as the king.
+            // between is of the same color as the King.
             if (pieces_in_intersection == std::to_underlying(purpose) &&
                 player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
-                if constexpr (purpose == Pin_Masks_Suitable_For::detecting_pins) {
+                if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Pins) {
                     // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
-                    // - one is at piece_position (rook or queen)
+                    // - one is at piece_position (Rook or Queen)
                     // - and one other piece.
                     // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
 
-                    if constexpr (slider == rook) {
+                    if constexpr (slider == Rook) {
                         pin_mask_HV |= ray;
-                    } else if constexpr (slider == bishop) {
+                    } else if constexpr (slider == Bishop) {
                         pin_mask_D |= ray;
                     }
-                } else if constexpr (purpose == Pin_Masks_Suitable_For::detecting_check) {
+                } else if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Check) {
                     // When the Bitcount equals one, it means that it is a check situation!
                     check_mask |= ray;
                 }

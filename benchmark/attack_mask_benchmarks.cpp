@@ -44,7 +44,7 @@ static void BM_pin_mask_generator(benchmark::State &state) {
         Bitboard cntr1 = 0ULL;
         Bitboard cntr2 = 0ULL;
 
-        movement_generator->build_pin_masks<Color::black, Pin_Masks_Suitable_For::detecting_pins>();
+        movement_generator->build_pin_masks<Color::Black, Pin_Masks_Suitable_For::Detecting_Pins>();
         cntr1 = movement_generator->get_pin_mask_HV();
         cntr2 = movement_generator->get_pin_mask_D();
 

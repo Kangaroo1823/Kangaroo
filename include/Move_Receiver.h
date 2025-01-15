@@ -21,17 +21,17 @@ namespace Kangaroo {
 
 
     template<Board_Status status, typename Callback>
-    class Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn, Callback>  {
+    class Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn, Callback>  {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(const Chess_Board *board,
                                                                      Callback callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
-            static_assert(status.color_p == Color::white || status.color_p == Color::black);
+            static_assert(status.color_p == Color::White || status.color_p == Color::Black);
             const Bitboard move = from | to;
             Chess_Board new_board = *board;
 
-            if constexpr (status.color_p == Color::white) {
+            if constexpr (status.color_p == Color::White) {
                 new_board.set_white_pawns(new_board.white_pawns() ^ move);
 
                 if (new_board.black_pawns() & to) { new_board.set_black_pawns(new_board.black_pawns() ^ to); }
@@ -40,7 +40,7 @@ namespace Kangaroo {
                 if (new_board.black_rooks() & to) { new_board.set_black_rooks(new_board.black_rooks() ^ to); }
                 if (new_board.black_queens() & to) { new_board.set_black_queens(new_board.black_queens() ^ to); }
 
-            } else if constexpr (status.color_p == Color::black) {
+            } else if constexpr (status.color_p == Color::Black) {
                 new_board.set_black_pawns(new_board.black_pawns() ^ move);
 
                 if (new_board.white_pawns() & to) { new_board.set_white_pawns(new_board.white_pawns() ^ to); }
@@ -50,12 +50,12 @@ namespace Kangaroo {
                 if (new_board.white_queens() & to) { new_board.set_white_queens(new_board.white_queens() ^ to); }
             }
 
-            callback(&new_board, move, status.color_p, Chess_Pieces::pawn);
+            callback(&new_board, move, status.color_p, Chess_Pieces::Pawn);
         }
     };
 
     template<Board_Status status, typename Callback>
-    class Move_Receiver<status, Move_Type::Normal, Chess_Pieces::pawn, Callback> {
+    class Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn, Callback> {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(const Chess_Board *board,
                                                                      Callback callback,
@@ -63,18 +63,18 @@ namespace Kangaroo {
                                                                      const Bitboard to) {
             using enum Color;
 
-            static_assert(status.color_p == white || status.color_p == black);
+            static_assert(status.color_p == White || status.color_p == Black);
 
             const Bitboard move = from | to;
 
             Chess_Board new_board = *board;
-            if constexpr (status.color_p == white) {
+            if constexpr (status.color_p == White) {
                 new_board.set_white_pawns(new_board.white_pawns() ^ move);
-            } else if constexpr (status.color_p == black) {
+            } else if constexpr (status.color_p == Black) {
                 new_board.set_black_pawns(new_board.black_pawns() ^ move);
             }
 
-            callback(&new_board, move, status.color_p, Chess_Pieces::pawn);
+            callback(&new_board, move, status.color_p, Chess_Pieces::Pawn);
         }
     };
 }
