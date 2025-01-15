@@ -224,8 +224,8 @@ void print_bitboard(Bitboard bitboard);
 
 /**
  * Returns a Bitboard with all bits set in
- *   - the first rank iff color == white
- *   - the 8th rank iff color == black
+ *   - the 2nd rank iff color == white
+ *   - the 7th rank iff color == black
  *
  */
 template<Color color>
@@ -234,7 +234,7 @@ template<Color color>
 
     static_assert(color == white || color == black);
 
-    return color == white ? 0xFF00000000000000ULL : 0x00000000000000FFULL;
+    return color == white ? 0x00FF000000000000ULL : 0x000000000000FF00ULL;
 };
 
 /**

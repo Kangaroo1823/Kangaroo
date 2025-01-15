@@ -15,6 +15,7 @@ namespace Kangaroo {
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture);
+        FRIEND_TEST(Movement_Generator_Test, test_pawn_movement_generator);
 
         Chess_Board *board_p;
 
@@ -187,6 +188,8 @@ namespace Kangaroo {
                 callback);
             moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::pin_D_move_generation)>(
                 callback);
+            moves += generate_pawn_moves<status.copy_and_set_mode(Move_Generation_Mode::promotion_move_generation)>(
+                callback);
 
             return moves;
         }
@@ -273,8 +276,9 @@ namespace Kangaroo {
             // this method is only supposed to be called in normal_move_generation mode or in
             // check_move_generation mode.
             static_assert(
-                status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
-                Move_Generation_Mode::check_move_generation);
+                status.mode == Move_Generation_Mode::normal_move_generation ||
+                status.mode == Move_Generation_Mode::check_move_generation ||
+                status.mode == Move_Generation_Mode::promotion_move_generation);
 
             // initialize the number of generated moves with zero.
             std::size_t moves = 0ULL;
@@ -291,12 +295,33 @@ namespace Kangaroo {
                 // generate a Bitboard with a single bit set where the pawn is attacking
                 Bitboard pawn_attack = 1ULL << std::to_underlying(square_of(pawn_attacks));
 
-                // perform the move and call the callback
-                Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn, CallBackType>::evaluate_and_perform_move(
-                    board_p, callback, pawn, pawn_attack);
+                if constexpr (status.mode == Move_Generation_Mode::promotion_move_generation) {
+                    // if so, perform the move and call the callback function.
+                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::queen,
+                        CallBackType>::evaluate_and_perform_move(
+                        board_p, callback, pawn, pawn_attack);
 
-                // increment the number of moves generated
-                ++moves;
+                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::bishop,
+                        CallBackType>::evaluate_and_perform_move(
+                        board_p, callback, pawn, pawn_attack);
+
+                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::knight,
+                        CallBackType>::evaluate_and_perform_move(
+                        board_p, callback, pawn, pawn_attack);
+
+                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::rook,
+                        CallBackType>::evaluate_and_perform_move(
+                        board_p, callback, pawn, pawn_attack);
+
+                    moves += 4ULL;
+                } else {
+                    // perform the move and call the callback
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::pawn, CallBackType>::evaluate_and_perform_move(
+                        board_p, callback, pawn, pawn_attack);
+
+                    // increment the number of moves generated
+                    ++moves;
+                }
             }
 
             // return the number of moves generated
@@ -416,7 +441,7 @@ namespace Kangaroo {
             if constexpr (status.mode == Move_Generation_Mode::normal_move_generation || status.mode ==
                           Move_Generation_Mode::check_move_generation) {
                 // ... we do not consider pinned pawns
-                pawns &= ~(pin_mask_D | pin_mask_HV);
+                pawns &= ~(pin_mask_D | pin_mask_HV) & ~get_promotion_rank<status.color_p>() ;
 
                 // if we are in pin_HV_move_generation-mode ...
             } else if constexpr (status.mode == Move_Generation_Mode::pin_HV_move_generation) {
@@ -427,6 +452,9 @@ namespace Kangaroo {
             } else if constexpr (status.mode == Move_Generation_Mode::pin_D_move_generation) {
                 // ...there is nothing to be done here.
                 return 0;
+            } else if constexpr (status.mode == Move_Generation_Mode::promotion_move_generation) {
+                // if we are in promotion_move_generation-mode, we only consider pawns that are in the promotion rank.
+                pawns &= ~(pin_mask_D | pin_mask_HV) & get_promotion_rank<status.color_p>();
             }
 
 
@@ -442,14 +470,13 @@ namespace Kangaroo {
                 if constexpr (status.mode == Move_Generation_Mode::normal_move_generation ||
                               status.mode == Move_Generation_Mode::pin_HV_move_generation ||
                               status.mode == Move_Generation_Mode::check_move_generation) {
-
                     // compute the moved pawn
                     const Bitboard moved_pawn = regular_pawn_push<status.color_p>(loop_pawn);
 
                     // and check if it is admissible.
                     if (is_pawn_push_admissible<status.mode>(loop_pawn, moved_pawn, board_p->all_pieces())) {
-
-                        if (is_pawn_promotion<status.color_p>(moved_pawn)) {
+                        // check if we are in promotion_move_generation-mode
+                        if constexpr (status.mode == Move_Generation_Mode::promotion_move_generation) {
                             // if so, perform the move and call the callback function.
                             Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::queen,
                                 CallBackType>::evaluate_and_perform_move(
@@ -468,30 +495,29 @@ namespace Kangaroo {
                                 board_p, callback, loop_pawn, moved_pawn);
 
                             moves += 4ULL;
-
                         } else {
-
                             // perform the move and run the callback
                             Move_Receiver<status, Move_Type::Normal, Chess_Pieces::pawn,
                                 CallBackType>::evaluate_and_perform_move(board_p, callback, loop_pawn, moved_pawn);
 
                             // increment the number of moves generated.
                             ++moves;
-                        }
 
-                        // double move for pawns in base row
-                        moves += generate_double_pawn_pushs<status, CallBackType>(callback, loop_pawn);
+                            // double move for pawns in base row
+                            moves += generate_double_pawn_pushs<status, CallBackType>(callback, loop_pawn);
+                        }
                     }
                 }
 
                 if constexpr (status.mode == Move_Generation_Mode::normal_move_generation ||
-                              status.mode == Move_Generation_Mode::check_move_generation) {
+                              status.mode == Move_Generation_Mode::check_move_generation ||
+                              status.mode == Move_Generation_Mode::promotion_move_generation) {
                     moves += generate_pawn_captures<status, CallBackType>(callback, loop_pawn);
                 }
 
                 if constexpr (status.en_passant_p == true && (
                                   status.mode == Move_Generation_Mode::normal_move_generation ||
-                                  status.mode == Move_Generation_Mode::check_move_generation) ) {
+                                  status.mode == Move_Generation_Mode::check_move_generation)) {
                     moves += generate_en_passant_captures<status, CallBackType>(callback, loop_pawn);
                 }
             }

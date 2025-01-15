@@ -140,6 +140,7 @@ enum class Move_Generation_Mode : uint64_t {
     pin_HV_move_generation = 1,
     pin_D_move_generation = 2,
     check_move_generation = 3,
+    promotion_move_generation = 4,
 };
 
 enum class Move_Type : uint64_t {

@@ -10,7 +10,6 @@
 
 namespace Kangaroo {
     TEST(Movement_Generator_Test, test_pin_masks_generator) {
-
         Chess_Board board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
         Movement_Generator gen(&board);
         gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
@@ -187,6 +186,22 @@ namespace Kangaroo {
         board.reset_board("8/6K1/8/8/3P4/8/q7/8 w - - 0 1 ");
         gen.build_pin_masks<Color::white, Pin_Masks_Suitable_For::detecting_pins>();
         ASSERT_EQ(gen.pin_mask_D, 0x0) << "25th test not true";
+    }
 
+    TEST(Movement_Generator_Test, test_pawn_movement_generator) {
+        Chess_Board board("8/8/8/8/8/8/8/8 w - - 0 1");
+        Movement_Generator gen(&board);
+
+        // empty board results in no moves generated
+        const auto moves = gen.run_move_generation(
+            [&]([[maybe_unused]] const Chess_Board *old_board, [[maybe_unused]] const Move move,
+                [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece) {
+                    std::print("move: 0x{0:x}\n", move);
+                    print_bitboard(move);
+                    std::print("\n\n");
+            });
+        ASSERT_EQ(moves, 0);
+
+        //
     }
 }
