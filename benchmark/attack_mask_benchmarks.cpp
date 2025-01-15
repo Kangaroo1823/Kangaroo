@@ -17,6 +17,8 @@ const auto movement_generator = std::make_unique<Kangaroo::Movement_Generator>(b
 
 // cppcheck-suppress constParameterCallback
 static void BM_move_generator(benchmark::State &state) {
+
+
     for ([[maybe_unused]] auto _: state) {
         uint64_t cntr = 0ULL;
 
