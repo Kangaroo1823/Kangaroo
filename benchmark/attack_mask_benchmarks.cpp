@@ -21,10 +21,10 @@ static void BM_move_generator(benchmark::State &state) {
         uint64_t cntr = 0ULL;
 
         auto s = movement_generator->generate_moves<Kangaroo::Board_Status(0x3d)>(
-            [&cntr](const Kangaroo::Chess_Board *board, const Move move, const Color color,
+            [&cntr](const Kangaroo::Chess_Board *new_board, const Move move, const Color color,
                     const Chess_Pieces chess_piece) {
                 ++cntr;
-                benchmark::DoNotOptimize(board);
+                benchmark::DoNotOptimize(new_board);
                 benchmark::DoNotOptimize(&move);
                 benchmark::DoNotOptimize(&color);
                 benchmark::DoNotOptimize(&chess_piece);

@@ -61,14 +61,16 @@ namespace Kangaroo {
                                                                      Callback callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
-            static_assert(status.color_p == Color::white || status.color_p == Color::black);
+            using enum Color;
+
+            static_assert(status.color_p == white || status.color_p == black);
 
             const Bitboard move = from | to;
 
             Chess_Board new_board = *board;
-            if constexpr (status.color_p == Color::white) {
+            if constexpr (status.color_p == white) {
                 new_board.set_white_pawns(new_board.white_pawns() ^ move);
-            } else if constexpr (status.color_p == Color::black) {
+            } else if constexpr (status.color_p == black) {
                 new_board.set_black_pawns(new_board.black_pawns() ^ move);
             }
 

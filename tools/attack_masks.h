@@ -15,7 +15,7 @@
 
 
 template<Slider slider>
-constexpr Bitboard create_attack_mask_for(const Square& position) {
+constexpr Bitboard create_attack_mask_for(const Square position) {
 
     Bitboard mask = 0ULL;
 

@@ -27,19 +27,19 @@
 #include "types.h"
 
 
-constexpr Square rank_file_to_position(const std::size_t rank, const std::size_t file) {
+[[nodiscard]] _ForceInline constexpr Square rank_file_to_position(const std::size_t rank, const std::size_t file) {
     return All_Positions[rank * 8 + file];
 }
 
-constexpr Bitboard set_bit(const Bitboard bitboard, const Square &position) {
+[[nodiscard]] _ForceInline constexpr Bitboard set_bit(const Bitboard bitboard, const Square position) {
     return bitboard | (1ULL << std::to_underlying(position));
 }
 
-constexpr Bitboard get_bit(const Bitboard bitboard, const Square &position) {
+[[nodiscard]] _ForceInline constexpr Bitboard get_bit(const Bitboard bitboard, const Square position) {
     return bitboard & (1ULL << std::to_underlying(position));
 }
 
-constexpr Bitboard pop_bit(const Bitboard bitboard, const Square &position) {
+[[nodiscard]] _ForceInline constexpr Bitboard pop_bit(const Bitboard bitboard, const Square position) {
     return bitboard & ~(1ULL << std::to_underlying(position));
 }
 
@@ -162,7 +162,7 @@ _ForceInline Bitboard create_occupancy_from_mask(const std::size_t index, const 
 
 
 #define Bitloop(x,y) for(typename std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
-//#define Bitloop(x,y) for(typename std::remove_const<decltype(x)>::type y = x;y;y=(y & (y - 1)))
+
 
 constexpr Bitboard not_a_file = /*
         A  B  C  D  E  F  G  H

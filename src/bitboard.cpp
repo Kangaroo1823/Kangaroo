@@ -12,12 +12,11 @@
  *    - as a 64 bit unsigned integer
  */
 void print_bitboard(const Bitboard bitboard) {
-
     std::print("/*\n");
 
-    for (int rank = 7; rank >= 0 ; rank--) {
-        std::print( "  {}   ", rank + 1);
-        for (int file = 0; file < 8 ; file++) {
+    for (int rank = 7; rank >= 0; rank--) {
+        std::print("  {}   ", rank + 1);
+        for (int file = 0; file < 8; file++) {
             if (bitboard & (1ULL << (rank * 8 + file))) {
                 std::print(" 1 ");
             } else {
@@ -28,7 +27,7 @@ void print_bitboard(const Bitboard bitboard) {
     }
     std::print("\n       A  B  C  D  E  F  G  H\n\n");
     std::print("       bitboard as 64 bit integer: */\n");
-    std::print( "       0x{0:x},\n", bitboard);
+    std::print("       0x{0:x},\n", bitboard);
 }
 
 std::string print_position(const Square position) {
@@ -43,8 +42,6 @@ std::string print_position(const Square position) {
         "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7",
         "A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
     };
-    if (position >= Square::A1 && position <= Square::H8) {
-        return position_table[std::to_underlying(position)];
-    }
-    return "unknown";
+
+    return position_table[std::to_underlying(position)];
 }

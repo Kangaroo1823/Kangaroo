@@ -85,72 +85,72 @@ namespace Kangaroo {
 
 
     public:
-        explicit Chess_Board(const std::string_view &fen);
+        explicit Chess_Board(std::string_view fen);
 
-        void reset_board(const std::string_view &fen);
+        void reset_board(std::string_view fen);
 
         [[nodiscard]] _ForceInline Bitboard white_king() const { return white_king_p; }
-        _ForceInline void set_white_king(const Bitboard &white_king) { white_king_p = white_king; };
+        _ForceInline void set_white_king(const Bitboard white_king) { white_king_p = white_king; };
 
         [[nodiscard]] _ForceInline Bitboard white_queens() const { return white_queens_p; }
-        _ForceInline void set_white_queens(const Bitboard &white_queens) { white_queens_p = white_queens; };
+        _ForceInline void set_white_queens(const Bitboard white_queens) { white_queens_p = white_queens; };
 
         [[nodiscard]] _ForceInline Bitboard white_rooks() const { return white_rooks_p; }
-        _ForceInline void set_white_rooks(const Bitboard &white_rooks) { white_rooks_p = white_rooks; };
+        _ForceInline void set_white_rooks(const Bitboard white_rooks) { white_rooks_p = white_rooks; };
 
         [[nodiscard]] _ForceInline Bitboard white_knights() const { return white_knights_p; }
-        _ForceInline void set_white_knights(const Bitboard &white_knights) { white_knights_p = white_knights; };
+        _ForceInline void set_white_knights(const Bitboard white_knights) { white_knights_p = white_knights; };
 
         [[nodiscard]] _ForceInline Bitboard white_bishops() const { return white_bishops_p; }
-        _ForceInline void set_white_bishops(const Bitboard &white_bishops) { white_bishops_p = white_bishops; };
+        _ForceInline void set_white_bishops(const Bitboard white_bishops) { white_bishops_p = white_bishops; };
 
         [[nodiscard]] _ForceInline Bitboard white_pawns() const { return white_pawns_p; }
-        _ForceInline void set_white_pawns(const Bitboard &white_pawns) { white_pawns_p = white_pawns; };
+        _ForceInline void set_white_pawns(const Bitboard white_pawns) { white_pawns_p = white_pawns; };
 
 
         [[nodiscard]] _ForceInline Bitboard black_king() const { return black_king_p; }
-        _ForceInline void set_black_king(const Bitboard &black_king) { black_king_p = black_king; };
+        _ForceInline void set_black_king(const Bitboard black_king) { black_king_p = black_king; };
 
         [[nodiscard]] _ForceInline Bitboard black_queens() const { return black_queens_p; }
-        _ForceInline void set_black_queens(const Bitboard &black_queens) { black_queens_p = black_queens; };
+        _ForceInline void set_black_queens(const Bitboard black_queens) { black_queens_p = black_queens; };
 
         [[nodiscard]] _ForceInline Bitboard black_rooks() const { return black_rooks_p; }
-        _ForceInline void set_black_rooks(const Bitboard &black_rooks) { black_rooks_p = black_rooks; };
+        _ForceInline void set_black_rooks(const Bitboard black_rooks) { black_rooks_p = black_rooks; };
 
         [[nodiscard]] _ForceInline Bitboard black_knights() const { return black_knights_p; }
-        _ForceInline void set_black_knights(const Bitboard &black_knights) { black_knights_p = black_knights; };
+        _ForceInline void set_black_knights(const Bitboard black_knights) { black_knights_p = black_knights; };
 
         [[nodiscard]] _ForceInline Bitboard black_bishops() const { return black_bishops_p; }
-        _ForceInline void set_black_bishops(const Bitboard &black_bishops) { black_bishops_p = black_bishops; };
+        _ForceInline void set_black_bishops(const Bitboard black_bishops) { black_bishops_p = black_bishops; };
 
         [[nodiscard]] _ForceInline Bitboard black_pawns() const { return black_pawns_p; }
-        _ForceInline void set_black_pawns(const Bitboard &black_pawns) { black_pawns_p = black_pawns; };
+        _ForceInline void set_black_pawns(const Bitboard black_pawns) { black_pawns_p = black_pawns; };
 
 
         [[nodiscard]] _ForceInline Bitboard black_pieces() const { return black_pieces_p; }
-        _ForceInline void set_black_pieces(const Bitboard &black_pieces) { black_pieces_p = black_pieces; };
+        _ForceInline void set_black_pieces(const Bitboard black_pieces) { black_pieces_p = black_pieces; };
 
         [[nodiscard]] _ForceInline Bitboard white_pieces() const { return white_pieces_p; }
-        _ForceInline void set_white_pieces(const Bitboard &white_pieces) { white_pieces_p = white_pieces; };
+        _ForceInline void set_white_pieces(const Bitboard white_pieces) { white_pieces_p = white_pieces; };
 
         [[nodiscard]] _ForceInline Bitboard all_pieces() const { return all_pieces_p; }
-        _ForceInline void set_all_pieces(const Bitboard &all_pieces) { all_pieces_p = all_pieces; };
+        _ForceInline void set_all_pieces(const Bitboard all_pieces) { all_pieces_p = all_pieces; };
 
 
         [[nodiscard]] _ForceInline const Bitboard &en_passant_square() const { return en_passant_square_p; }
-        _ForceInline void set_en_passant_square(const Bitboard &en_passant_square) {
+        _ForceInline void set_en_passant_square(const Bitboard en_passant_square) {
             en_passant_square_p = en_passant_square;
         };
 
         [[nodiscard]] _ForceInline std::size_t half_move_number() const { return half_move_number_p; }
-        _ForceInline void set_half_move_number(std::size_t half_move_number) { half_move_number_p = half_move_number; };
+        _ForceInline void set_half_move_number(const std::size_t half_move_number) { half_move_number_p = half_move_number; };
 
         [[nodiscard]] _ForceInline std::size_t full_move_number() const { return full_move_number_p; }
-        _ForceInline void set_full_move_number(const std::size_t &full_move_number) {
+        _ForceInline void set_full_move_number(const std::size_t full_move_number) {
             full_move_number_p = full_move_number;
         };
 
-        _ForceInline void set_color_to_move(const Color &color) {
+        _ForceInline void set_color_to_move(const Color color) {
             if (color == Color::white) {
                 flags |= 0x1ULL;
             } else {
@@ -162,7 +162,7 @@ namespace Kangaroo {
             return (flags & 0x1ULL) ? Color::white : Color::black;
         }
 
-        _ForceInline void set_en_passant(const bool &en_passant) {
+        _ForceInline void set_en_passant(const bool en_passant) {
             if (en_passant) {
                 flags |= 0x2ULL;
             } else {
@@ -174,11 +174,17 @@ namespace Kangaroo {
             return (flags & 0x2ULL) != 0;
         }
 
-        _ForceInline void set_white_queen_castle(const bool &white_queen_castle) {
+        _ForceInline void set_white_queen_castle(const bool white_queen_castle) {
             if (white_queen_castle) {
-                flags |= 0x04ULL;
+
+                // set the 4th bit of flags
+                flags |= 0x04ULL; // -V112
+
             } else {
-                flags &= ~0x04ULL;
+
+                // unset the 4th bit of flags
+                flags &= ~0x04ULL; // -V112
+
             }
         };
 
@@ -186,7 +192,7 @@ namespace Kangaroo {
             return (flags & 0x04ULL) != 0;
         }
 
-        _ForceInline void set_white_king_castle(const bool &white_king_castle) {
+        _ForceInline void set_white_king_castle(const bool white_king_castle) {
             if (white_king_castle) {
                 flags |= 0x08ULL;
             } else {
@@ -198,7 +204,7 @@ namespace Kangaroo {
             return (flags & 0x08ULL) != 0;
         }
 
-        _ForceInline void set_black_queen_castle(const bool &black_queen_castle) {
+        _ForceInline void set_black_queen_castle(const bool black_queen_castle) {
             if (black_queen_castle) {
                 flags |= 0x10ULL;
             } else {
@@ -211,11 +217,11 @@ namespace Kangaroo {
         }
 
 
-        _ForceInline void set_black_king_castle(const bool &black_king_castle) {
+        _ForceInline void set_black_king_castle(const bool black_king_castle) {
             if (black_king_castle) {
-                flags |= 0x20ULL;
+                flags |= 0x20ULL; // -V112
             } else {
-                flags &= ~0x20ULL;
+                flags &= ~0x20ULL; // -V112
             }
         };
 
@@ -223,7 +229,7 @@ namespace Kangaroo {
             return (flags & 0x20ULL) != 0;
         }
 
-        _ForceInline void set_check(const bool &check) {
+        _ForceInline void set_check(const bool check) {
             if (check) {
                 flags |= 0x40ULL;
             } else {
@@ -238,17 +244,17 @@ namespace Kangaroo {
         [[nodiscard]] _ForceInline uint64_t get_flags() const { return flags; }
 
     private:
-        uint64_t parce_fen_en_passant_notation(const std::string_view &fen);
+        uint64_t parce_fen_en_passant_notation(std::string_view str);
 
-        void process_fen_board_setup(const std::string_view &str);
+        void process_fen_board_setup(std::string_view str);
 
-        void parse_fen_player_to_move(const std::string_view &fen);
+        void parse_fen_player_to_move(std::string_view str);
 
-        void parse_fen_castling_information(const std::string_view &fen);
+        void parse_fen_castling_information(std::string_view fen);
 
-        void parse_fen_half_move_number(const std::string_view &fen);
+        void parse_fen_half_move_number(std::string_view fen);
 
-        void parse_fen_full_move_number(const std::string_view &fen);
+        void parse_fen_full_move_number(std::string_view fen);
 
 
         Bitboard white_king_p = 0ULL;

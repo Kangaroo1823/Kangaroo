@@ -6,5 +6,3 @@
 
 #include "Movement_Generator.h"
 
-namespace Kangaroo {
-} // Kangaroo

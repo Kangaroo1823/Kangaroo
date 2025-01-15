@@ -88,7 +88,7 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
 template<Slider slider>
 [[nodiscard]] constexpr Bitboard generate_slider_xray_visibility_for(const Square position) {
 
-    using enum Slider_t;
+    using enum Slider;
 
     static_assert(slider == rook || slider == bishop);
 
@@ -113,8 +113,8 @@ template<Slider slider>
 }
 
 void generate_xray_visibility_tables(std::ofstream &of) {
-    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Slider_t::rook>();
-    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Slider_t::bishop>();
+    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Slider::rook>();
+    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Slider::bishop>();
 
     output_array(of, rook_xray_visibility_table, "rook_xray_visibility_table", "Bitboard");
     output_array(of, bishop_xray_visibility_table, "bishop_xray_visibility_table", "Bitboard");
@@ -205,7 +205,7 @@ constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64
 
 template<Slider slider>
 constexpr Bitboard generate_pin_mask_for_position(Square piece_position, Square king_position) {
-    using enum Slider_t;
+    using enum Slider;
 
     static_assert(slider == rook || slider == bishop);
 
@@ -242,8 +242,8 @@ constexpr std::vector<Bitboard> generate_pin_table() {
 }
 
 void generate_pin_tables(std::ofstream &of) {
-    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Slider_t::rook>();
-    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Slider_t::bishop>();
+    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Slider::rook>();
+    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Slider::bishop>();
 
     output_array(of, rook_pin_table, "rook_pin_table", "Bitboard");
     output_array(of, bishop_pin_table, "bishop_pin_table", "Bitboard");
@@ -251,8 +251,8 @@ void generate_pin_tables(std::ofstream &of) {
 
 
 void generate_masks(std::ofstream &of) {
-    constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider_t::bishop>();
-    constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Slider_t::rook>();
+    constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider::bishop>();
+    constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Slider::rook>();
 
     output_array(of, bishop_attack_masks, "bishop_attack_masks", "Bitboard");
     output_array(of, rook_attack_masks, "rook_attack_masks", "Bitboard");

@@ -16,7 +16,7 @@
 
 
 
-uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_view &str) {
+uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_view str) {
     std::size_t rank = 8;
     std::size_t file = 8;
 
@@ -40,7 +40,7 @@ uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_
                 break;
             case 'E':
             case 'e':
-                file = 4;
+                file = 4; // -V112
                 break;
             case 'F':
             case 'f':
@@ -62,7 +62,7 @@ uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_
                 break;
             case '4': rank = 3;
                 break;
-            case '5': rank = 4;
+            case '5': rank = 4; // -V112
                 break;
             case '6': rank = 5;
                 break;
@@ -80,7 +80,7 @@ uint64_t Kangaroo::Chess_Board::parce_fen_en_passant_notation(const std::string_
     return 0ULL;
 }
 
-void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view &str) {
+void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) {
     std::size_t rank = 0;
     std::size_t file = 0;
 
@@ -122,7 +122,7 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view &str)
                 break;
             case '4': file = (file + 3) & 7;
                 break;
-            case '5': file = (file + 4) & 7;
+            case '5': file = (file + 4) & 7; // -V112
                 break;
             case '6': file = (file + 5) & 7;
                 break;
@@ -135,7 +135,7 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view &str)
     }
 }
 
-void Kangaroo::Chess_Board::parse_fen_player_to_move(const std::string_view &str) {
+void Kangaroo::Chess_Board::parse_fen_player_to_move(const std::string_view str) {
 
     if (str == "-") {
         set_color_to_move(Color::white);
@@ -155,7 +155,7 @@ void Kangaroo::Chess_Board::parse_fen_player_to_move(const std::string_view &str
     throw ReadFENException();
 }
 
-void Kangaroo::Chess_Board::parse_fen_castling_information(const std::string_view &fen) {
+void Kangaroo::Chess_Board::parse_fen_castling_information(const std::string_view fen) {
 
     set_white_king_castle(false);
     set_white_queen_castle(false);
@@ -178,7 +178,7 @@ void Kangaroo::Chess_Board::parse_fen_castling_information(const std::string_vie
     }
 }
 
-void Kangaroo::Chess_Board::parse_fen_half_move_number(const std::string_view &fen) {
+void Kangaroo::Chess_Board::parse_fen_half_move_number(const std::string_view fen) {
     set_half_move_number(0);
     for (const auto &c: fen) {
         switch (c) {
@@ -200,7 +200,7 @@ void Kangaroo::Chess_Board::parse_fen_half_move_number(const std::string_view &f
     }
 }
 
-void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view &fen) {
+void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view fen) {
     set_full_move_number(0);
     for (const auto &c: fen) {
         switch (c) {
@@ -223,7 +223,7 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view &f
 }
 
 
-void Kangaroo::Chess_Board::reset_board(const std::string_view &fen) {
+void Kangaroo::Chess_Board::reset_board(const std::string_view fen) {
 
     set_white_pawns(0ULL);
     set_white_knights(0ULL);
@@ -263,7 +263,8 @@ void Kangaroo::Chess_Board::reset_board(const std::string_view &fen) {
     parse_fen_player_to_move(tokens[1]);
     parse_fen_castling_information(tokens[2]);
 
-    if (tokens.size() >= 4) {
+
+    if (tokens.size() >= 4) {   // -V112
         flags |= parce_fen_en_passant_notation(tokens[3]);
     }
 
@@ -281,7 +282,7 @@ void Kangaroo::Chess_Board::reset_board(const std::string_view &fen) {
     set_all_pieces(white_pieces() | black_pieces());
 }
 
-Kangaroo::Chess_Board::Chess_Board(const std::string_view &fen) {
+Kangaroo::Chess_Board::Chess_Board(const std::string_view fen) {
     reset_board(fen);
 }
 

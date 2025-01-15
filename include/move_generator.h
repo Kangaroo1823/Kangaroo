@@ -13,7 +13,7 @@
 #include "chess_board.h"
 
 template<Slider slider>
-constexpr Bitboard get_attacks_for_position(const Square &position, const Bitboard occupancy) {
+constexpr Bitboard get_attacks_for_position(const Square position, const Bitboard occupancy) {
     // retrieve the mask for the given piece type and position
     const Bitboard mask = slider == Slider::rook
                               ? Constants::rook_attack_masks[std::to_underlying(position)]
@@ -95,11 +95,11 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
                                                                         : board->black_bishops());
 
     // ... and for queens
-    Bitboard queen_attacks = get_attacks_for<Slider_t::bishop>(board->all_pieces(),
+    Bitboard queen_attacks = get_attacks_for<Slider::bishop>(board->all_pieces(),
                                                                color == white
                                                                    ? board->white_queens()
                                                                    : board->black_queens());
-    queen_attacks |= get_attacks_for<Slider_t::rook>(board->all_pieces(),
+    queen_attacks |= get_attacks_for<Slider::rook>(board->all_pieces(),
                                                      color == white ? board->white_queens() : board->black_queens());
 
     const Bitboard attacks = pawn_attacks | knight_attacks | rook_attacks | bishop_attacks | king_attacks |
@@ -109,7 +109,7 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
 }
 
 template<Color color>
-constexpr Bitboard is_position_attacked_by(const Square &position, const Kangaroo::Chess_Board *board) {
+constexpr Bitboard is_position_attacked_by(const Square position, const Kangaroo::Chess_Board *board) {
     using enum Color;
 
     Bitboard attacks = 0ULL;

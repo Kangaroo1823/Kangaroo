@@ -20,8 +20,8 @@
 
 
 template<Slider slider>
-constexpr std::size_t create_hash_index(const Square &position, const Bitboard &occupancy,
-                                        const int64_t &relevant_bits) {
+constexpr std::size_t create_hash_index(const Square position, const Bitboard occupancy,
+                                        const int64_t relevant_bits) {
     if constexpr (slider == Slider::bishop) {
         return (occupancy * Constants::bishop_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
     } else {
@@ -31,7 +31,7 @@ constexpr std::size_t create_hash_index(const Square &position, const Bitboard &
 
 
 template<Slider slider>
-constexpr std::size_t create_magic_hash_index(const Square &position, const Bitboard &occupancy,
+constexpr std::size_t create_magic_hash_index(const Square position, const Bitboard occupancy,
                                               const int64_t relevant_bits) {
     const std::size_t offset = (slider == Slider::bishop ? 512 : 4096) * std::to_underlying(position);
 
@@ -49,7 +49,7 @@ template<Slider slider>
  * @return The attack mask represented as a Bitboard, defining all possible attack moves
  *         from the given position for the respective slider.
  */
-constexpr Bitboard get_attack_mask_for_slider(const Square &position) {
+constexpr Bitboard get_attack_mask_for_slider(const Square position) {
     return slider == Slider::bishop
                ? Constants::bishop_attack_masks[std::to_underlying(position)]
                : Constants::rook_attack_masks[std::to_underlying(position)];
@@ -57,7 +57,7 @@ constexpr Bitboard get_attack_mask_for_slider(const Square &position) {
 
 template<Slider slider>
 constexpr std::array<Bitboard, slider == Slider::bishop ? 512 : 4096>
-create_attack_table_for(const Square &position) {
+create_attack_table_for(const Square position) {
     const Bitboard mask = get_attack_mask_for_slider<slider>(position);
 
     const int64_t relevant_bits = Bitcount(mask);

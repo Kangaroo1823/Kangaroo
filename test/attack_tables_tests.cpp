@@ -36,7 +36,7 @@ TEST(Attack_Tables_Generator, slider_attack_test) {
  *****************************************************************************************/
 
 
-Bitboard create_king_attacks_(const Square &position) {
+Bitboard create_king_attacks_(const Square position) {
     Bitboard attacks = 0ULL;
 
     const Bitboard bitboard = set_bit(attacks, position);
@@ -129,7 +129,7 @@ TEST(Attack_Tables_Generator, pawn_attacks) {
 }
 
 template<Color color>
-Bitboard is_position_attacked_by_test_rig(const std::string_view &fen) {
+Bitboard is_position_attacked_by_test_rig(const std::string_view fen) {
     const auto board = std::make_unique<Kangaroo::Chess_Board>(fen);;
 
     Kangaroo::print_chess_board(board.get());
