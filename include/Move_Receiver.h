@@ -16,6 +16,9 @@ namespace Kangaroo {
                                                                      [[maybe_unused]] Callback callback,
                                                                      [[maybe_unused]] const Bitboard from,
                                                                      [[maybe_unused]] const Bitboard to) {
+
+            // dummy implementation. If we end up here, we forgot to implement a specialization.
+            callback(board, from | to, status.color_to_move, chess_piece);
         }
     };
 
