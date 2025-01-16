@@ -28,9 +28,9 @@ namespace Kangaroo {
         constexpr Board_Status(const Color color, const bool en_passant, const bool white_left_castle,
                                const bool white_right_castle,
                                const bool black_left_castle, const bool black_right_castle, const bool check)
-            : color_p(color), check_p(check), en_passant_p(en_passant),
-              white_left_castle_p(white_left_castle), white_right_castle_p(white_right_castle),
-              black_left_castle_p(black_left_castle), black_right_castle_p(black_right_castle) {
+            : color_to_move(color), check_p(check), en_passant_p(en_passant),
+              white_king_castle(white_left_castle), white_queen_castle(white_right_castle),
+              black_king_castle(black_left_castle), black_queen_castle(black_right_castle) {
         }
 
 
@@ -50,19 +50,32 @@ namespace Kangaroo {
          * @return An instance of the `Board_Status` class initialized with the game state parameters
          *         derived from the encoded flags.
          */
-        explicit constexpr Board_Status(const uint64_t flags) : color_p((flags & 0x1) ? Color::White : Color::Black),
+        explicit constexpr Board_Status(const uint64_t flags) : color_to_move(
+                                                                    (flags & 0x1) ? Color::White : Color::Black),
                                                                 check_p((flags & 0x40) != 0),
                                                                 en_passant_p((flags & 0x2) != 0),
-                                                                white_left_castle_p((flags & 0x04) != 0),
-                                                                white_right_castle_p((flags & 0x08) != 0),
-                                                                black_left_castle_p((flags & 0x10) != 0),
-                                                                black_right_castle_p((flags & 0x20) != 0) {
+                                                                white_king_castle((flags & 0x04) != 0),
+                                                                white_queen_castle((flags & 0x08) != 0),
+                                                                black_king_castle((flags & 0x10) != 0),
+                                                                black_queen_castle((flags & 0x20) != 0) {
+        }
+
+        [[nodiscard]] _ForceInline constexpr uint64_t to_flags() const {
+            uint64_t flags = 0;
+            flags |= color_to_move == Color::White ? 0x1 : 0x0;
+            flags |= en_passant_p ? 0x2 : 0x0;
+            flags |= white_king_castle ? 0x04 : 0x0;
+            flags |= white_queen_castle ? 0x08 : 0x0;
+            flags |= black_king_castle ? 0x10 : 0x0;
+            flags |= black_queen_castle ? 0x20 : 0x0;
+            flags |= check_p ? 0x40 : 0x0;
+            return flags;
         }
 
         /**
          * Who's turn is it?
          */
-        Color color_p = Color::White;
+        Color color_to_move = Color::White;
 
         /**
          * Is it a check_p?
@@ -79,25 +92,25 @@ namespace Kangaroo {
          * Indicates whether White is allowed to castle on the left (Queen's side).
          * True if castling is still possible, false otherwise.
          */
-        bool white_left_castle_p = true;
+        bool white_king_castle = true;
 
         /**
          * Indicates whether White is allowed to castle on the right (King's side).
          * True if castling is still possible, false otherwise.
          */
-        bool white_right_castle_p = true;
+        bool white_queen_castle = true;
 
         /**
          * Indicates whether Black is allowed to castle on the left (Queen's side).
          * True if castling is still possible, false otherwise.
          */
-        bool black_left_castle_p = true;
+        bool black_king_castle = true;
 
         /**
          * Indicates whether Black is allowed to castle on the right (King's side).
          * True if castling is still possible, false otherwise.
          */
-        bool black_right_castle_p = true;
+        bool black_queen_castle = true;
 
         /**
          * Represents the mode in which move generation is conducted during gameplay.

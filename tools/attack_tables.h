@@ -90,7 +90,9 @@ template<Slider slider>
  *         on the board for sliding pieces.
  */
 void create_attack_table(std::vector<Bitboard> &result) {
-    assert(result.size() >= 64 * (slider == Slider::bishop ? 512 : 4096));
+    using enum Slider;
+
+    assert(result.size() >= 64 * (slider == Bishop ? 512 : 4096));
 
     auto iter = result.begin();
     for (const auto &position: All_Positions) {

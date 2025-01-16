@@ -71,36 +71,36 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
 
     // create attack mask for pawns
     const Bitboard pawn_attacks = create_pawn_attacks_for<color == White ? White : Black>(
-        color == White ? board->white_pawns() : board->black_pawns()
+        color == White ? board->white_pawns : board->black_pawns
     );
 
     // create the attack mask for kings
-    const Bitboard king_attacks = create_king_attacks_for(color == White ? board->white_king() : board->black_king());
+    const Bitboard king_attacks = create_king_attacks_for(color == White ? board->white_king : board->black_king);
 
     // ... for knights
     const Bitboard knight_attacks = create_knight_attacks_for(color == White
-                                                                  ? board->white_knights()
-                                                                  : board->black_knights());
+                                                                  ? board->white_knights
+                                                                  : board->black_knights);
 
     // ... for rooks
-    const Bitboard rook_attacks = get_attacks_for<Slider::Rook>(board->all_pieces(),
+    const Bitboard rook_attacks = get_attacks_for<Slider::Rook>(board->all_pieces,
                                                                 color == White
-                                                                    ? board->white_rooks()
-                                                                    : board->black_rooks());
+                                                                    ? board->white_rooks
+                                                                    : board->black_rooks);
 
     // ... for bishops
-    const Bitboard bishop_attacks = get_attacks_for<Slider::Bishop>(board->all_pieces(),
+    const Bitboard bishop_attacks = get_attacks_for<Slider::Bishop>(board->all_pieces,
                                                                     color == White
-                                                                        ? board->white_bishops()
-                                                                        : board->black_bishops());
+                                                                        ? board->white_bishops
+                                                                        : board->black_bishops);
 
     // ... and for queens
-    Bitboard queen_attacks = get_attacks_for<Slider::Bishop>(board->all_pieces(),
+    Bitboard queen_attacks = get_attacks_for<Slider::Bishop>(board->all_pieces,
                                                                color == White
-                                                                   ? board->white_queens()
-                                                                   : board->black_queens());
-    queen_attacks |= get_attacks_for<Slider::Rook>(board->all_pieces(),
-                                                     color == White ? board->white_queens() : board->black_queens());
+                                                                   ? board->white_queens
+                                                                   : board->black_queens);
+    queen_attacks |= get_attacks_for<Slider::Rook>(board->all_pieces,
+                                                     color == White ? board->white_queens : board->black_queens);
 
     const Bitboard attacks = pawn_attacks | knight_attacks | rook_attacks | bishop_attacks | king_attacks |
                              queen_attacks;
@@ -118,30 +118,30 @@ constexpr Bitboard is_position_attacked_by(const Square position, const Kangaroo
     attacks |= (color == White
                     ? Constants::black_pawn_attacks[std::to_underlying(position)]
                     : Constants::white_pawn_attacks[std::to_underlying(position)]) & (color == White
-        ? board->white_pawns()
-        : board->black_pawns());
+        ? board->white_pawns
+        : board->black_pawns);
 
     // check_p for Knight attack
     attacks |= Constants::knight_attacks[std::to_underlying(position)] & (color == White
-                                                                              ? board->white_knights()
-                                                                              : board->black_knights());
+                                                                              ? board->white_knights
+                                                                              : board->black_knights);
 
     // check_p for King attack
     attacks |= Constants::king_attacks[std::to_underlying(position)] & (color == White
-                                                                            ? board->white_king()
-                                                                            : board->black_king());
+                                                                            ? board->white_king
+                                                                            : board->black_king);
 
     // check_p for Bishop and Queen attack
-    attacks |= get_attacks_for_position<Slider::Bishop>(position, board->all_pieces()) &
-    ((color == White ? board->white_bishops() : board->black_bishops()) | (color == White
-                                                                               ? board->white_queens()
-                                                                               : board->black_queens()));
+    attacks |= get_attacks_for_position<Slider::Bishop>(position, board->all_pieces) &
+    ((color == White ? board->white_bishops : board->black_bishops) | (color == White
+                                                                               ? board->white_queens
+                                                                               : board->black_queens));
 
     // check_p for Rook and Queen attack
-    attacks |= get_attacks_for_position<Slider::Rook>(position, board->all_pieces()) &
-    ((color == White ? board->white_rooks() : board->black_rooks()) | (color == White
-                                                                           ? board->white_queens()
-                                                                           : board->black_queens()));
+    attacks |= get_attacks_for_position<Slider::Rook>(position, board->all_pieces) &
+    ((color == White ? board->white_rooks : board->black_rooks) | (color == White
+                                                                           ? board->white_queens
+                                                                           : board->black_queens));
     return attacks;
 }
 

@@ -27,30 +27,32 @@ namespace Kangaroo {
                                                                      Callback callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
-            static_assert(status.color_p == Color::White || status.color_p == Color::Black);
+            using enum Color;
+
+            static_assert(status.color_to_move == White || status.color_to_move == Black);
             const Bitboard move = from | to;
             Chess_Board new_board = *board;
 
-            if constexpr (status.color_p == Color::White) {
-                new_board.set_white_pawns(new_board.white_pawns() ^ move);
+            if constexpr (status.color_to_move == White) {
+                new_board.white_pawns = new_board.white_pawns ^ move;
 
-                if (new_board.black_pawns() & to) { new_board.set_black_pawns(new_board.black_pawns() ^ to); }
-                if (new_board.black_bishops() & to) { new_board.set_black_bishops(new_board.black_bishops() ^ to); }
-                if (new_board.black_knights() & to) { new_board.set_black_knights(new_board.black_knights() ^ to); }
-                if (new_board.black_rooks() & to) { new_board.set_black_rooks(new_board.black_rooks() ^ to); }
-                if (new_board.black_queens() & to) { new_board.set_black_queens(new_board.black_queens() ^ to); }
+                if (new_board.black_pawns & to) { new_board.black_pawns = new_board.black_pawns ^ to; }
+                if (new_board.black_bishops & to) { new_board.black_bishops = new_board.black_bishops ^ to; }
+                if (new_board.black_knights & to) { new_board.black_knights = new_board.black_knights ^ to; }
+                if (new_board.black_rooks & to) { new_board.black_rooks = new_board.black_rooks ^ to; }
+                if (new_board.black_queens & to) { new_board.black_queens = new_board.black_queens ^ to; }
 
-            } else if constexpr (status.color_p == Color::Black) {
-                new_board.set_black_pawns(new_board.black_pawns() ^ move);
+            } else if constexpr (status.color_to_move == Black) {
+                new_board.black_pawns = new_board.black_pawns ^ move;
 
-                if (new_board.white_pawns() & to) { new_board.set_white_pawns(new_board.white_pawns() ^ to); }
-                if (new_board.white_bishops() & to) { new_board.set_white_bishops(new_board.white_bishops() ^ to); }
-                if (new_board.white_knights() & to) { new_board.set_white_knights(new_board.white_knights() ^ to); }
-                if (new_board.white_rooks() & to) { new_board.set_white_rooks(new_board.white_rooks() ^ to); }
-                if (new_board.white_queens() & to) { new_board.set_white_queens(new_board.white_queens() ^ to); }
+                if (new_board.white_pawns & to) { new_board.white_pawns = new_board.white_pawns ^ to; }
+                if (new_board.white_bishops & to) { new_board.white_bishops = new_board.white_bishops ^ to; }
+                if (new_board.white_knights & to) { new_board.white_knights = new_board.white_knights ^ to; }
+                if (new_board.white_rooks & to) { new_board.white_rooks = new_board.white_rooks ^ to; }
+                if (new_board.white_queens & to) { new_board.white_queens = new_board.white_queens ^ to; }
             }
 
-            callback(&new_board, move, status.color_p, Chess_Pieces::Pawn);
+            callback(&new_board, move, status.color_to_move, Chess_Pieces::Pawn);
         }
     };
 
@@ -63,18 +65,18 @@ namespace Kangaroo {
                                                                      const Bitboard to) {
             using enum Color;
 
-            static_assert(status.color_p == White || status.color_p == Black);
+            static_assert(status.color_to_move == White || status.color_to_move == Black);
 
             const Bitboard move = from | to;
 
             Chess_Board new_board = *board;
-            if constexpr (status.color_p == White) {
-                new_board.set_white_pawns(new_board.white_pawns() ^ move);
-            } else if constexpr (status.color_p == Black) {
-                new_board.set_black_pawns(new_board.black_pawns() ^ move);
+            if constexpr (status.color_to_move == White) {
+                new_board.white_pawns = new_board.white_pawns ^ move;
+            } else if constexpr (status.color_to_move == Black) {
+                new_board.black_pawns = new_board.black_pawns ^ move;
             }
 
-            callback(&new_board, move, status.color_p, Chess_Pieces::Pawn);
+            callback(&new_board, move, status.color_to_move, Chess_Pieces::Pawn);
         }
     };
 }
