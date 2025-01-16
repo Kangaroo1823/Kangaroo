@@ -16,7 +16,7 @@ const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w
 const auto movement_generator = std::make_unique<Kangaroo::Movement_Generator>(board.get());
 
 // cppcheck-suppress constParameterCallback
-static void BM_move_generator(benchmark::State &state) {
+static void BM_move_generator(benchmark::State &state) { // -V2009
 
 
     for ([[maybe_unused]] auto _: state) {
@@ -41,7 +41,7 @@ static void BM_move_generator(benchmark::State &state) {
 BENCHMARK(BM_move_generator)->Iterations(1000000000);
 
 
-static void BM_pin_mask_generator(benchmark::State &state) {
+static void BM_pin_mask_generator(benchmark::State &state) { // -V2009
     for ([[maybe_unused]] auto _: state) {
         Bitboard cntr1 = 0ULL;
         Bitboard cntr2 = 0ULL;

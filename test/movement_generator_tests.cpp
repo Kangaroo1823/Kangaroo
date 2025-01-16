@@ -195,15 +195,70 @@ namespace Kangaroo {
         Movement_Generator gen(&board);
 
         // empty board results in no moves generated
-        const auto moves = gen.run_move_generation(
-            []([[maybe_unused]] const Chess_Board *old_board, [[maybe_unused]] const Move move,
-                [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece) {
-                    std::print("move: 0x{0:x}\n", move);
-                    print_bitboard(move);
-                    std::print("\n\n");
+        auto number_of_moves = gen.run_move_generation(
+            []([[maybe_unused]] const Chess_Board *new_board, [[maybe_unused]] const Move move,
+               [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece) {
+                std::print("move: 0x{0:x}\n", move);
+                print_bitboard(move);
+                std::print("\n\n");
             });
-        ASSERT_EQ(moves, 0);
+        ASSERT_EQ(number_of_moves, 0);
 
-        //
+        /*
+                        A  B  C  D  E  F  G  H
+
+                   8    .  .  .  .  .  .  .  .
+                   7    .  .  ♖  .  .  .  .  .
+                   6    .  .  .  ♟  .  .  .  .
+                   5    .  .  .  .  .  .  .  .
+                   4    .  .  .  .  .  .  .  .
+                   3    .  .  .  .  .  .  .  .
+                   2    .  .  .  .  .  .  .  .
+                   1    .  .  .  .  .  .  .  .
+
+                        A  B  C  D  E  F  G  H
+          */
+        board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
+        print_chess_board(&board);
+
+        std::vector<Bitboard> moves = {
+            /*
+              8    .  .  .  .  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  1  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x8080000000000,
+            /*
+              8    .  .  .  .  .  .  .  .
+              7    .  .  1  .  .  .  .  .
+              6    .  .  .  1  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x4080000000000,
+        };
+
+        number_of_moves = gen.run_move_generation(
+            [&moves]([[maybe_unused]] const Chess_Board *new_board, [[maybe_unused]] const Move move,
+               [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece) {
+                print_bitboard(move);
+                ASSERT_TRUE(std::ranges::contains(moves, move));
+            });
+
+        ASSERT_EQ(number_of_moves, 2);
     }
 }

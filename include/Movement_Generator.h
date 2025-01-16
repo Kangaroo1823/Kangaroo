@@ -115,7 +115,7 @@ namespace Kangaroo {
         }
 
         template<typename CallBack>
-        [[nodiscard]] _ForceInline constexpr std::size_t run_move_generation(CallBack callback) {
+        [[nodiscard]] _ForceInline constexpr std::size_t run_move_generation(CallBack callback) { // -V2008
             switch (board_p->get_flags()) {
                 case 0x00: return generate_moves<Board_Status(0x00)>(callback);
                 case 0x01: return generate_moves<Board_Status(0x01)>(callback);

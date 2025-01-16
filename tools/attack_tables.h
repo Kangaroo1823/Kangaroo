@@ -155,7 +155,7 @@ constexpr Bitboard create_king_attacks_for(const Bitboard bitboard) {
 }
 
 
-constexpr void create_king_attacks(std::vector<Bitboard> &attacks) {
+_ForceInline constexpr void create_king_attacks(std::vector<Bitboard> &attacks) { // -V2009
     assert(attacks.size() >= 64);
 
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
@@ -186,7 +186,7 @@ constexpr Bitboard create_knight_attacks_for(const Bitboard bitboard) {
     return attacks;
 }
 
-constexpr void create_knight_attacks(std::vector<Bitboard> &attacks) {
+_ForceInline constexpr void create_knight_attacks(std::vector<Bitboard> &attacks) { // -V2009
     assert(attacks.size() >= 64);
 
     for (auto iter = attacks.begin(); const auto &position: All_Positions) {
