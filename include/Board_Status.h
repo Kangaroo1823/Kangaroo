@@ -4,12 +4,27 @@
 
 #ifndef BOARD_STATUS_H
 #define BOARD_STATUS_H
+#include <functional>
+#include <stdexcept>
+
 #include "base.h"
-#include "colors.h"
 #include "types.h"
 
 
 namespace Kangaroo {
+    class Chess_Board;
+    class Movement_Generator;
+
+    typedef std::function<void(const Chess_Board *, Move, Color, Chess_Pieces)> CallbackType;
+
+
+    class Invalid_Board_Status final : public std::runtime_error {
+    public:
+        Invalid_Board_Status() : std::runtime_error("Invalid board status") {}
+        ~Invalid_Board_Status() override = default;
+    };
+
+
     class Board_Status {
     public:
         Board_Status() = delete;
@@ -64,10 +79,10 @@ namespace Kangaroo {
             uint64_t flags = 0;
             flags |= color_to_move == Color::White ? 0x1 : 0x0;
             flags |= en_passant_p ? 0x2 : 0x0;
-            flags |= white_king_castle ? 0x04 : 0x0;
+            flags |= white_king_castle ? 0x04 : 0x0; // -V112
             flags |= white_queen_castle ? 0x08 : 0x0;
             flags |= black_king_castle ? 0x10 : 0x0;
-            flags |= black_queen_castle ? 0x20 : 0x0;
+            flags |= black_queen_castle ? 0x20 : 0x0; // -V112
             flags |= check_p ? 0x40 : 0x0;
             return flags;
         }
@@ -127,6 +142,9 @@ namespace Kangaroo {
             copy.mode = _mode;
             return copy;
         }
+
+        [[nodiscard]] std::size_t run_move_generation(Movement_Generator &gen,
+            const CallbackType& callback) const;
     };
 } // Kangaroo
 

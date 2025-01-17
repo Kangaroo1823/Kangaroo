@@ -37,16 +37,16 @@ namespace Kangaroo {
             Chess_Board new_board = *board;
 
             if constexpr (status.color_to_move == White) {
-                new_board.white_pawns = new_board.white_pawns ^ move;
+                new_board.white_pawns = new_board.white_pawns ^ move; // -V1051
 
-                if (new_board.black_pawns & to) { new_board.black_pawns = new_board.black_pawns ^ to; }
+                if (new_board.black_pawns & to) { new_board.black_pawns = new_board.black_pawns ^ to; } // -V1051
                 if (new_board.black_bishops & to) { new_board.black_bishops = new_board.black_bishops ^ to; }
                 if (new_board.black_knights & to) { new_board.black_knights = new_board.black_knights ^ to; }
                 if (new_board.black_rooks & to) { new_board.black_rooks = new_board.black_rooks ^ to; }
                 if (new_board.black_queens & to) { new_board.black_queens = new_board.black_queens ^ to; }
 
             } else if constexpr (status.color_to_move == Black) {
-                new_board.black_pawns = new_board.black_pawns ^ move;
+                new_board.black_pawns = new_board.black_pawns ^ move; // -V1051
 
                 if (new_board.white_pawns & to) { new_board.white_pawns = new_board.white_pawns ^ to; }
                 if (new_board.white_bishops & to) { new_board.white_bishops = new_board.white_bishops ^ to; }

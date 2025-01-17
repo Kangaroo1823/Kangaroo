@@ -10,11 +10,6 @@
 
 namespace Kangaroo {
 
-    class Invalid_Board_Status final : public std::runtime_error {
-        public:
-        Invalid_Board_Status() : std::runtime_error("Invalid board status") {}
-        ~Invalid_Board_Status() override = default;
-    };
 
 
     class Movement_Generator {
@@ -114,77 +109,6 @@ namespace Kangaroo {
             }
         }
 
-        template<typename CallBack>
-        [[nodiscard]] _ForceInline constexpr std::size_t run_move_generation(const Board_Status* status, CallBack callback) { // -V2008
-            switch (status->to_flags()) {
-                case 0x00: return generate_moves<Board_Status(0x00)>(callback);
-                case 0x01: return generate_moves<Board_Status(0x01)>(callback);
-                case 0x02: return generate_moves<Board_Status(0x02)>(callback);
-                case 0x03: return generate_moves<Board_Status(0x03)>(callback);
-                case 0x04: return generate_moves<Board_Status(0x04)>(callback);
-                case 0x05: return generate_moves<Board_Status(0x05)>(callback);
-                case 0x06: return generate_moves<Board_Status(0x06)>(callback);
-                case 0x07: return generate_moves<Board_Status(0x07)>(callback);
-                case 0x08: return generate_moves<Board_Status(0x08)>(callback);
-                case 0x09: return generate_moves<Board_Status(0x09)>(callback);
-                case 0x0a: return generate_moves<Board_Status(0x0a)>(callback);
-                case 0x0b: return generate_moves<Board_Status(0x0b)>(callback);
-                case 0x0c: return generate_moves<Board_Status(0x0c)>(callback);
-                case 0x0d: return generate_moves<Board_Status(0x0d)>(callback);
-                case 0x0e: return generate_moves<Board_Status(0x0e)>(callback);
-                case 0x0f: return generate_moves<Board_Status(0x0f)>(callback);
-                case 0x10: return generate_moves<Board_Status(0x10)>(callback);
-                case 0x11: return generate_moves<Board_Status(0x11)>(callback);
-                case 0x12: return generate_moves<Board_Status(0x12)>(callback);
-                case 0x13: return generate_moves<Board_Status(0x13)>(callback);
-                case 0x14: return generate_moves<Board_Status(0x14)>(callback);
-                case 0x15: return generate_moves<Board_Status(0x15)>(callback);
-                case 0x16: return generate_moves<Board_Status(0x16)>(callback);
-                case 0x17: return generate_moves<Board_Status(0x17)>(callback);
-                case 0x18: return generate_moves<Board_Status(0x18)>(callback);
-                case 0x19: return generate_moves<Board_Status(0x19)>(callback);
-                case 0x1a: return generate_moves<Board_Status(0x1a)>(callback);
-                case 0x1b: return generate_moves<Board_Status(0x1b)>(callback);
-                case 0x1c: return generate_moves<Board_Status(0x1c)>(callback);
-                case 0x1d: return generate_moves<Board_Status(0x1d)>(callback);
-                case 0x1e: return generate_moves<Board_Status(0x1e)>(callback);
-                case 0x1f: return generate_moves<Board_Status(0x1f)>(callback);
-                case 0x20: return generate_moves<Board_Status(0x20)>(callback);
-                case 0x21: return generate_moves<Board_Status(0x21)>(callback);
-                case 0x22: return generate_moves<Board_Status(0x22)>(callback);
-                case 0x23: return generate_moves<Board_Status(0x23)>(callback);
-                case 0x24: return generate_moves<Board_Status(0x24)>(callback);
-                case 0x25: return generate_moves<Board_Status(0x25)>(callback);
-                case 0x26: return generate_moves<Board_Status(0x26)>(callback);
-                case 0x27: return generate_moves<Board_Status(0x27)>(callback);
-                case 0x28: return generate_moves<Board_Status(0x28)>(callback);
-                case 0x29: return generate_moves<Board_Status(0x29)>(callback);
-                case 0x2a: return generate_moves<Board_Status(0x2a)>(callback);
-                case 0x2b: return generate_moves<Board_Status(0x2b)>(callback);
-                case 0x2c: return generate_moves<Board_Status(0x2c)>(callback);
-                case 0x2d: return generate_moves<Board_Status(0x2d)>(callback);
-                case 0x2e: return generate_moves<Board_Status(0x2e)>(callback);
-                case 0x2f: return generate_moves<Board_Status(0x2f)>(callback);
-                case 0x30: return generate_moves<Board_Status(0x30)>(callback);
-                case 0x31: return generate_moves<Board_Status(0x31)>(callback);
-                case 0x32: return generate_moves<Board_Status(0x32)>(callback);
-                case 0x33: return generate_moves<Board_Status(0x33)>(callback);
-                case 0x34: return generate_moves<Board_Status(0x34)>(callback);
-                case 0x35: return generate_moves<Board_Status(0x35)>(callback);
-                case 0x36: return generate_moves<Board_Status(0x36)>(callback);
-                case 0x37: return generate_moves<Board_Status(0x37)>(callback);
-                case 0x38: return generate_moves<Board_Status(0x38)>(callback);
-                case 0x39: return generate_moves<Board_Status(0x39)>(callback);
-                case 0x3a: return generate_moves<Board_Status(0x3a)>(callback);
-                case 0x3b: return generate_moves<Board_Status(0x3b)>(callback);
-                case 0x3c: return generate_moves<Board_Status(0x3c)>(callback);
-                case 0x3d: return generate_moves<Board_Status(0x3d)>(callback);
-                case 0x3e: return generate_moves<Board_Status(0x3e)>(callback);
-                case 0x3f: return generate_moves<Board_Status(0x3f)>(callback);
-                case 0x40: return generate_moves<Board_Status(0x40)>(callback);
-                default: throw Kangaroo::Invalid_Board_Status();
-            }
-        }
 
         template<Kangaroo::Board_Status status, typename CallBackType>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(CallBackType callback) {
