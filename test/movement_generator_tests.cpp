@@ -196,15 +196,17 @@ namespace Kangaroo {
         Movement_Generator gen(&board);
 
         // empty board results in no moves generated
-        auto number_of_moves = status->run_move_generation( gen,
-            []([[maybe_unused]] const Chess_Board *new_board, [[maybe_unused]] const Move move,
-               [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece) -> bool {
-                std::print("move: 0x{0:x}\n", move);
-                print_bitboard(move);
-                std::print("\n\n");
+        auto number_of_moves = status->run_move_generation(gen,
+                                                           []([[maybe_unused]] const Chess_Board *new_board,
+                                                              [[maybe_unused]] const Move move,
+                                                              [[maybe_unused]] const Color color,
+                                                              [[maybe_unused]] const Chess_Pieces chess_piece) -> bool {
+                                                               std::print("move: 0x{0:x}\n", move);
+                                                               print_bitboard(move);
+                                                               std::print("\n\n");
 
-                return true;
-            });
+                                                               return true;
+                                                           });
         ASSERT_EQ(number_of_moves, 0);
 
         /*
@@ -224,9 +226,42 @@ namespace Kangaroo {
 
 
         status = board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
-        print_chess_board(&board);
+        print_chess_board(&board, true);
 
-        std::array<Bitboard,2> moves = {
+        std::array<Kangaroo::Chess_Board, 1> new_boards = {
+            /*
+
+        A  B  C  D  E  F  G  H
+
+   8    .  .  .  .  .  .  .  .
+   7    .  .  .  ♟  .  .  .  .
+   6    .  .  .  .  .  .  .  .
+   5    .  .  .  .  .  .  .  .
+   4    .  .  .  .  .  .  .  .
+   3    .  .  .  .  .  .  .  .
+   2    .  .  .  .  .  .  .  .
+   1    .  .  .  .  .  .  .  .
+
+        A  B  C  D  E  F  G  H
+
+ */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0008000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+
+
+        };
+
+        std::array<Bitboard, 2> moves = {
             /*
               8    .  .  .  .  .  .  .  .
               7    .  .  .  1  .  .  .  .
@@ -257,17 +292,22 @@ namespace Kangaroo {
             0x4080000000000,
         };
 
-        number_of_moves = status->run_move_generation(gen,
-            []([[maybe_unused]] const Chess_Board *new_board, [[maybe_unused]] const Move move,
-               [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece)->bool {
-                print_bitboard(move);
+        ASSERT_EQ(status->run_move_generation(gen,
+                      [&moves, &new_boards]([[maybe_unused]] const Chess_Board *new_board, [[maybe_unused]] const Move
+                          move,
+                          [[maybe_unused]] const Color color, [[maybe_unused]] const Chess_Pieces chess_piece)->bool {
+                      print_bitboard(move);
 
-                //auto b = std::ranges::contains(moves, move);
-                //ASSERT_TRUE(b);
+                      const auto it = std::ranges::find(moves, move);
+                      if (it == moves.end()) {
+                          std::stringstream ss;
+                          ss << "move: 0x" << std::hex << move << " not found in moves";
+                          throw std::runtime_error(ss.str())
+                      }
 
-                return true;
-            });
+                      print_chess_board(new_board, true);
+                      return true;
+                      }), moves.size());
 
-        ASSERT_EQ(number_of_moves, 2);
     }
 }

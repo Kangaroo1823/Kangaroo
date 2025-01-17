@@ -85,8 +85,14 @@ namespace Kangaroo {
 
     public:
         explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
+        explicit Chess_Board(const std::array<Bitboard, 15> &data);
+        Chess_Board(const Chess_Board &) = default;
 
         [[nodiscard]] std::unique_ptr<Board_Status> reset_board(std::string_view fen);
+
+        bool operator==(const Chess_Board &) const = default;
+        bool operator!=(const Chess_Board &) const = default;
+
 
         Bitboard white_king = 0ULL;
         Bitboard white_queens = 0ULL;
@@ -127,7 +133,7 @@ namespace Kangaroo {
         void parse_fen_full_move_number(std::string_view fen);
     };
 
-    void print_chess_board(const Chess_Board *board);
+    void print_chess_board(const Chess_Board *board, bool output_data = false);
 }
 
 #endif //CHESS_BOARD_H
