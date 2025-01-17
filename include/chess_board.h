@@ -86,7 +86,33 @@ namespace Kangaroo {
     public:
         explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
 
-        explicit Chess_Board(const std::array<Bitboard, 15> &data);
+        explicit constexpr Chess_Board(const std::array<Bitboard, 15> &data) {
+            white_pawns = data[0];
+            white_knights = data[1];
+            white_bishops = data[2];
+            white_rooks = data[3];
+            white_queens = data[4];
+            white_king = data[5];
+            black_pawns = data[6];
+            black_knights = data[7];
+            black_bishops = data[8];
+            black_rooks = data[9];
+            black_queens = data[10];
+            black_king = data[11];
+            en_passant_square = data[12];
+            half_move_number = static_cast<std::size_t>(data[13]);
+            full_move_number = static_cast<std::size_t>(data[14]);
+
+            update_collectors();
+
+        }
+
+        _ForceInline constexpr void update_collectors() {
+            white_pieces = white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king;
+            black_pieces = black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king;
+
+            all_pieces = white_pieces | black_pieces;
+        }
 
         Chess_Board(const Chess_Board &) = default;
 

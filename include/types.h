@@ -145,6 +145,7 @@ enum class Move_Type : uint64_t {
     En_Passant = 3,
     Promotion = 4,
     Capture = 5,
+    Capture_Promotion = 6,
 };
 
 

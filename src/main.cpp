@@ -9,7 +9,7 @@
 int main() {
 
     const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
-    print_chess_board(board.get());
+    print_chess_board(*board);
 
 
 

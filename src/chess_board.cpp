@@ -16,34 +16,8 @@
 #include "Board_Status.h"
 
 
-
-Kangaroo::Chess_Board::Chess_Board(const std::array<Bitboard, 15> &data) {
-
-    white_pawns = data[0];
-    white_knights = data[1];
-    white_bishops = data[2];
-    white_rooks = data[3];
-    white_queens = data[4];
-    white_king = data[5];
-    black_pawns = data[6];
-    black_knights = data[7];
-    black_bishops = data[8];
-    black_rooks = data[9];
-    black_queens = data[10];
-    black_king = data[11];
-    en_passant_square = data[12];
-    half_move_number = static_cast<std::size_t>(data[13]);
-    full_move_number = static_cast<std::size_t>(data[14]);
-
-    white_pieces = white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king;
-    black_pieces = black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king;
-
-    all_pieces = white_pieces | black_pieces;
-
-}
-
-
-std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parce_fen_en_passant_notation(std::unique_ptr<Board_Status> &&status, const std::string_view str) {
+std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parce_fen_en_passant_notation(
+    std::unique_ptr<Board_Status> &&status, const std::string_view str) {
     std::size_t rank = 8;
     std::size_t file = 8;
 
@@ -115,7 +89,7 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) 
     std::size_t file = 0;
 
     for (const auto &c: str) {
-        Square position = rank_file_to_position(7-rank, file);
+        Square position = rank_file_to_position(7 - rank, file);
         file = (file + 1) & 7;
         switch (c) {
             case 'p': black_pawns = set_bit(black_pawns, position);
@@ -165,8 +139,8 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) 
     }
 }
 
-std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parse_fen_player_to_move(std::unique_ptr<Board_Status> && status, const std::string_view str) {
-
+std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parse_fen_player_to_move(
+    std::unique_ptr<Board_Status> &&status, const std::string_view str) {
     using enum Color;
 
     if (str == "-") {
@@ -187,8 +161,8 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parse_fen_player_
     throw ReadFENException();
 }
 
-std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parse_fen_castling_information(std::unique_ptr<Board_Status> &&status, const std::string_view fen) {
-
+std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parse_fen_castling_information(
+    std::unique_ptr<Board_Status> &&status, const std::string_view fen) {
     status->white_king_castle = false;
     status->white_queen_castle = false;
     status->black_king_castle = false;
@@ -227,7 +201,7 @@ void Kangaroo::Chess_Board::parse_fen_half_move_number(const std::string_view fe
             case '8':
             case '9':
                 half_move_number =
-                    half_move_number * 10 + (static_cast<std::size_t>(c) - static_cast<std::size_t>('0'));
+                        half_move_number * 10 + (static_cast<std::size_t>(c) - static_cast<std::size_t>('0'));
                 break;
             default: break;
         }
@@ -249,7 +223,7 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view fe
             case '8':
             case '9':
                 full_move_number =
-                    10 * full_move_number + (static_cast<std::size_t>(c) - static_cast<std::size_t>('0'));
+                        10 * full_move_number + (static_cast<std::size_t>(c) - static_cast<std::size_t>('0'));
                 break;
             default: break;
         }
@@ -258,7 +232,6 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view fe
 
 
 std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const std::string_view fen) {
-
     auto status = std::make_unique<Board_Status>(0);
 
     white_pawns = 0ULL;
@@ -295,7 +268,8 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
     status = parse_fen_castling_information(std::move(status), tokens[2]);
 
 
-    if (tokens.size() >= 4) {   // -V112
+    if (tokens.size() >= 4) {
+        // -V112
         status = parce_fen_en_passant_notation(std::move(status), tokens[3]);
     }
 
@@ -307,10 +281,7 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
         parse_fen_full_move_number(tokens[5]);
     }
 
-    white_pieces = white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king;
-    black_pieces = black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king;
-
-    all_pieces = white_pieces | black_pieces;
+    update_collectors();
 
     return status;
 }
@@ -325,7 +296,6 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
 }
 
 [[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data) {
-
     std::stringstream ss;
 
     constexpr std::string_view black_king_c = " \u{2654} ";
@@ -346,7 +316,7 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
     //"\u2005\u2005\u2004\u2024\u2004\u2005"; // "1 x \u2003 == 1 x \u3000 == 4 x \u202f";
 
     if (output_data) {
-        ss << std::format ("/*\n");
+        ss << std::format("/*\n");
     }
 
     std::print("\n       A  B  C  D  E  F  G  H\n\n");
@@ -386,26 +356,26 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
 
     if (output_data) {
         ss << std::format("*/\n  Kangaroo::Chess_Board( std::array<Bitboard, 15>{{\n");
-        ss << std::format("    /* white pawns    */ 0x{0:016x}, ", board.white_pawns );
-        ss << std::format("/* white knights */ 0x{0:016x}, ", board.white_knights );
-        ss << std::format("/* white bishops */ 0x{0:016x}, \n", board.white_bishops );
-        ss << std::format("    /* white rooks    */ 0x{0:016x}, ", board.white_rooks );
-        ss << std::format("/* white queens  */ 0x{0:016x}, ", board.white_queens );
-        ss << std::format("/* white king    */ 0x{0:016x}, \n", board.white_king );
-        ss << std::format("    /* black pawns    */ 0x{0:016x}, ", board.black_pawns );
-        ss << std::format("/* black knights */ 0x{0:016x}, ", board.black_knights );
-        ss << std::format("/* black bishops */ 0x{0:016x}, \n", board.black_bishops );
-        ss << std::format("    /* black rooks    */ 0x{0:016x}, ", board.black_rooks );
-        ss << std::format("/* black queens  */ 0x{0:016x}, ", board.black_queens );
-        ss << std::format("/* black king    */ 0x{0:016x}, \n", board.black_king );
-        ss << std::format("    /* en passant sq. */ 0x{0:016x}, ", board.en_passant_square );
-        ss << std::format("/* half move num */ 0x{0:016x}, ", board.half_move_number );
-        ss << std::format("/* full move num */ 0x{0:016x} }}),\n", board.full_move_number );
+        ss << std::format("    /* white pawns    */ 0x{0:016x}, ", board.white_pawns);
+        ss << std::format("/* white knights */ 0x{0:016x}, ", board.white_knights);
+        ss << std::format("/* white bishops */ 0x{0:016x}, \n", board.white_bishops);
+        ss << std::format("    /* white rooks    */ 0x{0:016x}, ", board.white_rooks);
+        ss << std::format("/* white queens  */ 0x{0:016x}, ", board.white_queens);
+        ss << std::format("/* white king    */ 0x{0:016x}, \n", board.white_king);
+        ss << std::format("    /* black pawns    */ 0x{0:016x}, ", board.black_pawns);
+        ss << std::format("/* black knights */ 0x{0:016x}, ", board.black_knights);
+        ss << std::format("/* black bishops */ 0x{0:016x}, \n", board.black_bishops);
+        ss << std::format("    /* black rooks    */ 0x{0:016x}, ", board.black_rooks);
+        ss << std::format("/* black queens  */ 0x{0:016x}, ", board.black_queens);
+        ss << std::format("/* black king    */ 0x{0:016x}, \n", board.black_king);
+        ss << std::format("    /* en passant sq. */ 0x{0:016x}, ", board.en_passant_square);
+        ss << std::format("/* half move num */ 0x{0:016x}, ", board.half_move_number);
+        ss << std::format("/* full move num */ 0x{0:016x} }}),\n", board.full_move_number);
     }
 
     return ss.str();
 }
 
 void Kangaroo::print_chess_board(const Chess_Board &board, const bool output_data) {
-        std::print("{}", format_chess_board(board, output_data));
+    std::print("{}", format_chess_board(board, output_data));
 }

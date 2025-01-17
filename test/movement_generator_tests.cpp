@@ -190,7 +190,11 @@ namespace Kangaroo {
         ASSERT_EQ(gen.pin_mask_D, 0x0) << "25th test not true";
     }
 
-    TEST(Movement_Generator_Test, test_pawn_movement_generator) {
+
+    /**
+     * Test if the empty board leads to no generated moves.
+     */
+    void pawn_movement_generator_test1() {
         Chess_Board board{};
         std::unique_ptr<Board_Status> status = board.reset_board("8/8/8/8/8/8/8/8 w - - 0 1");
         Movement_Generator gen(&board);
@@ -204,8 +208,15 @@ namespace Kangaroo {
                                                                return true;
                                                            });
         ASSERT_EQ(number_of_moves, 0);
+    }
 
-        /*
+
+    /**
+     * Test that the board below leads to two generated moves.
+     */
+    void pawn_movement_generator_test2() {
+
+            /*
                         A  B  C  D  E  F  G  H
 
                    8    .  .  .  .  .  .  .  .
@@ -220,28 +231,29 @@ namespace Kangaroo {
                         A  B  C  D  E  F  G  H
           */
 
-
-        status = board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
+        Chess_Board board{};
+        const auto status = board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
+        Movement_Generator gen(&board);
 
 
         std::array<Chess_Board, 2> new_boards = {
             /*
 
-           A  B  C  D  E  F  G  H
+                       A  B  C  D  E  F  G  H
 
-      8    .  .  .  .  .  .  .  .
-      7    .  .  ♖  ♟  .  .  .  .
-      6    .  .  .  .  .  .  .  .
-      5    .  .  .  .  .  .  .  .
-      4    .  .  .  .  .  .  .  .
-      3    .  .  .  .  .  .  .  .
-      2    .  .  .  .  .  .  .  .
-      1    .  .  .  .  .  .  .  .
+                  8    .  .  .  .  .  .  .  .
+                  7    .  .  ♖  ♟  .  .  .  .
+                  6    .  .  .  .  .  .  .  .
+                  5    .  .  .  .  .  .  .  .
+                  4    .  .  .  .  .  .  .  .
+                  3    .  .  .  .  .  .  .  .
+                  2    .  .  .  .  .  .  .  .
+                  1    .  .  .  .  .  .  .  .
 
-           A  B  C  D  E  F  G  H
+                       A  B  C  D  E  F  G  H
 
-    */
-            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                */
+            Chess_Board(std::array<Bitboard, 15>{
                 /* white pawns    */ 0x0008000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
                 0x0000000000000000,
                 /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
@@ -314,9 +326,6 @@ namespace Kangaroo {
             0x4080000000000,
         };
 
-        for (auto &new_board : new_boards) {
-            print_chess_board(new_board);
-        }
 
         auto f = [&moves, &new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
                           move, [[maybe_unused]] const Color color,
@@ -335,11 +344,165 @@ namespace Kangaroo {
                 ss << "board: " << new_board << " not found in boards";
                 throw std::runtime_error(ss.str());
             }
-
-            return true;
+            return false;
         };
 
         const auto n = status->run_move_generation(gen, f);
         ASSERT_EQ(n, moves.size());
+    }
+
+    /**
+     * Test that the board below, it is tested that the pawn will promote if it is moved.
+     */
+    void pawn_movement_generator_test4() {}
+    void pawn_movement_generator_test3() {
+                    /*
+                        A  B  C  D  E  F  G  H
+
+                   8    .  .  ♖  .  .  .  .  .
+                   7    .  .  .  ♟  .  .  .  .
+                   6    .  .  .  .  .  .  .  .
+                   5    .  .  .  .  .  .  .  .
+                   4    .  .  .  .  .  .  .  .
+                   3    .  .  .  .  .  .  .  .
+                   2    .  .  .  .  .  .  .  .
+                   1    .  .  .  .  .  .  .  .
+
+                        A  B  C  D  E  F  G  H
+          */
+
+        Chess_Board board{};
+        const auto status = board.reset_board("2r5/3P4/8/8/8/8/8/8 w - - 0 1");
+        Movement_Generator gen(&board);
+
+
+        [[maybe_unused]] constexpr std::array<Chess_Board, 2> new_boards = {
+            /*
+
+                       A  B  C  D  E  F  G  H
+
+                  8    .  .  .  .  .  .  .  .
+                  7    .  .  ♖  ♟  .  .  .  .
+                  6    .  .  .  .  .  .  .  .
+                  5    .  .  .  .  .  .  .  .
+                  4    .  .  .  .  .  .  .  .
+                  3    .  .  .  .  .  .  .  .
+                  2    .  .  .  .  .  .  .  .
+                  1    .  .  .  .  .  .  .  .
+
+                       A  B  C  D  E  F  G  H
+
+                */
+            Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0008000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0004000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  .  .  .  .  .  .
+              7    .  .  ♟  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0004000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+        };
+
+        [[maybe_unused]] constexpr std::array<Bitboard, 2> moves = {
+            /*
+              8    .  .  .  .  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  1  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x8080000000000,
+            /*
+              8    .  .  .  .  .  .  .  .
+              7    .  .  1  .  .  .  .  .
+              6    .  .  .  1  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x4080000000000,
+        };
+
+
+        auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                          move, [[maybe_unused]] const Color color,
+                          [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+
+            // const auto it = std::ranges::find(moves, move);
+            // if (it == moves.end()) {
+            //     std::stringstream ss;
+            //     ss << "move: 0x" << std::hex << move << " not found in moves";
+            //     throw std::runtime_error(ss.str());
+            // };
+            //
+            // const auto board_it = std::ranges::find(new_boards, new_board);
+            // if (board_it == new_boards.end()) {
+            //     std::stringstream ss;
+            //     ss << "board: " << new_board << " not found in boards";
+            //     throw std::runtime_error(ss.str());
+            // }
+            print_chess_board(new_board);
+            return false;
+        };
+
+        const auto n = status->run_move_generation(gen, f);
+        ASSERT_EQ(n, moves.size());
+    }
+
+    TEST(Movement_Generator_Test, test_pawn_movement_generator) {
+
+        // empty board leads to no generated moves
+        pawn_movement_generator_test1();
+
+        // simple board leads to two generated moves.
+        pawn_movement_generator_test2();
+
+        // test that promotion generation works.
+        pawn_movement_generator_test3();
+
+
     }
 }
