@@ -132,7 +132,7 @@ template<Color color>
 Bitboard is_position_attacked_by_test_rig(const std::string_view fen) {
     const auto board = std::make_unique<Kangaroo::Chess_Board>(fen);;
 
-    Kangaroo::print_chess_board(board.get());
+    print_chess_board(*board);
 
     Bitboard result = 0ULL;
 

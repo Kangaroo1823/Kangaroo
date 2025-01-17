@@ -319,7 +319,14 @@ Kangaroo::Chess_Board::Chess_Board(const std::string_view fen) {
     void(reset_board(fen)); // -V530
 }
 
-void Kangaroo::print_chess_board(const Chess_Board *board, bool output_data) {
+std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board &board) {
+    os << format_chess_board(board, false);
+    return os;
+}
+
+[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data) {
+
+    std::stringstream ss;
 
     constexpr std::string_view black_king_c = " \u{2654} ";
     constexpr std::string_view black_queen_c = " \u{2655} ";
@@ -338,63 +345,67 @@ void Kangaroo::print_chess_board(const Chess_Board *board, bool output_data) {
     constexpr std::string_view empty_c = " . ";
     //"\u2005\u2005\u2004\u2024\u2004\u2005"; // "1 x \u2003 == 1 x \u3000 == 4 x \u202f";
 
-    if (board == nullptr) return;
-
     if (output_data) {
-        std::print ("/*\n");
+        ss << std::format ("/*\n");
     }
 
     std::print("\n       A  B  C  D  E  F  G  H\n\n");
     for (std::size_t rank = 8; rank > 0; --rank) {
-        std::print("  {}   ", rank);
+        ss << std::format("  {}   ", rank);
         for (std::size_t file = 0; file < 8; ++file) {
-            if (get_bit(board->black_king, rank_file_to_position(rank - 1, file)))
-                std::print("{}", black_king_c);
-            else if (get_bit(board->black_queens, rank_file_to_position(rank - 1, file)))
-                std::print("{}", black_queen_c);
-            else if (get_bit(board->black_rooks, rank_file_to_position(rank - 1, file)))
-                std::print("{}", black_rook_c);
-            else if (get_bit(board->black_knights, rank_file_to_position(rank - 1, file)))
-                std::print("{}", black_knight_c);
-            else if (get_bit(board->black_bishops, rank_file_to_position(rank - 1, file)))
-                std::print("{}", black_bishop_c);
-            else if (get_bit(board->black_pawns, rank_file_to_position(rank - 1, file)))
-                std::print("{}", black_pawn_c);
+            if (get_bit(board.black_king, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", black_king_c);
+            else if (get_bit(board.black_queens, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", black_queen_c);
+            else if (get_bit(board.black_rooks, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", black_rook_c);
+            else if (get_bit(board.black_knights, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", black_knight_c);
+            else if (get_bit(board.black_bishops, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", black_bishop_c);
+            else if (get_bit(board.black_pawns, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", black_pawn_c);
 
-            else if (get_bit(board->white_king, rank_file_to_position(rank - 1, file)))
-                std::print("{}", white_king_c);
-            else if (get_bit(board->white_queens, rank_file_to_position(rank - 1, file)))
-                std::print("{}", white_queen_c);
-            else if (get_bit(board->white_rooks, rank_file_to_position(rank - 1, file)))
-                std::print("{}", white_rook_c);
-            else if (get_bit(board->white_knights, rank_file_to_position(rank - 1, file)))
-                std::print("{}", white_knight_c);
-            else if (get_bit(board->white_bishops, rank_file_to_position(rank - 1, file)))
-                std::print("{}", white_bishop_c);
-            else if (get_bit(board->white_pawns, rank_file_to_position(rank - 1, file)))
-                std::print("{}", white_pawn_c);
-            else std::print("{}", empty_c);
+            else if (get_bit(board.white_king, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", white_king_c);
+            else if (get_bit(board.white_queens, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", white_queen_c);
+            else if (get_bit(board.white_rooks, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", white_rook_c);
+            else if (get_bit(board.white_knights, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", white_knight_c);
+            else if (get_bit(board.white_bishops, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", white_bishop_c);
+            else if (get_bit(board.white_pawns, rank_file_to_position(rank - 1, file)))
+                ss << std::format("{}", white_pawn_c);
+            else ss << std::format("{}", empty_c);
         }
-        std::print("\n");
+        ss << std::format("\n");
     }
-    std::print("\n       A  B  C  D  E  F  G  H\n\n");
+    ss << std::format("\n       A  B  C  D  E  F  G  H\n\n");
 
     if (output_data) {
-        std::print("*/\n  Kangaroo::Chess_Board( std::array<Bitboard, 15>{{\n");
-        std::print("    /* white pawns    */ 0x{0:016x}, ", board->white_pawns );
-        std::print("/* white knights */ 0x{0:016x}, ", board->white_knights );
-        std::print("/* white bishops */ 0x{0:016x}, \n", board->white_bishops );
-        std::print("    /* white rooks    */ 0x{0:016x}, ", board->white_rooks );
-        std::print("/* white queens  */ 0x{0:016x}, ", board->white_queens );
-        std::print("/* white king    */ 0x{0:016x}, \n", board->white_king );
-        std::print("    /* black pawns    */ 0x{0:016x}, ", board->black_pawns );
-        std::print("/* black knights */ 0x{0:016x}, ", board->black_knights );
-        std::print("/* black bishops */ 0x{0:016x}, \n", board->black_bishops );
-        std::print("    /* black rooks    */ 0x{0:016x}, ", board->black_rooks );
-        std::print("/* black queens  */ 0x{0:016x}, ", board->black_queens );
-        std::print("/* black king    */ 0x{0:016x}, \n", board->black_king );
-        std::print("    /* en passant sq. */ 0x{0:016x}, ", board->en_passant_square );
-        std::print("/* half move num */ 0x{0:016x}, ", board->half_move_number );
-        std::print("/* full move num */ 0x{0:016x} }}),\n", board->full_move_number );
+        ss << std::format("*/\n  Kangaroo::Chess_Board( std::array<Bitboard, 15>{{\n");
+        ss << std::format("    /* white pawns    */ 0x{0:016x}, ", board.white_pawns );
+        ss << std::format("/* white knights */ 0x{0:016x}, ", board.white_knights );
+        ss << std::format("/* white bishops */ 0x{0:016x}, \n", board.white_bishops );
+        ss << std::format("    /* white rooks    */ 0x{0:016x}, ", board.white_rooks );
+        ss << std::format("/* white queens  */ 0x{0:016x}, ", board.white_queens );
+        ss << std::format("/* white king    */ 0x{0:016x}, \n", board.white_king );
+        ss << std::format("    /* black pawns    */ 0x{0:016x}, ", board.black_pawns );
+        ss << std::format("/* black knights */ 0x{0:016x}, ", board.black_knights );
+        ss << std::format("/* black bishops */ 0x{0:016x}, \n", board.black_bishops );
+        ss << std::format("    /* black rooks    */ 0x{0:016x}, ", board.black_rooks );
+        ss << std::format("/* black queens  */ 0x{0:016x}, ", board.black_queens );
+        ss << std::format("/* black king    */ 0x{0:016x}, \n", board.black_king );
+        ss << std::format("    /* en passant sq. */ 0x{0:016x}, ", board.en_passant_square );
+        ss << std::format("/* half move num */ 0x{0:016x}, ", board.half_move_number );
+        ss << std::format("/* full move num */ 0x{0:016x} }}),\n", board.full_move_number );
     }
+
+    return ss.str();
+}
+
+void Kangaroo::print_chess_board(const Chess_Board &board, const bool output_data) {
+        std::print("{}", format_chess_board(board, output_data));
 }

@@ -9,9 +9,6 @@
 #include "Move_Receiver.h"
 
 namespace Kangaroo {
-
-
-
     class Movement_Generator {
         FRIEND_TEST(Movement_Generator_Test, test_pin_masks_generator);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
@@ -110,8 +107,8 @@ namespace Kangaroo {
         }
 
 
-        template<Kangaroo::Board_Status status, typename CallBackType>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(CallBackType callback) {
+        template<Kangaroo::Board_Status status>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(const CallbackType &callback) {
             using enum Move_Generation_Mode;
             using enum Pin_Masks_Suitable_For;
 
@@ -164,15 +161,14 @@ namespace Kangaroo {
          * Generates a double Pawn push if admissible. Assumes that a single Pawn push is admissible.
          *
          * @tparam status an instances of the Board_Status class indicating the status of move generation
-         * @tparam CallBackType type of the callback function.
          * @param callback the call function
          * @param pawn a Bitboard with a single set bit at the position corresponding to the square where the
          *              pawn in question is currently located.
          * @return Returns the number of moves generated.
          */
-        template<Kangaroo::Board_Status status, typename CallBackType>
+        template<Kangaroo::Board_Status status>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(
-            CallBackType callback, const Bitboard pawn) const {
+            const CallbackType &callback, const Bitboard pawn) const {
             std::size_t moves = 0ULL;
 
             // check if the Pawn is in the base row.
@@ -182,8 +178,8 @@ namespace Kangaroo {
                     is_pawn_push_admissible<status.mode>(pawn,
                                                          moved_pawn_2, board_p->all_pieces)) {
                     // make the move and call the callback function.
-                    Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn,
-                        CallBackType>::evaluate_and_perform_move(board_p, callback, pawn, moved_pawn_2);
+                    Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, moved_pawn_2);
 
                     // increment the number of moves generated.
                     ++moves;
@@ -197,14 +193,13 @@ namespace Kangaroo {
         /**
          * Generates Pawn captures.
          * @tparam status an instance of the Board_Status class indicating the current state of move generation.
-         * @tparam CallBackType The type of the callback function. Should return void.
          * @param callback The callback function.
          * @param pawn A bitboard with a single set bit at the position of the pawn.
          * @return Returns the number of moves generated.
          */
-        template<Kangaroo::Board_Status status, typename CallBackType>
+        template<Kangaroo::Board_Status status>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(
-            CallBackType callback, const Bitboard pawn) const {
+            const CallbackType &callback, const Bitboard pawn) const {
             using enum Color;
             using enum Move_Generation_Mode;
             using enum Move_Type;
@@ -234,25 +229,24 @@ namespace Kangaroo {
 
                 if constexpr (status.mode == Promotion_Move_Generation) {
                     // if so, perform the move and call the callback function.
-                    Move_Receiver<status, Promotion, Queen,
-                        CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn_attack);
+                    Move_Receiver<status, Promotion, Queen>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn_attack);
 
-                    Move_Receiver<status, Promotion, Bishop, CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn_attack);
+                    Move_Receiver<status, Promotion, Bishop>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn_attack);
 
-                    Move_Receiver<status, Promotion, Knight, CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn_attack);
+                    Move_Receiver<status, Promotion, Knight>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn_attack);
 
-                    Move_Receiver<status, Promotion, Rook, CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn_attack);
+                    Move_Receiver<status, Promotion, Rook>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn_attack);
 
                     // increment the number of moves generated by four.
                     moves += 4ULL; // -V112
                 } else {
                     // perform the move and call the callback
-                    Move_Receiver<status, Capture, Pawn, CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn_attack);
+                    Move_Receiver<status, Capture, Pawn>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn_attack);
 
                     // increment the number of moves generated
                     ++moves;
@@ -268,14 +262,13 @@ namespace Kangaroo {
          * _and_ during normal- or check-move-generation.
          *
          * @tparam status An instance of the class Board_Status indicating the state of move generation this method was called in.
-         * @tparam CallBackType The type of the callback
          * @param callback The callback itself
          * @param pawn A Bitboard with a single bit set where the pawn is located.
          * @return Returns the number of moves generated.
          */
-        template<Kangaroo::Board_Status status, typename CallBackType>
+        template<Kangaroo::Board_Status status>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_en_passant_captures(
-            CallBackType callback, const Bitboard pawn) const {
+            const CallbackType &callback, const Bitboard pawn) const {
             using enum Color;
 
             static_assert(
@@ -292,9 +285,8 @@ namespace Kangaroo {
                 // if the Pawn is left of the en_passant_square
                 if (not_a_file & pawn & board_p->en_passant_square >> 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
-                        CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn << 7);
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn << 7);
 
                     // increase move counter by one
                     ++moves;
@@ -302,9 +294,8 @@ namespace Kangaroo {
                     // if the Pawn is on the right-hand-side of the en_passant_square
                 } else if (not_h_file & pawn & board_p->en_passant_square << 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
-                        CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn << 9);
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn << 9);
 
                     // increase move-counter by one
                     ++moves;
@@ -315,9 +306,8 @@ namespace Kangaroo {
                 // if the Pawn is on the right-hand-side of the en_passant_square
                 if (not_a_file & pawn & board_p->en_passant_square >> 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
-                        CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn >> 7);
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn >> 7);
 
                     // increase the move-counter by one
                     ++moves;
@@ -325,9 +315,8 @@ namespace Kangaroo {
                     // if the Pawn is on the left-hand-side of the en_passant_square
                 } else if (not_h_file & pawn & board_p->en_passant_square << 1) {
                     // perform the move and call the callback
-                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn,
-                        CallBackType>::evaluate_and_perform_move(
-                        board_p, callback, pawn, pawn >> 9);
+                    Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                        *board_p, callback, pawn, pawn >> 9);
 
                     // increase the move-counter by one
                     ++moves;
@@ -357,12 +346,11 @@ namespace Kangaroo {
          *
          *
          * @tparam status An instance of the class Board_Status indicating the state of move generation we are currently in.
-         * @tparam CallBackType The type of the callback function
          * @param callback  The user-provided callback function
          * @return Returns the number of moves generated.
          */
-        template<Kangaroo::Board_Status status, typename CallBackType>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_moves(CallBackType callback) const {
+        template<Kangaroo::Board_Status status>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_moves(const CallbackType &callback) const {
             using enum Color;
             using enum Chess_Pieces;
             using enum Move_Type;
@@ -413,42 +401,42 @@ namespace Kangaroo {
                         // check if we are in Promotion_Move_Generation-mode
                         if constexpr (status.mode == Promotion_Move_Generation) {
                             // if so, perform the move and call the callback function.
-                            Move_Receiver<status, Promotion, Queen, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Queen>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
-                            Move_Receiver<status, Promotion, Bishop, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Bishop>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
-                            Move_Receiver<status, Promotion, Knight, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Knight>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
-                            Move_Receiver<status, Promotion, Rook, CallBackType>::evaluate_and_perform_move(
+                            Move_Receiver<status, Promotion, Rook>::evaluate_and_perform_move(
                                 board_p, callback, loop_pawn, moved_pawn);
 
                             moves += 4ULL; // -V112
                         } else {
                             // perform the move and run the callback
-                            Move_Receiver<status, Normal, Pawn, CallBackType>::evaluate_and_perform_move(
-                                board_p, callback, loop_pawn, moved_pawn);
+                            Move_Receiver<status, Normal, Pawn>::evaluate_and_perform_move(
+                                *board_p, callback, loop_pawn, moved_pawn);
 
                             // increment the number of moves generated.
                             ++moves;
 
                             // double move for pawns in base row
-                            moves += generate_double_pawn_pushs<status, CallBackType>(callback, loop_pawn);
+                            moves += generate_double_pawn_pushs<status>(callback, loop_pawn);
                         }
                     }
                 }
 
                 if constexpr (status.mode == Normal_Move_Generation || status.mode == Check_Move_Generation ||
                               status.mode == Promotion_Move_Generation) {
-                    moves += generate_pawn_captures<status, CallBackType>(callback, loop_pawn);
+                    moves += generate_pawn_captures<status>(callback, loop_pawn);
                 }
 
                 if constexpr (status.en_passant_p == true && (
                                   status.mode == Normal_Move_Generation ||
                                   status.mode == Check_Move_Generation)) {
-                    moves += generate_en_passant_captures<status, CallBackType>(callback, loop_pawn);
+                    moves += generate_en_passant_captures<status>(callback, loop_pawn);
                 }
             }
             return moves;

@@ -243,7 +243,7 @@ namespace Kangaroo {
         };
 
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
-            [&moves]([[maybe_unused]] const Chess_Board *new_board, const Move &move, const Color color,
+            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move &move, const Color color,
                      const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::White);
                 ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
@@ -487,7 +487,7 @@ namespace Kangaroo {
         };
 
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
-            [&moves]([[maybe_unused]] const Chess_Board *new_board, const Move move, const Color color,
+            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::Black);
                 ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
@@ -618,10 +618,10 @@ namespace Kangaroo {
             0x100800000000,
         };
 
-        print_chess_board(board.get());
+        print_chess_board(*board);
 
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
-            [&moves]([[maybe_unused]] const Chess_Board *new_board, const Move move, const Color color,
+            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::White);
                 ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
@@ -752,10 +752,10 @@ namespace Kangaroo {
             0x8080000000000,
         };
 
-        print_chess_board(board.get());
+        print_chess_board(*board);
 
         const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
-            [&moves]([[maybe_unused]] const Chess_Board *new_board, const Move move, const Color color, const Chess_Pieces chess_piece) {
+            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color, const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::Black);
                 ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
                 ASSERT_TRUE(std::ranges::contains(moves, move));

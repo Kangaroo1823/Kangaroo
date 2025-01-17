@@ -161,7 +161,7 @@ _ForceInline Bitboard create_occupancy_from_mask(const std::size_t index, const 
 }
 
 
-#define Bitloop(x,y) for(typename std::remove_const<decltype(x)>::type y = x;y;y=_blsr_u64(y))
+#define Bitloop(x,y) for(typename std::remove_reference<typename std::remove_const<decltype(x)>::type>::type y = x;y;y=_blsr_u64(y))
 
 
 constexpr Bitboard not_a_file = /*

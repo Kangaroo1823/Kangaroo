@@ -15,7 +15,7 @@ namespace Kangaroo {
     class Chess_Board;
     class Movement_Generator;
 
-    typedef std::function<void(const Chess_Board *, Move, Color, Chess_Pieces)> CallbackType;
+    typedef std::function<void(const Chess_Board &, Move, Color, Chess_Pieces)> CallbackType;
 
 
     class Invalid_Board_Status final : public std::runtime_error {

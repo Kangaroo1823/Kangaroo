@@ -85,13 +85,34 @@ namespace Kangaroo {
 
     public:
         explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
+
         explicit Chess_Board(const std::array<Bitboard, 15> &data);
+
         Chess_Board(const Chess_Board &) = default;
 
         [[nodiscard]] std::unique_ptr<Board_Status> reset_board(std::string_view fen);
 
-        bool operator==(const Chess_Board &) const = default;
-        bool operator!=(const Chess_Board &) const = default;
+        bool operator==(const Chess_Board &b) const {
+            return b.white_pawns == white_pawns &&
+                   b.white_knights == white_knights &&
+                   b.white_bishops == white_bishops &&
+                   b.white_rooks == white_rooks &&
+                   b.white_queens == white_queens &&
+                   b.white_king == white_king &&
+                   b.black_pawns == black_pawns &&
+                   b.black_knights == black_knights &&
+                   b.black_bishops == black_bishops &&
+                   b.black_rooks == black_rooks &&
+                   b.black_queens == black_queens &&
+                   b.black_king == black_king &&
+                   b.en_passant_square == en_passant_square &&
+                   b.half_move_number == half_move_number &&
+                   b.full_move_number == full_move_number;
+        }
+
+        bool operator!=(const Chess_Board &b) const {
+            return !(*this == b);
+        };
 
 
         Bitboard white_king = 0ULL;
@@ -133,7 +154,9 @@ namespace Kangaroo {
         void parse_fen_full_move_number(std::string_view fen);
     };
 
-    void print_chess_board(const Chess_Board *board, bool output_data = false);
+    std::ostream &operator<<(std::ostream &os, const Chess_Board &board);
+    [[nodiscard]] std::string format_chess_board(const Chess_Board &board, bool output_data);
+    void print_chess_board(const Chess_Board &board, bool output_data = false);
 }
 
 #endif //CHESS_BOARD_H
