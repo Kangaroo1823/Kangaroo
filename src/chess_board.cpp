@@ -290,7 +290,7 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
 }
 
 Kangaroo::Chess_Board::Chess_Board(const std::string_view fen) {
-    void(reset_board(fen));
+    void(reset_board(fen)); // -V530
 }
 
 void Kangaroo::print_chess_board(const Chess_Board *board) {

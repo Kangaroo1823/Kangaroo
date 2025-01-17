@@ -48,7 +48,7 @@ namespace Kangaroo {
             } else if constexpr (status.color_to_move == Black) {
                 new_board.black_pawns = new_board.black_pawns ^ move; // -V1051
 
-                if (new_board.white_pawns & to) { new_board.white_pawns = new_board.white_pawns ^ to; }
+                if (new_board.white_pawns & to) { new_board.white_pawns = new_board.white_pawns ^ to; } // -V1051
                 if (new_board.white_bishops & to) { new_board.white_bishops = new_board.white_bishops ^ to; }
                 if (new_board.white_knights & to) { new_board.white_knights = new_board.white_knights ^ to; }
                 if (new_board.white_rooks & to) { new_board.white_rooks = new_board.white_rooks ^ to; }
