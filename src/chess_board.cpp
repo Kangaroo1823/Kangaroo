@@ -319,7 +319,7 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
         ss << std::format("/*\n");
     }
 
-    std::print("\n       A  B  C  D  E  F  G  H\n\n");
+    ss << std::format("\n       A  B  C  D  E  F  G  H\n\n");
     for (std::size_t rank = 8; rank > 0; --rank) {
         ss << std::format("  {}   ", rank);
         for (std::size_t file = 0; file < 8; ++file) {

@@ -145,10 +145,10 @@ namespace Kangaroo {
             using enum Move_Generation_Mode;
 
             static_assert(mode == Normal_Move_Generation || mode == Check_Move_Generation ||
-                          mode == Pin_HV_Move_Generation);
+                          mode == Pin_HV_Move_Generation || mode == Promotion_Move_Generation);
 
             const bool ret = (pawn_move & occupied_squares) == 0;
-            if constexpr (mode == Normal_Move_Generation || mode == Check_Move_Generation) {
+            if constexpr (mode == Normal_Move_Generation || mode == Check_Move_Generation || mode == Promotion_Move_Generation) {
                 return ret;
             } else if constexpr (mode == Pin_HV_Move_Generation) {
                 const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
@@ -392,7 +392,7 @@ namespace Kangaroo {
                 // if we are either in Normal_Move_Generation-mode, Pin_HV_Move_Generation-mode,
                 // or Check_Move_Generation-mode
                 if constexpr (status.mode == Normal_Move_Generation || status.mode == Pin_HV_Move_Generation ||
-                              status.mode == Check_Move_Generation) {
+                              status.mode == Check_Move_Generation || status.mode == Promotion_Move_Generation) {
                     // compute the moved Pawn
                     const Bitboard moved_pawn = regular_pawn_push<status.color_to_move>(loop_pawn);
 
@@ -402,16 +402,16 @@ namespace Kangaroo {
                         if constexpr (status.mode == Promotion_Move_Generation) {
                             // if so, perform the move and call the callback function.
                             Move_Receiver<status, Promotion, Queen>::evaluate_and_perform_move(
-                                board_p, callback, loop_pawn, moved_pawn);
+                                *board_p, callback, loop_pawn, moved_pawn);
 
                             Move_Receiver<status, Promotion, Bishop>::evaluate_and_perform_move(
-                                board_p, callback, loop_pawn, moved_pawn);
+                                *board_p, callback, loop_pawn, moved_pawn);
 
                             Move_Receiver<status, Promotion, Knight>::evaluate_and_perform_move(
-                                board_p, callback, loop_pawn, moved_pawn);
+                                *board_p, callback, loop_pawn, moved_pawn);
 
                             Move_Receiver<status, Promotion, Rook>::evaluate_and_perform_move(
-                                board_p, callback, loop_pawn, moved_pawn);
+                                *board_p, callback, loop_pawn, moved_pawn);
 
                             moves += 4ULL; // -V112
                         } else {

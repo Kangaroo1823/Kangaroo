@@ -4,6 +4,8 @@
 // Created by U439644 on 1/8/2025.
 //
 
+#include <bitset>
+
 #include "Movement_Generator.h"
 #include "gtest/gtest.h"
 #include "move_generator.h"
@@ -215,21 +217,20 @@ namespace Kangaroo {
      * Test that the board below leads to two generated moves.
      */
     void pawn_movement_generator_test2() {
+        /*
+                    A  B  C  D  E  F  G  H
 
-            /*
-                        A  B  C  D  E  F  G  H
+               8    .  .  .  .  .  .  .  .
+               7    .  .  ♖  .  .  .  .  .
+               6    .  .  .  ♟  .  .  .  .
+               5    .  .  .  .  .  .  .  .
+               4    .  .  .  .  .  .  .  .
+               3    .  .  .  .  .  .  .  .
+               2    .  .  .  .  .  .  .  .
+               1    .  .  .  .  .  .  .  .
 
-                   8    .  .  .  .  .  .  .  .
-                   7    .  .  ♖  .  .  .  .  .
-                   6    .  .  .  ♟  .  .  .  .
-                   5    .  .  .  .  .  .  .  .
-                   4    .  .  .  .  .  .  .  .
-                   3    .  .  .  .  .  .  .  .
-                   2    .  .  .  .  .  .  .  .
-                   1    .  .  .  .  .  .  .  .
-
-                        A  B  C  D  E  F  G  H
-          */
+                    A  B  C  D  E  F  G  H
+      */
 
         Chess_Board board{};
         const auto status = board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
@@ -328,9 +329,8 @@ namespace Kangaroo {
 
 
         auto f = [&moves, &new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                          move, [[maybe_unused]] const Color color,
-                          [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
-
+                                       move, [[maybe_unused]] const Color color,
+                                       [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             const auto it = std::ranges::find(moves, move);
             if (it == moves.end()) {
                 std::stringstream ss;
@@ -344,6 +344,31 @@ namespace Kangaroo {
                 ss << "board: " << new_board << " not found in boards";
                 throw std::runtime_error(ss.str());
             }
+
+            if (!new_board.is_state_consistent()) {
+                std::stringstream ss;
+                ss << "board: " << std::endl << new_board << " is not consistent." << std::endl;
+                ss << "--- details of board: ---------------------------------------------------" << std::endl;
+                ss << "   white pawns:    " << format_bitboard(new_board.white_pawns) << std::endl;
+                ss << "   black pawns:    " << format_bitboard(new_board.black_pawns) << std::endl;
+                ss << "   white knights:  " << format_bitboard(new_board.white_knights) << std::endl;
+                ss << "   black knights:  " << format_bitboard(new_board.black_knights) << std::endl;
+                ss << "   white bishops:  " << format_bitboard(new_board.white_bishops) << std::endl;
+                ss << "   black bishops:  " << format_bitboard(new_board.black_bishops) << std::endl;
+                ss << "   white rooks:    " << format_bitboard(new_board.white_rooks) << std::endl;
+                ss << "   black rooks:    " << format_bitboard(new_board.black_rooks) << std::endl;
+                ss << "   white queens:   " << format_bitboard(new_board.white_queens) << std::endl;
+                ss << "   black queens:   " << format_bitboard(new_board.black_queens) << std::endl;
+                ss << "   white king:     " << format_bitboard(new_board.white_king) << std::endl;
+                ss << "   black king:     " << format_bitboard(new_board.black_king) << std::endl;
+                ss << "   white pieces:   " << format_bitboard(new_board.white_pieces) << std::endl;
+                ss << "   black pieces:   " << format_bitboard(new_board.black_pieces) << std::endl;
+                ss << "   all pieces:     " << format_bitboard(new_board.all_pieces) << std::endl;
+                ss << "   en passant sq.: " << format_bitboard(new_board.en_passant_square) << std::endl;
+                ss << "-------------------------------------------------------------------------" << std::endl;
+                throw std::runtime_error(ss.str());
+            }
+
             return false;
         };
 
@@ -354,63 +379,34 @@ namespace Kangaroo {
     /**
      * Test that the board below, it is tested that the pawn will promote if it is moved.
      */
-    void pawn_movement_generator_test4() {}
     void pawn_movement_generator_test3() {
-                    /*
-                        A  B  C  D  E  F  G  H
+        /*
+            A  B  C  D  E  F  G  H
 
-                   8    .  .  ♖  .  .  .  .  .
-                   7    .  .  .  ♟  .  .  .  .
-                   6    .  .  .  .  .  .  .  .
-                   5    .  .  .  .  .  .  .  .
-                   4    .  .  .  .  .  .  .  .
-                   3    .  .  .  .  .  .  .  .
-                   2    .  .  .  .  .  .  .  .
-                   1    .  .  .  .  .  .  .  .
+       8    .  .  ♖  .  .  .  .  .
+       7    .  .  .  ♟  .  .  .  .
+       6    .  .  .  .  .  .  .  .
+       5    .  .  .  .  .  .  .  .
+       4    .  .  .  .  .  .  .  .
+       3    .  .  .  .  .  .  .  .
+       2    .  .  .  .  .  .  .  .
+       1    .  .  .  .  .  .  .  .
 
-                        A  B  C  D  E  F  G  H
-          */
+            A  B  C  D  E  F  G  H
+*/
 
         Chess_Board board{};
         const auto status = board.reset_board("2r5/3P4/8/8/8/8/8/8 w - - 0 1");
         Movement_Generator gen(&board);
 
 
-        [[maybe_unused]] constexpr std::array<Chess_Board, 2> new_boards = {
-            /*
-
-                       A  B  C  D  E  F  G  H
-
-                  8    .  .  .  .  .  .  .  .
-                  7    .  .  ♖  ♟  .  .  .  .
-                  6    .  .  .  .  .  .  .  .
-                  5    .  .  .  .  .  .  .  .
-                  4    .  .  .  .  .  .  .  .
-                  3    .  .  .  .  .  .  .  .
-                  2    .  .  .  .  .  .  .  .
-                  1    .  .  .  .  .  .  .  .
-
-                       A  B  C  D  E  F  G  H
-
-                */
-            Chess_Board(std::array<Bitboard, 15>{
-                /* white pawns    */ 0x0008000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
-                0x0000000000000000,
-                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
-                0x0000000000000000,
-                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
-                0x0000000000000000,
-                /* black rooks    */ 0x0004000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
-                0x0000000000000000,
-                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
-                0x0000000000000001
-            }),
+        [[maybe_unused]] constexpr std::array<Chess_Board, 8> new_boards = {
             /*
 
                    A  B  C  D  E  F  G  H
 
-              8    .  .  .  .  .  .  .  .
-              7    .  .  ♟  .  .  .  .  .
+              8    .  .  ♖  ♛  .  .  .  .
+              7    .  .  .  .  .  .  .  .
               6    .  .  .  .  .  .  .  .
               5    .  .  .  .  .  .  .  .
               4    .  .  .  .  .  .  .  .
@@ -422,7 +418,175 @@ namespace Kangaroo {
 
             */
             Kangaroo::Chess_Board(std::array<Bitboard, 15>{
-                /* white pawns    */ 0x0004000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0800000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0400000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♖  ♝  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0800000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0400000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♖  ♞  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0800000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0400000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♖  ♜  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0800000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0400000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♛  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0400000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♝  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0400000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♞  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0400000000000000, /* white bishops */
                 0x0000000000000000,
                 /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
                 0x0000000000000000,
@@ -433,13 +597,55 @@ namespace Kangaroo {
                 /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
                 0x0000000000000001
             }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  ♜  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0400000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
         };
 
-        [[maybe_unused]] constexpr std::array<Bitboard, 2> moves = {
+        [[maybe_unused]] constexpr std::array<Bitboard, 8> moves = {
             /*
-              8    .  .  .  .  .  .  .  .
+  8    .  .  .  1  .  .  .  .
+  7    .  .  .  1  .  .  .  .
+  6    .  .  .  .  .  .  .  .
+  5    .  .  .  .  .  .  .  .
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  .  .  .  .  .
+  2    .  .  .  .  .  .  .  .
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+       bitboard as 64 bit integer: */
+            0x808000000000000,
+            /*
+              8    .  .  .  1  .  .  .  .
               7    .  .  .  1  .  .  .  .
-              6    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
               5    .  .  .  .  .  .  .  .
               4    .  .  .  .  .  .  .  .
               3    .  .  .  .  .  .  .  .
@@ -449,11 +655,11 @@ namespace Kangaroo {
                    A  B  C  D  E  F  G  H
 
                    bitboard as 64 bit integer: */
-            0x8080000000000,
+            0x808000000000000,
             /*
-              8    .  .  .  .  .  .  .  .
-              7    .  .  1  .  .  .  .  .
-              6    .  .  .  1  .  .  .  .
+              8    .  .  .  1  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
               5    .  .  .  .  .  .  .  .
               4    .  .  .  .  .  .  .  .
               3    .  .  .  .  .  .  .  .
@@ -463,28 +669,105 @@ namespace Kangaroo {
                    A  B  C  D  E  F  G  H
 
                    bitboard as 64 bit integer: */
-            0x4080000000000,
+            0x808000000000000,
+            /*
+              8    .  .  .  1  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x808000000000000,
+            /*
+              8    .  .  1  .  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x408000000000000,
+            /*
+              8    .  .  1  .  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x408000000000000,
+            /*
+              8    .  .  1  .  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x408000000000000,
+            /*
+              8    .  .  1  .  .  .  .  .
+              7    .  .  .  1  .  .  .  .
+              6    .  .  .  .  .  .  .  .
+              5    .  .  .  .  .  .  .  .
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+                   bitboard as 64 bit integer: */
+            0x408000000000000,
+
         };
 
 
-        auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                          move, [[maybe_unused]] const Color color,
-                          [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+        auto f = [&new_boards, &moves]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                               move, [[maybe_unused]] const Color color,
+                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
 
-            // const auto it = std::ranges::find(moves, move);
-            // if (it == moves.end()) {
-            //     std::stringstream ss;
-            //     ss << "move: 0x" << std::hex << move << " not found in moves";
-            //     throw std::runtime_error(ss.str());
-            // };
-            //
-            // const auto board_it = std::ranges::find(new_boards, new_board);
-            // if (board_it == new_boards.end()) {
-            //     std::stringstream ss;
-            //     ss << "board: " << new_board << " not found in boards";
-            //     throw std::runtime_error(ss.str());
-            // }
-            print_chess_board(new_board);
+            const auto it = std::ranges::find(moves, move);
+            if (it == moves.end()) {
+                std::stringstream ss;
+                ss << "move: 0x" << std::hex << move << " not found in moves";
+                throw std::runtime_error(ss.str());
+            };
+
+
+            if (const auto board_it = std::ranges::find(new_boards, new_board); board_it == new_boards.end()) {
+                std::stringstream ss;
+                ss << "board: " << new_board << " not found in boards";
+                throw std::runtime_error(ss.str());
+            }
+
+            if (!new_board.is_state_consistent()) {
+                std::stringstream ss;
+                ss << "board: " << new_board << " is not consistent";
+
+                throw std::runtime_error(ss.str());
+            }
             return false;
         };
 
@@ -493,7 +776,6 @@ namespace Kangaroo {
     }
 
     TEST(Movement_Generator_Test, test_pawn_movement_generator) {
-
         // empty board leads to no generated moves
         pawn_movement_generator_test1();
 
@@ -502,7 +784,5 @@ namespace Kangaroo {
 
         // test that promotion generation works.
         pawn_movement_generator_test3();
-
-
     }
 }

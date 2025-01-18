@@ -84,6 +84,14 @@ namespace Kangaroo {
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
 
     public:
+
+        [[nodiscard]] constexpr bool is_state_consistent() const {
+            return (white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king) == white_pieces &&
+                   (black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king) == black_pieces &&
+                       (white_pieces | black_pieces) == all_pieces;
+        }
+
+
         explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
 
         explicit constexpr Chess_Board(const std::array<Bitboard, 15> &data) {
