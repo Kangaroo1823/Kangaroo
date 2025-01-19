@@ -108,7 +108,7 @@ namespace Kangaroo {
 
 
         template<Kangaroo::Board_Status status>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(const CallbackType &callback) {
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_all_pawn_moves(const CallbackType &callback) {
             using enum Move_Generation_Mode;
             using enum Pin_Masks_Suitable_For;
 
@@ -283,19 +283,19 @@ namespace Kangaroo {
             // when we generate moves for White
             if constexpr (status.color_to_move == White) {
                 // if the Pawn is left of the en_passant_square
-                if (not_a_file & pawn & board_p->en_passant_square >> 1) {
+                if (not_a_file & pawn & board_p->en_passant_square >> 7) {
                     // perform the move and call the callback
                     Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                        *board_p, callback, pawn, pawn << 7);
+                        *board_p, callback, pawn, board_p->en_passant_square);
 
                     // increase move counter by one
                     ++moves;
 
                     // if the Pawn is on the right-hand-side of the en_passant_square
-                } else if (not_h_file & pawn & board_p->en_passant_square << 1) {
+                } else if (not_h_file & pawn & board_p->en_passant_square >> 9) {
                     // perform the move and call the callback
                     Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                        *board_p, callback, pawn, pawn << 9);
+                        *board_p, callback, pawn, board_p->en_passant_square);
 
                     // increase move-counter by one
                     ++moves;
@@ -304,19 +304,19 @@ namespace Kangaroo {
                 // when we generate moves for Black ...
             } else if constexpr (status.color_to_move == Black) {
                 // if the Pawn is on the right-hand-side of the en_passant_square
-                if (not_a_file & pawn & board_p->en_passant_square >> 1) {
+                if (not_a_file & pawn & board_p->en_passant_square << 7) {
                     // perform the move and call the callback
                     Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                        *board_p, callback, pawn, pawn >> 7);
+                        *board_p, callback, pawn, board_p->en_passant_square);
 
                     // increase the move-counter by one
                     ++moves;
 
                     // if the Pawn is on the left-hand-side of the en_passant_square
-                } else if (not_h_file & pawn & board_p->en_passant_square << 1) {
+                } else if (not_h_file & pawn & board_p->en_passant_square << 9) {
                     // perform the move and call the callback
                     Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                        *board_p, callback, pawn, pawn >> 9);
+                        *board_p, callback, pawn, board_p->en_passant_square);
 
                     // increase the move-counter by one
                     ++moves;

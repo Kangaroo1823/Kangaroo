@@ -22,11 +22,11 @@ static void BM_move_generator(benchmark::State &state) { // -V2009
     for ([[maybe_unused]] auto _: state) {
         uint64_t cntr = 0ULL;
 
-        auto s = movement_generator->generate_moves<Kangaroo::Board_Status(0x3d)>(
-            [&cntr](const Kangaroo::Chess_Board *new_board, const Move move, const Color color,
+        auto s = movement_generator->generate_all_pawn_moves<Kangaroo::Board_Status(0x3d)>(
+            [&cntr](const Kangaroo::Chess_Board &new_board, const Move move, const Color color,
                     const Chess_Pieces chess_piece) {
                 ++cntr;
-                benchmark::DoNotOptimize(new_board);
+                benchmark::DoNotOptimize(&new_board);
                 benchmark::DoNotOptimize(&move);
                 benchmark::DoNotOptimize(&color);
                 benchmark::DoNotOptimize(&chess_piece);

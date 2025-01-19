@@ -248,7 +248,7 @@ template<Color color>
 }
 
 
-std::string print_position(Square position);
+std::string format_square(Square position);
 
 inline std::string format_bitboard(Bitboard bitboard) {
     return std::format("0x{:x}, ", bitboard);

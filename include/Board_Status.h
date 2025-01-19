@@ -143,7 +143,7 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] std::size_t run_move_generation(Movement_Generator &gen,
+        [[nodiscard]] std::size_t run_pawn_move_generation(Movement_Generator &gen,
             const CallbackType& callback) const;
     };
 } // Kangaroo

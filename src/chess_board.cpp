@@ -295,7 +295,8 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
     return os;
 }
 
-[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data) {
+[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data,
+                                                       std::optional<Board_Status> status) {
     std::stringstream ss;
 
     constexpr std::string_view black_king_c = " \u{2654} ";
@@ -350,6 +351,21 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
                 ss << std::format("{}", white_pawn_c);
             else ss << std::format("{}", empty_c);
         }
+        if (rank == 8 && board.en_passant_square) {
+            ss << "         en passant square: " << format_square(square_of(board.en_passant_square));
+        }
+        if (rank == 7 && status != std::nullopt) {
+            ss << "         castling rights:   " << (status->white_king_castle ? "K" : "-") << (
+                status->white_queen_castle ? "Q" : "-") << (status->black_king_castle ? "k" : "-") << (
+                status->black_queen_castle ? "q" : "-");
+        }
+        if (rank == 6) {
+            ss << "         half move number:  " << board.half_move_number;
+        }
+        if (rank == 5) {
+            ss << "         full move number:  " << board.full_move_number;
+        }
+
         ss << std::format("\n");
     }
     ss << std::format("\n       A  B  C  D  E  F  G  H\n\n");

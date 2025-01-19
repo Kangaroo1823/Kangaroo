@@ -84,11 +84,12 @@ namespace Kangaroo {
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
 
     public:
-
         [[nodiscard]] constexpr bool is_state_consistent() const {
-            return (white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king) == white_pieces &&
-                   (black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king) == black_pieces &&
-                       (white_pieces | black_pieces) == all_pieces;
+            return (white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king) ==
+                   white_pieces &&
+                   (black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king) ==
+                   black_pieces &&
+                   (white_pieces | black_pieces) == all_pieces;
         }
 
 
@@ -112,7 +113,6 @@ namespace Kangaroo {
             full_move_number = static_cast<std::size_t>(data[14]);
 
             update_collectors();
-
         }
 
         _ForceInline constexpr void update_collectors() {
@@ -189,7 +189,10 @@ namespace Kangaroo {
     };
 
     std::ostream &operator<<(std::ostream &os, const Chess_Board &board);
-    [[nodiscard]] std::string format_chess_board(const Chess_Board &board, bool output_data);
+
+    [[nodiscard]] std::string format_chess_board(const Chess_Board &board, bool output_data = false,
+                                                           std::optional<Board_Status> status = std::nullopt);
+
     void print_chess_board(const Chess_Board &board, bool output_data = false);
 }
 
