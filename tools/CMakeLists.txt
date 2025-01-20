@@ -249,6 +249,8 @@ add_executable( hex_to_bitboard
         hex_to_bitboard.cpp
         ../include/bitboard.h
         ../src/bitboard.cpp
+        ../include/Move_Receiver.decl.h
+        ../include/Movement_Generator.decl.h
 )
 target_link_libraries( hex_to_bitboard PRIVATE Kangaroo_warnings )
 target_include_directories( hex_to_bitboard PRIVATE ../include )
