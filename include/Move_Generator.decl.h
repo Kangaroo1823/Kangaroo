@@ -10,7 +10,7 @@
 #include "Move_Receiver.h"
 
 namespace Kangaroo {
-    class Movement_Generator {
+    class Move_Generator {
         FRIEND_TEST(Movement_Generator_Test, test_pin_masks_generator);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
@@ -28,7 +28,7 @@ namespace Kangaroo {
         Bitboard check_mask = 0ULL;
 
     public:
-        explicit Movement_Generator(Chess_Board *board) : board_p(board) {
+        explicit Move_Generator(Chess_Board *board) : board_p(board) {
         }
 
         [[nodiscard]] _ForceInline constexpr Bitboard get_pin_mask_HV() const {

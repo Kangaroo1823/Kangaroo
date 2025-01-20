@@ -16,7 +16,7 @@ namespace Kangaroo {
         using enum Pin_Masks_Suitable_For;
 
         Chess_Board board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
         gen.build_pin_masks<White, Detecting_Pins>();
         ASSERT_EQ(gen.pin_mask_HV, 0) << "1st test not true";
 
@@ -199,7 +199,7 @@ namespace Kangaroo {
     void pawn_movement_generator_test1() {
         Chess_Board board{};
         std::unique_ptr<Board_Status> status = board.reset_board("8/8/8/8/8/8/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
         // empty board results in no moves generated
         auto number_of_moves = status->run_pawn_move_generation(gen,
@@ -234,7 +234,7 @@ namespace Kangaroo {
 
         Chess_Board board{};
         const auto status = board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
 
         std::array<Chess_Board, 2> new_boards = {
@@ -397,7 +397,7 @@ namespace Kangaroo {
 
         Chess_Board board{};
         const auto status = board.reset_board("2r5/3P4/8/8/8/8/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
 
         [[maybe_unused]] constexpr std::array<Chess_Board, 8> new_boards = {
@@ -796,7 +796,7 @@ namespace Kangaroo {
 
         Chess_Board board{};
         const auto status = board.reset_board("7K/8/5P2/8/8/8/8/b7 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
         auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
                     move, [[maybe_unused]] const Color color,
@@ -812,7 +812,7 @@ namespace Kangaroo {
     void pawn_movement_generator_test5() {
         Chess_Board board{};
         const auto status = board.reset_board("5K2/8/4b3/5P2/8/8/8/5r2 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
         std::array<Chess_Board, 1> new_boards{
             /*
@@ -897,7 +897,7 @@ namespace Kangaroo {
     void pawn_movement_generator_test6() {
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/2b5/r2P3K/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
 
         auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
@@ -915,7 +915,7 @@ namespace Kangaroo {
     void pawn_movement_generator_test7() {
         Chess_Board board{};
         const auto status = board.reset_board("8/pp1ppppp/8/1Pp5/8/8/8/8 w kqKQ c6 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
         print_chess_board(board);
     }

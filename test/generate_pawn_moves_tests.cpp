@@ -13,7 +13,7 @@ namespace Kangaroo {
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base) {
         auto board = std::make_unique<
             Kangaroo::Chess_Board>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        Kangaroo::Movement_Generator gen(board.get());
+        Kangaroo::Move_Generator gen(board.get());
 
         [[maybe_unused]] std::array<Move, 16> moves = {
             /*
@@ -257,7 +257,7 @@ namespace Kangaroo {
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base) {
         auto board = std::make_unique<
             Kangaroo::Chess_Board>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
-        Movement_Generator gen(board.get());
+        Move_Generator gen(board.get());
 
         [[maybe_unused]] std::array<Move, 16> moves = {
             /*
@@ -501,7 +501,7 @@ namespace Kangaroo {
 
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture) {
         const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
-        Movement_Generator gen(board.get());
+        Move_Generator gen(board.get());
 
         [[maybe_unused]] std::array<Move, 8> moves = {
             /*
@@ -635,7 +635,7 @@ namespace Kangaroo {
 
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture) {
         const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_b);
-        Movement_Generator gen(board.get());
+        Move_Generator gen(board.get());
 
         [[maybe_unused]] std::array<Move, 8> moves = {
             /*

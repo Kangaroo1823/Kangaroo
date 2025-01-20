@@ -13,7 +13,7 @@
 
 namespace Kangaroo {
     class Chess_Board;
-    class Movement_Generator;
+    class Move_Generator;
 
     typedef std::function<void(const Chess_Board &, Move, Color, Chess_Pieces)> CallbackType;
 
@@ -143,7 +143,7 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] std::size_t run_pawn_move_generation(Movement_Generator &gen,
+        [[nodiscard]] std::size_t run_pawn_move_generation(Move_Generator &gen,
             const CallbackType& callback) const;
     };
 } // Kangaroo

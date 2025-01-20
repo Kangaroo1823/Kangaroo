@@ -13,7 +13,7 @@
 
 
 const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
-const auto movement_generator = std::make_unique<Kangaroo::Movement_Generator>(board.get());
+const auto movement_generator = std::make_unique<Kangaroo::Move_Generator>(board.get());
 
 // cppcheck-suppress constParameterCallback
 static void BM_move_generator(benchmark::State &state) { // -V2009

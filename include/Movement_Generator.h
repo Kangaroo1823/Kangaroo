@@ -6,13 +6,13 @@
 #define MOVEMENT_GENERATOR_H
 
 #include "bitboard.h"
-#include "Movement_Generator.decl.h"
+#include "Move_Generator.decl.h"
 #include "Move_Receiver.decl.h"
 
 
 namespace Kangaroo {
     template<Color color_of_king, Pin_Masks_Suitable_For purpose>
-    _ForceInline constexpr void Movement_Generator::build_pin_masks() {
+    _ForceInline constexpr void Move_Generator::build_pin_masks() {
         using enum Color;
         using enum Slider;
 
@@ -57,7 +57,7 @@ namespace Kangaroo {
 
 
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t Movement_Generator::generate_all_pawn_moves(
+    [[nodiscard]] _ForceInline constexpr std::size_t Move_Generator::generate_all_pawn_moves(
         const CallbackType &callback) {
         using enum Move_Generation_Mode;
         using enum Pin_Masks_Suitable_For;
@@ -77,7 +77,7 @@ namespace Kangaroo {
 
 
     template<Move_Generation_Mode mode>
-    [[nodiscard]] _ForceInline constexpr bool Movement_Generator::is_pawn_push_admissible(
+    [[nodiscard]] _ForceInline constexpr bool Move_Generator::is_pawn_push_admissible(
         const Bitboard pawn_origin, const Bitboard pawn_move, const Bitboard occupied_squares) const {
         using enum Move_Generation_Mode;
 
@@ -105,7 +105,7 @@ namespace Kangaroo {
      * @return Returns the number of moves generated.
      */
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t Movement_Generator::generate_double_pawn_pushs(
+    [[nodiscard]] _ForceInline constexpr std::size_t Move_Generator::generate_double_pawn_pushs(
         const CallbackType &callback, const Bitboard pawn) const {
         std::size_t moves = 0ULL;
 
@@ -136,7 +136,7 @@ namespace Kangaroo {
      * @return Returns the number of moves generated.
      */
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t Movement_Generator::generate_pawn_captures(
+    [[nodiscard]] _ForceInline constexpr std::size_t Move_Generator::generate_pawn_captures(
         const CallbackType &callback, const Bitboard pawn) const {
         using enum Color;
         using enum Move_Generation_Mode;
@@ -205,7 +205,7 @@ namespace Kangaroo {
      * @return Returns the number of moves generated.
      */
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t Movement_Generator::generate_en_passant_captures(
+    [[nodiscard]] _ForceInline constexpr std::size_t Move_Generator::generate_en_passant_captures(
         const CallbackType &callback, const Bitboard pawn) const {
         using enum Color;
 
@@ -288,7 +288,7 @@ namespace Kangaroo {
      * @return Returns the number of moves generated.
      */
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t Movement_Generator::generate_pawn_moves(const CallbackType &callback) const {
+    [[nodiscard]] _ForceInline constexpr std::size_t Move_Generator::generate_pawn_moves(const CallbackType &callback) const {
         using enum Color;
         using enum Chess_Pieces;
         using enum Move_Type;
@@ -382,7 +382,7 @@ namespace Kangaroo {
 
 
     template<Slider slider, Pin_Masks_Suitable_For purpose, Color color>
-    _ForceInline constexpr void Movement_Generator::update_pin_mask_for_movement_like(const Square king_position,
+    _ForceInline constexpr void Move_Generator::update_pin_mask_for_movement_like(const Square king_position,
                                                                   const Bitboard rooks_remaining) {
         using enum Slider;
         using enum Color;
