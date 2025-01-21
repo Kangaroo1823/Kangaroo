@@ -268,8 +268,7 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
     status = parse_fen_castling_information(std::move(status), tokens[2]);
 
 
-    if (tokens.size() >= 4) {
-        // -V112
+    if (tokens.size() >= 4) {  // -V112
         status = parce_fen_en_passant_notation(std::move(status), tokens[3]);
     }
 
