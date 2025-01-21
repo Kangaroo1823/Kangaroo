@@ -11,8 +11,6 @@
 #include "types.h"
 #include "Bit_Board.h"
 #include "Board_Status.h"
-#include "colors.h"
-#include "Constants.h"
 #include "gtest/gtest.h"
 
 inline constexpr std::string_view fen_empty_board = "8/8/8/8/8/8/8/8 w - - 0 1 ";
@@ -27,6 +25,10 @@ inline constexpr std::string_view fen_killer_position =
 inline constexpr std::string_view fen_cmk_position =
         "r2q1rk1/ppp2ppp/2n1bn2/2b1p3/3pP3/3P1NPP/PPP1NPB1/R1BQ1RK1 b - - 0 9 ";
 
+#define bitboard_for(obj, color, piece) (obj).chess_board[static_cast<std::size_t>(piece) + All_Pieces.size() * static_cast<std::size_t>(color)]
+#define all_pieces_for(obj, color) (obj).chess_board[2*All_Pieces.size() + static_cast<std::size_t>(color)]
+#define total_pieces_for(obj) (obj).chess_board[14]
+#define en_passant_square_for(obj) (obj).chess_board[15]
 
 namespace Kangaroo {
     template<Color color>
@@ -84,42 +86,50 @@ namespace Kangaroo {
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
 
     public:
-
         [[nodiscard]] constexpr bool is_state_consistent() const {
-            return (white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king) == white_pieces &&
-                   (black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king) == black_pieces &&
-                       (white_pieces | black_pieces) == all_pieces;
+            using enum Chess_Pieces;
+            using enum Color;
+
+            auto b1 = (bitboard_for((*this), White, Pawn) | bitboard_for(*this, White, Knight) |
+                       bitboard_for(*this, White, Bishop) | bitboard_for(*this, White, Rook) |
+                       bitboard_for(*this, White, Queen) | bitboard_for(*this, White, King)) ==
+                      all_pieces_for(*this, White);
+            auto b2 = (bitboard_for(*this, Black, Pawn) | bitboard_for(*this, Black, Knight) |
+                       bitboard_for(*this, Black, Bishop) | bitboard_for(*this, Black, Rook) |
+                       bitboard_for(*this, Black, Queen) | bitboard_for(*this, Black, King)) ==
+                      all_pieces_for(*this, Black);
+            auto b3 = (all_pieces_for(*this, White) | all_pieces_for(*this, Black)) == total_pieces_for(*this);
+
+            return b1 && b2 && b3;
         }
 
 
         explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
 
         explicit constexpr Chess_Board(const std::array<Bitboard, 15> &data) {
-            white_pawns = data[0];
-            white_knights = data[1];
-            white_bishops = data[2];
-            white_rooks = data[3];
-            white_queens = data[4];
-            white_king = data[5];
-            black_pawns = data[6];
-            black_knights = data[7];
-            black_bishops = data[8];
-            black_rooks = data[9];
-            black_queens = data[10];
-            black_king = data[11];
-            en_passant_square = data[12];
+            for (auto it = chess_board.begin(); const auto &d : data ) {
+                *it = d;
+                ++it;
+            }
+            chess_board[15] = 0ULL;
             half_move_number = static_cast<std::size_t>(data[13]);
             full_move_number = static_cast<std::size_t>(data[14]);
 
             update_collectors();
-
         }
 
         _ForceInline constexpr void update_collectors() {
-            white_pieces = white_pawns | white_knights | white_bishops | white_rooks | white_queens | white_king;
-            black_pieces = black_pawns | black_knights | black_bishops | black_rooks | black_queens | black_king;
+            using enum Color;
 
-            all_pieces = white_pieces | black_pieces;
+            for (const auto c : All_Colors) {
+                Bitboard b = 0ULL;
+                for (const auto p : All_Pieces) {
+                    b |= bitboard_for(*this, c, p);
+                }
+                all_pieces_for(*this, c) = b;
+            }
+
+            total_pieces_for(*this) = all_pieces_for(*this, White) | all_pieces_for(*this, Black);
         }
 
         Chess_Board(const Chess_Board &) = default;
@@ -127,19 +137,7 @@ namespace Kangaroo {
         [[nodiscard]] std::unique_ptr<Board_Status> reset_board(std::string_view fen);
 
         bool operator==(const Chess_Board &b) const {
-            return b.white_pawns == white_pawns &&
-                   b.white_knights == white_knights &&
-                   b.white_bishops == white_bishops &&
-                   b.white_rooks == white_rooks &&
-                   b.white_queens == white_queens &&
-                   b.white_king == white_king &&
-                   b.black_pawns == black_pawns &&
-                   b.black_knights == black_knights &&
-                   b.black_bishops == black_bishops &&
-                   b.black_rooks == black_rooks &&
-                   b.black_queens == black_queens &&
-                   b.black_king == black_king &&
-                   b.en_passant_square == en_passant_square &&
+            return b.chess_board == chess_board &&
                    b.half_move_number == half_move_number &&
                    b.full_move_number == full_move_number;
         }
@@ -149,25 +147,33 @@ namespace Kangaroo {
         };
 
 
-        Bitboard white_king = 0ULL;
-        Bitboard white_queens = 0ULL;
-        Bitboard white_rooks = 0ULL;
-        Bitboard white_knights = 0ULL;
-        Bitboard white_bishops = 0ULL;
-        Bitboard white_pawns = 0ULL;
+        std::array<Bitboard, 16> chess_board = {
+            0ULL, 0ULL, 0ULL, 0ULL,
+            0ULL, 0ULL, 0ULL, 0ULL,
+            0ULL, 0ULL, 0ULL, 0ULL,
+            0ULL, 0ULL, 0ULL, 0ULL
+        };
 
-        Bitboard black_king = 0ULL;
-        Bitboard black_queens = 0ULL;
-        Bitboard black_rooks = 0ULL;
-        Bitboard black_knights = 0ULL;
-        Bitboard black_bishops = 0ULL;
-        Bitboard black_pawns = 0ULL;
+        /*        Bitboard white_king = 0ULL;
+                Bitboard white_queens = 0ULL;
+                Bitboard white_rooks = 0ULL;
+                Bitboard white_knights = 0ULL;
+                Bitboard white_bishops = 0ULL;
+                Bitboard white_pawns = 0ULL;
 
-        Bitboard black_pieces = 0ULL;
-        Bitboard white_pieces = 0ULL;
-        Bitboard all_pieces = 0ULL;
+                Bitboard black_king = 0ULL;
+                Bitboard black_queens = 0ULL;
+                Bitboard black_rooks = 0ULL;
+                Bitboard black_knights = 0ULL;
+                Bitboard black_bishops = 0ULL;
+                Bitboard black_pawns = 0ULL;
 
-        Bitboard en_passant_square = 0ULL;
+                Bitboard black_pieces = 0ULL;
+                Bitboard white_pieces = 0ULL;
+                Bitboard all_pieces = 0ULL;
+
+                Bitboard en_passant_square = 0ULL; */
+
         std::size_t half_move_number = 0;
         std::size_t full_move_number = 0;
 
@@ -189,7 +195,9 @@ namespace Kangaroo {
     };
 
     std::ostream &operator<<(std::ostream &os, const Chess_Board &board);
+
     [[nodiscard]] std::string format_chess_board(const Chess_Board &board, bool output_data);
+
     void print_chess_board(const Chess_Board &board, bool output_data = false);
 }
 

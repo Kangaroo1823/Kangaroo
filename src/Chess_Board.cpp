@@ -76,7 +76,7 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parce_fen_en_pass
             default: break;
         }
         if (rank < 8 && file < 8) {
-            en_passant_square = 1ULL << std::to_underlying(rank_file_to_position(rank, file));
+            en_passant_square_for(*this) = 1ULL << std::to_underlying(rank_file_to_position(rank, file));
             status->en_passant_p = true;
         }
     }
@@ -88,13 +88,16 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) 
     std::size_t rank = 0;
     std::size_t file = 0;
 
+    using enum Color;
+    using enum Chess_Pieces;
+
     for (const auto &c: str) {
         Square position = rank_file_to_position(7 - rank, file);
         file = (file + 1) & 7;
         switch (c) {
-            case 'p': black_pawns = set_bit(black_pawns, position);
+            case 'p': bitboard_for(*this, Black, Pawn) = set_bit(bitboard_for(*this, Black, Pawn), position);
                 break;
-            case 'P': white_pawns = set_bit(white_pawns, position);
+            case 'P': bitboard_for(*this, White, Pawn) = set_bit(bitboard_for(*this, White, Pawn), position);
                 break;
             case 'n': black_knights = set_bit(black_knights, position);
                 break;
@@ -234,25 +237,10 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view fe
 std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const std::string_view fen) {
     auto status = std::make_unique<Board_Status>(0);
 
-    white_pawns = 0ULL;
-    white_knights = 0ULL;
-    white_bishops = 0ULL;
-    white_rooks = 0ULL;
-    white_queens = 0ULL;
-    white_king = 0ULL;
-    black_pawns = 0ULL;
-    black_knights = 0ULL;
-    black_bishops = 0ULL;
-    black_rooks = 0ULL;
-    black_queens = 0ULL;
-    black_king = 0ULL;
-    en_passant_square = 0ULL;
+    chess_board = std::array<Bitboard, 16>{};
+
     half_move_number = 0ULL;
     full_move_number = 0ULL;
-
-    white_pieces = 0ULL;
-    black_pieces = 0ULL;
-    all_pieces = 0ULL;
 
 
     std::vector<std::string_view> tokens;

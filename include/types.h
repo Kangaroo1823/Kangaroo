@@ -14,8 +14,12 @@ using Move = uint64_t;
 
 enum class Color : std::size_t {
     White = 0,
-    Black = 16,
+    Black = 1,
 };
+
+_ForceInline constexpr Color enemy(const Color color) {
+    return color == Color::White ? Color::Black : Color::White;
+}
 
 constexpr std::array<Color, 2> All_Colors = {Color::White, Color::Black};
 
