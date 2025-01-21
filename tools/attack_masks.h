@@ -6,7 +6,7 @@
 #define ATTACK_MASKS_H
 
 #include <array>
-#include "../include/bitboard.h"
+#include "../include/Bit_Board.h"
 
 
 /**********************************************************************************

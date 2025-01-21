@@ -4,7 +4,7 @@
 // Created by peter on 03/01/2025.
 //
 
-#include "chess_board.h"
+#include "Chess_Board.h"
 #include "Movement_Generator.h"
 #include "gtest/gtest.h"
 #include "move_generator.h"

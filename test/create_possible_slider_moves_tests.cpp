@@ -4,7 +4,7 @@
 // Created by peter on 02/12/2024.
 //
 
-#include "../include/bitboard.h"
+#include "../include/Bit_Board.h"
 #include "../tools/create_possible_slider_moves.h"
 #include "gtest/gtest.h"
 

@@ -5,7 +5,7 @@
 #ifndef CREATE_POSSIBLE_BISHOP_MOVES_H
 #define CREATE_POSSIBLE_BISHOP_MOVES_H
 
-#include "../include/bitboard.h"
+#include "../include/Bit_Board.h"
 
 
 namespace Kangaroo {

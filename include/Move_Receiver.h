@@ -7,7 +7,7 @@
 #include <filesystem>
 
 #include "Board_Status.h"
-#include "chess_board.h"
+#include "Chess_Board.h"
 
 
 namespace Kangaroo {

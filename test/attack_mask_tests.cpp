@@ -14,7 +14,7 @@
 
 
 #include "../tools/attack_masks.h"
-#include "../include/bitboard.h"           // for Bitboard, Position, print_...
+#include "../include/Bit_Board.h"           // for Bitboard, Position, print_...
 #include "gtest/gtest.h"    // for StringRef, AssertionHandler
 
 Bitboard create_rook_attack_mask(Square position) {

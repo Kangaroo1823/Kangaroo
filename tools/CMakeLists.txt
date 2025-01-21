@@ -12,9 +12,8 @@ set(CONSTANTS_GENERATOR_SOURCES
 ################################
 add_executable(Kangaroo_constants_generator_masks
         constants_generator.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
-        ../include/colors.h
+        ../include/Bit_Board.h
+        ../src/Bit_Board.cpp
         attack_masks.h
         create_possible_slider_moves.h
         ../include/base.h
@@ -64,9 +63,8 @@ add_custom_target(
 #
 ################################
 add_executable(Kangaroo_constants_generator_magics constants_generator.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
-        ../include/colors.h
+        ../include/Bit_Board.h
+        ../src/Bit_Board.cpp
         attack_masks.h
         create_possible_slider_moves.h
         ../include/base.h
@@ -114,9 +112,8 @@ add_dependencies(Kangaroo_constants_generator_magics generate_masks)
 ################################
 add_executable(Kangaroo_constants_generator_attacks
         constants_generator.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
-        ../include/colors.h
+        ../include/Bit_Board.h
+        ../src/Bit_Board.cpp
         attack_masks.h
         create_possible_slider_moves.h
         ../include/base.h
@@ -163,9 +160,9 @@ add_custom_target(
 ##################################################
 add_executable(Kangaroo_constants_generator_pin_tables
         constants_generator.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
-        ../include/colors.h)
+        ../include/Bit_Board.h
+        ../src/Bit_Board.cpp
+)
 target_link_libraries(Kangaroo_constants_generator_pin_tables
         PUBLIC
         Kangaroo_warnings
@@ -203,9 +200,9 @@ add_custom_target(
 ##################################################
 add_executable(Kangaroo_constants_generator_xray_visibility_tables
         constants_generator.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
-        ../include/colors.h)
+        ../include/Bit_Board.h
+        ../src/Bit_Board.cpp
+)
 target_link_libraries(Kangaroo_constants_generator_xray_visibility_tables
         PUBLIC
         Kangaroo_warnings
@@ -247,8 +244,8 @@ add_custom_target(
 
 add_executable( hex_to_bitboard
         hex_to_bitboard.cpp
-        ../include/bitboard.h
-        ../src/bitboard.cpp
+        ../include/Bit_Board.h
+        ../src/Bit_Board.cpp
 )
 target_link_libraries( hex_to_bitboard PRIVATE Kangaroo_warnings )
 target_include_directories( hex_to_bitboard PRIVATE ../include )

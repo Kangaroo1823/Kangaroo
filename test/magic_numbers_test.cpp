@@ -8,7 +8,7 @@
 #include <string>                        // for basic_string
 #include "gtest/gtest.h"  // for AssertionHandler, StringRef
 
-#include "bitboard.h"
+#include "Bit_Board.h"
 #include "magic_numbers.h"
 #include "constants_masks.h"
 #include "constants_magics.h"

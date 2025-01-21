@@ -5,13 +5,13 @@
 // Created by peter on 01/12/2024.
 //
 
-#include "chess_board.h"
+#include "Chess_Board.h"
 #include <print>             // for print
 #include <cstddef>                // for size_t
 #include <numeric>                // for accumulate
 #include <ranges>
 #include <vector>
-#include "bitboard.h"  // for Position_t, set_bit, get_bit, rank_...
+#include "Bit_Board.h"  // for Position_t, set_bit, get_bit, rank_...
 #include "types.h"
 #include "Board_Status.h"
 

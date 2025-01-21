@@ -5,7 +5,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include "base.h"
+#include "Base.h"
 
 #include "constants_masks.h"
 #include "constants_magics.h"

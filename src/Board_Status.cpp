@@ -5,7 +5,7 @@
 //
 
 #include <functional>
-#include "base.h"
+#include "Base.h"
 #include "types.h"
 #include "Board_Status.h"
 #include "Movement_Generator.h"

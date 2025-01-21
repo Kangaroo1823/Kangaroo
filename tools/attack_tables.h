@@ -9,7 +9,7 @@
 #include <cassert>
 #include <vector>
 
-#include "../include/bitboard.h"
+#include "../include/Bit_Board.h"
 #include "magic_numbers.h"
 #include "../include/colors.h"
 #include "constants_magics.h"

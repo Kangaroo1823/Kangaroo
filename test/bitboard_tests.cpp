@@ -9,7 +9,7 @@
 
 
 #include <cstdint>                      // for int64_t
-#include "../include/bitboard.h"         // for set_bit, Bitcount, E4, Bitboard
+#include "../include/Bit_Board.h"         // for set_bit, Bitcount, E4, Bitboard
 #include "gtest/gtest.h"  // for AssertionHandler, operator""...
 
 

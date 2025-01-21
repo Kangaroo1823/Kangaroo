@@ -13,7 +13,7 @@
 #include <print>
 
 
-#include "../include/bitboard.h"
+#include "../include/Bit_Board.h"
 #include "create_possible_slider_moves.h"
 #include "../include/types.h"
 #include "constants_masks.h"

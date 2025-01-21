@@ -4,7 +4,7 @@
 
 #ifndef MOVEMENT_GENERATOR_H
 #define MOVEMENT_GENERATOR_H
-#include "chess_board.h"
+#include "Chess_Board.h"
 #include "types.h"
 #include "Move_Receiver.h"
 

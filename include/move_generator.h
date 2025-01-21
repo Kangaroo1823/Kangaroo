@@ -10,7 +10,7 @@
 #include "Board_Status.h"
 #include "constants_attacks.h"
 #include "attack_tables.h"
-#include "chess_board.h"
+#include "Chess_Board.h"
 
 template<Slider slider>
 constexpr Bitboard get_attacks_for_position(const Square position, const Bitboard occupancy) {

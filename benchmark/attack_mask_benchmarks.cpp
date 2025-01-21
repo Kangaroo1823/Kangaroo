@@ -8,7 +8,7 @@
 
 #include "benchmark/benchmark.h"
 #include "../tools/attack_tables.h"
-#include "chess_board.h"
+#include "Chess_Board.h"
 #include "Movement_Generator.h"
 
 

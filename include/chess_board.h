@@ -7,12 +7,12 @@
 
 #include <memory>
 
-#include "base.h"
+#include "Base.h"
 #include "types.h"
-#include "bitboard.h"
+#include "Bit_Board.h"
 #include "Board_Status.h"
 #include "colors.h"
-#include "constants.h"
+#include "Constants.h"
 #include "gtest/gtest.h"
 
 inline constexpr std::string_view fen_empty_board = "8/8/8/8/8/8/8/8 w - - 0 1 ";

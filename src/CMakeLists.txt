@@ -74,9 +74,8 @@ endif()
 find_package(OpenMP)
 
 # create a library to hold the tested logic of the ChessEngine
-add_library(Kangaroo_library ../include/bitboard.h
-        bitboard.cpp
-        ../include/colors.h
+add_library(Kangaroo_library ../include/Bit_Board.h
+        Bit_Board.cpp
         chess_board.cpp
         ../include/chess_board.h
         ../include/base.h

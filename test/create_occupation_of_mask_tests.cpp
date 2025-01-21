@@ -5,7 +5,7 @@
 //
 
 #include <array>                         // for array
-#include "../include/bitboard.h"         // for set_bit, Bitboard, Position_t
+#include "../include/Bit_Board.h"         // for set_bit, Bitboard, Position_t
 #include "gtest/gtest.h"  // for StringRef, AssertionHandler
 
 constexpr std::array<Bitboard, 64> occupancy_test_table = {
