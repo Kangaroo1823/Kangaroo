@@ -80,131 +80,26 @@ namespace Kangaroo::Move_Receiver {
             chess_piece == Chess_Pieces::Knight || chess_piece == Chess_Pieces::Bishop ||
             chess_piece == Chess_Pieces::Queen || chess_piece == Chess_Pieces::King);
 
-        if constexpr (status.color_to_move == Color::White) {
-            if constexpr (chess_piece == Chess_Pieces::Pawn) {
-                board.white_pawns ^= move; // -V1051
-            } else if constexpr (chess_piece == Chess_Pieces::Rook) {
-                board.white_rooks ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Knight) {
-                board.white_knights ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Bishop) {
-                board.white_bishops ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Queen) {
-                board.white_queens ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::King) {
-                board.white_king ^= move;
-            }
 
-            board.white_pieces ^= move;
-            board.black_pieces ^= to;
-            board.all_pieces ^= from;
+        bitboard_for(board, status.color_to_move, chess_piece) ^= move;
+        all_pieces_for(board, status.color_to_move) ^= move;
+        all_pieces_for(board, enemy(status.color_to_move)) ^= to;
+        total_pieces_for(board) ^= from;
 
-            if (board.black_pawns & to) {
-                board.black_pawns ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.black_pawns ^= to;
-            }
-            if (board.black_bishops & to) {
-                board.black_bishops ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.black_bishops ^= to;
-            }
-            if (board.black_knights & to) {
-                board.black_knights ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.black_knights ^= to;
-            }
-            if (board.black_rooks & to) {
-                board.black_rooks ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.black_rooks ^= to;
-            }
-            if (board.black_queens & to) {
-                board.black_queens ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.black_queens ^= to;
-            }
 
-            if constexpr (chess_piece == Chess_Pieces::Pawn) {
-                board.white_pawns ^= move; // -V1051
-            } else if constexpr (chess_piece == Chess_Pieces::Rook) {
-                board.white_rooks ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Knight) {
-                board.white_knights ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Bishop) {
-                board.white_bishops ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Queen) {
-                board.white_queens ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::King) {
-                board.white_king ^= move;
-            }
-
-            board.white_pieces ^= move;
-            board.black_pieces ^= to;
-            board.all_pieces ^= from;
-        } else if constexpr (status.color_to_move == Color::Black) {
-            if constexpr (chess_piece == Chess_Pieces::Pawn) {
-                board.black_pawns ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Rook) {
-                board.black_rooks ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Knight) {
-                board.black_knights ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Bishop) {
-                board.black_bishops ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Queen) {
-                board.black_queens ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::King) {
-                board.black_king ^= move;
-            }
-
-            board.black_pieces ^= move;
-            board.white_pieces ^= to;
-            board.all_pieces ^= from;
-
-            if (board.white_pawns & to) {
-                board.white_pawns ^= to;
+        for (const auto p: All_Pieces) {
+            if (bitboard_for(board, enemy(status.color_to_move), p) & to) {
+                bitboard_for(board, enemy(status.color_to_move), p) ^= to;
                 callback(board, move, status.color_to_move, chess_piece);
-                board.white_pawns ^= to;
+                bitboard_for(board, enemy(status.color_to_move), p) ^= to;
+                break;
             }
-            if (board.white_bishops & to) {
-                board.white_bishops ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.white_bishops ^= to;
-            }
-            if (board.white_knights & to) {
-                board.white_knights ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.white_knights ^= to;
-            }
-            if (board.white_rooks & to) {
-                board.white_rooks ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.white_rooks ^= to;
-            }
-            if (board.white_queens & to) {
-                board.white_queens ^= to;
-                callback(board, move, status.color_to_move, chess_piece);
-                board.white_queens ^= to;
-            }
-
-            if constexpr (chess_piece == Chess_Pieces::Pawn) {
-                board.black_pawns ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Rook) {
-                board.black_rooks ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Knight) {
-                board.black_knights ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Bishop) {
-                board.black_bishops ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::Queen) {
-                board.black_queens ^= move;
-            } else if constexpr (chess_piece == Chess_Pieces::King) {
-                board.black_king ^= move;
-            }
-
-            board.black_pieces ^= move;
-            board.white_pieces ^= to;
-            board.all_pieces ^= from;
         }
+
+        bitboard_for(board, status.color_to_move, chess_piece) ^= move;
+        all_pieces_for(board, status.color_to_move) ^= move;
+        all_pieces_for(board, enemy(status.color_to_move)) ^= to;
+        total_pieces_for(board) ^= from;
     }
 
     template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>

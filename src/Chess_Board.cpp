@@ -99,25 +99,25 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) 
                 break;
             case 'P': bitboard_for(*this, White, Pawn) = set_bit(bitboard_for(*this, White, Pawn), position);
                 break;
-            case 'n': black_knights = set_bit(black_knights, position);
+            case 'n': bitboard_for(*this, Black, Knight)  = set_bit(bitboard_for(*this, Black, Knight), position);
                 break;
-            case 'N': white_knights = set_bit(white_knights, position);
+            case 'N': bitboard_for(*this, White, Knight) = set_bit(bitboard_for(*this, White, Knight), position);
                 break;
-            case 'b': black_bishops = set_bit(black_bishops, position);
+            case 'b': bitboard_for(*this, Black, Bishop) = set_bit(bitboard_for(*this, Black, Bishop), position);
                 break;
-            case 'B': white_bishops = set_bit(white_bishops, position);
+            case 'B': bitboard_for(*this, White, Bishop) = set_bit(bitboard_for(*this, White, Bishop), position);
                 break;
-            case 'r': black_rooks = set_bit(black_rooks, position);
+            case 'r': bitboard_for(*this, Black, Rook) = set_bit(bitboard_for(*this, Black, Rook), position);
                 break;
-            case 'R': white_rooks = set_bit(white_rooks, position);
+            case 'R': bitboard_for(*this, White, Rook) = set_bit(bitboard_for(*this, White, Rook), position);
                 break;
-            case 'q': black_queens = set_bit(black_queens, position);
+            case 'q': bitboard_for(*this, Black, Queen) = set_bit(bitboard_for(*this, Black, Queen), position);
                 break;
-            case 'Q': white_queens = set_bit(white_queens, position);
+            case 'Q': bitboard_for(*this, White, Queen) = set_bit(bitboard_for(*this, White, Queen), position);
                 break;
-            case 'k': black_king = set_bit(black_king, position);
+            case 'k': bitboard_for(*this, Black, King) = set_bit(bitboard_for(*this, Black, King), position);
                 break;
-            case 'K': white_king = set_bit(white_king, position);
+            case 'K': bitboard_for(*this, White, King) = set_bit(bitboard_for(*this, White, King), position);
                 break;
             case '/': if (++rank > 7) break;
                 file = 0;
@@ -283,6 +283,9 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
 }
 
 [[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data) {
+    using enum Color;
+    using enum Chess_Pieces;
+
     std::stringstream ss;
 
     constexpr std::string_view black_king_c = " \u{2654} ";
@@ -310,30 +313,30 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
     for (std::size_t rank = 8; rank > 0; --rank) {
         ss << std::format("  {}   ", rank);
         for (std::size_t file = 0; file < 8; ++file) {
-            if (get_bit(board.black_king, rank_file_to_position(rank - 1, file)))
+            if (get_bit(bitboard_for(board, Black, King), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", black_king_c);
-            else if (get_bit(board.black_queens, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, Black, Queen), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", black_queen_c);
-            else if (get_bit(board.black_rooks, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, Black, Rook), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", black_rook_c);
-            else if (get_bit(board.black_knights, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, Black, Knight), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", black_knight_c);
-            else if (get_bit(board.black_bishops, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, Black, Bishop), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", black_bishop_c);
-            else if (get_bit(board.black_pawns, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, Black, Pawn), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", black_pawn_c);
 
-            else if (get_bit(board.white_king, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, White, King), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", white_king_c);
-            else if (get_bit(board.white_queens, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, White, Queen), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", white_queen_c);
-            else if (get_bit(board.white_rooks, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, White, Rook), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", white_rook_c);
-            else if (get_bit(board.white_knights, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, White, Knight), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", white_knight_c);
-            else if (get_bit(board.white_bishops, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, White, Bishop), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", white_bishop_c);
-            else if (get_bit(board.white_pawns, rank_file_to_position(rank - 1, file)))
+            else if (get_bit(bitboard_for(board, White, Pawn), rank_file_to_position(rank - 1, file)))
                 ss << std::format("{}", white_pawn_c);
             else ss << std::format("{}", empty_c);
         }
@@ -343,19 +346,19 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
 
     if (output_data) {
         ss << std::format("*/\n  Kangaroo::Chess_Board( std::array<Bitboard, 15>{{\n");
-        ss << std::format("    /* white pawns    */ 0x{0:016x}, ", board.white_pawns);
-        ss << std::format("/* white knights */ 0x{0:016x}, ", board.white_knights);
-        ss << std::format("/* white bishops */ 0x{0:016x}, \n", board.white_bishops);
-        ss << std::format("    /* white rooks    */ 0x{0:016x}, ", board.white_rooks);
-        ss << std::format("/* white queens  */ 0x{0:016x}, ", board.white_queens);
-        ss << std::format("/* white king    */ 0x{0:016x}, \n", board.white_king);
-        ss << std::format("    /* black pawns    */ 0x{0:016x}, ", board.black_pawns);
-        ss << std::format("/* black knights */ 0x{0:016x}, ", board.black_knights);
-        ss << std::format("/* black bishops */ 0x{0:016x}, \n", board.black_bishops);
-        ss << std::format("    /* black rooks    */ 0x{0:016x}, ", board.black_rooks);
-        ss << std::format("/* black queens  */ 0x{0:016x}, ", board.black_queens);
-        ss << std::format("/* black king    */ 0x{0:016x}, \n", board.black_king);
-        ss << std::format("    /* en passant sq. */ 0x{0:016x}, ", board.en_passant_square);
+        ss << std::format("    /* white pawns    */ 0x{0:016x}, ", bitboard_for(board, White, Pawn));
+        ss << std::format("/* white knights */ 0x{0:016x}, ", bitboard_for(board, White, Knight));
+        ss << std::format("/* white bishops */ 0x{0:016x}, \n", bitboard_for(board, White, Bishop));
+        ss << std::format("    /* white rooks    */ 0x{0:016x}, ", bitboard_for(board, White, Rook));
+        ss << std::format("/* white queens  */ 0x{0:016x}, ", bitboard_for(board, White, Queen));
+        ss << std::format("/* white king    */ 0x{0:016x}, \n", bitboard_for(board, White, King));
+        ss << std::format("    /* black pawns    */ 0x{0:016x}, ", bitboard_for(board, Black, Pawn));
+        ss << std::format("/* black knights */ 0x{0:016x}, ", bitboard_for(board, Black, Knight));
+        ss << std::format("/* black bishops */ 0x{0:016x}, \n", bitboard_for(board, Black, Bishop));
+        ss << std::format("    /* black rooks    */ 0x{0:016x}, ", bitboard_for(board, Black, Rook));
+        ss << std::format("/* black queens  */ 0x{0:016x}, ", bitboard_for(board, Black, Queen));
+        ss << std::format("/* black king    */ 0x{0:016x}, \n", bitboard_for(board, Black, King));
+        ss << std::format("    /* en passant sq. */ 0x{0:016x}, ", en_passant_square_for(board));
         ss << std::format("/* half move num */ 0x{0:016x}, ", board.half_move_number);
         ss << std::format("/* full move num */ 0x{0:016x} }}),\n", board.full_move_number);
     }
