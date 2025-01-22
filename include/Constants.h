@@ -13,10 +13,20 @@
 #include "constants_pin_tables.h"
 #include "constants_xray_visibility_tables.h"
 
-template<Slider slider>
-[[nodiscard]] _ForceInline constexpr Bitboard get_attack_mask_for(const Square position) {
+template<Color color>
+[[nodiscard]] _ForceInline constexpr Bitboard get_pawn_attacks_for(const Square position) {
+    using enum Color;
 
-    using enum Slider;
+    static_assert(color == White || color == Black);
+    return color == White
+               ? Constants::white_pawn_attacks[std::to_underlying(position)]
+               : Constants::black_pawn_attacks[std::to_underlying(position)];
+}
+
+
+template<Chess_Pieces slider>
+[[nodiscard]] _ForceInline constexpr Bitboard get_attack_mask_for(const Square position) {
+    using enum Chess_Pieces;
 
     static_assert(slider == Bishop || slider == Rook);
 
@@ -31,10 +41,9 @@ template<Slider slider>
     return 0;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] _ForceInline constexpr MagicNumber get_magic_number_for(const Square position) {
-
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Bishop || slider == Rook);
 
@@ -50,11 +59,10 @@ template<Slider slider>
 }
 
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] _ForceInline constexpr Bitboard get_attacks_for(const Square position, const Bitboard occupancy,
                                                               const int64_t relevant_bits) {
-
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Bishop || slider == Rook);
 
@@ -71,9 +79,9 @@ template<Slider slider>
     return 0;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] _ForceInline constexpr Bitboard get_attacks_for(const Square position, const Bitboard all_pieces) {
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Bishop || slider == Rook);
 
@@ -90,10 +98,9 @@ template<Slider slider>
     return 0;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] _ForceInline constexpr Bitboard get_xray_for(const Square position) {
-
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Bishop || slider == Rook);
 
@@ -108,10 +115,10 @@ template<Slider slider>
     return 0;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] _ForceInline constexpr Bitboard get_pin_ray_for(const Square king_position,
                                                               const Square slider_position) {
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Bishop || slider == Rook);
 

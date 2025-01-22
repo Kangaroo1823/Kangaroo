@@ -24,7 +24,7 @@
 #include <utility>         // for to_underlying
 
 #include "Base.h"
-#include "types.h"
+#include "Types.h"
 
 
 [[nodiscard]] _ForceInline constexpr Square rank_file_to_position(const std::size_t rank, const std::size_t file) {

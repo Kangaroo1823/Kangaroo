@@ -31,14 +31,14 @@ namespace Constants::Impl {
         // loop over all 64 board squares
         std::print("// rooks:\n");
         for (const auto square: All_Positions) {
-            const MagicNumber m = find_magic_number<Slider::Rook>(square);
+            const MagicNumber m = find_magic_number<Chess_Pieces::Rook>(square);
             std::print("/* magic number found for {}: */", print_position(square));
             std::print(" 0x{0:x},\n", m);
         }
         std::print("\n");
         std::print("// bishops:\n");
         for (const auto square: All_Positions) {
-            const MagicNumber m = find_magic_number<Slider::Bishop>(square);
+            const MagicNumber m = find_magic_number<Chess_Pieces::Bishop>(square);
             std::print("/* magic number found for {}: */", print_position(square));
             std::print(" 0x{0:x},\n", m);
         }

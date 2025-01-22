@@ -11,7 +11,7 @@
 #include <algorithm>
 
 #include "attack_masks.h"
-#include "types.h"
+#include "Types.h"
 
 #ifdef GENERATE_ATTACKS
 #include "attack_tables.h"
@@ -85,10 +85,10 @@ void output_array(std::ofstream &of, const T &arr, const std::string &name, cons
     return bishop_xray_visibility;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] constexpr Bitboard generate_slider_xray_visibility_for(const Square position) {
 
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Rook || slider == Bishop);
 
@@ -101,7 +101,7 @@ template<Slider slider>
     return 0ULL;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 [[nodiscard]] constexpr std::array<Bitboard, All_Positions.size()> generate_slider_visibilities() {
     std::array<Bitboard, All_Positions.size()> visibilities{};
 
@@ -113,8 +113,8 @@ template<Slider slider>
 }
 
 void generate_xray_visibility_tables(std::ofstream &of) {
-    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Slider::Rook>();
-    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Slider::Bishop>();
+    constexpr std::array<Bitboard, All_Positions.size()> rook_xray_visibility_table = generate_slider_visibilities<Chess_Pieces::Rook>();
+    constexpr std::array<Bitboard, All_Positions.size()> bishop_xray_visibility_table = generate_slider_visibilities<Chess_Pieces::Bishop>();
 
     output_array(of, rook_xray_visibility_table, "rook_xray_visibility_table", "Bitboard");
     output_array(of, bishop_xray_visibility_table, "bishop_xray_visibility_table", "Bitboard");
@@ -128,7 +128,7 @@ void generate_xray_visibility_tables(std::ofstream &of) {
  *
  ************************************************************************/
 
-template<Slider slider>
+template<Chess_Pieces slider>
 constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, const int64_t king_file,
                                                        const int64_t piece_rank,
                                                        const int64_t piece_file) {
@@ -165,7 +165,7 @@ constexpr Bitboard generate_rook_pin_mask_towards_king(const int64_t king_rank, 
     return 0x0ULL;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64_t king_file, const int64_t piece_rank,
                                             const int64_t piece_file) {
     auto r = piece_rank;
@@ -203,9 +203,9 @@ constexpr Bitboard generate_bishop_pin_mask(const int64_t king_rank, const int64
     return 0x0ULL;
 }
 
-template<Slider slider>
+template<Chess_Pieces slider>
 constexpr Bitboard generate_pin_mask_for_position(Square piece_position, Square king_position) {
-    using enum Slider;
+    using enum Chess_Pieces;
 
     static_assert(slider == Rook || slider == Bishop);
 
@@ -222,7 +222,7 @@ constexpr Bitboard generate_pin_mask_for_position(Square piece_position, Square 
 }
 
 
-template<Slider slider>
+template<Chess_Pieces slider>
 constexpr std::vector<Bitboard> generate_pin_table() {
     std::vector<Bitboard> pin_table(4096, 0ULL);
 
@@ -242,8 +242,8 @@ constexpr std::vector<Bitboard> generate_pin_table() {
 }
 
 void generate_pin_tables(std::ofstream &of) {
-    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Slider::Rook>();
-    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Slider::Bishop>();
+    const std::vector<Bitboard> rook_pin_table = generate_pin_table<Chess_Pieces::Rook>();
+    const std::vector<Bitboard> bishop_pin_table = generate_pin_table<Chess_Pieces::Bishop>();
 
     output_array(of, rook_pin_table, "rook_pin_table", "Bitboard");
     output_array(of, bishop_pin_table, "bishop_pin_table", "Bitboard");
@@ -251,8 +251,8 @@ void generate_pin_tables(std::ofstream &of) {
 
 
 void generate_masks(std::ofstream &of) {
-    constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Slider::Bishop>();
-    constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Slider::Rook>();
+    constexpr std::array<Bitboard, 64> bishop_attack_masks = create_attack_masks<Chess_Pieces::Bishop>();
+    constexpr std::array<Bitboard, 64> rook_attack_masks = create_attack_masks<Chess_Pieces::Rook>();
 
     output_array(of, bishop_attack_masks, "bishop_attack_masks", "Bitboard");
     output_array(of, rook_attack_masks, "rook_attack_masks", "Bitboard");
@@ -260,8 +260,8 @@ void generate_masks(std::ofstream &of) {
 
 #ifdef GENERATE_MAGICS
 void generate_magic_numbers(std::ofstream &of) {
-    const std::array<MagicNumber, 64> Bishop_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::Bishop>();
-    const std::array<MagicNumber, 64> Rook_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Slider::Rook>();
+    const std::array<MagicNumber, 64> Bishop_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Chess_Pieces::Bishop>();
+    const std::array<MagicNumber, 64> Rook_Magic_Numbers = Constants::Impl::find_magic_numbers_for<Chess_Pieces::Rook>();
 
     output_array(of, Bishop_Magic_Numbers, "bishop_magic_numbers", "MagicNumber");
     output_array(of, Rook_Magic_Numbers, "rook_magic_numbers", "MagicNumber");
@@ -271,10 +271,10 @@ void generate_magic_numbers(std::ofstream &of) {
 #ifdef GENERATE_ATTACKS
 void generate_attacks(std::ofstream &of) {
     std::vector<Bitboard> rook_attack_table(64 * 4096, 0ULL);
-    create_attack_table<Slider::Rook>(rook_attack_table);
+    create_attack_table<Chess_Pieces::Rook>(rook_attack_table);
 
     std::vector<Bitboard> bishop_attack_table(64 * 512, 0ULL);
-    create_attack_table<Slider::Bishop>(bishop_attack_table);
+    create_attack_table<Chess_Pieces::Bishop>(bishop_attack_table);
 
     std::vector<Bitboard> white_pawn_attacks(64, 0ULL);
     create_pawn_attacks<Color::White>(white_pawn_attacks);
@@ -319,7 +319,7 @@ int main(const int argc, const char **argv) {
     of.open(argv[1], std::ios::out);
     of << "#pragma once\n\n";
     of << "#include <array>\n";
-    of << "#include \"types.h\"\n\n";
+    of << "#include \"Types.h\"\n\n";
 
     of << "namespace Constants {\n";
 #ifdef GENERATE_MASKS

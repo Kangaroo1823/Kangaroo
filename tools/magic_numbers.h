@@ -15,7 +15,7 @@
 
 #include "../include/Bit_Board.h"
 #include "create_possible_slider_moves.h"
-#include "../include/types.h"
+#include "../include/Types.h"
 #include "constants_masks.h"
 
 
@@ -26,7 +26,7 @@ namespace Constants::Impl {
     MagicNumber magic_candidate(Bitboard occupation);
 
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     /**
      * \brief Populates the occupancy table with all possible occupancies derived from the given mask.
      *
@@ -40,7 +40,7 @@ namespace Constants::Impl {
      *        based on the given mask.
      */
     constexpr void populate_occupancy_with_mask(const Bitboard mask,
-                                                std::array<Bitboard, slider == Slider::Bishop
+                                                std::array<Bitboard, slider == Chess_Pieces::Bishop
                                                                          ? 512
                                                                          : 4096> &occupancy_table) {
         std::size_t index = 0;
@@ -51,7 +51,7 @@ namespace Constants::Impl {
         }
     }
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     /**
      * \brief Fills the attack table based on the occupancy table and the position of the figure.
      *
@@ -65,11 +65,11 @@ namespace Constants::Impl {
      * \param attack_table A table that will be populated with the possible attack bitboards for the given occupancies.
      */
     constexpr void fill_attack_table_from_occupancy(const Square position_of_figure,
-                                                    const std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> &
+                                                    const std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> &
                                                     occupancy_table,
-                                                    std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> &
+                                                    std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> &
                                                     attack_table) {
-        typename std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096>::size_type index = 0;
+        typename std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096>::size_type index = 0;
         for (auto &attack: attack_table) {
             // compute the attacks corresponding to index given occupancy.
             attack = Kangaroo::create_possible_slider_moves<slider>(occupancy_table[index], position_of_figure);
@@ -78,7 +78,7 @@ namespace Constants::Impl {
     }
 
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     /**
      * \brief Resets the provided used attack table by setting all elements to zero.
      *
@@ -88,13 +88,13 @@ namespace Constants::Impl {
      * \param used_attack_table The array representing the used attack table. The size of the array
      * depends on whether it is for bishops (512) or rooks (4096).
      */
-    void reset_used_attack_table(std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> used_attack_table) {
+    void reset_used_attack_table(std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> used_attack_table) {
         // set the array used_attack_table to zero. We need it to check_p if we have a
         // collision using magic_number.
         std::ranges::for_each(used_attack_table, [](auto &i) { i = 0; });
     }
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     /**
      * \brief Checks for collisions when applying a magic number to a set of occupancy and attack tables.
      *
@@ -111,9 +111,9 @@ namespace Constants::Impl {
      */
     bool check_magic_number_collisions(const int64_t relevant_bits_in_mask,
                                        const std::size_t number_of_occupancies,
-                                       std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> occupancy_table,
-                                       std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> attack_table,
-                                       std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> used_attack_table,
+                                       std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> occupancy_table,
+                                       std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> attack_table,
+                                       std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> used_attack_table,
                                        MagicNumber magic_number) {
         for (std::size_t index = 0; index < number_of_occupancies; index++) {
             Bitboard magic_index = (occupancy_table[index] * magic_number) >> (64 - relevant_bits_in_mask);
@@ -129,7 +129,7 @@ namespace Constants::Impl {
     }
 
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     /**
      * \brief Attempts to generate a magic number for optimizing chess move lookup.
      *
@@ -149,10 +149,10 @@ namespace Constants::Impl {
      */
     bool generate_magic_number(const Bitboard mask, const int64_t relevant_bits_in_mask,
                                const std::size_t number_of_occupancies,
-                               const std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> &occupancy_table,
-                               const std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> &attack_table,
+                               const std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> &occupancy_table,
+                               const std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> &attack_table,
                                MagicNumber &value1) {
-        std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> used_attack_table{};
+        std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> used_attack_table{};
 
         // the aim of the following loop is to find a magic number that works.
         // We do this brute force! get a candidate and see whether it works, i.e, there
@@ -178,7 +178,7 @@ namespace Constants::Impl {
         return false;
     }
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     /**
      * \brief Finds a magic number for the specified position of a figure.
      *
@@ -193,7 +193,7 @@ namespace Constants::Impl {
      */
     MagicNumber find_magic_number(const Square position_of_figure) {
         // get the mask corresponding to the position of the figure.
-        const Bitboard mask = slider == Slider::Bishop
+        const Bitboard mask = slider == Chess_Pieces::Bishop
                                   ? Constants::bishop_attack_masks[std::to_underlying(position_of_figure)]
                                   : Constants::rook_attack_masks[std::to_underlying(position_of_figure)];
 
@@ -205,12 +205,12 @@ namespace Constants::Impl {
                 static_cast<std::size_t>(1) << static_cast<std::size_t>(relevant_bits_in_mask);
 
         // holds every possible occupation within mask
-        std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> occupancy_table{};
+        std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> occupancy_table{};
         populate_occupancy_with_mask<slider>(mask, occupancy_table);
 
         // a bit in attack_table[index] is set iff the figure in question can attack it given the
         // occupancy in occupancy_table[index].
-        std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> attack_table{};
+        std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> attack_table{};
         fill_attack_table_from_occupancy<slider>(position_of_figure, occupancy_table, attack_table);
 
         if (MagicNumber value1; generate_magic_number<slider>(mask, relevant_bits_in_mask, number_of_occupancies,
@@ -222,7 +222,7 @@ namespace Constants::Impl {
         return 0;
     }
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     std::array<MagicNumber, 64> find_magic_numbers_for() {
         std::array<MagicNumber, 64> magic_numbers{};
         for (std::size_t i = 0; i < 64; i++) {

@@ -102,6 +102,20 @@ namespace Kangaroo::Move_Receiver {
         total_pieces_for(board) ^= from;
     }
 
+    template <Board_Status status, Chess_Pieces chess_piece>
+    static void evaluate_and_perform_normal_move(Chess_Board &board, const CallbackType &callback, const Move move) {
+
+        bitboard_for(board, status.color_to_move, chess_piece) ^= move;
+        all_pieces_for(board, status.color_to_move) ^= move;
+        total_pieces_for(board) ^= move;
+
+        callback(board, move, status.color_to_move, chess_piece);
+
+        bitboard_for(board, status.color_to_move, chess_piece) ^= move;
+        all_pieces_for(board, status.color_to_move) ^= move;
+        total_pieces_for(board) ^= move;
+    }
+
     template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>
     _ForceInline static constexpr void evaluate_and_perform_move([[maybe_unused]] Chess_Board &board,
                                                                  [[maybe_unused]] const CallbackType &callback,
@@ -118,40 +132,12 @@ namespace Kangaroo::Move_Receiver {
             evaluate_and_perform_pawn_capture_promotion<status, chess_piece>(board, callback, from, to, move);
         } else if constexpr (move_type == Move_Type::Capture) {
             evaluate_and_perform_capture<status, chess_piece>(board, callback, from, to, move);
+        } else if constexpr (move_type == Move_Type::Normal) {
+            evaluate_and_perform_normal_move<status, chess_piece>(board, callback, move);
         }
     }
 };
 
-
-template<Board_Status status>
-class Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn> {
-public:
-    _ForceInline static constexpr void evaluate_and_perform_move(const Chess_Board &board,
-                                                                 const CallbackType &callback,
-                                                                 const Bitboard from,
-                                                                 const Bitboard to) {
-        using enum Color;
-
-        static_assert(status.color_to_move == White || status.color_to_move == Black);
-
-        const Bitboard move = from | to;
-
-        Chess_Board new_board = board;
-        if constexpr (status.color_to_move == White) {
-            new_board.white_pawns ^= move;
-            new_board.white_pieces ^= move;
-            new_board.all_pieces ^= move;
-        } else if constexpr (status.color_to_move == Black) {
-            new_board.black_pawns ^= move;
-            new_board.black_pieces ^= move;
-            new_board.all_pieces ^= move;
-        }
-
-        callback(new_board, move, status.color_to_move, Chess_Pieces::Pawn);
-    }
-};
-
-}
 
 
 #endif //MOVE_RECIEVER_H

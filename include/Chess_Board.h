@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "Base.h"
-#include "types.h"
+#include "Types.h"
 #include "Bit_Board.h"
 #include "Board_Status.h"
 #include "gtest/gtest.h"

@@ -24,11 +24,6 @@ _ForceInline constexpr Color enemy(const Color color) {
 constexpr std::array<Color, 2> All_Colors = {Color::White, Color::Black};
 
 
-enum class Slider : std::size_t {
-    Rook = 0,
-    Bishop = 1,
-};
-
 enum class Chess_Pieces : std::size_t {
     Pawn = 0,
     Knight = 1,

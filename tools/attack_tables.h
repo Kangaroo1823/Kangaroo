@@ -18,10 +18,10 @@
  *********************************************************************************/
 
 
-template<Slider slider>
+template<Chess_Pieces slider>
 constexpr std::size_t create_hash_index(const Square position, const Bitboard occupancy,
                                         const int64_t relevant_bits) {
-    if constexpr (slider == Slider::Bishop) {
+    if constexpr (slider == Chess_Pieces::Bishop) {
         return (occupancy * Constants::bishop_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
     } else {
         return (occupancy * Constants::rook_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
@@ -29,16 +29,16 @@ constexpr std::size_t create_hash_index(const Square position, const Bitboard oc
 }
 
 
-template<Slider slider>
+template<Chess_Pieces slider>
 constexpr std::size_t create_magic_hash_index(const Square position, const Bitboard occupancy,
                                               const int64_t relevant_bits) {
-    const std::size_t offset = (slider == Slider::Bishop ? 512 : 4096) * std::to_underlying(position);
+    const std::size_t offset = (slider == Chess_Pieces::Bishop ? 512 : 4096) * std::to_underlying(position);
 
     return offset + create_hash_index<slider>(position, occupancy, relevant_bits);
 }
 
 
-template<Slider slider>
+template<Chess_Pieces slider>
 /**
  * Computes the attack mask for a sliding piece (rook or bishop) based on its position
  * on the board. The function determines if the slider is a bishop or rook and retrieves
@@ -49,20 +49,20 @@ template<Slider slider>
  *         from the given position for the respective slider.
  */
 constexpr Bitboard get_attack_mask_for_slider(const Square position) {
-    return slider == Slider::Bishop
+    return slider == Chess_Pieces::Bishop
                ? Constants::bishop_attack_masks[std::to_underlying(position)]
                : Constants::rook_attack_masks[std::to_underlying(position)];
 }
 
-template<Slider slider>
-constexpr std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096>
+template<Chess_Pieces slider>
+constexpr std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096>
 create_attack_table_for(const Square position) {
     const Bitboard mask = get_attack_mask_for_slider<slider>(position);
 
     const int64_t relevant_bits = Bitcount(mask);
     const std::size_t number_of_masks = static_cast<std::size_t>(1) << static_cast<std::size_t>(relevant_bits);
 
-    std::array<Bitboard, slider == Slider::Bishop ? 512 : 4096> attack_table = {0};
+    std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096> attack_table = {0};
 
     for (std::size_t index = 0; index < number_of_masks; ++index) {
         const Bitboard occupancy = create_occupancy_from_mask(index, mask);
@@ -76,7 +76,7 @@ create_attack_table_for(const Square position) {
 }
 
 
-template<Slider slider>
+template<Chess_Pieces slider>
 /**
  * Generates and initializes an attack table containing all possible attack patterns
  * for sliding pieces (rooks and bishops) across the chessboard. This function precomputes
@@ -89,7 +89,7 @@ template<Slider slider>
  *         on the board for sliding pieces.
  */
 void create_attack_table(std::vector<Bitboard> &result) {
-    using enum Slider;
+    using enum Chess_Pieces;
 
     assert(result.size() >= 64 * (slider == Bishop ? 512 : 4096));
 

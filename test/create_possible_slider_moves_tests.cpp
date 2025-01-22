@@ -19,7 +19,7 @@ TEST(Move_Generator, create_possible_bishop_moves) {
     mask = set_bit(mask, C2);
 
     // cppcheck-suppress unreadVariable
-    const Bitboard board = Kangaroo::create_possible_slider_moves<Slider::Bishop>(mask, position);
+    const Bitboard board = Kangaroo::create_possible_slider_moves<Chess_Pieces::Bishop>(mask, position);
 
     ASSERT_EQ(board, /*
     8   0  0  0  0  0  0  0  0
@@ -49,7 +49,7 @@ TEST(Move_Generator, create_possible_rook_moves) {
     mask = set_bit(mask, E7);
 
     // cppcheck-suppress unreadVariable
-    const Bitboard board = Kangaroo::create_possible_slider_moves<Slider::Rook>(mask, position);
+    const Bitboard board = Kangaroo::create_possible_slider_moves<Chess_Pieces::Rook>(mask, position);
 
     ASSERT_EQ( board,
 /*

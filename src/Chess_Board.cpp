@@ -12,7 +12,7 @@
 #include <ranges>
 #include <vector>
 #include "Bit_Board.h"  // for Position_t, set_bit, get_bit, rank_...
-#include "types.h"
+#include "Types.h"
 #include "Board_Status.h"
 
 

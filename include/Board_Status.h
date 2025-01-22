@@ -8,19 +8,20 @@
 #include <stdexcept>
 
 #include "Base.h"
-#include "types.h"
+#include "Types.h"
 
 
 namespace Kangaroo {
     class Chess_Board;
-    class Movement_Generator;
 
     typedef std::function<void(const Chess_Board &, Move, Color, Chess_Pieces)> CallbackType;
 
 
     class Invalid_Board_Status final : public std::runtime_error {
     public:
-        Invalid_Board_Status() : std::runtime_error("Invalid board status") {}
+        Invalid_Board_Status() : std::runtime_error("Invalid board status") {
+        }
+
         ~Invalid_Board_Status() override = default;
     };
 
@@ -143,8 +144,7 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] std::size_t run_move_generation(Movement_Generator &gen,
-            const CallbackType& callback) const;
+        [[nodiscard]] std::size_t run_move_generation(const CallbackType &callback) const;
     };
 } // Kangaroo
 

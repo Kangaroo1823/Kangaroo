@@ -78,9 +78,9 @@ namespace Kangaroo {
         return moves;
     }
 
-    template<Slider slider>
+    template<Chess_Pieces slider>
     [[nodiscard]] constexpr Bitboard create_possible_slider_moves(const Bitboard occupancy, const Square position) {
-        using enum Slider;
+        using enum Chess_Pieces;
 
         static_assert(slider == Bishop || slider == Rook);
 

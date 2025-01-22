@@ -24,7 +24,7 @@ TEST(Attack_Tables_Generator, slider_attack_test) {
     constexpr auto position = Square::E4;
 
     constexpr Bitboard mask = Constants::rook_attack_masks[std::to_underlying(position)];
-    const std::size_t hash_index = create_magic_hash_index<Slider::Rook>(position, occupancy, Bitcount(mask));
+    const std::size_t hash_index = create_magic_hash_index<Chess_Pieces::Rook>(position, occupancy, Bitcount(mask));
 
     print_bitboard(Constants::rook_attack_table[hash_index]);
 

@@ -5,36 +5,31 @@
 #ifndef MOVEMENT_GENERATOR_H
 #define MOVEMENT_GENERATOR_H
 #include "Chess_Board.h"
-#include "types.h"
+#include "Constants.h"
+#include "Types.h"
 #include "Move_Receiver.h"
 
 namespace Kangaroo::Movement_Generator {
-    FRIEND_TEST(Movement_Generator_Test, test_pin_masks_generator);
-    FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
-    FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
-    FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture);
-    FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture);
-    FRIEND_TEST(Movement_Generator_Test, test_pawn_movement_generator);
 
-    Chess_Board *board_p;
+
+    inline Chess_Board *board_p;
 
     // pin-masks to detect pinned pieces
-    Bitboard pin_mask_HV = 0ULL;
-    Bitboard pin_mask_D = 0ULL;
+    inline Bitboard pin_mask_HV = 0ULL;
+    inline Bitboard pin_mask_D = 0ULL;
 
     // Bitboard to detect if a King is in check.
-    Bitboard check_mask = 0ULL;
+    inline Bitboard check_mask = 0ULL;
 
-    public
-    :
-    explicit Movement_Generator(Chess_Board *board) : board_p(board) {
+    _ForceInline constexpr void init (Chess_Board *board) {
+        board_p = board;
     }
 
-    _ForceInline constexpr Bitboard get_pin_mask_HV() const {
+    _ForceInline constexpr Bitboard get_pin_mask_HV() {
         return pin_mask_HV;
     }
 
-    _ForceInline constexpr Bitboard get_pin_mask_D() const {
+    _ForceInline constexpr Bitboard get_pin_mask_D() {
         return pin_mask_D;
     }
 
@@ -65,7 +60,7 @@ namespace Kangaroo::Movement_Generator {
     template<Color color_of_king, Pin_Masks_Suitable_For purpose>
     _ForceInline constexpr void build_pin_masks() {
         using enum Color;
-        using enum Slider;
+        using enum Chess_Pieces;
 
         static_assert(color_of_king == White || color_of_king == Black, "Invalid color");
         static_assert(
@@ -80,18 +75,16 @@ namespace Kangaroo::Movement_Generator {
         }
 
         // compute King position
-        const Square king_position = square_of(color_of_king == White
-                                                   ? board_p->white_king
-                                                   : board_p->black_king);
+        const Square king_position = square_of(bitboard_for(*board_p, color_of_king, King));
 
         // loop over all the rooks of opposite color
-        Bitloop(color_of_king == White ? board_p->black_rooks : board_p->white_rooks, rooks_remaining) {
+        Bitloop(bitboard_for(*board_p, color_of_king, Rook), rooks_remaining) {
             // change the HV-pin-mask, if necessary
             update_pin_mask_for_movement_like<Rook, purpose, color_of_king>(king_position, rooks_remaining);
         }
 
         // loop over all the queens of opposite color
-        Bitloop(color_of_king == White ? board_p->black_queens : board_p->white_queens, queens_remaining) {
+        Bitloop(bitboard_for(*board_p, color_of_king, Queen), queens_remaining) {
             // change the HV-pin-mask, if necessary
             update_pin_mask_for_movement_like<Rook, purpose, color_of_king>(king_position, queens_remaining);
 
@@ -100,7 +93,7 @@ namespace Kangaroo::Movement_Generator {
         }
 
         // loop over all the bishops of opposite color
-        Bitloop(color_of_king == White ? board_p->black_bishops : board_p->white_bishops, bishops_remaining) {
+        Bitloop(bitboard_for(*board_p, color_of_king, Bishop), bishops_remaining) {
             // change the D-pin-mask, if necessary
             update_pin_mask_for_movement_like<Bishop, purpose, color_of_king>(king_position, bishops_remaining);
         }
@@ -125,8 +118,6 @@ namespace Kangaroo::Movement_Generator {
         return moves;
     }
 
-    private
-    :
     /**
      * checks if a move is admissible.
      *
@@ -142,7 +133,7 @@ namespace Kangaroo::Movement_Generator {
      */
     template<Move_Generation_Mode mode>
     [[nodiscard]] _ForceInline constexpr bool is_pawn_push_admissible(
-        const Bitboard pawn_origin, const Bitboard pawn_move, const Bitboard occupied_squares) const {
+        const Bitboard pawn_origin, const Bitboard pawn_move, const Bitboard occupied_squares) {
         using enum Move_Generation_Mode;
 
         static_assert(mode == Normal_Move_Generation || mode == Check_Move_Generation ||
@@ -170,7 +161,7 @@ namespace Kangaroo::Movement_Generator {
      */
     template<Kangaroo::Board_Status status>
     [[nodiscard]] _ForceInline constexpr std::size_t generate_double_pawn_pushs(
-        const CallbackType &callback, const Bitboard pawn) const {
+        const CallbackType &callback, const Bitboard pawn) {
         std::size_t moves = 0ULL;
 
         // check if the Pawn is in the base row.
@@ -178,9 +169,9 @@ namespace Kangaroo::Movement_Generator {
             // if so, check if a double Pawn push is admissible.
             if (const Bitboard moved_pawn_2 = double_pawn_push<status.color_to_move>(pawn);
                 is_pawn_push_admissible<status.mode>(pawn,
-                                                     moved_pawn_2, board_p->all_pieces)) {
+                                                     moved_pawn_2, total_pieces_for(*board_p))) {
                 // make the move and call the callback function.
-                Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Normal, Chess_Pieces::Pawn>(
                     *board_p, callback, pawn, moved_pawn_2);
 
                 // increment the number of moves generated.
@@ -201,7 +192,7 @@ namespace Kangaroo::Movement_Generator {
      */
     template<Kangaroo::Board_Status status>
     [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_captures(
-        const CallbackType &callback, const Bitboard pawn) const {
+        const CallbackType &callback, const Bitboard pawn) {
         using enum Color;
         using enum Move_Generation_Mode;
         using enum Move_Type;
@@ -219,9 +210,7 @@ namespace Kangaroo::Movement_Generator {
 
         const auto pawn_square = std::to_underlying(square_of(pawn));
         // the squares the Pawn in question can move to should be occupied by the opposite color.
-        Bitboard mask = status.color_to_move == White
-                            ? Constants::white_pawn_attacks[pawn_square] & board_p->black_pieces
-                            : Constants::black_pawn_attacks[pawn_square] & board_p->white_pieces;
+        Bitboard mask = get_pawn_attacks_for<status.color_to_move>(pawn_square) & all_pieces_for(*board_p, enemy(status.color_to_move));
 
 
         // loop over all such squares
@@ -231,23 +220,23 @@ namespace Kangaroo::Movement_Generator {
 
             if constexpr (status.mode == Promotion_Move_Generation) {
                 // if so, perform the move and call the callback function.
-                Move_Receiver<status, Capture_Promotion, Queen>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Capture_Promotion, Queen>(
                     *board_p, callback, pawn, pawn_attack);
 
-                Move_Receiver<status, Capture_Promotion, Bishop>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Capture_Promotion, Bishop>(
                     *board_p, callback, pawn, pawn_attack);
 
-                Move_Receiver<status, Capture_Promotion, Knight>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Capture_Promotion, Knight>(
                     *board_p, callback, pawn, pawn_attack);
 
-                Move_Receiver<status, Capture_Promotion, Rook>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Capture_Promotion, Rook>(
                     *board_p, callback, pawn, pawn_attack);
 
                 // increment the number of moves generated by four.
                 moves += 4ULL; // -V112
             } else {
                 // perform the move and call the callback
-                Move_Receiver<status, Capture, Pawn>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Capture, Pawn>(
                     *board_p, callback, pawn, pawn_attack);
 
                 // increment the number of moves generated
@@ -270,7 +259,7 @@ namespace Kangaroo::Movement_Generator {
      */
     template<Kangaroo::Board_Status status>
     [[nodiscard]] _ForceInline constexpr std::size_t generate_en_passant_captures(
-        const CallbackType &callback, const Bitboard pawn) const {
+        const CallbackType &callback, const Bitboard pawn) {
         using enum Color;
 
         static_assert(
@@ -285,9 +274,9 @@ namespace Kangaroo::Movement_Generator {
         // when we generate moves for White
         if constexpr (status.color_to_move == White) {
             // if the Pawn is left of the en_passant_square
-            if (not_a_file & pawn & board_p->en_passant_square >> 1) {
+            if (not_a_file & pawn & en_passant_square_for(*board_p) >> 7) {
                 // perform the move and call the callback
-                Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
                     *board_p, callback, pawn, pawn << 7);
 
                 // increase move counter by one
@@ -445,10 +434,10 @@ namespace Kangaroo::Movement_Generator {
     }
 
 
-    template<Slider slider, Pin_Masks_Suitable_For purpose, Color color>
+    template<Chess_Pieces slider, Pin_Masks_Suitable_For purpose, Color color>
     _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
                                                                   const Bitboard rooks_remaining) {
-        using enum Slider;
+        using enum Chess_Pieces;
         using enum Color;
 
         static_assert(
