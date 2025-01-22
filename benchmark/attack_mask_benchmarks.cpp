@@ -13,16 +13,16 @@
 
 
 const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
-const auto movement_generator = std::make_unique<Kangaroo::Movement_Generator>(board.get());
 
 // cppcheck-suppress constParameterCallback
 static void BM_move_generator(benchmark::State &state) { // -V2009
 
+    Kangaroo::Movement_Generator::init(board.get());
 
     for ([[maybe_unused]] auto _: state) {
         uint64_t cntr = 0ULL;
 
-        auto s = movement_generator->generate_moves<Kangaroo::Board_Status(0x3d)>(
+        auto s = Kangaroo::Movement_Generator::generate_moves<Kangaroo::Board_Status(0x3d)>(
             [&cntr](const Kangaroo::Chess_Board &new_board, const Move move, const Color color,
                     const Chess_Pieces chess_piece) {
                 ++cntr;
@@ -46,9 +46,9 @@ static void BM_pin_mask_generator(benchmark::State &state) { // -V2009
         Bitboard cntr1 = 0ULL;
         Bitboard cntr2 = 0ULL;
 
-        movement_generator->build_pin_masks<Color::Black, Pin_Masks_Suitable_For::Detecting_Pins>();
-        cntr1 = movement_generator->get_pin_mask_HV();
-        cntr2 = movement_generator->get_pin_mask_D();
+        Kangaroo::Movement_Generator::build_pin_masks<Color::Black, Pin_Masks_Suitable_For::Detecting_Pins>();
+        cntr1 = Kangaroo::Movement_Generator::get_pin_mask_HV();
+        cntr2 = Kangaroo::Movement_Generator::get_pin_mask_D();
 
         benchmark::DoNotOptimize(cntr1);
         benchmark::DoNotOptimize(cntr2);

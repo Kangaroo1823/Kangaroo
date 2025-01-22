@@ -10,8 +10,6 @@
 #include "Move_Receiver.h"
 
 namespace Kangaroo::Movement_Generator {
-
-
     inline Chess_Board *board_p;
 
     // pin-masks to detect pinned pieces
@@ -21,7 +19,7 @@ namespace Kangaroo::Movement_Generator {
     // Bitboard to detect if a King is in check.
     inline Bitboard check_mask = 0ULL;
 
-    _ForceInline constexpr void init (Chess_Board *board) {
+    _ForceInline constexpr void init(Chess_Board *board) {
         board_p = board;
     }
 
@@ -31,6 +29,49 @@ namespace Kangaroo::Movement_Generator {
 
     _ForceInline constexpr Bitboard get_pin_mask_D() {
         return pin_mask_D;
+    }
+
+    template<Chess_Pieces slider, Pin_Masks_Suitable_For purpose, Color color>
+    _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
+                                                                  const Bitboard rooks_remaining) {
+        using enum Chess_Pieces;
+        using enum Color;
+
+        static_assert(
+            purpose == Pin_Masks_Suitable_For::Detecting_Pins ||
+            purpose == Pin_Masks_Suitable_For::Detecting_Check);
+
+        // compute position of current Rook
+        const Square rook_position = square_of(rooks_remaining);
+
+        // compute the pin-ray between the Rook and the King
+        const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
+
+        const auto pieces_in_intersection = Bitcount(ray & total_pieces_for(*board_p));
+
+        const auto player_pieces_in_intersection = Bitcount(
+            ray & all_pieces_for(*board_p, color));
+
+        // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
+        // between is of the same color as the King.
+        if (pieces_in_intersection == std::to_underlying(purpose) &&
+            player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
+            if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Pins) {
+                // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
+                // - one is at piece_position (Rook or Queen)
+                // - and one other piece.
+                // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
+
+                if constexpr (slider == Rook) {
+                    pin_mask_HV |= ray;
+                } else if constexpr (slider == Bishop) {
+                    pin_mask_D |= ray;
+                }
+            } else if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Check) {
+                // When the Bitcount equals one, it means that it is a check situation!
+                check_mask |= ray;
+            }
+        }
     }
 
     /**
@@ -100,24 +141,6 @@ namespace Kangaroo::Movement_Generator {
     }
 
 
-    template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(const CallbackType &callback) {
-        using enum Move_Generation_Mode;
-        using enum Pin_Masks_Suitable_For;
-
-        build_pin_masks<status.color_to_move, Detecting_Pins>();
-
-        uint64_t moves = generate_pawn_moves<status.copy_and_set_mode(Normal_Move_Generation)>(callback);
-
-        moves += generate_pawn_moves<status.copy_and_set_mode(Pin_HV_Move_Generation)>(callback);
-
-        moves += generate_pawn_moves<status.copy_and_set_mode(Pin_D_Move_Generation)>(callback);
-
-        moves += generate_pawn_moves<status.copy_and_set_mode(Promotion_Move_Generation)>(callback);
-
-        return moves;
-    }
-
     /**
      * checks if a move is admissible.
      *
@@ -143,10 +166,10 @@ namespace Kangaroo::Movement_Generator {
         if constexpr (mode == Normal_Move_Generation || mode == Check_Move_Generation || mode ==
                       Promotion_Move_Generation) {
             return ret;
-                      } else if constexpr (mode == Pin_HV_Move_Generation) {
-                          const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
-                          return ret && p && (pawn_origin & pin_mask_D) == 0;
-                      }
+        } else if constexpr (mode == Pin_HV_Move_Generation) {
+            const bool p = (pawn_origin & pin_mask_HV) == 0 || (pawn_move & pin_mask_HV) != 0;
+            return ret && p && (pawn_origin & pin_mask_D) == 0;
+        }
         return false;
     }
 
@@ -176,7 +199,7 @@ namespace Kangaroo::Movement_Generator {
 
                 // increment the number of moves generated.
                 ++moves;
-                                                     }
+            }
         }
 
         // return the number of moves generated.
@@ -210,7 +233,8 @@ namespace Kangaroo::Movement_Generator {
 
         const auto pawn_square = std::to_underlying(square_of(pawn));
         // the squares the Pawn in question can move to should be occupied by the opposite color.
-        Bitboard mask = get_pawn_attacks_for<status.color_to_move>(pawn_square) & all_pieces_for(*board_p, enemy(status.color_to_move));
+        Bitboard mask = get_pawn_attacks_for<status.color_to_move>(pawn_square) & all_pieces_for(
+                            *board_p, enemy(status.color_to_move));
 
 
         // loop over all such squares
@@ -277,16 +301,16 @@ namespace Kangaroo::Movement_Generator {
             if (not_a_file & pawn & en_passant_square_for(*board_p) >> 7) {
                 // perform the move and call the callback
                 Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
-                    *board_p, callback, pawn, pawn << 7);
+                    *board_p, callback, pawn, en_passant_square_for(*board_p));
 
                 // increase move counter by one
                 ++moves;
 
                 // if the Pawn is on the right-hand-side of the en_passant_square
-            } else if (not_h_file & pawn & board_p->en_passant_square << 1) {
+            } else if (not_h_file & pawn & en_passant_square_for(*board_p) >> 9) {
                 // perform the move and call the callback
-                Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                    *board_p, callback, pawn, pawn << 9);
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
+                    *board_p, callback, pawn, en_passant_square_for(*board_p));
 
                 // increase move-counter by one
                 ++moves;
@@ -295,19 +319,19 @@ namespace Kangaroo::Movement_Generator {
             // when we generate moves for Black ...
         } else if constexpr (status.color_to_move == Black) {
             // if the Pawn is on the right-hand-side of the en_passant_square
-            if (not_a_file & pawn & board_p->en_passant_square >> 1) {
+            if (not_a_file & pawn & en_passant_square_for(*board_p) << 7) {
                 // perform the move and call the callback
-                Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                    *board_p, callback, pawn, pawn >> 7);
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
+                    *board_p, callback, pawn, en_passant_square_for(*board_p));
 
                 // increase the move-counter by one
                 ++moves;
 
                 // if the Pawn is on the left-hand-side of the en_passant_square
-            } else if (not_h_file & pawn & board_p->en_passant_square << 1) {
+            } else if (not_h_file & pawn & en_passant_square_for(*board_p) << 9) {
                 // perform the move and call the callback
-                Move_Receiver<status, Move_Type::Capture, Chess_Pieces::Pawn>::evaluate_and_perform_move(
-                    *board_p, callback, pawn, pawn >> 9);
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
+                    *board_p, callback, pawn, en_passant_square_for(*board_p));
 
                 // increase the move-counter by one
                 ++moves;
@@ -341,7 +365,7 @@ namespace Kangaroo::Movement_Generator {
      * @return Returns the number of moves generated.
      */
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_moves(const CallbackType &callback) const {
+    [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_moves(const CallbackType &callback) {
         using enum Color;
         using enum Chess_Pieces;
         using enum Move_Type;
@@ -351,7 +375,7 @@ namespace Kangaroo::Movement_Generator {
         std::size_t moves = 0ULL;
 
         // select the correct set of pawns.
-        Bitboard pawns = status.color_to_move == White ? board_p->white_pawns : board_p->black_pawns;
+        Bitboard pawns = bitboard_for(*board_p, status.color_to_move, Pawn);
 
         // if we are in Normal_Move_Generation-mode or in Check_Move_Generation-mode...
         if constexpr (status.mode == Normal_Move_Generation || status.mode == Check_Move_Generation) {
@@ -388,26 +412,26 @@ namespace Kangaroo::Movement_Generator {
                 const Bitboard moved_pawn = regular_pawn_push<status.color_to_move>(loop_pawn);
 
                 // and check if it is admissible.
-                if (is_pawn_push_admissible<status.mode>(loop_pawn, moved_pawn, board_p->all_pieces)) {
+                if (is_pawn_push_admissible<status.mode>(loop_pawn, moved_pawn, total_pieces_for(*board_p))) {
                     // check if we are in Promotion_Move_Generation-mode
                     if constexpr (status.mode == Promotion_Move_Generation) {
                         // if so, perform the move and call the callback function.
-                        Move_Receiver<status, Promotion, Queen>::evaluate_and_perform_move(
+                        Move_Receiver::evaluate_and_perform_move<status, Promotion, Queen>(
                             *board_p, callback, loop_pawn, moved_pawn);
 
-                        Move_Receiver<status, Promotion, Bishop>::evaluate_and_perform_move(
+                        Move_Receiver::evaluate_and_perform_move<status, Promotion, Bishop>(
                             *board_p, callback, loop_pawn, moved_pawn);
 
-                        Move_Receiver<status, Promotion, Knight>::evaluate_and_perform_move(
+                        Move_Receiver::evaluate_and_perform_move<status, Promotion, Knight>(
                             *board_p, callback, loop_pawn, moved_pawn);
 
-                        Move_Receiver<status, Promotion, Rook>::evaluate_and_perform_move(
+                        Move_Receiver::evaluate_and_perform_move<status, Promotion, Rook>(
                             *board_p, callback, loop_pawn, moved_pawn);
 
                         moves += 4ULL; // -V112
                     } else {
                         // perform the move and run the callback
-                        Move_Receiver<status, Normal, Pawn>::evaluate_and_perform_move(
+                        Move_Receiver::evaluate_and_perform_move<status, Normal, Pawn>(
                             *board_p, callback, loop_pawn, moved_pawn);
 
                         // increment the number of moves generated.
@@ -417,64 +441,39 @@ namespace Kangaroo::Movement_Generator {
                         moves += generate_double_pawn_pushs<status>(callback, loop_pawn);
                     }
                 }
-                          }
+            }
 
             if constexpr (status.mode == Normal_Move_Generation || status.mode == Check_Move_Generation ||
                           status.mode == Promotion_Move_Generation) {
                 moves += generate_pawn_captures<status>(callback, loop_pawn);
-                          }
+            }
 
             if constexpr (status.en_passant_p == true && (
                               status.mode == Normal_Move_Generation ||
                               status.mode == Check_Move_Generation)) {
                 moves += generate_en_passant_captures<status>(callback, loop_pawn);
-                              }
+            }
         }
         return moves;
     }
 
 
-    template<Chess_Pieces slider, Pin_Masks_Suitable_For purpose, Color color>
-    _ForceInline constexpr void update_pin_mask_for_movement_like(const Square king_position,
-                                                                  const Bitboard rooks_remaining) {
-        using enum Chess_Pieces;
-        using enum Color;
+    template<Kangaroo::Board_Status status>
+    [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(const CallbackType &callback) {
+        using enum Move_Generation_Mode;
+        using enum Pin_Masks_Suitable_For;
 
-        static_assert(
-            purpose == Pin_Masks_Suitable_For::Detecting_Pins ||
-            purpose == Pin_Masks_Suitable_For::Detecting_Check);
+        build_pin_masks<status.color_to_move, Detecting_Pins>();
 
-        // compute position of current Rook
-        const Square rook_position = square_of(rooks_remaining);
+        uint64_t moves = generate_pawn_moves<status.copy_and_set_mode(Normal_Move_Generation)>(callback);
 
-        // compute the pin-ray between the Rook and the King
-        const Bitboard ray = get_pin_ray_for<slider>(king_position, rook_position);
+        moves += generate_pawn_moves<status.copy_and_set_mode(Pin_HV_Move_Generation)>(callback);
 
-        const auto pieces_in_intersection = Bitcount(ray & board_p->all_pieces);
+        moves += generate_pawn_moves<status.copy_and_set_mode(Pin_D_Move_Generation)>(callback);
 
-        const auto player_pieces_in_intersection = Bitcount(
-            ray & (color == White ? board_p->white_pieces : board_p->black_pieces));
+        moves += generate_pawn_moves<status.copy_and_set_mode(Promotion_Move_Generation)>(callback);
 
-        // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
-        // between is of the same color as the King.
-        if (pieces_in_intersection == std::to_underlying(purpose) &&
-            player_pieces_in_intersection == std::to_underlying(purpose) - 1) {
-            if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Pins) {
-                // In case it is, we should add the ray to the pin-mask since there are two pieces in the ray:
-                // - one is at piece_position (Rook or Queen)
-                // - and one other piece.
-                // Therefore, the other piece is pinned, and we need to add the ray to te pin-mask.
-
-                if constexpr (slider == Rook) {
-                    pin_mask_HV |= ray;
-                } else if constexpr (slider == Bishop) {
-                    pin_mask_D |= ray;
-                }
-            } else if constexpr (purpose == Pin_Masks_Suitable_For::Detecting_Check) {
-                // When the Bitcount equals one, it means that it is a check situation!
-                check_mask |= ray;
-            }
-            }
+        return moves;
     }
 }
 
