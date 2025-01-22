@@ -282,7 +282,7 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
     return os;
 }
 
-[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data) {
+[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data, const std::optional<Board_Status> &status) {
     using enum Color;
     using enum Chess_Pieces;
 
@@ -340,8 +340,8 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
                 ss << std::format("{}", white_pawn_c);
             else ss << std::format("{}", empty_c);
         }
-        if (rank == 8 && board.en_passant_square) {
-            ss << "         en passant square: " << format_square(square_of(board.en_passant_square));
+        if (rank == 8 && en_passant_square_for(board)) {
+            ss << "         en passant square: " << format_square(square_of(en_passant_square_for(board)));
         }
         if (rank == 7 && status != std::nullopt) {
             ss << "         castling rights:   " << (status->white_king_castle ? "K" : "-") << (

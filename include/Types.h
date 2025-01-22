@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <array>
+#include "Base.h"
 
 using MagicNumber = uint64_t;
 using Bitboard = uint64_t;

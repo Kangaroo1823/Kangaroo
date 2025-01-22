@@ -68,11 +68,10 @@ template<Color color>
  */
 constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
     using enum Color;
+    using enum Chess_Pieces;
 
     // create attack mask for pawns
-    const Bitboard pawn_attacks = create_pawn_attacks_for<color == White ? White : Black>(
-        color == White ? board->white_pawns : board->black_pawns
-    );
+    const Bitboard pawn_attacks = create_pawn_attacks_for<color>(bitboard_for(*board, color, Pawn));
 
     // create the attack mask for kings
     const Bitboard king_attacks = create_king_attacks_for(color == White ? board->white_king : board->black_king);

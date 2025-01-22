@@ -5,7 +5,6 @@
 #ifndef MOVE_RECEIVER_H
 #define MOVE_RECEIVER_H
 
-#include "Move_Receiver.decl.h"
 #include "Board_Status.h"
 #include "Chess_Board.h"
 

@@ -107,7 +107,7 @@ namespace Kangaroo {
         explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
 
         explicit constexpr Chess_Board(const std::array<Bitboard, 15> &data) {
-            for (auto it = chess_board.begin(); const auto &d : data ) {
+            for (auto it = chess_board.begin(); const auto &d: data) {
                 *it = d;
                 ++it;
             }
@@ -121,9 +121,9 @@ namespace Kangaroo {
         _ForceInline constexpr void update_collectors() {
             using enum Color;
 
-            for (const auto c : All_Colors) {
+            for (const auto c: All_Colors) {
                 Bitboard b = 0ULL;
-                for (const auto p : All_Pieces) {
+                for (const auto p: All_Pieces) {
                     b |= bitboard_for(*this, c, p);
                 }
                 all_pieces_for(*this, c) = b;
@@ -196,7 +196,8 @@ namespace Kangaroo {
 
     std::ostream &operator<<(std::ostream &os, const Chess_Board &board);
 
-    [[nodiscard]] std::string format_chess_board(const Chess_Board &board, bool output_data);
+    [[nodiscard]] std::string format_chess_board(const Chess_Board &board, bool output_data,
+                                                 const std::optional<Board_Status> &status = std::nullopt);
 
     void print_chess_board(const Chess_Board &board, bool output_data = false);
 }
