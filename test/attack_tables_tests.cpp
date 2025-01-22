@@ -11,6 +11,8 @@
 
 #include "attack_tables.h"
 #include "move_generator.h"
+#include "Constants.h"
+#include "Chess_Board.h"
 
 
 

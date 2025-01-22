@@ -19,7 +19,7 @@ add_executable(Kangaroo_constants_generator_masks
         ../include/base.h
         ../include/constants.h
         ../include/types.h
-        ../include/move_generator.h)
+        ../include/_move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_masks
         PUBLIC
         Kangaroo_warnings
@@ -72,7 +72,7 @@ add_executable(Kangaroo_constants_generator_magics constants_generator.cpp
         magic_numbers.cpp
         ../include/constants.h
         ../include/types.h
-        ../include/move_generator.h)
+        ../include/_move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_magics
         PUBLIC
         Kangaroo_warnings
@@ -121,7 +121,7 @@ add_executable(Kangaroo_constants_generator_attacks
         magic_numbers.cpp
         ../include/constants.h
         ../include/types.h
-        ../include/move_generator.h)
+        ../include/_move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_attacks
         PUBLIC
         Kangaroo_warnings

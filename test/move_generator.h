@@ -7,10 +7,10 @@
 #ifndef MOVE_GENERATOR_H
 #define MOVE_GENERATOR_H
 #include <filesystem>
-#include "Board_Status.h"
-#include "constants_attacks.h"
-#include "attack_tables.h"
-#include "Chess_Board.h"
+#include "../include/Board_Status.h"
+#include "../cmake-build-release-winclang-1916-2/constants_attacks.h"
+#include "../tools/attack_tables.h"
+#include "../include/Chess_Board.h"
 
 template<Chess_Pieces slider>
 constexpr Bitboard get_attacks_for_position(const Square position, const Bitboard occupancy) {

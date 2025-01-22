@@ -81,7 +81,7 @@ add_library(Kangaroo_library ../include/Bit_Board.h
         ../include/base.h
         ../include/constants.h
         ../include/types.h
-        ../include/move_generator.h
+  #      ../include/_move_generator.h
         ../include/Board_Status.h
         Movement_Generator.cpp
         ../include/Movement_Generator.h

@@ -4,16 +4,22 @@
 // Created by peter on 03/01/2025.
 //
 
+#include <ranges>
+#include <algorithm>
+
 #include "Chess_Board.h"
 #include "Movement_Generator.h"
 #include "gtest/gtest.h"
-#include "move_generator.h"
+
 
 namespace Kangaroo {
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base) {
+
+        using namespace Movement_Generator;
+
         auto board = std::make_unique<
             Kangaroo::Chess_Board>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        Kangaroo::Move_Generator gen(board.get());
+        init(board.get());
 
         [[maybe_unused]] std::array<Move, 16> moves = {
             /*

@@ -144,7 +144,7 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] std::size_t run_move_generation(const CallbackType &callback) const;
+        [[nodiscard]] std::size_t run_pawn_move_generation(const CallbackType &callback) const;
     };
 } // Kangaroo
 
