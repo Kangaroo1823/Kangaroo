@@ -11,7 +11,7 @@
 #include "Movement_Generator.h"
 
 namespace Kangaroo {
-    [[nodiscard]] std::size_t Board_Status::run_move_generation(const CallbackType &callback) const {
+    [[nodiscard]] std::size_t Board_Status::run_move_generation(const CallbackType &callback) const { // -V2008
         switch (to_flags()) {
             case 0x00: return Movement_Generator::generate_moves<Board_Status(0x00)>(callback);
             case 0x01: return Movement_Generator::generate_moves<Board_Status(0x01)>(callback);

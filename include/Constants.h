@@ -14,13 +14,13 @@
 #include "constants_xray_visibility_tables.h"
 
 template<Color color>
-[[nodiscard]] _ForceInline constexpr Bitboard get_pawn_attacks_for(const Square position) {
+[[nodiscard]] _ForceInline constexpr Bitboard get_pawn_attacks_for(const std::size_t position) {
     using enum Color;
 
     static_assert(color == White || color == Black);
     return color == White
-               ? Constants::white_pawn_attacks[std::to_underlying(position)]
-               : Constants::black_pawn_attacks[std::to_underlying(position)];
+               ? Constants::white_pawn_attacks[position]
+               : Constants::black_pawn_attacks[position];
 }
 
 
