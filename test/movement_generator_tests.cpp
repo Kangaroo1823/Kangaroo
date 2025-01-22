@@ -199,7 +199,6 @@ namespace Kangaroo {
      * Test if the empty board leads to no generated moves.
      */
     void pawn_movement_generator_test1() {
-
         using namespace Kangaroo::Movement_Generator;
 
         Chess_Board board{};
@@ -208,12 +207,12 @@ namespace Kangaroo {
 
         // empty board results in no moves generated
         auto number_of_moves = status->run_pawn_move_generation(
-                                                           []([[maybe_unused]] const Chess_Board &new_board,
-                                                              [[maybe_unused]] const Move move,
-                                                              [[maybe_unused]] const Color color,
-                                                              [[maybe_unused]] const Chess_Pieces chess_piece) -> bool {
-                                                               return true;
-                                                           });
+            []([[maybe_unused]] const Chess_Board &new_board,
+               [[maybe_unused]] const Move move,
+               [[maybe_unused]] const Color color,
+               [[maybe_unused]] const Chess_Pieces chess_piece) -> bool {
+                return true;
+            });
         ASSERT_EQ(number_of_moves, 0);
     }
 
@@ -222,7 +221,6 @@ namespace Kangaroo {
      * Test that the board below leads to two generated moves.
      */
     void pawn_movement_generator_test2() {
-
         using namespace Kangaroo::Movement_Generator;
         using enum Chess_Pieces;
         using enum Color;
@@ -390,7 +388,6 @@ namespace Kangaroo {
      * Test that the board below, it is tested that the pawn will promote if it is moved.
      */
     void pawn_movement_generator_test3() {
-
         using namespace Kangaroo::Movement_Generator;
 
         /*
@@ -790,7 +787,6 @@ namespace Kangaroo {
 
     // test that with a diagonally pinned pawn no moves are generated.
     void pawn_movement_generator_test4() {
-
         using namespace Kangaroo::Movement_Generator;
         /*
 
@@ -825,7 +821,6 @@ namespace Kangaroo {
 
     // test if vertically pinned pawn moves are generated correctly
     void pawn_movement_generator_test5() {
-
         using namespace Kangaroo::Movement_Generator;
 
         Chess_Board board{};
@@ -881,9 +876,8 @@ namespace Kangaroo {
         };
 
         auto f = [&new_boards, &moves]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                               move, [[maybe_unused]] const Color color,
-                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
-
+                                       move, [[maybe_unused]] const Color color,
+                                       [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             if (const auto it = std::ranges::find(moves, move); it == moves.end()) {
                 std::stringstream ss;
                 ss << "move: 0x" << std::hex << move << " not found in moves";
@@ -913,7 +907,6 @@ namespace Kangaroo {
 
     // test that horizontally pinned pawns cannot move.
     void pawn_movement_generator_test6() {
-
         using namespace Kangaroo::Movement_Generator;
 
         Chess_Board board{};
@@ -922,19 +915,17 @@ namespace Kangaroo {
 
 
         auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-            move, [[maybe_unused]] const Color color,
-            [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+                    move, [[maybe_unused]] const Color color,
+                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             throw std::runtime_error("no moves should be generated here..");
         };
 
         const auto n = status->run_pawn_move_generation(f);
         ASSERT_EQ(n, 0);
-
     }
 
     // test en_passant captures
     void pawn_movement_generator_test7() {
-
         using namespace Kangaroo::Movement_Generator;
 
         Chess_Board board{};
@@ -942,6 +933,15 @@ namespace Kangaroo {
         init(&board);
 
         print_chess_board(board);
+
+        auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                    move, [[maybe_unused]] const Color color,
+                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+            print_chess_board(new_board);
+            return false;
+        };
+
+        [[maybe_unused]] const auto n = status->run_pawn_move_generation(f);
     }
 
     TEST(Movement_Generator_Test, test_pawn_movement_generator) {

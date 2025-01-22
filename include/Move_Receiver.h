@@ -102,9 +102,9 @@ namespace Kangaroo::Move_Receiver {
         total_pieces_for(board) ^= from;
     }
 
-    template <Board_Status status, Chess_Pieces chess_piece>
-    static void evaluate_and_perform_normal_move(Chess_Board &board, const CallbackType &callback, const Move move) {
-
+    template<Board_Status status, Chess_Pieces chess_piece>
+    _ForceInline constexpr static void evaluate_and_perform_normal_move(
+        Chess_Board &board, const CallbackType &callback, const Move move) {
         bitboard_for(board, status.color_to_move, chess_piece) ^= move;
         all_pieces_for(board, status.color_to_move) ^= move;
         total_pieces_for(board) ^= move;
@@ -114,6 +114,35 @@ namespace Kangaroo::Move_Receiver {
         bitboard_for(board, status.color_to_move, chess_piece) ^= move;
         all_pieces_for(board, status.color_to_move) ^= move;
         total_pieces_for(board) ^= move;
+    }
+
+    template<Board_Status status, Chess_Pieces chess_piece>
+    _ForceInline constexpr static void evaluate_and_perform_en_passant(Chess_Board &board, const CallbackType &callback,
+                                                                       const Bitboard to, const Move move) {
+        using enum Color;
+
+        static_assert(status.color_to_move == White || status.color_to_move == Black);
+        static_assert(chess_piece == Chess_Pieces::Pawn);
+        static_assert(status.en_passant_p);
+
+        const Bitboard capture = status.color_to_move == White ? to >> 8 : to << 8;
+
+        bitboard_for(board, status.color_to_move, chess_piece) ^= move;
+        all_pieces_for(board, status.color_to_move) ^= move;
+        total_pieces_for(board) ^= move | capture;
+        all_pieces_for(board, enemy(status.color_to_move)) ^= capture;
+        bitboard_for(board, enemy(status.color_to_move), chess_piece) ^= capture;
+        Bitboard en_passant_square = en_passant_square_for(board);
+        en_passant_square_for(board) = 0ULL;
+
+        callback(board, move, status.color_to_move, chess_piece);
+
+        en_passant_square_for(board) = en_passant_square;
+        bitboard_for(board, status.color_to_move, chess_piece) ^= move;
+        all_pieces_for(board, status.color_to_move) ^= move;
+        total_pieces_for(board) ^= move | capture;
+        all_pieces_for(board, enemy(status.color_to_move)) ^= capture;
+        bitboard_for(board, enemy(status.color_to_move), chess_piece) ^= capture;
     }
 
     template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>
@@ -134,10 +163,11 @@ namespace Kangaroo::Move_Receiver {
             evaluate_and_perform_capture<status, chess_piece>(board, callback, from, to, move);
         } else if constexpr (move_type == Move_Type::Normal) {
             evaluate_and_perform_normal_move<status, chess_piece>(board, callback, move);
+        } else if constexpr (move_type == Move_Type::En_Passant) {
+            evaluate_and_perform_en_passant<status, chess_piece>(board, callback, to, move);
         }
     }
 };
-
 
 
 #endif //MOVE_RECIEVER_H
