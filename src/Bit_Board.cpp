@@ -30,7 +30,7 @@ void print_bitboard(const Bitboard bitboard) {
     std::print("       0x{0:x},\n", bitboard);
 }
 
-std::string print_position(const Square position) {
+std::string format_square(const Square position) {
     // An example of using a look-up table
     static const std::array<std::string, 64> position_table = {
         "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1",

@@ -16,7 +16,7 @@ namespace Kangaroo {
         using enum Pin_Masks_Suitable_For;
 
         Chess_Board board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
         gen.build_pin_masks<White, Detecting_Pins>();
         ASSERT_EQ(gen.pin_mask_HV, 0) << "1st test not true";
 
@@ -199,10 +199,10 @@ namespace Kangaroo {
     void pawn_movement_generator_test1() {
         Chess_Board board{};
         std::unique_ptr<Board_Status> status = board.reset_board("8/8/8/8/8/8/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
         // empty board results in no moves generated
-        auto number_of_moves = status->run_move_generation(gen,
+        auto number_of_moves = status->run_pawn_move_generation(gen,
                                                            []([[maybe_unused]] const Chess_Board &new_board,
                                                               [[maybe_unused]] const Move move,
                                                               [[maybe_unused]] const Color color,
@@ -234,7 +234,7 @@ namespace Kangaroo {
 
         Chess_Board board{};
         const auto status = board.reset_board("8/2r5/3P4/8/8/8/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
 
         std::array<Chess_Board, 2> new_boards = {
@@ -372,7 +372,7 @@ namespace Kangaroo {
             return false;
         };
 
-        const auto n = status->run_move_generation(gen, f);
+        const auto n = status->run_pawn_move_generation(gen, f);
         ASSERT_EQ(n, moves.size());
     }
 
@@ -397,7 +397,7 @@ namespace Kangaroo {
 
         Chess_Board board{};
         const auto status = board.reset_board("2r5/3P4/8/8/8/8/8/8 w - - 0 1");
-        Movement_Generator gen(&board);
+        Move_Generator gen(&board);
 
 
         [[maybe_unused]] constexpr std::array<Chess_Board, 8> new_boards = {
@@ -745,9 +745,8 @@ namespace Kangaroo {
 
 
         auto f = [&new_boards, &moves]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                               move, [[maybe_unused]] const Color color,
-                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
-
+                                       move, [[maybe_unused]] const Color color,
+                                       [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             const auto it = std::ranges::find(moves, move);
             if (it == moves.end()) {
                 std::stringstream ss;
@@ -771,8 +770,154 @@ namespace Kangaroo {
             return false;
         };
 
-        const auto n = status->run_move_generation(gen, f);
+        const auto n = status->run_pawn_move_generation(gen, f);
         ASSERT_EQ(n, moves.size());
+    }
+
+
+    // test that with a diagonally pinned pawn no moves are generated.
+    void pawn_movement_generator_test4() {
+        /*
+
+               A  B  C  D  E  F  G  H
+
+          8    .  .  .  .  .  .  .  ♚
+          7    .  .  .  .  .  .  .  .
+          6    .  .  .  .  .  ♟  .  .
+          5    .  .  .  .  .  .  .  .
+          4    .  .  .  .  .  .  .  .
+          3    .  .  .  .  .  .  .  .
+          2    .  .  .  .  .  .  .  .
+          1    ♗  .  .  .  .  .  .  .
+
+               A  B  C  D  E  F  G  H
+
+        */
+
+        Chess_Board board{};
+        const auto status = board.reset_board("7K/8/5P2/8/8/8/8/b7 w - - 0 1");
+        Move_Generator gen(&board);
+
+        auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                    move, [[maybe_unused]] const Color color,
+                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+            throw std::runtime_error("no moves should be generated here..");
+        };
+
+        const auto n = status->run_pawn_move_generation(gen, f);
+        ASSERT_EQ(n, 0);
+    }
+
+    // test if vertically pinned pawn moves are generated correctly
+    void pawn_movement_generator_test5() {
+        Chess_Board board{};
+        const auto status = board.reset_board("5K2/8/4b3/5P2/8/8/8/5r2 w - - 0 1");
+        Move_Generator gen(&board);
+
+        std::array<Chess_Board, 1> new_boards{
+            /*
+
+           A  B  C  D  E  F  G  H
+
+      8    .  .  .  .  .  ♚  .  .
+      7    .  .  .  .  .  .  .  .
+      6    .  .  .  .  ♗  ♟  .  .
+      5    .  .  .  .  .  .  .  .
+      4    .  .  .  .  .  .  .  .
+      3    .  .  .  .  .  .  .  .
+      2    .  .  .  .  .  .  .  .
+      1    .  .  .  .  .  ♖  .  .
+
+           A  B  C  D  E  F  G  H
+
+    */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000200000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x2000000000000000,
+                /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000100000000000,
+                /* black rooks    */ 0x0000000000000020, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+        };
+
+        std::array<Bitboard, 1> moves{
+            /*
+  8    .  .  .  .  .  .  .  .
+  7    .  .  .  .  .  .  .  .
+  6    .  .  .  .  .  1  .  .
+  5    .  .  .  .  .  1  .  .
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  .  .  .  .  .
+  2    .  .  .  .  .  .  .  .
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+       bitboard as 64 bit integer: */
+            0x202000000000,
+        };
+
+        auto f = [&new_boards, &moves]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                               move, [[maybe_unused]] const Color color,
+                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+
+            if (const auto it = std::ranges::find(moves, move); it == moves.end()) {
+                std::stringstream ss;
+                ss << "move: 0x" << std::hex << move << " not found in moves";
+                throw std::runtime_error(ss.str());
+            };
+
+
+            if (const auto board_it = std::ranges::find(new_boards, new_board); board_it == new_boards.end()) {
+                std::stringstream ss;
+                ss << "board: " << new_board << " not found in boards";
+                throw std::runtime_error(ss.str());
+            }
+
+            if (!new_board.is_state_consistent()) {
+                std::stringstream ss;
+                ss << "board: " << new_board << " is not consistent";
+
+                throw std::runtime_error(ss.str());
+            }
+            return false;
+        };
+
+        const auto n = status->run_pawn_move_generation(gen, f);
+
+        ASSERT_EQ(n, 1);
+    }
+
+    // test that horizontally pinned pawns cannot move.
+    void pawn_movement_generator_test6() {
+        Chess_Board board{};
+        const auto status = board.reset_board("8/8/8/8/2b5/r2P3K/8/8 w - - 0 1");
+        Move_Generator gen(&board);
+
+
+        auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+            move, [[maybe_unused]] const Color color,
+            [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+            throw std::runtime_error("no moves should be generated here..");
+        };
+
+        const auto n = status->run_pawn_move_generation(gen, f);
+        ASSERT_EQ(n, 0);
+
+    }
+
+    // test en_passant captures
+    void pawn_movement_generator_test7() {
+        Chess_Board board{};
+        const auto status = board.reset_board("8/pp1ppppp/8/1Pp5/8/8/8/8 w kqKQ c6 0 1");
+        Move_Generator gen(&board);
+
+        print_chess_board(board);
     }
 
     TEST(Movement_Generator_Test, test_pawn_movement_generator) {
@@ -784,5 +929,13 @@ namespace Kangaroo {
 
         // test that promotion generation works.
         pawn_movement_generator_test3();
+
+        // test whether the restricted move generation under pins works
+        pawn_movement_generator_test4();
+        pawn_movement_generator_test5();
+        pawn_movement_generator_test6();
+
+        // test that en-passant captures work.
+        pawn_movement_generator_test7();
     }
 }
