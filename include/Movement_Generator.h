@@ -119,13 +119,13 @@ namespace Kangaroo::Movement_Generator {
         const Square king_position = square_of(bitboard_for(*board_p, color_of_king, King));
 
         // loop over all the rooks of opposite color
-        Bitloop(bitboard_for(*board_p, color_of_king, Rook), rooks_remaining) {
+        Bitloop(bitboard_for(*board_p, enemy(color_of_king), Rook), rooks_remaining) {
             // change the HV-pin-mask, if necessary
             update_pin_mask_for_movement_like<Rook, purpose, color_of_king>(king_position, rooks_remaining);
         }
 
         // loop over all the queens of opposite color
-        Bitloop(bitboard_for(*board_p, color_of_king, Queen), queens_remaining) {
+        Bitloop(bitboard_for(*board_p, enemy(color_of_king), Queen), queens_remaining) {
             // change the HV-pin-mask, if necessary
             update_pin_mask_for_movement_like<Rook, purpose, color_of_king>(king_position, queens_remaining);
 
@@ -134,7 +134,7 @@ namespace Kangaroo::Movement_Generator {
         }
 
         // loop over all the bishops of opposite color
-        Bitloop(bitboard_for(*board_p, color_of_king, Bishop), bishops_remaining) {
+        Bitloop(bitboard_for(*board_p, enemy(color_of_king), Bishop), bishops_remaining) {
             // change the D-pin-mask, if necessary
             update_pin_mask_for_movement_like<Bishop, purpose, color_of_king>(king_position, bishops_remaining);
         }

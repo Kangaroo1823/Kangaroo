@@ -248,7 +248,7 @@ namespace Kangaroo {
             0x80008000,
         };
 
-        const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
+        const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move &move, const Color color,
                      const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::White);
@@ -261,9 +261,10 @@ namespace Kangaroo {
 
 
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base) {
+        using namespace Kangaroo::Movement_Generator;
         auto board = std::make_unique<
             Kangaroo::Chess_Board>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
-        Move_Generator gen(board.get());
+        init(board.get());
 
         [[maybe_unused]] std::array<Move, 16> moves = {
             /*
@@ -492,7 +493,7 @@ namespace Kangaroo {
             0x80008000000000,
         };
 
-        const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
+        const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::Black);
@@ -506,8 +507,10 @@ namespace Kangaroo {
 
 
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture) {
+        using namespace Kangaroo::Movement_Generator;
+
         const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
-        Move_Generator gen(board.get());
+        init(board.get());
 
         [[maybe_unused]] std::array<Move, 8> moves = {
             /*
@@ -626,7 +629,7 @@ namespace Kangaroo {
 
         print_chess_board(*board);
 
-        const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
+        const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::White);
@@ -640,8 +643,10 @@ namespace Kangaroo {
 
 
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture) {
+
+        using namespace Kangaroo::Movement_Generator;
         const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_b);
-        Move_Generator gen(board.get());
+        init(board.get());
 
         [[maybe_unused]] std::array<Move, 8> moves = {
             /*
@@ -760,7 +765,7 @@ namespace Kangaroo {
 
         print_chess_board(*board);
 
-        const auto s = gen.generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
+        const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color, const Chess_Pieces chess_piece) {
                 ASSERT_EQ(color, Color::Black);
                 ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);

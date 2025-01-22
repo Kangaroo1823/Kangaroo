@@ -204,6 +204,7 @@ namespace Kangaroo {
 
         Chess_Board board{};
         std::unique_ptr<Board_Status> status = board.reset_board("8/8/8/8/8/8/8/8 w - - 0 1");
+        init(&board);
 
         // empty board results in no moves generated
         auto number_of_moves = status->run_pawn_move_generation(

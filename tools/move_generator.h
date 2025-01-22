@@ -8,7 +8,7 @@
 #define MOVE_GENERATOR_H
 #include <filesystem>
 #include "../include/Board_Status.h"
-#include "../cmake-build-release-winclang-1916-2/constants_attacks.h"
+#include "constants_attacks.h"
 #include "../tools/attack_tables.h"
 #include "../include/Chess_Board.h"
 
@@ -74,32 +74,25 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
     const Bitboard pawn_attacks = create_pawn_attacks_for<color>(bitboard_for(*board, color, Pawn));
 
     // create the attack mask for kings
-    const Bitboard king_attacks = create_king_attacks_for(color == White ? board->white_king : board->black_king);
+    const Bitboard king_attacks = create_king_attacks_for(bitboard_for(*board, color, King));
 
     // ... for knights
-    const Bitboard knight_attacks = create_knight_attacks_for(color == White
-                                                                  ? board->white_knights
-                                                                  : board->black_knights);
+    const Bitboard knight_attacks = create_knight_attacks_for(bitboard_for(*board, color, Knight));
 
     // ... for rooks
-    const Bitboard rook_attacks = get_attacks_for<Chess_Pieces::Rook>(board->all_pieces,
-                                                                color == White
-                                                                    ? board->white_rooks
-                                                                    : board->black_rooks);
+    const Bitboard rook_attacks = get_attacks_for<Chess_Pieces::Rook>(total_pieces_for(*board),
+                                                                bitboard_for(*board, color, Rook));
 
     // ... for bishops
-    const Bitboard bishop_attacks = get_attacks_for<Chess_Pieces::Bishop>(board->all_pieces,
-                                                                    color == White
-                                                                        ? board->white_bishops
-                                                                        : board->black_bishops);
+    const Bitboard bishop_attacks = get_attacks_for<Chess_Pieces::Bishop>(total_pieces_for(*board),
+                                                                    bitboard_for(*board, color, Bishop));
 
     // ... and for queens
-    Bitboard queen_attacks = get_attacks_for<Chess_Pieces::Bishop>(board->all_pieces,
-                                                               color == White
-                                                                   ? board->white_queens
-                                                                   : board->black_queens);
-    queen_attacks |= get_attacks_for<Chess_Pieces::Rook>(board->all_pieces,
-                                                     color == White ? board->white_queens : board->black_queens);
+    Bitboard queen_attacks = get_attacks_for<Chess_Pieces::Bishop>(total_pieces_for(*board),
+                                                               bitboard_for(*board,color,Queen));
+
+    queen_attacks |= get_attacks_for<Chess_Pieces::Rook>(total_pieces_for(*board),
+                                                     bitboard_for(*board, color, Queen));
 
     const Bitboard attacks = pawn_attacks | knight_attacks | rook_attacks | bishop_attacks | king_attacks |
                              queen_attacks;
@@ -110,37 +103,28 @@ constexpr Bitboard attacked_squares_by(const Kangaroo::Chess_Board *board) {
 template<Color color>
 constexpr Bitboard is_position_attacked_by(const Square position, const Kangaroo::Chess_Board *board) {
     using enum Color;
+    using enum Chess_Pieces;
 
     Bitboard attacks = 0ULL;
 
     // check_p for Pawn attack
     attacks |= (color == White
                     ? Constants::black_pawn_attacks[std::to_underlying(position)]
-                    : Constants::white_pawn_attacks[std::to_underlying(position)]) & (color == White
-        ? board->white_pawns
-        : board->black_pawns);
+                    : Constants::white_pawn_attacks[std::to_underlying(position)]) & (bitboard_for(*board, color, Pawn));
 
     // check_p for Knight attack
-    attacks |= Constants::knight_attacks[std::to_underlying(position)] & (color == White
-                                                                              ? board->white_knights
-                                                                              : board->black_knights);
+    attacks |= Constants::knight_attacks[std::to_underlying(position)] & (bitboard_for(*board,color,Knight));
 
     // check_p for King attack
-    attacks |= Constants::king_attacks[std::to_underlying(position)] & (color == White
-                                                                            ? board->white_king
-                                                                            : board->black_king);
+    attacks |= Constants::king_attacks[std::to_underlying(position)] & (bitboard_for(*board,color,King));
 
     // check_p for Bishop and Queen attack
-    attacks |= get_attacks_for_position<Chess_Pieces::Bishop>(position, board->all_pieces) &
-    ((color == White ? board->white_bishops : board->black_bishops) | (color == White
-                                                                               ? board->white_queens
-                                                                               : board->black_queens));
+    attacks |= get_attacks_for_position<Chess_Pieces::Bishop>(position, total_pieces_for(*board)) &
+    (bitboard_for(*board, color, Bishop) | bitboard_for(*board, color, Queen));
 
     // check_p for Rook and Queen attack
-    attacks |= get_attacks_for_position<Chess_Pieces::Rook>(position, board->all_pieces) &
-    ((color == White ? board->white_rooks : board->black_rooks) | (color == White
-                                                                           ? board->white_queens
-                                                                           : board->black_queens));
+    attacks |= get_attacks_for_position<Chess_Pieces::Rook>(position, total_pieces_for(*board)) &
+    (bitboard_for(*board, color, Rook) | bitboard_for(*board, color, Queen));
     return attacks;
 }
 
