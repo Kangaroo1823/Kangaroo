@@ -4,6 +4,7 @@
 
 #ifndef BOARD_STATUS_H
 #define BOARD_STATUS_H
+#include <cassert>
 #include <functional>
 #include <stdexcept>
 
@@ -14,7 +15,7 @@
 namespace Kangaroo {
     class Chess_Board;
 
-    typedef std::function<void(const Chess_Board &, Move, Color, Chess_Pieces)> CallbackType;
+    typedef std::function<bool(const Chess_Board &, Move, Color, Chess_Pieces)> CallbackType;
 
 
     class Invalid_Board_Status final : public std::runtime_error {
@@ -141,6 +142,29 @@ namespace Kangaroo {
         [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_mode(const Move_Generation_Mode _mode) const {
             Board_Status copy = *this;
             copy.mode = _mode;
+            return copy;
+        }
+
+        [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_en_passant(const bool en_passant) const {
+            Board_Status copy = *this;
+            copy.en_passant_p = en_passant;
+            return copy;
+        }
+
+        [[nodiscard]] _ForceInline consteval Board_Status copy_and_prep_for_next_player() const {
+
+            Board_Status copy = *this;
+
+            assert(copy.check_p == false); // check_p should be false when copy_and_prep_for_next_player() is called;
+
+
+            if (copy.color_to_move == Color::White) {
+                copy.color_to_move = Color::Black;
+            } else {
+                copy.color_to_move = Color::White;
+            }
+            copy.en_passant_p = false;
+
             return copy;
         }
 
