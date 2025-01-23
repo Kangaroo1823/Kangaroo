@@ -14,7 +14,6 @@
 
 namespace Kangaroo {
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base) {
-
         using namespace Movement_Generator;
 
         auto board = std::make_unique<
@@ -250,10 +249,17 @@ namespace Kangaroo {
 
         const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move &move, const Color color,
-                     const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::White);
-                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
-                ASSERT_TRUE(std::ranges::contains(moves, move));
+                     const Chess_Pieces chess_piece) -> bool {
+                if (color != Color::White) {
+                    throw std::runtime_error("Color is not white");
+                }
+                if (chess_piece != Chess_Pieces::Pawn) {
+                    throw std::runtime_error("Chess piece is not pawn");
+                }
+                if (!std::ranges::contains(moves, move)) {
+                    throw std::runtime_error("Move is not in moves");
+                }
+                return false;
             });
 
         ASSERT_EQ(moves.size(), s);
@@ -495,11 +501,17 @@ namespace Kangaroo {
 
         const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
-                     const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::Black);
-                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
-                ASSERT_TRUE(std::ranges::contains(moves, move));
-                print_bitboard(move);
+                     const Chess_Pieces chess_piece)-> bool {
+                if (color != Color::White) {
+                    throw std::runtime_error("Color is not white");
+                }
+                if (chess_piece != Chess_Pieces::Pawn) {
+                    throw std::runtime_error("Chess piece is not pawn");
+                }
+                if (!std::ranges::contains(moves, move)) {
+                    throw std::runtime_error("Move is not in moves");
+                }
+                return false;
             });
 
         ASSERT_EQ(s, moves.size());
@@ -631,11 +643,17 @@ namespace Kangaroo {
 
         const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
-                     const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::White);
-                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
-                ASSERT_TRUE(std::ranges::contains(moves, move));
-                print_bitboard(move);
+                     const Chess_Pieces chess_piece) -> bool {
+                if (color != Color::White) {
+                    throw std::runtime_error("Color is not white");
+                }
+                if (chess_piece != Chess_Pieces::Pawn) {
+                    throw std::runtime_error("Chess piece is not pawn");
+                }
+                if (!std::ranges::contains(moves, move)) {
+                    throw std::runtime_error("Move is not in moves");
+                }
+                return false;
             });
 
         ASSERT_EQ(s, moves.size());
@@ -643,7 +661,6 @@ namespace Kangaroo {
 
 
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture) {
-
         using namespace Kangaroo::Movement_Generator;
         const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_b);
         init(board.get());
@@ -766,11 +783,18 @@ namespace Kangaroo {
         print_chess_board(*board);
 
         const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
-            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color, const Chess_Pieces chess_piece) {
-                ASSERT_EQ(color, Color::Black);
-                ASSERT_EQ(chess_piece, Chess_Pieces::Pawn);
-                ASSERT_TRUE(std::ranges::contains(moves, move));
-                print_bitboard(move);
+            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
+                     const Chess_Pieces chess_piece)-> bool {
+                if (color != Color::White) {
+                    throw std::runtime_error("Color is not white");
+                }
+                if (chess_piece != Chess_Pieces::Pawn) {
+                    throw std::runtime_error("Chess piece is not pawn");
+                }
+                if (!std::ranges::contains(moves, move)) {
+                    throw std::runtime_error("Move is not in moves");
+                }
+                return false;
             });
 
         ASSERT_EQ(s, moves.size());

@@ -459,7 +459,7 @@ namespace Kangaroo::Movement_Generator {
 
 
     template<Kangaroo::Board_Status status>
-    [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(const CallbackType &callback) {
+    [[nodiscard]] constexpr std::size_t generate_moves(const CallbackType &callback) {
         using enum Move_Generation_Mode;
         using enum Pin_Masks_Suitable_For;
 

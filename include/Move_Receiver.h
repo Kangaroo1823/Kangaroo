@@ -5,10 +5,18 @@
 #ifndef MOVE_RECEIVER_H
 #define MOVE_RECEIVER_H
 
+#include <filesystem>
+
 #include "Board_Status.h"
 #include "Chess_Board.h"
 #include "Movement_Generator.h"
 
+namespace Kangaroo::Movement_Generator {
+
+    template<Board_Status status>
+    [[nodiscard]] constexpr std::size_t generate_moves(const CallbackType &callback);
+
+}
 
 namespace Kangaroo::Move_Receiver {
     template<Board_Status status, Chess_Pieces chess_piece>
@@ -187,7 +195,7 @@ namespace Kangaroo::Move_Receiver {
                 go_deeper = evaluate_and_perform_pawn_promotion<status, chess_piece>(board, callback, from, to, move);
             }
             if (go_deeper) {
-                [[maybe_unused]] Movement_Generator::generate_moves<status.copy_and_prep_for_next_player()>(callback);
+                [[maybe_unused]] auto _ = Movement_Generator::generate_moves<status.copy_and_prep_for_next_player()>(callback);
             }
         } else if constexpr (move_type == Move_Type::Capture_Promotion) {
             if constexpr (status.en_passant_p) {
