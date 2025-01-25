@@ -151,12 +151,9 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] _ForceInline consteval Board_Status copy_and_prep_for_next_player() const {
+        [[nodiscard]] _ForceInline constexpr Board_Status copy_and_prep_for_next_player() const {
 
             Board_Status copy = *this;
-
-            assert(copy.check_p == false); // check_p should be false when copy_and_prep_for_next_player() is called;
-
 
             if (copy.color_to_move == Color::White) {
                 copy.color_to_move = Color::Black;

@@ -502,8 +502,8 @@ namespace Kangaroo {
         const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece)-> bool {
-                if (color != Color::White) {
-                    throw std::runtime_error("Color is not white");
+                if (color != Color::Black) {
+                    throw std::runtime_error("Color is not black");
                 }
                 if (chess_piece != Chess_Pieces::Pawn) {
                     throw std::runtime_error("Chess piece is not pawn");
@@ -780,13 +780,12 @@ namespace Kangaroo {
             0x8080000000000,
         };
 
-        print_chess_board(*board);
 
         const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3c)>(
             [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move move, const Color color,
                      const Chess_Pieces chess_piece)-> bool {
-                if (color != Color::White) {
-                    throw std::runtime_error("Color is not white");
+                if (color != Color::Black) {
+                    throw std::runtime_error("Color is not black");
                 }
                 if (chess_piece != Chess_Pieces::Pawn) {
                     throw std::runtime_error("Chess piece is not pawn");

@@ -928,20 +928,380 @@ namespace Kangaroo {
     void pawn_movement_generator_test7() {
         using namespace Kangaroo::Movement_Generator;
 
+        /*
+                       A  B  C  D  E  F  G  H
+
+                  8    .  .  .  .  .  .  .  .          en passant square: C6
+                  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+                  6    .  .  .  .  .  .  .  .          half move number:  0
+                  5    .  ♟  ♙  .  .  .  .  .          full move number:  1
+                  4    .  .  .  .  .  .  .  .
+                  3    .  .  .  .  .  .  .  .
+                  2    .  .  .  .  .  .  .  .
+                  1    .  .  .  .  .  .  .  .
+
+                       A  B  C  D  E  F  G  H
+         */
+
         Chess_Board board{};
         const auto status = board.reset_board("8/pp1ppppp/8/1Pp5/8/8/8/8 w kqKQ c6 0 1");
         init(&board);
 
-        print_chess_board(board);
+        std::array<Chess_Board, 2> new_boards{
+            /*
 
-        auto f = []([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+  6    .  ♟  .  .  .  .  .  .          half move number:  0
+  5    .  .  ♙  .  .  .  .  .          full move number:  1
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  .  .  .  .  .
+  2    .  .  .  .  .  .  .  .
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000020000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x00fb000400000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
+
+                   A  B  C  D  E  F  G  H
+
+              8    .  .  .  .  .  .  .  .
+              7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+              6    .  .  ♟  .  .  .  .  .          half move number:  0
+              5    .  .  .  .  .  .  .  .          full move number:  1
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
+
+                   A  B  C  D  E  F  G  H
+
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000040000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x00fb000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+        };
+
+        auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
                     move, [[maybe_unused]] const Color color,
                     [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
-            print_chess_board(new_board);
+            if (color != Color::White) {
+                throw std::runtime_error("color should be white");
+            }
+
+            if (chess_piece != Chess_Pieces::Pawn) {
+                throw std::runtime_error("chess piece should be pawn");
+            }
+
+            if (std::ranges::find(new_boards, new_board) == new_boards.end()) {
+                throw std::runtime_error("board not found in new_boards");
+            }
             return false;
         };
 
-        [[maybe_unused]] const auto n = status->run_pawn_move_generation(f);
+        const auto n = status->run_pawn_move_generation(f);
+
+        ASSERT_EQ(n, 2);
+    }
+
+    void pawn_movement_generator_test8() {
+        using namespace Kangaroo::Movement_Generator;
+
+        /*
+        A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .          en passant square: C6
+  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+  6    .  .  .  .  .  .  .  .          half move number:  0
+  5    .  .  ♙  ♟  .  .  .  .          full move number:  1
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  .  .  .  .  .
+  2    .  .  .  .  .  .  .  .
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+         */
+
+        Chess_Board board{};
+        const auto status = board.reset_board("8/pp1ppppp/8/2pP4/8/8/8/8 w kqKQ c6 0 1");
+        init(&board);
+
+
+        [[maybe_unused]] std::array<Chess_Board, 2> new_boards{
+        /*
+
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+  6    .  .  .  ♟  .  .  .  .          half move number:  0
+  5    .  .  ♙  .  .  .  .  .          full move number:  1
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  .  .  .  .  .
+  2    .  .  .  .  .  .  .  .
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+    /* white pawns    */ 0x0000080000000000, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
+    /* black pawns    */ 0x00fb000400000000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+/*
+
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+  6    .  .  ♟  .  .  .  .  .          half move number:  0
+  5    .  .  .  .  .  .  .  .          full move number:  1
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  .  .  .  .  .
+  2    .  .  .  .  .  .  .  .
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+    /* white pawns    */ 0x0000040000000000, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
+    /* black pawns    */ 0x00fb000000000000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+        };
+
+        auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                    move, [[maybe_unused]] const Color color,
+                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+            if (color != Color::White) {
+                throw std::runtime_error("color should be white");
+            }
+
+            if (chess_piece != Chess_Pieces::Pawn) {
+                throw std::runtime_error("chess piece should be pawn");
+            }
+
+            if (std::ranges::find(new_boards, new_board) == new_boards.end()) {
+                throw std::runtime_error("board not found in new_boards");
+            }
+            return false;
+        };
+
+        const auto n = status->run_pawn_move_generation(f);
+
+        ASSERT_EQ(n, 2);
+    }
+
+    void pawn_movement_generator_test9() {
+        using namespace Kangaroo::Movement_Generator;
+                /*
+        A  B  C  D  E  F  G  H
+
+8    .  .  .  .  .  .  .  .          en passant square: D3
+7    .  .  .  .  .  .  .  .
+6    .  .  .  .  .  .  .  .          half move number:  0
+5    .  .  .  .  .  .  .  .          full move number:  1
+4    .  .  ♙  ♟  .  .  .  .
+3    .  .  .  .  .  .  .  .
+2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+1    .  .  .  .  .  .  .  .
+
+A  B  C  D  E  F  G  H
+         */
+
+        Chess_Board board{};
+        const auto status = board.reset_board("8/8/8/8/2pP4/8/PPP1PPPP/8 b kqKQ d3 0 1");
+        init(&board);
+
+        [[maybe_unused]] std::array<Chess_Board, 2> new_boards{
+            /*
+
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    .  .  .  .  .  .  .  .
+  6    .  .  .  .  .  .  .  .          half move number:  0
+  5    .  .  .  .  .  .  .  .          full move number:  1
+  4    .  .  .  ♟  .  .  .  .
+  3    .  .  ♙  .  .  .  .  .
+  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+    /* white pawns    */ 0x000000000800f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
+    /* black pawns    */ 0x0000000000040000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+/*
+
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    .  .  .  .  .  .  .  .
+  6    .  .  .  .  .  .  .  .          half move number:  0
+  5    .  .  .  .  .  .  .  .          full move number:  1
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  ♙  .  .  .  .
+  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+    /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
+    /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+        };
+
+        auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                    move, [[maybe_unused]] const Color color,
+                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+            if (color != Color::Black) {
+                throw std::runtime_error("color should be black");
+            }
+
+            if (chess_piece != Chess_Pieces::Pawn) {
+                throw std::runtime_error("chess piece should be pawn");
+            }
+
+            if (std::ranges::find(new_boards, new_board) == new_boards.end()) {
+                throw std::runtime_error("board not found in new_boards");
+            }
+            return false;
+        };
+
+        const auto n = status->run_pawn_move_generation(f);
+
+        ASSERT_EQ(n, 2);
+    }
+
+    void pawn_movement_generator_test10() {
+        using namespace Kangaroo::Movement_Generator;
+                        /*
+        A  B  C  D  E  F  G  H
+
+8    .  .  .  .  .  .  .  .          en passant square: D3
+7    .  .  .  .  .  .  .  .
+6    .  .  .  .  .  .  .  .          half move number:  0
+5    .  .  .  .  .  .  .  .          full move number:  1
+4    .  .  .  ♟  ♙  .  .  .
+3    .  .  .  .  .  .  .  .
+2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+1    .  .  .  .  .  .  .  .
+
+A  B  C  D  E  F  G  H
+         */
+
+        Chess_Board board{};
+        const auto status = board.reset_board("8/8/8/8/3Pp3/8/PPP1PPPP/8 b kqKQ d3 0 1");
+        init(&board);
+
+        print_chess_board(board);
+
+        [[maybe_unused]] std::array<Chess_Board, 2> new_boards{
+/*
+
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    .  .  .  .  .  .  .  .
+  6    .  .  .  .  .  .  .  .          half move number:  0
+  5    .  .  .  .  .  .  .  .          full move number:  1
+  4    .  .  .  ♟  .  .  .  .
+  3    .  .  .  .  ♙  .  .  .
+  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+    /* white pawns    */ 0x000000000800f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
+    /* black pawns    */ 0x0000000000100000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+/*
+
+       A  B  C  D  E  F  G  H
+
+  8    .  .  .  .  .  .  .  .
+  7    .  .  .  .  .  .  .  .
+  6    .  .  .  .  .  .  .  .          half move number:  0
+  5    .  .  .  .  .  .  .  .          full move number:  1
+  4    .  .  .  .  .  .  .  .
+  3    .  .  .  ♙  .  .  .  .
+  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+  1    .  .  .  .  .  .  .  .
+
+       A  B  C  D  E  F  G  H
+
+*/
+  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+    /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
+    /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+        };
+
+        auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
+                    move, [[maybe_unused]] const Color color,
+                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+            if (color != Color::Black) {
+                throw std::runtime_error("color should be black");
+            }
+
+            if (chess_piece != Chess_Pieces::Pawn) {
+                throw std::runtime_error("chess piece should be pawn");
+            }
+
+            if (std::ranges::find(new_boards, new_board) == new_boards.end()) {
+                throw std::runtime_error("board not found in new_boards");
+            }
+
+            return false;
+        };
+
+        const auto n = status->run_pawn_move_generation(f);
+
+        ASSERT_EQ(n, 2);
     }
 
     TEST(Movement_Generator_Test, test_pawn_movement_generator) {
@@ -961,5 +1321,8 @@ namespace Kangaroo {
 
         // test that en-passant captures work.
         pawn_movement_generator_test7();
+        pawn_movement_generator_test8();
+        pawn_movement_generator_test9();
+        pawn_movement_generator_test10();
     }
 }

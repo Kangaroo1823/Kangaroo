@@ -321,7 +321,7 @@ namespace Kangaroo::Movement_Generator {
             // if the Pawn is on the right-hand-side of the en_passant_square
             if (not_a_file & pawn & en_passant_square_for(*board_p) << 7) {
                 // perform the move and call the callback
-                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::En_Passant, Chess_Pieces::Pawn>(
                     *board_p, callback, pawn, en_passant_square_for(*board_p));
 
                 // increase the move-counter by one
@@ -330,7 +330,7 @@ namespace Kangaroo::Movement_Generator {
                 // if the Pawn is on the left-hand-side of the en_passant_square
             } else if (not_h_file & pawn & en_passant_square_for(*board_p) << 9) {
                 // perform the move and call the callback
-                Move_Receiver::evaluate_and_perform_move<status, Move_Type::Capture, Chess_Pieces::Pawn>(
+                Move_Receiver::evaluate_and_perform_move<status, Move_Type::En_Passant, Chess_Pieces::Pawn>(
                     *board_p, callback, pawn, en_passant_square_for(*board_p));
 
                 // increase the move-counter by one

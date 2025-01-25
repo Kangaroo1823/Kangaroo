@@ -24,12 +24,14 @@ static void BM_move_generator(benchmark::State &state) { // -V2009
 
         auto s = Kangaroo::Movement_Generator::generate_moves<Kangaroo::Board_Status(0x3d)>(
             [&cntr](const Kangaroo::Chess_Board &new_board, const Move move, const Color color,
-                    const Chess_Pieces chess_piece) {
+                    const Chess_Pieces chess_piece) -> bool {
                 ++cntr;
                 benchmark::DoNotOptimize(&new_board);
                 benchmark::DoNotOptimize(&move);
                 benchmark::DoNotOptimize(&color);
                 benchmark::DoNotOptimize(&chess_piece);
+
+                return false;
             });
 
 
