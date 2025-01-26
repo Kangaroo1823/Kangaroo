@@ -15,9 +15,10 @@ namespace Kangaroo {
         using enum Color;
         using enum Pin_Masks_Suitable_For;
 
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
 
         Chess_Board board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
+        Move_Generator gen(&board);
         init(&board);
         build_pin_masks<White, Detecting_Pins>();
         ASSERT_EQ(pin_mask_HV, 0) << "1st test not true";
@@ -1304,6 +1305,17 @@ A  B  C  D  E  F  G  H
         ASSERT_EQ(n, 2);
     }
 
+    void pawn_movement_generator_test11() {
+        using namespace Kangaroo::Movement_Generator;
+                        /*
+
+        */
+
+        Chess_Board board{};
+        const auto status = board.reset_board("8/8/8/8/K6r/8/3P4/8 w kqKQ d3 0 1");
+        init(&board);
+    }
+
     TEST(Movement_Generator_Test, test_pawn_movement_generator) {
         // empty board leads to no generated moves
         pawn_movement_generator_test1();
@@ -1324,5 +1336,8 @@ A  B  C  D  E  F  G  H
         pawn_movement_generator_test8();
         pawn_movement_generator_test9();
         pawn_movement_generator_test10();
+
+        // test that pawn move generation works in a situation of chess
+        pawn_movement_generator_test11();
     }
 }

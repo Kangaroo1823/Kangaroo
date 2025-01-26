@@ -4,23 +4,26 @@
 
 #ifndef BOARD_STATUS_H
 #define BOARD_STATUS_H
-#include <cassert>
 #include <functional>
+#include <memory>
 #include <stdexcept>
 
 #include "Base.h"
 #include "Types.h"
 
+namespace Kangaroo::Move_Generator {
+    class Move_Generator;
+}
 
 namespace Kangaroo {
     class Chess_Board;
 
-    typedef std::function<bool(const Chess_Board &, Move, Color, Chess_Pieces)> CallbackType;
+    typedef std::function<void(const Chess_Board *, Move, Color, Chess_Pieces)> CallbackType;
 
 
     class Invalid_Board_Status final : public std::runtime_error {
     public:
-        Invalid_Board_Status() : std::runtime_error("Invalid board status") {
+        Invalid_Board_Status() : std::runtime_error("Invalid m_board status") {
         }
 
         ~Invalid_Board_Status() override = default;
@@ -32,7 +35,7 @@ namespace Kangaroo {
         Board_Status() = delete;
 
         /**
-         * Constructor to initialize the board status with specific game state parameters.
+         * Constructor to initialize the m_board status with specific game state parameters.
          *
          * @param color Specifies the current turn color (white or black).
          * @param check Indicates if the current player is in check.
@@ -52,7 +55,7 @@ namespace Kangaroo {
 
 
         /**
-         * Constructor to initialize the board status using a single 64-bit flags variable.
+         * Constructor to initialize the m_board status using a single 64-bit flags variable.
          *
          * @param flags A 64-bit integer containing encoded information about the game state.
          *              The bits represent:
@@ -129,21 +132,6 @@ namespace Kangaroo {
          */
         bool black_queen_castle = true;
 
-        /**
-         * Represents the mode in which move generation is conducted during gameplay.
-         *
-         * The possible modes include:
-         * - normal_move_generation: Default mode for generating legal moves under standard rules.
-         * - pin_move_generation: Mode for generating moves while considering pin constraints.
-         * - check_move_generation: Mode for generating only those moves that resolve a check.
-         */
-        Move_Generation_Mode mode = Move_Generation_Mode::Normal_Move_Generation;
-
-        [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_mode(const Move_Generation_Mode _mode) const {
-            Board_Status copy = *this;
-            copy.mode = _mode;
-            return copy;
-        }
 
         [[nodiscard]] _ForceInline constexpr Board_Status copy_and_set_en_passant(const bool en_passant) const {
             Board_Status copy = *this;
@@ -165,8 +153,10 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] std::size_t run_pawn_move_generation(const CallbackType &callback) const;
+        [[nodiscard]] constexpr std::unique_ptr<Move_Generator::Move_Generator> get_move_generator() const;
+        [[nodiscard]] std::size_t run_pawn_move_generation(Chess_Board *board, const CallbackType &callback) const;
     };
+
 } // Kangaroo
 
 #endif //BOARD_STATUS_H

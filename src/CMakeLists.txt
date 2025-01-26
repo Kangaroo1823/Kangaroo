@@ -86,8 +86,14 @@ add_library(Kangaroo_library ../include/Bit_Board.h
         Movement_Generator.cpp
         ../include/Movement_Generator.h
         Move_Receiver.cpp
-        ../include/Move_Receiver.h
+        ../include/Move_Generator/Move_Receiver.h
         Board_Status.cpp
+        Move_Generator/Pin_And_Check_Mask_Generator.cpp
+        ../include/Move_Generator/Pin_And_Check_Mask_Generator.h
+        Move_Generator/Pawn_Move_Generator.cpp
+        ../include/Move_Generator/Pawn_Move_Generator.h
+        ../include/Move_Evaluator/Movement_Evaluator.h
+        ../include/Move_Generator/Move_Generator.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC

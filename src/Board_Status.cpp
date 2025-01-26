@@ -4,80 +4,83 @@
 // Created by U439644 on 1/17/2025.
 //
 
-#include <functional>
-#include "Base.h"
-#include "Types.h"
+
 #include "Board_Status.h"
-#include "Movement_Generator.h"
+#include "Move_Generator/Move_Generator.h"
 
 namespace Kangaroo {
-    [[nodiscard]] std::size_t Board_Status::run_pawn_move_generation(const CallbackType &callback) const { // -V2008
+
+    [[nodiscard]] constexpr std::unique_ptr<Kangaroo::Move_Generator::Move_Generator> Board_Status::get_move_generator() const {
+    }
+
+
+    [[nodiscard]] std::size_t Board_Status::run_pawn_move_generation(Chess_Board *board, const CallbackType &callback) const { // -V2008
         switch (to_flags()) {
-            case 0x00: return Movement_Generator::generate_moves<Board_Status(0x00)>(callback);
-            case 0x01: return Movement_Generator::generate_moves<Board_Status(0x01)>(callback);
-            case 0x02: return Movement_Generator::generate_moves<Board_Status(0x02)>(callback);
-            case 0x03: return Movement_Generator::generate_moves<Board_Status(0x03)>(callback);
-            case 0x04: return Movement_Generator::generate_moves<Board_Status(0x04)>(callback);
-            case 0x05: return Movement_Generator::generate_moves<Board_Status(0x05)>(callback);
-            case 0x06: return Movement_Generator::generate_moves<Board_Status(0x06)>(callback);
-            case 0x07: return Movement_Generator::generate_moves<Board_Status(0x07)>(callback);
-            case 0x08: return Movement_Generator::generate_moves<Board_Status(0x08)>(callback);
-            case 0x09: return Movement_Generator::generate_moves<Board_Status(0x09)>(callback);
-            case 0x0a: return Movement_Generator::generate_moves<Board_Status(0x0a)>(callback);
-            case 0x0b: return Movement_Generator::generate_moves<Board_Status(0x0b)>(callback);
-            case 0x0c: return Movement_Generator::generate_moves<Board_Status(0x0c)>(callback);
-            case 0x0d: return Movement_Generator::generate_moves<Board_Status(0x0d)>(callback);
-            case 0x0e: return Movement_Generator::generate_moves<Board_Status(0x0e)>(callback);
-            case 0x0f: return Movement_Generator::generate_moves<Board_Status(0x0f)>(callback);
-            case 0x10: return Movement_Generator::generate_moves<Board_Status(0x10)>(callback);
-            case 0x11: return Movement_Generator::generate_moves<Board_Status(0x11)>(callback);
-            case 0x12: return Movement_Generator::generate_moves<Board_Status(0x12)>(callback);
-            case 0x13: return Movement_Generator::generate_moves<Board_Status(0x13)>(callback);
-            case 0x14: return Movement_Generator::generate_moves<Board_Status(0x14)>(callback);
-            case 0x15: return Movement_Generator::generate_moves<Board_Status(0x15)>(callback);
-            case 0x16: return Movement_Generator::generate_moves<Board_Status(0x16)>(callback);
-            case 0x17: return Movement_Generator::generate_moves<Board_Status(0x17)>(callback);
-            case 0x18: return Movement_Generator::generate_moves<Board_Status(0x18)>(callback);
-            case 0x19: return Movement_Generator::generate_moves<Board_Status(0x19)>(callback);
-            case 0x1a: return Movement_Generator::generate_moves<Board_Status(0x1a)>(callback);
-            case 0x1b: return Movement_Generator::generate_moves<Board_Status(0x1b)>(callback);
-            case 0x1c: return Movement_Generator::generate_moves<Board_Status(0x1c)>(callback);
-            case 0x1d: return Movement_Generator::generate_moves<Board_Status(0x1d)>(callback);
-            case 0x1e: return Movement_Generator::generate_moves<Board_Status(0x1e)>(callback);
-            case 0x1f: return Movement_Generator::generate_moves<Board_Status(0x1f)>(callback);
-            case 0x20: return Movement_Generator::generate_moves<Board_Status(0x20)>(callback);
-            case 0x21: return Movement_Generator::generate_moves<Board_Status(0x21)>(callback);
-            case 0x22: return Movement_Generator::generate_moves<Board_Status(0x22)>(callback);
-            case 0x23: return Movement_Generator::generate_moves<Board_Status(0x23)>(callback);
-            case 0x24: return Movement_Generator::generate_moves<Board_Status(0x24)>(callback);
-            case 0x25: return Movement_Generator::generate_moves<Board_Status(0x25)>(callback);
-            case 0x26: return Movement_Generator::generate_moves<Board_Status(0x26)>(callback);
-            case 0x27: return Movement_Generator::generate_moves<Board_Status(0x27)>(callback);
-            case 0x28: return Movement_Generator::generate_moves<Board_Status(0x28)>(callback);
-            case 0x29: return Movement_Generator::generate_moves<Board_Status(0x29)>(callback);
-            case 0x2a: return Movement_Generator::generate_moves<Board_Status(0x2a)>(callback);
-            case 0x2b: return Movement_Generator::generate_moves<Board_Status(0x2b)>(callback);
-            case 0x2c: return Movement_Generator::generate_moves<Board_Status(0x2c)>(callback);
-            case 0x2d: return Movement_Generator::generate_moves<Board_Status(0x2d)>(callback);
-            case 0x2e: return Movement_Generator::generate_moves<Board_Status(0x2e)>(callback);
-            case 0x2f: return Movement_Generator::generate_moves<Board_Status(0x2f)>(callback);
-            case 0x30: return Movement_Generator::generate_moves<Board_Status(0x30)>(callback);
-            case 0x31: return Movement_Generator::generate_moves<Board_Status(0x31)>(callback);
-            case 0x32: return Movement_Generator::generate_moves<Board_Status(0x32)>(callback);
-            case 0x33: return Movement_Generator::generate_moves<Board_Status(0x33)>(callback);
-            case 0x34: return Movement_Generator::generate_moves<Board_Status(0x34)>(callback);
-            case 0x35: return Movement_Generator::generate_moves<Board_Status(0x35)>(callback);
-            case 0x36: return Movement_Generator::generate_moves<Board_Status(0x36)>(callback);
-            case 0x37: return Movement_Generator::generate_moves<Board_Status(0x37)>(callback);
-            case 0x38: return Movement_Generator::generate_moves<Board_Status(0x38)>(callback);
-            case 0x39: return Movement_Generator::generate_moves<Board_Status(0x39)>(callback);
-            case 0x3a: return Movement_Generator::generate_moves<Board_Status(0x3a)>(callback);
-            case 0x3b: return Movement_Generator::generate_moves<Board_Status(0x3b)>(callback);
-            case 0x3c: return Movement_Generator::generate_moves<Board_Status(0x3c)>(callback);
-            case 0x3d: return Movement_Generator::generate_moves<Board_Status(0x3d)>(callback);
-            case 0x3e: return Movement_Generator::generate_moves<Board_Status(0x3e)>(callback);
-            case 0x3f: return Movement_Generator::generate_moves<Board_Status(0x3f)>(callback);
-            case 0x40: return Movement_Generator::generate_moves<Board_Status(0x40)>(callback);
+            case 0x00: { Move_Generator::Move_Generator<Board_Status(0x00)> gen(board); return gen.generate_moves(callback); }
+            case 0x01: { Move_Generator::Move_Generator<Board_Status(0x01)> gen(board); return gen.generate_moves(callback); }
+            case 0x02: { Move_Generator::Move_Generator<Board_Status(0x02)> gen(board); return gen.generate_moves(callback); }
+            case 0x03: { Move_Generator::Move_Generator<Board_Status(0x03)> gen(board); return gen.generate_moves(callback); }
+            case 0x04: { Move_Generator::Move_Generator<Board_Status(0x04)> gen(board); return gen.generate_moves(callback); }
+            case 0x05: { Move_Generator::Move_Generator<Board_Status(0x05)> gen(board); return gen.generate_moves(callback); }
+            case 0x06: { Move_Generator::Move_Generator<Board_Status(0x06)> gen(board); return gen.generate_moves(callback); }
+            case 0x07: { Move_Generator::Move_Generator<Board_Status(0x07)> gen(board); return gen.generate_moves(callback); }
+            case 0x08: { Move_Generator::Move_Generator<Board_Status(0x08)> gen(board); return gen.generate_moves(callback); }
+            case 0x09: { Move_Generator::Move_Generator<Board_Status(0x09)> gen(board); return gen.generate_moves(callback); }
+            case 0x0a: { Move_Generator::Move_Generator<Board_Status(0x0a)> gen(board); return gen.generate_moves(callback); }
+            case 0x0b: { Move_Generator::Move_Generator<Board_Status(0x0b)> gen(board); return gen.generate_moves(callback); }
+            case 0x0c: { Move_Generator::Move_Generator<Board_Status(0x0c)> gen(board); return gen.generate_moves(callback); }
+            case 0x0d: { Move_Generator::Move_Generator<Board_Status(0x0d)> gen(board); return gen.generate_moves(callback); }
+            case 0x0e: { Move_Generator::Move_Generator<Board_Status(0x0e)> gen(board); return gen.generate_moves(callback); }
+            case 0x0f: { Move_Generator::Move_Generator<Board_Status(0x0f)> gen(board); return gen.generate_moves(callback); }
+            case 0x10: { Move_Generator::Move_Generator<Board_Status(0x10)> gen(board); return gen.generate_moves(callback); }
+            case 0x11: { Move_Generator::Move_Generator<Board_Status(0x11)> gen(board); return gen.generate_moves(callback); }
+            case 0x12: { Move_Generator::Move_Generator<Board_Status(0x12)> gen(board); return gen.generate_moves(callback); }
+            case 0x13: { Move_Generator::Move_Generator<Board_Status(0x13)> gen(board); return gen.generate_moves(callback); }
+            case 0x14: { Move_Generator::Move_Generator<Board_Status(0x14)> gen(board); return gen.generate_moves(callback); }
+            case 0x15: { Move_Generator::Move_Generator<Board_Status(0x15)> gen(board); return gen.generate_moves(callback); }
+            case 0x16: { Move_Generator::Move_Generator<Board_Status(0x16)> gen(board); return gen.generate_moves(callback); }
+            case 0x17: { Move_Generator::Move_Generator<Board_Status(0x17)> gen(board); return gen.generate_moves(callback); }
+            case 0x18: { Move_Generator::Move_Generator<Board_Status(0x18)> gen(board); return gen.generate_moves(callback); }
+            case 0x19: { Move_Generator::Move_Generator<Board_Status(0x19)> gen(board); return gen.generate_moves(callback); }
+            case 0x1a: { Move_Generator::Move_Generator<Board_Status(0x1a)> gen(board); return gen.generate_moves(callback); }
+            case 0x1b: { Move_Generator::Move_Generator<Board_Status(0x1b)> gen(board); return gen.generate_moves(callback); }
+            case 0x1c: { Move_Generator::Move_Generator<Board_Status(0x1c)> gen(board); return gen.generate_moves(callback); }
+            case 0x1d: { Move_Generator::Move_Generator<Board_Status(0x1d)> gen(board); return gen.generate_moves(callback); }
+            case 0x1e: { Move_Generator::Move_Generator<Board_Status(0x1e)> gen(board); return gen.generate_moves(callback); }
+            case 0x1f: { Move_Generator::Move_Generator<Board_Status(0x1f)> gen(board); return gen.generate_moves(callback); }
+            case 0x20: { Move_Generator::Move_Generator<Board_Status(0x20)> gen(board); return gen.generate_moves(callback); }
+            case 0x21: { Move_Generator::Move_Generator<Board_Status(0x21)> gen(board); return gen.generate_moves(callback); }
+            case 0x22: { Move_Generator::Move_Generator<Board_Status(0x22)> gen(board); return gen.generate_moves(callback); }
+            case 0x23: { Move_Generator::Move_Generator<Board_Status(0x23)> gen(board); return gen.generate_moves(callback); }
+            case 0x24: { Move_Generator::Move_Generator<Board_Status(0x24)> gen(board); return gen.generate_moves(callback); }
+            case 0x25: { Move_Generator::Move_Generator<Board_Status(0x25)> gen(board); return gen.generate_moves(callback); }
+            case 0x26: { Move_Generator::Move_Generator<Board_Status(0x26)> gen(board); return gen.generate_moves(callback); }
+            case 0x27: { Move_Generator::Move_Generator<Board_Status(0x27)> gen(board); return gen.generate_moves(callback); }
+            case 0x28: { Move_Generator::Move_Generator<Board_Status(0x28)> gen(board); return gen.generate_moves(callback); }
+            case 0x29: { Move_Generator::Move_Generator<Board_Status(0x29)> gen(board); return gen.generate_moves(callback); }
+            case 0x2a: { Move_Generator::Move_Generator<Board_Status(0x2a)> gen(board); return gen.generate_moves(callback); }
+            case 0x2b: { Move_Generator::Move_Generator<Board_Status(0x2b)> gen(board); return gen.generate_moves(callback); }
+            case 0x2c: { Move_Generator::Move_Generator<Board_Status(0x2c)> gen(board); return gen.generate_moves(callback); }
+            case 0x2d: { Move_Generator::Move_Generator<Board_Status(0x2d)> gen(board); return gen.generate_moves(callback); }
+            case 0x2e: { Move_Generator::Move_Generator<Board_Status(0x2e)> gen(board); return gen.generate_moves(callback); }
+            case 0x2f: { Move_Generator::Move_Generator<Board_Status(0x2f)> gen(board); return gen.generate_moves(callback); }
+            case 0x30: { Move_Generator::Move_Generator<Board_Status(0x30)> gen(board); return gen.generate_moves(callback); }
+            case 0x31: { Move_Generator::Move_Generator<Board_Status(0x31)> gen(board); return gen.generate_moves(callback); }
+            case 0x32: { Move_Generator::Move_Generator<Board_Status(0x32)> gen(board); return gen.generate_moves(callback); }
+            case 0x33: { Move_Generator::Move_Generator<Board_Status(0x33)> gen(board); return gen.generate_moves(callback); }
+            case 0x34: { Move_Generator::Move_Generator<Board_Status(0x34)> gen(board); return gen.generate_moves(callback); }
+            case 0x35: { Move_Generator::Move_Generator<Board_Status(0x35)> gen(board); return gen.generate_moves(callback); }
+            case 0x36: { Move_Generator::Move_Generator<Board_Status(0x36)> gen(board); return gen.generate_moves(callback); }
+            case 0x37: { Move_Generator::Move_Generator<Board_Status(0x37)> gen(board); return gen.generate_moves(callback); }
+            case 0x38: { Move_Generator::Move_Generator<Board_Status(0x38)> gen(board); return gen.generate_moves(callback); }
+            case 0x39: { Move_Generator::Move_Generator<Board_Status(0x39)> gen(board); return gen.generate_moves(callback); }
+            case 0x3a: { Move_Generator::Move_Generator<Board_Status(0x3a)> gen(board); return gen.generate_moves(callback); }
+            case 0x3b: { Move_Generator::Move_Generator<Board_Status(0x3b)> gen(board); return gen.generate_moves(callback); }
+            case 0x3c: { Move_Generator::Move_Generator<Board_Status(0x3c)> gen(board); return gen.generate_moves(callback); }
+            case 0x3d: { Move_Generator::Move_Generator<Board_Status(0x3d)> gen(board); return gen.generate_moves(callback); }
+            case 0x3e: { Move_Generator::Move_Generator<Board_Status(0x3e)> gen(board); return gen.generate_moves(callback); }
+            case 0x3f: { Move_Generator::Move_Generator<Board_Status(0x3f)> gen(board); return gen.generate_moves(callback); }
+            case 0x40: { Move_Generator::Move_Generator<Board_Status(0x40)> gen(board); return gen.generate_moves(callback); }
             default: throw Kangaroo::Invalid_Board_Status();
         }
     }

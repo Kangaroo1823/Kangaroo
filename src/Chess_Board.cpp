@@ -14,6 +14,7 @@
 #include "Bit_Board.h"  // for Position_t, set_bit, get_bit, rank_...
 #include "Types.h"
 #include "Board_Status.h"
+#include "Movement_Generator.h"
 
 
 std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parce_fen_en_passant_notation(
@@ -99,7 +100,7 @@ void Kangaroo::Chess_Board::process_fen_board_setup(const std::string_view str) 
                 break;
             case 'P': bitboard_for(*this, White, Pawn) = set_bit(bitboard_for(*this, White, Pawn), position);
                 break;
-            case 'n': bitboard_for(*this, Black, Knight)  = set_bit(bitboard_for(*this, Black, Knight), position);
+            case 'n': bitboard_for(*this, Black, Knight) = set_bit(bitboard_for(*this, Black, Knight), position);
                 break;
             case 'N': bitboard_for(*this, White, Knight) = set_bit(bitboard_for(*this, White, Knight), position);
                 break;
@@ -234,6 +235,31 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view fe
 }
 
 
+std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::update_check_flag(
+    std::unique_ptr<Board_Status> &&status) {
+
+    using namespace Kangaroo::Movement_Generator;
+    using enum Color;
+    using enum Chess_Pieces;
+
+    assert(status->color_to_move == White || status->color_to_move == Black);
+
+    init(this);
+
+    status->color_to_move == White
+        ? build_pin_masks<White, Pin_Masks_Suitable_For::Detecting_Check>()
+        : build_pin_masks<Black, Pin_Masks_Suitable_For::Detecting_Check>();
+
+    if (check_mask) {
+        status->check_p = true;
+    } else {
+        status->check_p = false;
+    }
+
+
+    return status;
+}
+
 std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const std::string_view fen) {
     auto status = std::make_unique<Board_Status>(0);
 
@@ -256,7 +282,8 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
     status = parse_fen_castling_information(std::move(status), tokens[2]);
 
 
-    if (tokens.size() >= 4) {  // -V112
+    if (tokens.size() >= 4) {
+        // -V112
         status = parce_fen_en_passant_notation(std::move(status), tokens[3]);
     }
 
@@ -270,6 +297,8 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
 
     update_collectors();
 
+    status = update_check_flag(std::move(status));
+
     return status;
 }
 
@@ -282,7 +311,8 @@ std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board
     return os;
 }
 
-[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data, const std::optional<Board_Status> &status) {
+[[nodiscard]] std::string Kangaroo::format_chess_board(const Chess_Board &board, bool output_data,
+                                                       const std::optional<Board_Status> &status) {
     using enum Color;
     using enum Chess_Pieces;
 
