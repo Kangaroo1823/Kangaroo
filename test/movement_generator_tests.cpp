@@ -8,12 +8,19 @@
 
 #include "Movement_Generator.h"
 #include "gtest/gtest.h"
-// #include "move_generator.h"
+#include "move_generator.h"
+#include "Move_Generator/Move_Generator.h"
 
 namespace Kangaroo {
 
-    Status_Template(h) {
-        Move_Generator::Move_Generator<status> gen()
+    Status_Template(Compate_Pin_Mask_HV, Chess_Board *, const Bitboard)(Chess_Board *board, const Bitboard value) {
+        Move_Generator::Move_Generator<status> gen(board);
+        ASSERT_EQ(gen.get_pin_mask_HV(), value);
+    }
+
+    Status_Template(Compate_Pin_Mask_D, Chess_Board *, const Bitboard)(Chess_Board *board, const Bitboard value) {
+        Move_Generator::Move_Generator<status> gen(board);
+        ASSERT_EQ(gen.get_pin_mask_D(), value);
     }
 
     TEST(Movement_Generator_Test, test_pin_masks_generator) {
@@ -22,7 +29,11 @@ namespace Kangaroo {
 
         using namespace Kangaroo::Move_Generator;
 
-        Chess_Board board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
+        Chess_Board board{};
+
+        auto s = board.reset_board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
+        execute_status_template<Compate_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0);
+
         Move_Generator gen(&board);
         init(&board);
         build_pin_masks<White, Detecting_Pins>();
