@@ -9,11 +9,10 @@
 #include "../Chess_Board.h"
 
 namespace Kangaroo::Move_Generator {
-    template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>
+    template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType>
     class Move_Receiver {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move([[maybe_unused]] Chess_Board *board,
-                                                                     [[maybe_unused]] const CallbackType &callback,
                                                                      [[maybe_unused]] const Bitboard from,
                                                                      [[maybe_unused]] const Bitboard to) {
             throw std::exception("This version of Move_Receiver::evaluate_and_perform_move() is not implemented yet.");
@@ -21,11 +20,10 @@ namespace Kangaroo::Move_Generator {
     };
 
 
-    template<Board_Status status, Chess_Pieces chess_piece>
-    class Move_Receiver<status, Move_Type::Promotion, chess_piece> {
+    template<Board_Status status, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType>
+    class Move_Receiver<status, Move_Type::Promotion, chess_piece, CallbackType> {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
-                                                                     const CallbackType &callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
             using enum Color;
@@ -43,7 +41,7 @@ namespace Kangaroo::Move_Generator {
             total_pieces_for(*board) ^= move;
 
             bitboard_for(*board, status.color_to_move, chess_piece) ^= to;
-            callback(board, move, status.color_to_move, chess_piece);
+            CallbackType<status, Move_Type::Promotion, chess_piece>::callback(board, move, from, to);
             bitboard_for(*board, status.color_to_move, chess_piece) ^= to;
 
             total_pieces_for(*board) ^= move;
@@ -52,11 +50,10 @@ namespace Kangaroo::Move_Generator {
         }
     };
 
-    template<Board_Status status, Chess_Pieces chess_piece>
-    class Move_Receiver<status, Move_Type::Capture_Promotion, chess_piece> {
+    template<Board_Status status, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType>
+    class Move_Receiver<status, Move_Type::Capture_Promotion, chess_piece, CallbackType> {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
-                                                                     const CallbackType &callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
             using enum Color;
@@ -79,7 +76,7 @@ namespace Kangaroo::Move_Generator {
             for (const auto p: All_Pieces) {
                 if (bitboard_for(*board, enemy(status.color_to_move), p) & to) {
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
-                    callback(board, move, status.color_to_move, chess_piece);
+                    CallbackType<status, Move_Type::Capture_Promotion, chess_piece>::callback(board, move, from, to);
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
                     break;
                 }
@@ -95,11 +92,10 @@ namespace Kangaroo::Move_Generator {
     };
 
 
-    template<Board_Status status, Chess_Pieces chess_piece>
-    class Move_Receiver<status, Move_Type::Capture, chess_piece> {
+    template<Board_Status status, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType>
+    class Move_Receiver<status, Move_Type::Capture, chess_piece, CallbackType> {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
-                                                                     const CallbackType &callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
             using enum Color;
@@ -122,7 +118,7 @@ namespace Kangaroo::Move_Generator {
             for (const auto p: All_Pieces) {
                 if (bitboard_for(*board, enemy(status.color_to_move), p) & to) {
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
-                    callback(board, move, status.color_to_move, chess_piece);
+                    CallbackType<status, Move_Type::Capture, chess_piece>::callback(board, move, from, to);
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
                     break;
                 }
@@ -136,11 +132,10 @@ namespace Kangaroo::Move_Generator {
     };
 
 
-    template<Board_Status status, Chess_Pieces chess_piece>
-    class Move_Receiver<status, Move_Type::Normal, chess_piece> {
+    template<Board_Status status, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType>
+    class Move_Receiver<status, Move_Type::Normal, chess_piece, CallbackType> {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
-                                                                     const CallbackType &callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
             using enum Color;
@@ -155,7 +150,7 @@ namespace Kangaroo::Move_Generator {
             all_pieces_for(*board, status.color_to_move) ^= move;
             total_pieces_for(*board) ^= move;
 
-            callback(board, move, status.color_to_move, chess_piece);
+            CallbackType<status, Move_Type::Normal, chess_piece>::callback(board, move, from, to);
 
             bitboard_for(*board, status.color_to_move, chess_piece) ^= move;
             all_pieces_for(*board, status.color_to_move) ^= move;
@@ -164,11 +159,10 @@ namespace Kangaroo::Move_Generator {
     };
 
 
-    template<Board_Status status, Chess_Pieces chess_piece>
-    class Move_Receiver<status, Move_Type::En_Passant, chess_piece> {
+    template<Board_Status status, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType>
+    class Move_Receiver<status, Move_Type::En_Passant, chess_piece, CallbackType> {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
-                                                                     const CallbackType &callback,
                                                                      const Bitboard from,
                                                                      const Bitboard to) {
             using enum Color;
@@ -186,10 +180,10 @@ namespace Kangaroo::Move_Generator {
             total_pieces_for(*board) ^= move | capture;
             all_pieces_for(*board, enemy(status.color_to_move)) ^= capture;
             bitboard_for(*board, enemy(status.color_to_move), chess_piece) ^= capture;
-            Bitboard en_passant_square = en_passant_square_for(*board);
+            const Bitboard en_passant_square = en_passant_square_for(*board);
             en_passant_square_for(*board) = 0ULL;
 
-            callback(board, move, status.color_to_move, chess_piece);
+            CallbackType<status, Move_Type::En_Passant, chess_piece>::callback(board, move, from, to);
 
             en_passant_square_for(*board) = en_passant_square;
             bitboard_for(*board, status.color_to_move, chess_piece) ^= move;

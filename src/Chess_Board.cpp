@@ -15,6 +15,7 @@
 #include "Types.h"
 #include "Board_Status.h"
 #include "Movement_Generator.h"
+#include "Move_Generator/Pin_And_Check_Mask_Generator.h"
 
 
 std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::parce_fen_en_passant_notation(
@@ -242,15 +243,10 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::update_check_flag
     using enum Color;
     using enum Chess_Pieces;
 
-    assert(status->color_to_move == White || status->color_to_move == Black);
+    Move_Generator::Pin_And_Check_Mask_Generator<Board_Status(0x00)> gen(this);
 
-    init(this);
 
-    status->color_to_move == White
-        ? build_pin_masks<White, Pin_Masks_Suitable_For::Detecting_Check>()
-        : build_pin_masks<Black, Pin_Masks_Suitable_For::Detecting_Check>();
-
-    if (check_mask) {
+    if (gen.get_check_mask()) {
         status->check_p = true;
     } else {
         status->check_p = false;

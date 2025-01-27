@@ -15,8 +15,6 @@
 namespace Kangaroo {
     class Chess_Board;
 
-    typedef std::function<void(const Chess_Board *, Move, Color, Chess_Pieces)> CallbackType;
-
 
     class Invalid_Board_Status final : public std::runtime_error {
     public:
