@@ -13,14 +13,14 @@
 
 namespace Kangaroo {
 
-    Status_Template(Compate_Pin_Mask_HV, Chess_Board *, const Bitboard)(Chess_Board *board, const Bitboard value) {
+    Status_Template(Compate_Pin_Mask_HV, Chess_Board *, const Bitboard, const std::string&)(Chess_Board *board, const Bitboard value, const std::string& str) {
         Move_Generator::Move_Generator<status> gen(board);
-        ASSERT_EQ(gen.get_pin_mask_HV(), value);
+        ASSERT_EQ(gen.get_pin_mask_HV(), value) << str;
     }
 
-    Status_Template(Compate_Pin_Mask_D, Chess_Board *, const Bitboard)(Chess_Board *board, const Bitboard value) {
+    Status_Template(Compate_Pin_Mask_D, Chess_Board *, const Bitboard, const std::string&)(Chess_Board *board, const Bitboard value, const std::string& str) {
         Move_Generator::Move_Generator<status> gen(board);
-        ASSERT_EQ(gen.get_pin_mask_D(), value);
+        ASSERT_EQ(gen.get_pin_mask_D(), value) << str;
     }
 
     TEST(Movement_Generator_Test, test_pin_masks_generator) {
@@ -32,16 +32,14 @@ namespace Kangaroo {
         Chess_Board board{};
 
         auto s = board.reset_board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
-        execute_status_template<Compate_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0);
+        execute_status_template<Compate_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "1st test not true");
 
-        Move_Generator gen(&board);
-        init(&board);
-        build_pin_masks<White, Detecting_Pins>();
-        ASSERT_EQ(pin_mask_HV, 0) << "1st test not true";
 
-        void(board.reset_board("K7/8/8/8/P7/8/r7/8 w - - 0 1 ")); // -V530
-        build_pin_masks<White, Detecting_Pins>();
-        ASSERT_EQ(pin_mask_HV, 0x1010101010100) << "2nd test not true";
+        s = board.reset_board("K7/8/8/8/P7/8/r7/8 w - - 0 1 ");
+        execute_status_template<Compate_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "2nd test not true");
+
+        s = board.reset_board("k7/8/8/8/p7/8/R7/8 w - - 0 1 ");
+        
 
         void(board.reset_board("k7/8/8/8/P7/8/R7/8 w - - 0 1 ")); // -V530
         build_pin_masks<Black, Detecting_Pins>();
