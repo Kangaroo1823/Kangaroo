@@ -11,6 +11,11 @@
 // #include "move_generator.h"
 
 namespace Kangaroo {
+
+    Status_Template(h) {
+        Move_Generator::Move_Generator<status> gen()
+    }
+
     TEST(Movement_Generator_Test, test_pin_masks_generator) {
         using enum Color;
         using enum Pin_Masks_Suitable_For;

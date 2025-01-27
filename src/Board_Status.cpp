@@ -10,9 +10,6 @@
 
 namespace Kangaroo {
 
-    [[nodiscard]] constexpr std::unique_ptr<Kangaroo::Move_Generator::Move_Generator> Board_Status::get_move_generator() const {
-    }
-
 
     [[nodiscard]] std::size_t Board_Status::run_pawn_move_generation(Chess_Board *board, const CallbackType &callback) const { // -V2008
         switch (to_flags()) {

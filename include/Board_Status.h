@@ -11,9 +11,7 @@
 #include "Base.h"
 #include "Types.h"
 
-namespace Kangaroo::Move_Generator {
-    class Move_Generator;
-}
+
 
 namespace Kangaroo {
     class Chess_Board;
@@ -153,9 +151,86 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] constexpr std::unique_ptr<Move_Generator::Move_Generator> get_move_generator() const;
         [[nodiscard]] std::size_t run_pawn_move_generation(Chess_Board *board, const CallbackType &callback) const;
+
     };
+
+    template<template<Board_Status status> class T, Us... U> void execute_state_template(const Board_Status &status) {
+        switch (status.to_flags()) {
+            case 0x00: { T<Board_Status(0x00)>::execute(); break; }
+            case 0x01: { T<Board_Status(0x01)>::execute(); break; }
+            case 0x02: { T<Board_Status(0x02)>::execute(); break; }
+            case 0x03: { T<Board_Status(0x03)>::execute(); break; }
+            case 0x04: { T<Board_Status(0x04)>::execute(); break; }
+            case 0x05: { T<Board_Status(0x05)>::execute(); break; }
+            case 0x06: { T<Board_Status(0x06)>::execute(); break; }
+            case 0x07: { T<Board_Status(0x07)>::execute(); break; }
+            case 0x08: { T<Board_Status(0x08)>::execute(); break; }
+            case 0x09: { T<Board_Status(0x09)>::execute(); break; }
+            case 0x0A: { T<Board_Status(0x0A)>::execute(); break; }
+            case 0x0B: { T<Board_Status(0x0B)>::execute(); break; }
+            case 0x0C: { T<Board_Status(0x0C)>::execute(); break; }
+            case 0x0D: { T<Board_Status(0x0D)>::execute(); break; }
+            case 0x0E: { T<Board_Status(0x0E)>::execute(); break; }
+            case 0x0F: { T<Board_Status(0x0F)>::execute(); break; }
+            case 0x10: { T<Board_Status(0x10)>::execute(); break; }
+            case 0x11: { T<Board_Status(0x11)>::execute(); break; }
+            case 0x12: { T<Board_Status(0x12)>::execute(); break; }
+            case 0x13: { T<Board_Status(0x13)>::execute(); break; }
+            case 0x14: { T<Board_Status(0x14)>::execute(); break; }
+            case 0x15: { T<Board_Status(0x15)>::execute(); break; }
+            case 0x16: { T<Board_Status(0x16)>::execute(); break; }
+            case 0x17: { T<Board_Status(0x17)>::execute(); break; }
+            case 0x18: { T<Board_Status(0x18)>::execute(); break; }
+            case 0x19: { T<Board_Status(0x19)>::execute(); break; }
+            case 0x1A: { T<Board_Status(0x1A)>::execute(); break; }
+            case 0x1B: { T<Board_Status(0x1B)>::execute(); break; }
+            case 0x1C: { T<Board_Status(0x1C)>::execute(); break; }
+            case 0x1D: { T<Board_Status(0x1D)>::execute(); break; }
+            case 0x1E: { T<Board_Status(0x1E)>::execute(); break; }
+            case 0x1F: { T<Board_Status(0x1F)>::execute(); break; }
+            case 0x20: { T<Board_Status(0x20)>::execute(); break; }
+            case 0x21: { T<Board_Status(0x21)>::execute(); break; }
+            case 0x22: { T<Board_Status(0x22)>::execute(); break; }
+            case 0x23: { T<Board_Status(0x23)>::execute(); break; }
+            case 0x24: { T<Board_Status(0x24)>::execute(); break; }
+            case 0x25: { T<Board_Status(0x25)>::execute(); break; }
+            case 0x26: { T<Board_Status(0x26)>::execute(); break; }
+            case 0x27: { T<Board_Status(0x27)>::execute(); break; }
+            case 0x28: { T<Board_Status(0x28)>::execute(); break; }
+            case 0x29: { T<Board_Status(0x29)>::execute(); break; }
+            case 0x2A: { T<Board_Status(0x2A)>::execute(); break; }
+            case 0x2B: { T<Board_Status(0x2B)>::execute(); break; }
+            case 0x2C: { T<Board_Status(0x2C)>::execute(); break; }
+            case 0x2D: { T<Board_Status(0x2D)>::execute(); break; }
+            case 0x2E: { T<Board_Status(0x2E)>::execute(); break; }
+            case 0x2F: { T<Board_Status(0x2F)>::execute(); break; }
+            case 0x30: { T<Board_Status(0x30)>::execute(); break; }
+            case 0x31: { T<Board_Status(0x31)>::execute(); break; }
+            case 0x32: { T<Board_Status(0x32)>::execute(); break; }
+            case 0x33: { T<Board_Status(0x33)>::execute(); break; }
+            case 0x34: { T<Board_Status(0x34)>::execute(); break; }
+            case 0x35: { T<Board_Status(0x35)>::execute(); break; }
+            case 0x36: { T<Board_Status(0x36)>::execute(); break; }
+            case 0x37: { T<Board_Status(0x37)>::execute(); break; }
+            case 0x38: { T<Board_Status(0x38)>::execute(); break; }
+            case 0x39: { T<Board_Status(0x39)>::execute(); break; }
+            case 0x3A: { T<Board_Status(0x3A)>::execute(); break; }
+            case 0x3B: { T<Board_Status(0x3B)>::execute(); break; }
+            case 0x3C: { T<Board_Status(0x3C)>::execute(); break; }
+            case 0x3D: { T<Board_Status(0x3D)>::execute(); break; }
+            case 0x3E: { T<Board_Status(0x3E)>::execute(); break; }
+            case 0x3F: { T<Board_Status(0x3F)>::execute(); break; }
+            case 0x40: { T<Board_Status(0x40)>::execute(); break; }
+
+#define Status_Template(template_name) template<Board_Status status> class template_name { public: _ForceInline constexpr static void execute(); }; template<Board_Status status> _ForceInline constexpr void template_name<status>::execute()
+
+
+            default: {
+                throw Invalid_Board_Status();
+            }
+        }
+    }
 
 } // Kangaroo
 
