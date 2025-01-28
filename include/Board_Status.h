@@ -146,13 +146,11 @@ namespace Kangaroo {
 
             return copy;
         }
-
-        [[nodiscard]] std::size_t run_pawn_move_generation(Chess_Board *board) const;
     };
 
     template<template<Board_Status, template<Board_Status, Move_Type, Chess_Pieces> class> class T,
         template<Board_Status, Move_Type, Chess_Pieces> class CallbackType, typename... Args>
-    _ForceInline constexpr auto execute_status_callback_template(const Board_Status &status, Args... args) {
+    [[nodiscard]] _ForceInline constexpr auto execute_status_callback_template(const Board_Status &status, Args... args) {
         switch (status.to_flags()) {
             case 0x00: return T<Board_Status(0x00), CallbackType>::execute(args...);
             case 0x01: return T<Board_Status(0x01), CallbackType>::execute(args...);
@@ -223,11 +221,11 @@ namespace Kangaroo {
         }
     }
 
-#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _ForceInline static constexpr auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _ForceInline static constexpr auto tn::execute(__VA_ARGS__)
+#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _ForceInline static constexpr auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _ForceInline constexpr auto tn<status, CallbackType>::execute(__VA_ARGS__)
 
 
     template<template<Board_Status status> class T, typename... Args>
-    _ForceInline constexpr auto execute_status_template(const Board_Status &status, Args... args) {
+    [[nodiscard]] _ForceInline constexpr auto execute_status_template(const Board_Status &status, Args... args) {
         switch (status.to_flags()) {
             case 0x00: return T<Board_Status(0x00)>::execute(args...);
             case 0x01: return T<Board_Status(0x01)>::execute(args...);

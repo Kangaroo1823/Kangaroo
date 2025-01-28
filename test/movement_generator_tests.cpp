@@ -13,13 +13,19 @@
 
 namespace Kangaroo {
 
-    Status_Template(Compare_Pin_Mask_HV, Chess_Board *, const Bitboard, const std::string&)(Chess_Board *board, const Bitboard value, const std::string& str) {
-        Move_Generator::Move_Generator<status> gen(board);
+    template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>
+    class Dummy {
+        public:
+        auto callback(const Chess_Board *, )
+    };
+
+    Status_Callback_Template(Compare_Pin_Mask_HV, Chess_Board * board, const Bitboard value, const std::string& str){
+        Move_Generator::Move_Generator<status, CallbackType> gen(board);
         ASSERT_EQ(gen.get_pin_mask_HV(), value) << str;
     }
 
-    Status_Template(Compare_Pin_Mask_D, Chess_Board *, const Bitboard, const std::string&)(Chess_Board *board, const Bitboard value, const std::string& str) {
-        Move_Generator::Move_Generator<status> gen(board);
+    Status_Callback_Template(Compare_Pin_Mask_D, Chess_Board * board, const Bitboard value, const std::string& str) {
+        Move_Generator::Move_Generator<status, CallbackType> gen(board);
         ASSERT_EQ(gen.get_pin_mask_D(), value) << str;
     }
 
@@ -32,7 +38,7 @@ namespace Kangaroo {
         Chess_Board board{};
 
         auto s = board.reset_board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "1st test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "1st test not true");
 
         s = board.reset_board("K7/8/8/8/P7/8/r7/8 w - - 0 1 ");
         execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "2nd test not true");

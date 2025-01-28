@@ -14,22 +14,8 @@
 namespace Kangaroo::Movement_Generator {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     template<Board_Status status>
-    [[nodiscard]] constexpr std::size_t generate_knight_moves([[maybe_unused]] const CallbackType &callback) {
+    [[nodiscard]] constexpr std::size_t generate_knight_moves() {
         using enum Color;
         using enum Chess_Pieces;
         using enum Move_Type;
