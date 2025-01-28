@@ -147,279 +147,158 @@ namespace Kangaroo {
             return copy;
         }
 
-        [[nodiscard]] std::size_t run_pawn_move_generation(Chess_Board *board, const CallbackType &callback) const;
+        [[nodiscard]] std::size_t run_pawn_move_generation(Chess_Board *board) const;
     };
 
-    template<template<Board_Status status> class T, typename... Args>
-    void execute_status_template(const Board_Status &status, Args... args) {
+    template<template<Board_Status, template<Board_Status, Move_Type, Chess_Pieces> class> class T,
+        template<Board_Status, Move_Type, Chess_Pieces> class CallbackType, typename... Args>
+    _ForceInline constexpr auto execute_status_callback_template(const Board_Status &status, Args... args) {
         switch (status.to_flags()) {
-            case 0x00: {
-                T<Board_Status(0x00)>::execute(args...);
-                break;
-            }
-            case 0x01: {
-                T<Board_Status(0x01)>::execute(args...);
-                break;
-            }
-            case 0x02: {
-                T<Board_Status(0x02)>::execute(args...);
-                break;
-            }
-            case 0x03: {
-                T<Board_Status(0x03)>::execute(args...);
-                break;
-            }
-            case 0x04: {
-                T<Board_Status(0x04)>::execute(args...);
-                break;
-            }
-            case 0x05: {
-                T<Board_Status(0x05)>::execute(args...);
-                break;
-            }
-            case 0x06: {
-                T<Board_Status(0x06)>::execute(args...);
-                break;
-            }
-            case 0x07: {
-                T<Board_Status(0x07)>::execute(args...);
-                break;
-            }
-            case 0x08: {
-                T<Board_Status(0x08)>::execute(args...);
-                break;
-            }
-            case 0x09: {
-                T<Board_Status(0x09)>::execute(args...);
-                break;
-            }
-            case 0x0A: {
-                T<Board_Status(0x0A)>::execute(args...);
-                break;
-            }
-            case 0x0B: {
-                T<Board_Status(0x0B)>::execute(args...);
-                break;
-            }
-            case 0x0C: {
-                T<Board_Status(0x0C)>::execute(args...);
-                break;
-            }
-            case 0x0D: {
-                T<Board_Status(0x0D)>::execute(args...);
-                break;
-            }
-            case 0x0E: {
-                T<Board_Status(0x0E)>::execute(args...);
-                break;
-            }
-            case 0x0F: {
-                T<Board_Status(0x0F)>::execute(args...);
-                break;
-            }
-            case 0x10: {
-                T<Board_Status(0x10)>::execute(args...);
-                break;
-            }
-            case 0x11: {
-                T<Board_Status(0x11)>::execute(args...);
-                break;
-            }
-            case 0x12: {
-                T<Board_Status(0x12)>::execute(args...);
-                break;
-            }
-            case 0x13: {
-                T<Board_Status(0x13)>::execute(args...);
-                break;
-            }
-            case 0x14: {
-                T<Board_Status(0x14)>::execute(args...);
-                break;
-            }
-            case 0x15: {
-                T<Board_Status(0x15)>::execute(args...);
-                break;
-            }
-            case 0x16: {
-                T<Board_Status(0x16)>::execute(args...);
-                break;
-            }
-            case 0x17: {
-                T<Board_Status(0x17)>::execute(args...);
-                break;
-            }
-            case 0x18: {
-                T<Board_Status(0x18)>::execute(args...);
-                break;
-            }
-            case 0x19: {
-                T<Board_Status(0x19)>::execute(args...);
-                break;
-            }
-            case 0x1A: {
-                T<Board_Status(0x1A)>::execute(args...);
-                break;
-            }
-            case 0x1B: {
-                T<Board_Status(0x1B)>::execute(args...);
-                break;
-            }
-            case 0x1C: {
-                T<Board_Status(0x1C)>::execute(args...);
-                break;
-            }
-            case 0x1D: {
-                T<Board_Status(0x1D)>::execute(args...);
-                break;
-            }
-            case 0x1E: {
-                T<Board_Status(0x1E)>::execute(args...);
-                break;
-            }
-            case 0x1F: {
-                T<Board_Status(0x1F)>::execute(args...);
-                break;
-            }
-            case 0x20: {
-                T<Board_Status(0x20)>::execute(args...);
-                break;
-            }
-            case 0x21: {
-                T<Board_Status(0x21)>::execute(args...);
-                break;
-            }
-            case 0x22: {
-                T<Board_Status(0x22)>::execute(args...);
-                break;
-            }
-            case 0x23: {
-                T<Board_Status(0x23)>::execute(args...);
-                break;
-            }
-            case 0x24: {
-                T<Board_Status(0x24)>::execute(args...);
-                break;
-            }
-            case 0x25: {
-                T<Board_Status(0x25)>::execute(args...);
-                break;
-            }
-            case 0x26: {
-                T<Board_Status(0x26)>::execute(args...);
-                break;
-            }
-            case 0x27: {
-                T<Board_Status(0x27)>::execute(args...);
-                break;
-            }
-            case 0x28: {
-                T<Board_Status(0x28)>::execute(args...);
-                break;
-            }
-            case 0x29: {
-                T<Board_Status(0x29)>::execute(args...);
-                break;
-            }
-            case 0x2A: {
-                T<Board_Status(0x2A)>::execute(args...);
-                break;
-            }
-            case 0x2B: {
-                T<Board_Status(0x2B)>::execute(args...);
-                break;
-            }
-            case 0x2C: {
-                T<Board_Status(0x2C)>::execute(args...);
-                break;
-            }
-            case 0x2D: {
-                T<Board_Status(0x2D)>::execute(args...);
-                break;
-            }
-            case 0x2E: {
-                T<Board_Status(0x2E)>::execute(args...);
-                break;
-            }
-            case 0x2F: {
-                T<Board_Status(0x2F)>::execute(args...);
-                break;
-            }
-            case 0x30: {
-                T<Board_Status(0x30)>::execute(args...);
-                break;
-            }
-            case 0x31: {
-                T<Board_Status(0x31)>::execute(args...);
-                break;
-            }
-            case 0x32: {
-                T<Board_Status(0x32)>::execute(args...);
-                break;
-            }
-            case 0x33: {
-                T<Board_Status(0x33)>::execute(args...);
-                break;
-            }
-            case 0x34: {
-                T<Board_Status(0x34)>::execute(args...);
-                break;
-            }
-            case 0x35: {
-                T<Board_Status(0x35)>::execute(args...);
-                break;
-            }
-            case 0x36: {
-                T<Board_Status(0x36)>::execute(args...);
-                break;
-            }
-            case 0x37: {
-                T<Board_Status(0x37)>::execute(args...);
-                break;
-            }
-            case 0x38: {
-                T<Board_Status(0x38)>::execute(args...);
-                break;
-            }
-            case 0x39: {
-                T<Board_Status(0x39)>::execute(args...);
-                break;
-            }
-            case 0x3A: {
-                T<Board_Status(0x3A)>::execute(args...);
-                break;
-            }
-            case 0x3B: {
-                T<Board_Status(0x3B)>::execute(args...);
-                break;
-            }
-            case 0x3C: {
-                T<Board_Status(0x3C)>::execute(args...);
-                break;
-            }
-            case 0x3D: {
-                T<Board_Status(0x3D)>::execute(args...);
-                break;
-            }
-            case 0x3E: {
-                T<Board_Status(0x3E)>::execute(args...);
-                break;
-            }
-            case 0x3F: {
-                T<Board_Status(0x3F)>::execute(args...);
-                break;
-            }
-            case 0x40: {
-                T<Board_Status(0x40)>::execute(args...);
-                break;
-            }
-            default: {
-                throw Invalid_Board_Status();
-            }
+            case 0x00: return T<Board_Status(0x00), CallbackType>::execute(args...);
+            case 0x01: return T<Board_Status(0x01), CallbackType>::execute(args...);
+            case 0x02: return T<Board_Status(0x02), CallbackType>::execute(args...);
+            case 0x03: return T<Board_Status(0x03), CallbackType>::execute(args...);
+            case 0x04: return T<Board_Status(0x04), CallbackType>::execute(args...);
+            case 0x05: return T<Board_Status(0x05), CallbackType>::execute(args...);
+            case 0x06: return T<Board_Status(0x06), CallbackType>::execute(args...);
+            case 0x07: return T<Board_Status(0x07), CallbackType>::execute(args...);
+            case 0x08: return T<Board_Status(0x08), CallbackType>::execute(args...);
+            case 0x09: return T<Board_Status(0x09), CallbackType>::execute(args...);
+            case 0x0A: return T<Board_Status(0x0A), CallbackType>::execute(args...);
+            case 0x0B: return T<Board_Status(0x0B), CallbackType>::execute(args...);
+            case 0x0C: return T<Board_Status(0x0C), CallbackType>::execute(args...);
+            case 0x0D: return T<Board_Status(0x0D), CallbackType>::execute(args...);
+            case 0x0E: return T<Board_Status(0x0E), CallbackType>::execute(args...);
+            case 0x0F: return T<Board_Status(0x0F), CallbackType>::execute(args...);
+            case 0x10: return T<Board_Status(0x10), CallbackType>::execute(args...);
+            case 0x11: return T<Board_Status(0x11), CallbackType>::execute(args...);
+            case 0x12: return T<Board_Status(0x12), CallbackType>::execute(args...);
+            case 0x13: return T<Board_Status(0x13), CallbackType>::execute(args...);
+            case 0x14: return T<Board_Status(0x14), CallbackType>::execute(args...);
+            case 0x15: return T<Board_Status(0x15), CallbackType>::execute(args...);
+            case 0x16: return T<Board_Status(0x16), CallbackType>::execute(args...);
+            case 0x17: return T<Board_Status(0x17), CallbackType>::execute(args...);
+            case 0x18: return T<Board_Status(0x18), CallbackType>::execute(args...);
+            case 0x19: return T<Board_Status(0x19), CallbackType>::execute(args...);
+            case 0x1A: return T<Board_Status(0x1A), CallbackType>::execute(args...);
+            case 0x1B: return T<Board_Status(0x1B), CallbackType>::execute(args...);
+            case 0x1C: return T<Board_Status(0x1C), CallbackType>::execute(args...);
+            case 0x1D: return T<Board_Status(0x1D), CallbackType>::execute(args...);
+            case 0x1E: return T<Board_Status(0x1E), CallbackType>::execute(args...);
+            case 0x1F: return T<Board_Status(0x1F), CallbackType>::execute(args...);
+            case 0x20: return T<Board_Status(0x20), CallbackType>::execute(args...);
+            case 0x21: return T<Board_Status(0x21), CallbackType>::execute(args...);
+            case 0x22: return T<Board_Status(0x22), CallbackType>::execute(args...);
+            case 0x23: return T<Board_Status(0x23), CallbackType>::execute(args...);
+            case 0x24: return T<Board_Status(0x24), CallbackType>::execute(args...);
+            case 0x25: return T<Board_Status(0x25), CallbackType>::execute(args...);
+            case 0x26: return T<Board_Status(0x26), CallbackType>::execute(args...);
+            case 0x27: return T<Board_Status(0x27), CallbackType>::execute(args...);
+            case 0x28: return T<Board_Status(0x28), CallbackType>::execute(args...);
+            case 0x29: return T<Board_Status(0x29), CallbackType>::execute(args...);
+            case 0x2A: return T<Board_Status(0x2A), CallbackType>::execute(args...);
+            case 0x2B: return T<Board_Status(0x2B), CallbackType>::execute(args...);
+            case 0x2C: return T<Board_Status(0x2C), CallbackType>::execute(args...);
+            case 0x2D: return T<Board_Status(0x2D), CallbackType>::execute(args...);
+            case 0x2E: return T<Board_Status(0x2E), CallbackType>::execute(args...);
+            case 0x2F: return T<Board_Status(0x2F), CallbackType>::execute(args...);
+            case 0x30: return T<Board_Status(0x30), CallbackType>::execute(args...);
+            case 0x31: return T<Board_Status(0x31), CallbackType>::execute(args...);
+            case 0x32: return T<Board_Status(0x32), CallbackType>::execute(args...);
+            case 0x33: return T<Board_Status(0x33), CallbackType>::execute(args...);
+            case 0x34: return T<Board_Status(0x34), CallbackType>::execute(args...);
+            case 0x35: return T<Board_Status(0x35), CallbackType>::execute(args...);
+            case 0x36: return T<Board_Status(0x36), CallbackType>::execute(args...);
+            case 0x37: return T<Board_Status(0x37), CallbackType>::execute(args...);
+            case 0x38: return T<Board_Status(0x38), CallbackType>::execute(args...);
+            case 0x39: return T<Board_Status(0x39), CallbackType>::execute(args...);
+            case 0x3A: return T<Board_Status(0x3A), CallbackType>::execute(args...);
+            case 0x3B: return T<Board_Status(0x3B), CallbackType>::execute(args...);
+            case 0x3C: return T<Board_Status(0x3C), CallbackType>::execute(args...);
+            case 0x3D: return T<Board_Status(0x3D), CallbackType>::execute(args...);
+            case 0x3E: return T<Board_Status(0x3E), CallbackType>::execute(args...);
+            case 0x3F: return T<Board_Status(0x3F), CallbackType>::execute(args...);
+            case 0x40: return T<Board_Status(0x40), CallbackType>::execute(args...);
+            default: { throw std::exception("Invalid Board_Status"); }
         }
     }
 
-#define Status_Template(template_name, ...) template<Board_Status status> class template_name { public: _ForceInline constexpr static void execute(__VA_ARGS__); }; template<Board_Status status> _ForceInline constexpr void template_name<status>::execute
+#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _ForceInline static constexpr auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _ForceInline static constexpr auto tn::execute(__VA_ARGS__)
+
+
+    template<template<Board_Status status> class T, typename... Args>
+    _ForceInline constexpr auto execute_status_template(const Board_Status &status, Args... args) {
+        switch (status.to_flags()) {
+            case 0x00: return T<Board_Status(0x00)>::execute(args...);
+            case 0x01: return T<Board_Status(0x01)>::execute(args...);
+            case 0x02: return T<Board_Status(0x02)>::execute(args...);
+            case 0x03: return T<Board_Status(0x03)>::execute(args...);
+            case 0x04: return T<Board_Status(0x04)>::execute(args...);
+            case 0x05: return T<Board_Status(0x05)>::execute(args...);
+            case 0x06: return T<Board_Status(0x06)>::execute(args...);
+            case 0x07: return T<Board_Status(0x07)>::execute(args...);
+            case 0x08: return T<Board_Status(0x08)>::execute(args...);
+            case 0x09: return T<Board_Status(0x09)>::execute(args...);
+            case 0x0A: return T<Board_Status(0x0A)>::execute(args...);
+            case 0x0B: return T<Board_Status(0x0B)>::execute(args...);
+            case 0x0C: return T<Board_Status(0x0C)>::execute(args...);
+            case 0x0D: return T<Board_Status(0x0D)>::execute(args...);
+            case 0x0E: return T<Board_Status(0x0E)>::execute(args...);
+            case 0x0F: return T<Board_Status(0x0F)>::execute(args...);
+            case 0x10: return T<Board_Status(0x10)>::execute(args...);
+            case 0x11: return T<Board_Status(0x11)>::execute(args...);
+            case 0x12: return T<Board_Status(0x12)>::execute(args...);
+            case 0x13: return T<Board_Status(0x13)>::execute(args...);
+            case 0x14: return T<Board_Status(0x14)>::execute(args...);
+            case 0x15: return T<Board_Status(0x15)>::execute(args...);
+            case 0x16: return T<Board_Status(0x16)>::execute(args...);
+            case 0x17: return T<Board_Status(0x17)>::execute(args...);
+            case 0x18: return T<Board_Status(0x18)>::execute(args...);
+            case 0x19: return T<Board_Status(0x19)>::execute(args...);
+            case 0x1A: return T<Board_Status(0x1A)>::execute(args...);
+            case 0x1B: return T<Board_Status(0x1B)>::execute(args...);
+            case 0x1C: return T<Board_Status(0x1C)>::execute(args...);
+            case 0x1D: return T<Board_Status(0x1D)>::execute(args...);
+            case 0x1E: return T<Board_Status(0x1E)>::execute(args...);
+            case 0x1F: return T<Board_Status(0x1F)>::execute(args...);
+            case 0x20: return T<Board_Status(0x20)>::execute(args...);
+            case 0x21: return T<Board_Status(0x21)>::execute(args...);
+            case 0x22: return T<Board_Status(0x22)>::execute(args...);
+            case 0x23: return T<Board_Status(0x23)>::execute(args...);
+            case 0x24: return T<Board_Status(0x24)>::execute(args...);
+            case 0x25: return T<Board_Status(0x25)>::execute(args...);
+            case 0x26: return T<Board_Status(0x26)>::execute(args...);
+            case 0x27: return T<Board_Status(0x27)>::execute(args...);
+            case 0x28: return T<Board_Status(0x28)>::execute(args...);
+            case 0x29: return T<Board_Status(0x29)>::execute(args...);
+            case 0x2A: return T<Board_Status(0x2A)>::execute(args...);
+            case 0x2B: return T<Board_Status(0x2B)>::execute(args...);
+            case 0x2C: return T<Board_Status(0x2C)>::execute(args...);
+            case 0x2D: return T<Board_Status(0x2D)>::execute(args...);
+            case 0x2E: return T<Board_Status(0x2E)>::execute(args...);
+            case 0x2F: return T<Board_Status(0x2F)>::execute(args...);
+            case 0x30: return T<Board_Status(0x30)>::execute(args...);
+            case 0x31: return T<Board_Status(0x31)>::execute(args...);
+            case 0x32: return T<Board_Status(0x32)>::execute(args...);
+            case 0x33: return T<Board_Status(0x33)>::execute(args...);
+            case 0x34: return T<Board_Status(0x34)>::execute(args...);
+            case 0x35: return T<Board_Status(0x35)>::execute(args...);
+            case 0x36: return T<Board_Status(0x36)>::execute(args...);
+            case 0x37: return T<Board_Status(0x37)>::execute(args...);
+            case 0x38: return T<Board_Status(0x38)>::execute(args...);
+            case 0x39: return T<Board_Status(0x39)>::execute(args...);
+            case 0x3A: return T<Board_Status(0x3A)>::execute(args...);
+            case 0x3B: return T<Board_Status(0x3B)>::execute(args...);
+            case 0x3C: return T<Board_Status(0x3C)>::execute(args...);
+            case 0x3D: return T<Board_Status(0x3D)>::execute(args...);
+            case 0x3E: return T<Board_Status(0x3E)>::execute(args...);
+            case 0x3F: return T<Board_Status(0x3F)>::execute(args...);
+            case 0x40: return T<Board_Status(0x40)>::execute(args...);
+            default: throw Invalid_Board_Status();
+        }
+    }
+
+#define Status_Template(template_name, ...) template<Board_Status status> class template_name { public: _ForceInline constexpr static void execute(__VA_ARGS__); }; template<Board_Status status> _ForceInline constexpr void template_name<status>::execute(__VA_ARGS__)
 } // Kangaroo
 
 #endif //BOARD_STATUS_H
