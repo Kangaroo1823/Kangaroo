@@ -13,11 +13,12 @@
 
 namespace Kangaroo {
 
-    template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>
-    class Dummy {
-        public:
-        auto callback(const Chess_Board *, )
-    };
+#define Callback_Template(tn) template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece> class tn { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to); }; template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to)
+#define Callback_Template_MT_Specialization(tn, move_type) template<Board_Status status, Chess_Pieces chess_piece> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt); }; template<Board_Status status, Chess_Pieces chess_piece> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt)
+#define Callback_Template_CP_Specialization(tn, chess_piece) template<Board_Status status, Move_Type move_type> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, cp); }; template<Board_Status status, Move_Type move_type> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, cp)
+#define Callback_Template_MT_CP_Specialization(tn, move_type, chess_piece) template<Board_Status status> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt, cp); }; template<Board_Status status> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt, cp)
+
+    Callback_Template(Dummy) {}
 
     Status_Callback_Template(Compare_Pin_Mask_HV, Chess_Board * board, const Bitboard value, const std::string& str){
         Move_Generator::Move_Generator<status, CallbackType> gen(board);
@@ -38,10 +39,10 @@ namespace Kangaroo {
         Chess_Board board{};
 
         auto s = board.reset_board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
-        execute_status_callback_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "1st test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(*s, &board, 0x0, "1st test not true");
 
         s = board.reset_board("K7/8/8/8/P7/8/r7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "2nd test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "2nd test not true");
 
         s = board.reset_board("k7/8/8/8/P7/8/R7/8 w - - 0 1 ");
         execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x00, "3rd test not true");
