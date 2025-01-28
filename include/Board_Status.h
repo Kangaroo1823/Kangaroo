@@ -4,12 +4,11 @@
 
 #ifndef BOARD_STATUS_H
 #define BOARD_STATUS_H
-#include <functional>
-#include <memory>
 #include <stdexcept>
 
 #include "Base.h"
 #include "Types.h"
+
 
 
 namespace Kangaroo {
@@ -148,7 +147,7 @@ namespace Kangaroo {
         }
     };
 
-    template<template<Board_Status, template<Board_Status, Move_Type, Chess_Pieces> class> class T,
+    template<template<Board_Status, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args_> class> class T,
         template<Board_Status, Move_Type, Chess_Pieces> class CallbackType, typename... Args>
     [[nodiscard]] _ForceInline constexpr auto execute_status_callback_template(const Board_Status &status, Args... args) {
         switch (status.to_flags()) {
@@ -299,10 +298,10 @@ namespace Kangaroo {
 #define Status_Template(template_name, ...) template<Board_Status status> class template_name { public: _ForceInline constexpr static void execute(__VA_ARGS__); }; template<Board_Status status> _ForceInline constexpr void template_name<status>::execute(__VA_ARGS__)
 
 
-#define Callback_Template(tn) template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece> class tn { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to); }; template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to)
-#define Callback_Template_MT_Specialization(tn, move_type) template<Board_Status status, Chess_Pieces chess_piece> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt); }; template<Board_Status status, Chess_Pieces chess_piece> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt)
-#define Callback_Template_CP_Specialization(tn, chess_piece) template<Board_Status status, Move_Type move_type> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, cp); }; template<Board_Status status, Move_Type move_type> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, cp)
-#define Callback_Template_MT_CP_Specialization(tn, move_type, chess_piece) template<Board_Status status> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt, cp); }; template<Board_Status status> constexpr auto tn<status, move_type, chess_piece>::callback(const Chess_Board *, Bitboard move, Bitboard from, Bitboard to, mt, cp)
+#define Callback_Template(tn, ...) template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece> class tn { public: _ForceInline constexpr static auto callback(const Chess_Board *board, Bitboard move, Bitboard from, Bitboard to __VA_OPT__(,) __VA_ARGS__); }; template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece> constexpr auto tn<status, move_type, chess_piece>::callback([[maybe_unused]] const Chess_Board *board, [[maybe_unused]] Bitboard move, [[maybe_unused]] Bitboard from, [[maybe_unused]] Bitboard to __VA_OPT__(,) __VA_ARGS__)
+#define Callback_Template_MT_Specialization(tn, move_type, ...) template<Board_Status status, Chess_Pieces chess_piece> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *board, Bitboard move, Bitboard from, Bitboard to __VA_OPT__(,) __VA_ARGS__); }; template<Board_Status status, Chess_Pieces chess_piece> constexpr auto tn<status, move_type, chess_piece>::callback([[maybe_unused]] const Chess_Board *board, [[maybe_unused]] Bitboard move, [[maybe_unused]] Bitboard from, [[maybe_unused]] Bitboard to __VA_OPT__(,) __VA_ARGS__)
+#define Callback_Template_CP_Specialization(tn, chess_piece, ...) template<Board_Status status, Move_Type move_type> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *board, Bitboard move, Bitboard from, Bitboard to __VA_OPT(,) __VA_ARGS__); }; template<Board_Status status, Move_Type move_type> constexpr auto tn<status, move_type, chess_piece>::callback([[maybe_unused]] const Chess_Board *board, [[maybe_unused]] Bitboard move, [[maybe_unused]] Bitboard from, [[maybe_unused]] Bitboard to __VA_OPT__(,) __VA_ARGS__)
+#define Callback_Template_MT_CP_Specialization(tn, move_type, chess_piece, ...) template<Board_Status status> class tn<status, move_type, chess_piece> { public: _ForceInline constexpr static auto callback(const Chess_Board *board, Bitboard move, Bitboard from, Bitboard to __VA_OPT__(,) __VA_ARGS__); }; template<Board_Status status> constexpr auto tn<status, move_type, chess_piece>::callback([[maybe_unused]] const Chess_Board *board, [[maybe_unused]] Bitboard move, [[maybe_unused]] Bitboard from, [[maybe_unused]] Bitboard to __VA_OPT__(,) __VA_ARGS__)
 
 } // Kangaroo
 

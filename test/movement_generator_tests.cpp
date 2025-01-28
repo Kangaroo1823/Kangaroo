@@ -11,12 +11,11 @@
 #include "move_generator.h"
 #include "Move_Generator/Move_Generator.h"
 
-namespace Kangaroo {
+namespace Kangaroo::Movement_Generator_Tests {
+    Callback_Template(Dummy) {
+    }
 
-
-    Callback_Template(Dummy) {}
-
-    Status_Callback_Template(Compare_Pin_Mask_HV, Chess_Board * board, const Bitboard value, const std::string& str){
+    Status_Callback_Template(Compare_Pin_Mask_HV, Chess_Board * board, const Bitboard value, const std::string& str) {
         Move_Generator::Move_Generator<status, CallbackType> gen(board);
         ASSERT_EQ(gen.get_pin_mask_HV(), value) << str;
     }
@@ -35,156 +34,204 @@ namespace Kangaroo {
         Chess_Board board{};
 
         auto s = board.reset_board("K7/8/8/P7/P7/8/r7/8 w - - 0 1 ");
-        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(*s, &board, 0x0, "1st test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "1st test not true");
 
         s = board.reset_board("K7/8/8/8/P7/8/r7/8 w - - 0 1 ");
-        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "2nd test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "2nd test not true");
 
         s = board.reset_board("k7/8/8/8/P7/8/R7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x00, "3rd test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x00, "3rd test not true");
 
         s = board.reset_board("k7/8/8/8/p7/8/R7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "4th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "4th test not true");
 
         s = board.reset_board("K7/8/8/8/P7/8/q7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "5th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "5th test not true");
 
         s = board.reset_board("k7/8/8/8/p7/8/Q7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "6th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "6th test not true");
 
         s = board.reset_board("8/q7/8/P7/8/8/8/K7 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "7th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "7th test not true");
 
         s = board.reset_board("8/Q7/8/p7/8/8/8/k7 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "8th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "8th test not true");
 
         s = board.reset_board("8/r7/8/P7/8/8/8/K7 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "9th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "9th test not true");
 
         s = board.reset_board("8/R7/8/p7/8/8/8/k7 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x1010101010100, "10th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x1010101010100, "10th test not true");
 
         s = board.reset_board("8/r7/8/P7/P7/8/8/K7 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x00, "11th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x00, "11th test not true");
 
         s = board.reset_board("8/R7/8/p7/p7/8/8/k7 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x00, "12th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x00, "12th test not true");
 
         s = board.reset_board("8/8/R1pp2k1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x00, "13th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x00, "13th test not true");
 
         s = board.reset_board("8/8/R2p2k1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x3f0000000000, "14th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x3f0000000000, "14th test not true");
 
         s = board.reset_board("8/8/r1PP2K1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "15th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "15th test not true");
 
         s = board.reset_board("8/8/r2P2K1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x3f0000000000, "16th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x3f0000000000, "16th test not true");
 
         s = board.reset_board("8/8/K2P2r1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x7e0000000000, "17th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x7e0000000000, "17th test not true");
 
         s = board.reset_board("8/8/K1PP2r1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "18th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "18th test not true");
 
         s = board.reset_board("8/8/k2p2R1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x7e0000000000, "19th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x7e0000000000, "19th test not true");
 
         s = board.reset_board("8/8/k1pp2R1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "20th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "20th test not true");
 
         s = board.reset_board("8/8/K2P2q1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x7e0000000000, "21th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x7e0000000000, "21th test not true");
 
         s = board.reset_board("8/8/K1PP2q1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "22th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "22th test not true");
 
         s = board.reset_board("8/8/k2p2Q1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x7e0000000000, "23th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x7e0000000000, "23th test not true");
 
         s = board.reset_board("8/8/k1pp2Q1/8/8/8/8/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_HV, Chess_Board *, const Bitboard>(*s, &board, 0x0, "24th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_HV, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "24th test not true");
 
 
         // Bishop tests
         s = board.reset_board("8/1k6/8/3p4/4p3/8/6B/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "25th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "25th test not true");
 
         s = board.reset_board("8/1k6/8/3p4/8/8/6B/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x40810204000, "26th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x40810204000, "26th test not true");
 
         s = board.reset_board("8/1K6/8/3P4/4P3/8/6b/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "27th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "27th test not true");
 
         s = board.reset_board("8/1K6/8/3P4/8/8/6b/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x40810204000, "28th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x40810204000, "28th test not true");
 
         s = board.reset_board("8/1k6/8/3p4/4p3/8/6Q/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "29th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "29th test not true");
 
         s = board.reset_board("8/1k6/8/3p4/8/8/6Q/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x40810204000, "30th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x40810204000, "30th test not true");
 
         s = board.reset_board("8/1K6/8/3P4/4P3/8/6q/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "31th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "31th test not true");
 
         s = board.reset_board("8/1K6/8/3P4/8/8/6q/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x40810204000, "32th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x40810204000, "32th test not true");
 
         s = board.reset_board("8/6k1/8/4p3/3p4/8/1B6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "33th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "33th test not true");
 
         s = board.reset_board("8/6k1/8/8/3p4/8/1B6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x40810204000, "34th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x40810204000, "34th test not true");
 
         s = board.reset_board("8/6K1/8/4P3/3P4/8/1b6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "35th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "35th test not true");
 
         s = board.reset_board("8/6K1/8/8/3P4/8/1b6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x201008040200, "36th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x201008040200, "36th test not true");
 
         s = board.reset_board("8/6k1/8/4p3/3p4/8/1Q6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "37th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "37th test not true");
 
         s = board.reset_board("8/6k1/8/8/3p4/8/1Q6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x201008040200, "38th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x201008040200, "38th test not true");
 
         s = board.reset_board("8/6K1/8/4P3/3P4/8/1q6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "39th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "39th test not true");
 
         s = board.reset_board("8/6K1/8/8/3P4/8/1q6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x201008040200, "40th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x201008040200, "40th test not true");
 
         // should be zero
         s = board.reset_board("8/6K1/8/4p3/3P4/8/1q6/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "41th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "41th test not true");
 
         s = board.reset_board("8/6K1/8/8/3P4/8/q7/8 w - - 0 1 ");
-        execute_status_template<Compare_Pin_Mask_D, Chess_Board *, const Bitboard>(*s, &board, 0x0, "42th test not true");
+        execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(
+            *s, &board, 0x0, "42th test not true");
     }
 
+
+    Status_Callback_Template(Pawn_Movement_Generator_Test1, Chess_Board* board) {
+        Move_Generator::Move_Generator<status, CallbackType> generator(board);
+        return generator.generate_pawn_movements();
+    }
 
     /**
      * Test if the empty board leads to no generated moves.
      */
     void pawn_movement_generator_test1() {
-
-
         Chess_Board board{};
-        std::unique_ptr<Board_Status> status = board.reset_board("8/8/8/8/8/8/8/8 w - - 0 1");
-
-
-        // empty board results in no moves generated
-        auto number_of_moves = status->run_pawn_move_generation( &board,
-            []([[maybe_unused]] const Chess_Board &new_board,
-               [[maybe_unused]] const Move move,
-               [[maybe_unused]] const Color color,
-               [[maybe_unused]] const Chess_Pieces chess_piece) {
-            });
+        const std::unique_ptr<Board_Status> status = board.reset_board("8/8/8/8/8/8/8/8 w - - 0 1");
+        const auto number_of_moves = execute_status_callback_template<Pawn_Movement_Generator_Test1, Dummy, Chess_Board
+            *>(*status, &board);
         ASSERT_EQ(number_of_moves, 0);
     }
 
+
+    Callback_Template(Pawn_Movement_Generator_Test2_Callback) {
+
+    }
+
+    Status_Callback_Template(Pawn_Movement_Generator_Test2, [[maybe_unused]] Chess_Board* board, [[maybe_unused]] std::array<Chess_Board,
+                             2> &chess_boards, [[maybe_unused]] std::array<Bitboard, 2> &moves) {
+        Move_Generator::Move_Generator<status, CallbackType> generator(board);
+        return generator.generate_pawn_movements();
+    }
 
     /**
      * Test that the board below leads to two generated moves.
@@ -975,8 +1022,8 @@ namespace Kangaroo {
         };
 
         auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                    move, [[maybe_unused]] const Color color,
-                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+                               move, [[maybe_unused]] const Color color,
+                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             if (color != Color::White) {
                 throw std::runtime_error("color should be white");
             }
@@ -1021,55 +1068,67 @@ namespace Kangaroo {
 
 
         [[maybe_unused]] std::array<Chess_Board, 2> new_boards{
-        /*
+            /*
 
-       A  B  C  D  E  F  G  H
+           A  B  C  D  E  F  G  H
 
-  8    .  .  .  .  .  .  .  .
-  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
-  6    .  .  .  ♟  .  .  .  .          half move number:  0
-  5    .  .  ♙  .  .  .  .  .          full move number:  1
-  4    .  .  .  .  .  .  .  .
-  3    .  .  .  .  .  .  .  .
-  2    .  .  .  .  .  .  .  .
-  1    .  .  .  .  .  .  .  .
+      8    .  .  .  .  .  .  .  .
+      7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+      6    .  .  .  ♟  .  .  .  .          half move number:  0
+      5    .  .  ♙  .  .  .  .  .          full move number:  1
+      4    .  .  .  .  .  .  .  .
+      3    .  .  .  .  .  .  .  .
+      2    .  .  .  .  .  .  .  .
+      1    .  .  .  .  .  .  .  .
 
-       A  B  C  D  E  F  G  H
+           A  B  C  D  E  F  G  H
 
-*/
-  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
-    /* white pawns    */ 0x0000080000000000, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
-    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
-    /* black pawns    */ 0x00fb000400000000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
-    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
-    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
-/*
+    */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000080000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x00fb000400000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-  8    .  .  .  .  .  .  .  .
-  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
-  6    .  .  ♟  .  .  .  .  .          half move number:  0
-  5    .  .  .  .  .  .  .  .          full move number:  1
-  4    .  .  .  .  .  .  .  .
-  3    .  .  .  .  .  .  .  .
-  2    .  .  .  .  .  .  .  .
-  1    .  .  .  .  .  .  .  .
+              8    .  .  .  .  .  .  .  .
+              7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+              6    .  .  ♟  .  .  .  .  .          half move number:  0
+              5    .  .  .  .  .  .  .  .          full move number:  1
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-*/
-  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
-    /* white pawns    */ 0x0000040000000000, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
-    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
-    /* black pawns    */ 0x00fb000000000000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
-    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
-    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x0000040000000000, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x00fb000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
         };
 
         auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                    move, [[maybe_unused]] const Color color,
-                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+                               move, [[maybe_unused]] const Color color,
+                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             if (color != Color::White) {
                 throw std::runtime_error("color should be white");
             }
@@ -1091,8 +1150,8 @@ namespace Kangaroo {
 
     void pawn_movement_generator_test9() {
         using namespace Kangaroo::Movement_Generator;
-                /*
-        A  B  C  D  E  F  G  H
+        /*
+A  B  C  D  E  F  G  H
 
 8    .  .  .  .  .  .  .  .          en passant square: D3
 7    .  .  .  .  .  .  .  .
@@ -1104,7 +1163,7 @@ namespace Kangaroo {
 1    .  .  .  .  .  .  .  .
 
 A  B  C  D  E  F  G  H
-         */
+ */
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/2pP4/8/PPP1PPPP/8 b kqKQ d3 0 1");
@@ -1127,39 +1186,51 @@ A  B  C  D  E  F  G  H
        A  B  C  D  E  F  G  H
 
 */
-  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
-    /* white pawns    */ 0x000000000800f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
-    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
-    /* black pawns    */ 0x0000000000040000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
-    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
-    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
-/*
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x000000000800f700, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000040000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-  8    .  .  .  .  .  .  .  .
-  7    .  .  .  .  .  .  .  .
-  6    .  .  .  .  .  .  .  .          half move number:  0
-  5    .  .  .  .  .  .  .  .          full move number:  1
-  4    .  .  .  .  .  .  .  .
-  3    .  .  .  ♙  .  .  .  .
-  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
-  1    .  .  .  .  .  .  .  .
+              8    .  .  .  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .          half move number:  0
+              5    .  .  .  .  .  .  .  .          full move number:  1
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  ♙  .  .  .  .
+              2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+              1    .  .  .  .  .  .  .  .
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-*/
-  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
-    /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
-    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
-    /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
-    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
-    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
         };
 
         auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                    move, [[maybe_unused]] const Color color,
-                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+                               move, [[maybe_unused]] const Color color,
+                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             if (color != Color::Black) {
                 throw std::runtime_error("color should be black");
             }
@@ -1181,8 +1252,8 @@ A  B  C  D  E  F  G  H
 
     void pawn_movement_generator_test10() {
         using namespace Kangaroo::Movement_Generator;
-                        /*
-        A  B  C  D  E  F  G  H
+        /*
+A  B  C  D  E  F  G  H
 
 8    .  .  .  .  .  .  .  .          en passant square: D3
 7    .  .  .  .  .  .  .  .
@@ -1194,7 +1265,7 @@ A  B  C  D  E  F  G  H
 1    .  .  .  .  .  .  .  .
 
 A  B  C  D  E  F  G  H
-         */
+*/
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/3Pp3/8/PPP1PPPP/8 b kqKQ d3 0 1");
@@ -1203,55 +1274,67 @@ A  B  C  D  E  F  G  H
         print_chess_board(board);
 
         [[maybe_unused]] std::array<Chess_Board, 2> new_boards{
-/*
+            /*
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-  8    .  .  .  .  .  .  .  .
-  7    .  .  .  .  .  .  .  .
-  6    .  .  .  .  .  .  .  .          half move number:  0
-  5    .  .  .  .  .  .  .  .          full move number:  1
-  4    .  .  .  ♟  .  .  .  .
-  3    .  .  .  .  ♙  .  .  .
-  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
-  1    .  .  .  .  .  .  .  .
+              8    .  .  .  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .          half move number:  0
+              5    .  .  .  .  .  .  .  .          full move number:  1
+              4    .  .  .  ♟  .  .  .  .
+              3    .  .  .  .  ♙  .  .  .
+              2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+              1    .  .  .  .  .  .  .  .
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-*/
-  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
-    /* white pawns    */ 0x000000000800f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
-    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
-    /* black pawns    */ 0x0000000000100000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
-    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
-    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
-/*
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x000000000800f700, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000100000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
+            /*
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-  8    .  .  .  .  .  .  .  .
-  7    .  .  .  .  .  .  .  .
-  6    .  .  .  .  .  .  .  .          half move number:  0
-  5    .  .  .  .  .  .  .  .          full move number:  1
-  4    .  .  .  .  .  .  .  .
-  3    .  .  .  ♙  .  .  .  .
-  2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
-  1    .  .  .  .  .  .  .  .
+              8    .  .  .  .  .  .  .  .
+              7    .  .  .  .  .  .  .  .
+              6    .  .  .  .  .  .  .  .          half move number:  0
+              5    .  .  .  .  .  .  .  .          full move number:  1
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  ♙  .  .  .  .
+              2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+              1    .  .  .  .  .  .  .  .
 
-       A  B  C  D  E  F  G  H
+                   A  B  C  D  E  F  G  H
 
-*/
-  Kangaroo::Chess_Board( std::array<Bitboard, 15>{
-    /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
-    /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000000000000,
-    /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
-    /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
-    /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
+            */
+            Kangaroo::Chess_Board(std::array<Bitboard, 15>{
+                /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */
+                0x0000000000000000,
+                /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+                0x0000000000000000,
+                /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */
+                0x0000000000000000,
+                /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+                0x0000000000000000,
+                /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
+                0x0000000000000001
+            }),
         };
 
         auto f = [&new_boards]([[maybe_unused]] const Chess_Board &new_board, [[maybe_unused]] const Move
-                    move, [[maybe_unused]] const Color color,
-                    [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
+                               move, [[maybe_unused]] const Color color,
+                               [[maybe_unused]] const Chess_Pieces chess_piece)-> bool {
             if (color != Color::Black) {
                 throw std::runtime_error("color should be black");
             }
@@ -1274,9 +1357,9 @@ A  B  C  D  E  F  G  H
 
     void pawn_movement_generator_test11() {
         using namespace Kangaroo::Movement_Generator;
-                        /*
+        /*
 
-        */
+*/
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/K6r/8/3P4/8 w kqKQ d3 0 1");

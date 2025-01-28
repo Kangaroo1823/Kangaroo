@@ -134,7 +134,7 @@ namespace Kangaroo {
 
         Chess_Board(const Chess_Board &) = default;
 
-        std::unique_ptr<Kangaroo::Board_Status> update_check_flag(std::unique_ptr<Board_Status> &&status);
+        std::unique_ptr<Board_Status> update_check_flag(std::unique_ptr<Board_Status> &&status);
 
         [[nodiscard]] std::unique_ptr<Board_Status> reset_board(std::string_view fen);
 

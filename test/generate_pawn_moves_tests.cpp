@@ -10,17 +10,36 @@
 #include "Chess_Board.h"
 #include "Movement_Generator.h"
 #include "gtest/gtest.h"
+#include "Move_Generator/Move_Generator.h"
 
 
-namespace Kangaroo {
+namespace Kangaroo::Generate_Pawn_Moves_Tests {
+    Callback_Template(Pawn_Move_Generator_White_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
+        if (status.color_to_move != Color::White) {
+            throw std::runtime_error("Color is not white");
+        }
+        if (chess_piece != Chess_Pieces::Pawn) {
+            throw std::runtime_error("Chess piece is not pawn");
+        }
+        if (!std::ranges::contains(moves, move)) {
+            throw std::runtime_error("Move is not in moves");
+        }
+    }
+
+    Status_Callback_Template(Pawn_Move_Generator_Base, Chess_Board *board, const std::array<Move,
+                             16> &moves) {
+        Move_Generator::Move_Generator<status, CallbackType> generator(board);
+        return generator.generate_pawn_movements(moves);
+    }
+
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base) {
         using namespace Movement_Generator;
 
-        auto board = std::make_unique<
-            Kangaroo::Chess_Board>("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        init(board.get());
+        Chess_Board board{};
+        auto status = board.reset_board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-        [[maybe_unused]] std::array<Move, 16> moves = {
+
+        const std::array<Move, 16> moves = {
             /*
           8    .  .  .  .  .  .  .  .
           7    .  .  .  .  .  .  .  .
@@ -247,20 +266,9 @@ namespace Kangaroo {
             0x80008000,
         };
 
-        const auto s = generate_pawn_moves<Kangaroo::Board_Status(0x3d)>(
-            [&moves]([[maybe_unused]] const Chess_Board &new_board, const Move &move, const Color color,
-                     const Chess_Pieces chess_piece) -> bool {
-                if (color != Color::White) {
-                    throw std::runtime_error("Color is not white");
-                }
-                if (chess_piece != Chess_Pieces::Pawn) {
-                    throw std::runtime_error("Chess piece is not pawn");
-                }
-                if (!std::ranges::contains(moves, move)) {
-                    throw std::runtime_error("Move is not in moves");
-                }
-                return false;
-            });
+
+        const std::size_t s = execute_status_callback_template<Pawn_Move_Generator_Base,
+            Pawn_Move_Generator_White_Pawn_Base_Callback>(*status, &board, moves);
 
         ASSERT_EQ(moves.size(), s);
     }
