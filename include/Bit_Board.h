@@ -74,11 +74,12 @@ constexpr int64_t Bitcount_(Bitboard bitboard) {
  * @return The number of set bits in the given bitboard.
  */
 constexpr int64_t Bitcount(const Bitboard board) {
-    return std::popcount(board);
+    return _mm_popcnt_u64(board); // std::popcount(board);
 }
 
 constexpr Bitboard bitboard_square_of(const Bitboard bitboard) {
     return _blsi_u64(bitboard);
+    // _blsi_u64(bitboard);
 }
 
 constexpr Square square_of_(const Bitboard bitboard) {
@@ -99,7 +100,8 @@ constexpr Square square_of_(const Bitboard bitboard) {
  * @return The index of the least significant set bit in the input bitboard.
  */
 constexpr Square square_of(const Bitboard bitboard) {
-    return static_cast<Square>(std::countr_zero(bitboard));
+    return static_cast<Square>(_tzcnt_u64(bitboard));
+    // static_cast<Square>(std::countr_zero(bitboard));
 
 }
 

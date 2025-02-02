@@ -55,7 +55,7 @@ namespace Kangaroo::Move_Generator {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
                                                                      const Bitboard from,
-                                                                     const Bitboard to, Args ...args) {
+                                                                     const Bitboard to, [[maybe_unused]] Args ...args) {
             using enum Color;
             using enum Chess_Pieces;
             Bitboard move = to | from;
@@ -74,6 +74,7 @@ namespace Kangaroo::Move_Generator {
 
             bitboard_for(*board, status.color_to_move, chess_piece) ^= to;
 
+
             for (const auto p: All_Pieces) {
                 if (bitboard_for(*board, enemy(status.color_to_move), p) & to) {
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
@@ -82,6 +83,7 @@ namespace Kangaroo::Move_Generator {
                     break;
                 }
             }
+
 
             bitboard_for(*board, status.color_to_move, chess_piece) ^= to;
 

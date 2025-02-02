@@ -23,7 +23,8 @@ namespace Kangaroo::Move_Generator {
             using enum Move_Generation_Mode;
 
             // pawn move generation
-            uint64_t moves = this->template generate_pawn_moves<Normal_Move_Generation>(args...);
+            uint64_t moves = 0;
+            moves += this->template generate_pawn_moves<Normal_Move_Generation>(args...);
             moves += this->template generate_pawn_moves<Pin_HV_Move_Generation>(args...);
             moves += this->template generate_pawn_moves<Pin_D_Move_Generation>(args...);
             moves += this->template generate_pawn_moves<Promotion_Move_Generation>(args...);
@@ -32,7 +33,7 @@ namespace Kangaroo::Move_Generator {
         }
 
         template<typename ...Args>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(Args... args) {
+        [[nodiscard]] std::size_t generate_moves(Args... args) {
             std::size_t moves = this->generate_pawn_movments(args...);
 
             return moves;

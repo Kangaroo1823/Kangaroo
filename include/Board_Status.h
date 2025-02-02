@@ -216,7 +216,7 @@ namespace Kangaroo {
             case 0x3E: return T<Board_Status(0x3E), CallbackType>::execute(args...);
             case 0x3F: return T<Board_Status(0x3F), CallbackType>::execute(args...);
             case 0x40: return T<Board_Status(0x40), CallbackType>::execute(args...);
-            default: { throw std::exception("Invalid Board_Status"); }
+            default: { throw Invalid_Board_Status(); }
         }
     }
 
