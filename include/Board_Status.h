@@ -220,7 +220,7 @@ namespace Kangaroo {
         }
     }
 
-#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _ForceInline static constexpr auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _ForceInline constexpr auto tn<status, CallbackType>::execute(__VA_ARGS__)
+#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _NoInline static auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _NoInline auto tn<status, CallbackType>::execute(__VA_ARGS__)
 
 
     template<template<Board_Status status> class T, typename... Args>

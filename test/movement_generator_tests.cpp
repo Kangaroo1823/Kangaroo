@@ -276,9 +276,6 @@ namespace Kangaroo::Movement_Generator_Tests {
             throw std::runtime_error(ss.str());
         }
 
-
-
-
     }
 
     Status_Callback_Template(Pawn_Movement_Generator_Test2, Chess_Board* board,

@@ -3,5 +3,6 @@ cmake-build-release*
 cpm_source_cache
 libs
 .idea
+.vscode
 .sonarlint
 .PVS-Studio
