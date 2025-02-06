@@ -13,7 +13,7 @@
 #include "Move_Generator/Move_Generator.h"
 
 namespace Kangaroo::Movement_Generator_Tests {
-    Callback_Template(Dummy) {
+    Callback_Template_Inline(Dummy) {
     }
 
     Status_Callback_Template(Compare_Pin_Mask_HV, Chess_Board * board, const Bitboard value, const std::string& str) {
@@ -232,7 +232,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test2_Callback, [[maybe_unused]] const std::array<Chess_Board, 2> &new_boards,
+    Callback_Template_Inline(Pawn_Movement_Generator_Test2_Callback, [[maybe_unused]] const std::array<Chess_Board, 2> &new_boards,
                       [[maybe_unused]] const std::array<Bitboard, 2> &moves) {
         using enum Chess_Pieces;
         using enum Color;
@@ -413,7 +413,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test3_Callback, const std::array<Chess_Board, 8> &new_boards,
+    Callback_Template_Inline(Pawn_Movement_Generator_Test3_Callback, const std::array<Chess_Board, 8> &new_boards,
                       const std::array<Bitboard, 8> &moves) {
         using enum Chess_Pieces;
         using enum Color;
@@ -821,7 +821,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test4_Callback) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test4_Callback) {
         throw std::runtime_error("no moves should be generated here..");
     }
 
@@ -859,7 +859,7 @@ namespace Kangaroo::Movement_Generator_Tests {
         ASSERT_EQ(n, 0);
     }
 
-    Callback_Template(Pawn_Movement_Generator_Test5_Callback, const std::array<Chess_Board, 1> &new_boards,
+    Callback_Template_Inline(Pawn_Movement_Generator_Test5_Callback, const std::array<Chess_Board, 1> &new_boards,
                       const std::array<Move, 1> &moves) {
         if (const auto it = std::ranges::find(moves, move); it == moves.end()) {
             std::stringstream ss;
@@ -949,7 +949,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test6_Callback) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test6_Callback) {
         throw std::runtime_error("no moves should be generated here..");
     }
 
@@ -973,7 +973,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test7_Callback, const std::array<Chess_Board, 2> &new_boards) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test7_Callback, const std::array<Chess_Board, 2> &new_boards) {
         if (status.color_to_move != Color::White) {
             throw std::runtime_error("color should be white");
         }
@@ -1082,7 +1082,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test8_Callback, const std::array<Chess_Board, 2> &new_boards) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test8_Callback, const std::array<Chess_Board, 2> &new_boards) {
         if (status.color_to_move != Color::White) {
             throw std::runtime_error("color should be white");
         }
@@ -1192,7 +1192,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template(Pawn_Movement_Generator_Test9_Callback, const std::array<Chess_Board, 2> &new_boards) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test9_Callback, const std::array<Chess_Board, 2> &new_boards) {
         if (status.color_to_move != Color::Black) {
             throw std::runtime_error("color should be black");
         }
@@ -1298,7 +1298,7 @@ A  B  C  D  E  F  G  H
         ASSERT_EQ(n, 2);
     }
 
-    Callback_Template(Pawn_Movement_Generator_Test10_Callback, const std::array<Chess_Board, 2> &new_boards) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test10_Callback, const std::array<Chess_Board, 2> &new_boards) {
         if (status.color_to_move != Color::Black) {
             throw std::runtime_error("color should be black");
         }

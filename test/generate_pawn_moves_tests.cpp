@@ -14,7 +14,7 @@
 
 
 namespace Kangaroo::Generate_Pawn_Moves_Tests {
-    Callback_Template(Pawn_Move_Generator_White_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
+    Callback_Template_Inline(Pawn_Move_Generator_White_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
         if (status.color_to_move != Color::White) {
             throw std::runtime_error("Color is not white");
         }
@@ -274,7 +274,7 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
 
-    Callback_Template(Pawn_Move_Generator_Black_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
+    Callback_Template_Inline(Pawn_Move_Generator_Black_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
         if (status.color_to_move != Color::Black) {
             throw std::runtime_error("Color is not white");
         }
@@ -523,7 +523,7 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
         ASSERT_EQ(s, moves.size());
     }
 
-    Callback_Template(Pawn_Move_Generator_White_Pawn_Capture_Callback, const std::array<Move, 8> &moves) {
+    Callback_Template_Inline(Pawn_Move_Generator_White_Pawn_Capture_Callback, const std::array<Move, 8> &moves) {
         if (status.color_to_move != Color::White) {
             throw std::runtime_error("Color is not white");
         }
@@ -666,7 +666,7 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
         ASSERT_EQ(s, moves.size());
     }
 
-    Callback_Template(Pawn_Move_Generator_Black_Pawn_Capture_Callback, const std::array<Move, 8> &moves) {
+    Callback_Template_Inline(Pawn_Move_Generator_Black_Pawn_Capture_Callback, const std::array<Move, 8> &moves) {
         if (status.color_to_move != Color::Black) {
             throw std::runtime_error("Color is not black");
         }
