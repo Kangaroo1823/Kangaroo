@@ -14,8 +14,8 @@ namespace Kangaroo::Move_Generator {
     class Move_Generator : public Pawn_Move_Generator<status, CallbackType> {
     public:
         constexpr explicit Move_Generator(Chess_Board *board)
-            : Pin_And_Check_Mask_Generator<status>(board)
-              , Pawn_Move_Generator<status, CallbackType>(board) {
+            : Pin_And_Check_Mask_Generator<status>(board),
+              Pawn_Move_Generator<status, CallbackType>(board) {
         }
 
         template<typename ...Args>
@@ -33,8 +33,8 @@ namespace Kangaroo::Move_Generator {
         }
 
         template<typename ...Args>
-        [[nodiscard]] std::size_t generate_moves(Args... args) {
-            std::size_t moves = this->generate_pawn_movments(args...);
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(Args... args) {
+            const std::size_t moves = this->generate_pawn_movements(args...);
 
             return moves;
         }

@@ -7,57 +7,41 @@
 #include <memory>
 
 #include "benchmark/benchmark.h"
-#include "../tools/attack_tables.h"
+
 #include "Chess_Board.h"
-#include "Movement_Generator.h"
+#include "Board_Status.h"
+#include "Move_Generator/Move_Generator.h"
 
 
-const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
+namespace Kangaroo {
 
-// cppcheck-suppress constParameterCallback
-static void BM_move_generator(benchmark::State &state) { // -V2009
-
-    Kangaroo::Movement_Generator::init(board.get());
-
-    for ([[maybe_unused]] auto _: state) {
-        uint64_t cntr = 0ULL;
-
-        auto s = Kangaroo::Movement_Generator::generate_moves<Kangaroo::Board_Status(0x3d)>(
-            [&cntr](const Kangaroo::Chess_Board &new_board, const Move move, const Color color,
-                    const Chess_Pieces chess_piece) -> bool {
-                ++cntr;
-                benchmark::DoNotOptimize(&new_board);
-                benchmark::DoNotOptimize(&move);
-                benchmark::DoNotOptimize(&color);
-                benchmark::DoNotOptimize(&chess_piece);
-
-                return false;
-            });
-
-
-        benchmark::DoNotOptimize(cntr);
-        benchmark::DoNotOptimize(s);
+    Callback_Template_Inline(Benchmark_Callback, uint64_t &cntr) {
+        ++cntr;
+        benchmark::DoNotOptimize(&board);
+        benchmark::DoNotOptimize(&move);
     }
+
+    const auto board = std::make_unique<Chess_Board>(fen_tricky_position_w);
+    Move_Generator::Move_Generator<Board_Status(0x3d), Benchmark_Callback> generator(board.get());
+
+    // cppcheck-suppress constParameterCallback
+    static void BM_move_generator(benchmark::State &state) {
+
+
+
+        for ([[maybe_unused]] auto _: state) {
+
+            uint64_t cntr = 0ULL;
+            std::size_t ret = generator.generate_moves(cntr);
+
+            benchmark::DoNotOptimize(cntr);
+            benchmark::DoNotOptimize(ret);
+        }
+    }
+
+    BENCHMARK(BM_move_generator)->Iterations(1000000000);
 }
 
-BENCHMARK(BM_move_generator)->Iterations(1000000000);
-
-
-static void BM_pin_mask_generator(benchmark::State &state) { // -V2009
-    for ([[maybe_unused]] auto _: state) {
-        Bitboard cntr1 = 0ULL;
-        Bitboard cntr2 = 0ULL;
-
-        Kangaroo::Movement_Generator::build_pin_masks<Color::Black, Pin_Masks_Suitable_For::Detecting_Pins>();
-        cntr1 = Kangaroo::Movement_Generator::get_pin_mask_HV();
-        cntr2 = Kangaroo::Movement_Generator::get_pin_mask_D();
-
-        benchmark::DoNotOptimize(cntr1);
-        benchmark::DoNotOptimize(cntr2);
-    }
-}
-
-BENCHMARK(BM_pin_mask_generator);
 
 
 BENCHMARK_MAIN();
