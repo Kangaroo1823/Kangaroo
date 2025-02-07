@@ -232,8 +232,9 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
 
-    Callback_Template_Inline(Pawn_Movement_Generator_Test2_Callback, [[maybe_unused]] const std::array<Chess_Board, 2> &new_boards,
-                      [[maybe_unused]] const std::array<Bitboard, 2> &moves) {
+    Callback_Template_Inline(Pawn_Movement_Generator_Test2_Callback, [[maybe_unused]] const std::array<Chess_Board,
+                             2> &new_boards,
+                             [[maybe_unused]] const std::array<Bitboard, 2> &moves) {
         using enum Chess_Pieces;
         using enum Color;
 
@@ -243,7 +244,6 @@ namespace Kangaroo::Movement_Generator_Tests {
             ss << "move: 0x" << std::hex << move << " not found in moves";
             throw std::runtime_error(ss.str());
         };
-
 
 
         const auto board_it = std::ranges::find(new_boards, *board);
@@ -275,7 +275,6 @@ namespace Kangaroo::Movement_Generator_Tests {
             ss << "-------------------------------------------------------------------------" << std::endl;
             throw std::runtime_error(ss.str());
         }
-
     }
 
     Status_Callback_Template(Pawn_Movement_Generator_Test2, Chess_Board* board,
@@ -306,7 +305,6 @@ namespace Kangaroo::Movement_Generator_Tests {
 
                     A  B  C  D  E  F  G  H
       */
-
 
 
         Chess_Board board{};
@@ -414,7 +412,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
 
     Callback_Template_Inline(Pawn_Movement_Generator_Test3_Callback, const std::array<Chess_Board, 8> &new_boards,
-                      const std::array<Bitboard, 8> &moves) {
+                             const std::array<Bitboard, 8> &moves) {
         using enum Chess_Pieces;
         using enum Color;
 
@@ -860,7 +858,7 @@ namespace Kangaroo::Movement_Generator_Tests {
     }
 
     Callback_Template_Inline(Pawn_Movement_Generator_Test5_Callback, const std::array<Chess_Board, 1> &new_boards,
-                      const std::array<Move, 1> &moves) {
+                             const std::array<Move, 1> &moves) {
         if (const auto it = std::ranges::find(moves, move); it == moves.end()) {
             std::stringstream ss;
             ss << "move: 0x" << std::hex << move << " not found in moves";
@@ -983,6 +981,7 @@ namespace Kangaroo::Movement_Generator_Tests {
         }
 
         if (std::ranges::find(new_boards, *board) == new_boards.end()) {
+            print_chess_board(*board);
             throw std::runtime_error("board not found in new_boards");
         }
     }
@@ -1018,21 +1017,20 @@ namespace Kangaroo::Movement_Generator_Tests {
 
         std::array<Chess_Board, 2> new_boards{
             /*
+                   A  B  C  D  E  F  G  H
 
-       A  B  C  D  E  F  G  H
+              8    .  .  .  .  .  .  .  .
+              7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
+              6    .  ♟  .  .  .  .  .  .          half move number:  0
+              5    .  .  ♙  .  .  .  .  .          full move number:  1
+              4    .  .  .  .  .  .  .  .
+              3    .  .  .  .  .  .  .  .
+              2    .  .  .  .  .  .  .  .
+              1    .  .  .  .  .  .  .  .
 
-  8    .  .  .  .  .  .  .  .
-  7    ♙  ♙  .  ♙  ♙  ♙  ♙  ♙
-  6    .  ♟  .  .  .  .  .  .          half move number:  0
-  5    .  .  ♙  .  .  .  .  .          full move number:  1
-  4    .  .  .  .  .  .  .  .
-  3    .  .  .  .  .  .  .  .
-  2    .  .  .  .  .  .  .  .
-  1    .  .  .  .  .  .  .  .
+                   A  B  C  D  E  F  G  H
 
-       A  B  C  D  E  F  G  H
-
-*/
+            */
             Kangaroo::Chess_Board(std::array<Bitboard, 15>{
                 /* white pawns    */ 0x0000020000000000, /* white knights */ 0x0000000000000000, /* white bishops */
                 0x0000000000000000,
@@ -1077,7 +1075,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
 
         const std::size_t n = execute_status_callback_template<Pawn_Movement_Generator_Test7,
-                Pawn_Movement_Generator_Test7_Callback>(*status, &board, new_boards);
+            Pawn_Movement_Generator_Test7_Callback>(*status, &board, new_boards);
         ASSERT_EQ(n, 2);
     }
 
@@ -1094,7 +1092,6 @@ namespace Kangaroo::Movement_Generator_Tests {
         if (std::ranges::find(new_boards, *board) == new_boards.end()) {
             throw std::runtime_error("board not found in new_boards");
         }
-
     }
 
     Status_Callback_Template(Pawn_Movement_Generator_Test8, Chess_Board* board,
@@ -1187,7 +1184,7 @@ namespace Kangaroo::Movement_Generator_Tests {
         };
 
         const std::size_t n = execute_status_callback_template<Pawn_Movement_Generator_Test8,
-                Pawn_Movement_Generator_Test8_Callback>(*status, &board, new_boards);
+            Pawn_Movement_Generator_Test8_Callback>(*status, &board, new_boards);
         ASSERT_EQ(n, 2);
     }
 
@@ -1204,7 +1201,6 @@ namespace Kangaroo::Movement_Generator_Tests {
         if (std::ranges::find(new_boards, *board) == new_boards.end()) {
             throw std::runtime_error("board not found in new_boards");
         }
-
     }
 
     Status_Callback_Template(Pawn_Movement_Generator_Test9, Chess_Board* board,
@@ -1294,7 +1290,7 @@ A  B  C  D  E  F  G  H
         };
 
         const std::size_t n = execute_status_callback_template<Pawn_Movement_Generator_Test9,
-                Pawn_Movement_Generator_Test9_Callback>(*status, &board, new_boards);
+            Pawn_Movement_Generator_Test9_Callback>(*status, &board, new_boards);
         ASSERT_EQ(n, 2);
     }
 
@@ -1310,7 +1306,6 @@ A  B  C  D  E  F  G  H
         if (std::ranges::find(new_boards, *board) == new_boards.end()) {
             throw std::runtime_error("board not found in new_boards");
         }
-
     }
 
     Status_Callback_Template(Pawn_Movement_Generator_Test10, Chess_Board* board,
@@ -1339,7 +1334,6 @@ A  B  C  D  E  F  G  H
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/3Pp3/8/PPP1PPPP/8 b kqKQ d3 0 1");
-
 
 
         [[maybe_unused]] std::array<Chess_Board, 2> new_boards{
@@ -1402,7 +1396,7 @@ A  B  C  D  E  F  G  H
         };
 
         const std::size_t n = execute_status_callback_template<Pawn_Movement_Generator_Test10,
-                Pawn_Movement_Generator_Test10_Callback>(*status, &board, new_boards);
+            Pawn_Movement_Generator_Test10_Callback>(*status, &board, new_boards);
         ASSERT_EQ(n, 2);
     }
 
@@ -1423,8 +1417,6 @@ A  B  C  D  E  F  G  H
         // simple board leads to two generated moves.
         pawn_movement_generator_test2();
 
-        return;
-
         // test that promotion generation works.
         pawn_movement_generator_test3();
 
@@ -1433,11 +1425,14 @@ A  B  C  D  E  F  G  H
         pawn_movement_generator_test5();
         pawn_movement_generator_test6();
 
+
         // test that en-passant captures work.
         pawn_movement_generator_test7();
+        return;
         pawn_movement_generator_test8();
         pawn_movement_generator_test9();
         pawn_movement_generator_test10();
+
 
         // test that pawn move generation works in a situation of chess
         pawn_movement_generator_test11();
