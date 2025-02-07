@@ -1,6 +1,6 @@
 project("Kangaroo_benchmark")
 
-add_executable(Kangaroo_benchmark attack_mask_benchmarks.cpp)
+add_executable(Kangaroo_benchmark pawn_move_generator_benchmarks.cpp)
 target_link_libraries(Kangaroo_benchmark PRIVATE
         Kangaroo_library
         Kangaroo_options

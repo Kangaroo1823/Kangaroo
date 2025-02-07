@@ -26,13 +26,11 @@ namespace Kangaroo {
 
     // cppcheck-suppress constParameterCallback
     static void BM_move_generator(benchmark::State &state) {
-
-
-
+        
         for ([[maybe_unused]] auto _: state) {
 
             uint64_t cntr = 0ULL;
-            std::size_t ret = generator.generate_moves(cntr);
+            std::size_t ret = generator.generate_pawn_movements(cntr);
 
             benchmark::DoNotOptimize(cntr);
             benchmark::DoNotOptimize(ret);
