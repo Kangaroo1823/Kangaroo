@@ -9,6 +9,39 @@
 #include "../Chess_Board.h"
 
 namespace Kangaroo::Move_Generator {
+
+    template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args> class CallbackType, typename ...Args>
+    class Move_Receiver_Base {
+    public:
+        _ForceInline static constexpr auto handle_ep(Chess_Board *board, const Bitboard move, const Bitboard from, const Bitboard to, Args... args) {
+            if constexpr (status.en_passant_p) {
+                auto en_passant_square = en_passant_square_for(*board);
+                en_passant_square_for(*board) = 0ULL;
+                CallbackType<status.copy_and_set_en_passant(false), move_type, chess_piece>::callback(board, move, from, to, args...);
+                en_passant_square_for(*board) = en_passant_square;
+            } else {
+                CallbackType<status, move_type, chess_piece>::callback(board, move, from, to, args...);
+            }
+        }
+    };
+
+
+    template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args> class CallbackType, typename ...Args>
+    class Move_Receiver_Base<status, Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...> {
+    public:
+        _ForceInline static constexpr auto handle_ep(Chess_Board *board, const Bitboard move, const Bitboard from, const Bitboard to, Args... args) {
+            if constexpr (status.en_passant_p) {
+                auto en_passant_square = en_passant_square_for(*board);
+                en_passant_square_for(*board) = regular_pawn_push<status.color_to_move>(from);
+                CallbackType<status.copy_and_set_en_passant(true), Move_Type::Double_Push, Chess_Pieces::Pawn>::callback(board, move, from, to, args...);
+                en_passant_square_for(*board) = en_passant_square;
+            } else {
+                CallbackType<status, Move_Type::Double_Push, Chess_Pieces::Pawn>::callback(board, move, from, to, args...);
+            }
+        }
+
+    };
+
     template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args_> class CallbackType, typename ...Args>
     class Move_Receiver {
     public:
@@ -41,7 +74,7 @@ namespace Kangaroo::Move_Generator {
             total_pieces_for(*board) ^= move;
 
             bitboard_for(*board, status.color_to_move, chess_piece) ^= to;
-            CallbackType<status, Move_Type::Promotion, chess_piece>::callback(board, move, from, to, args...);
+            Move_Receiver_Base<status, Move_Type::Promotion, chess_piece, CallbackType, Args...>::handle_ep(board, move, from, to, args...);
             bitboard_for(*board, status.color_to_move, chess_piece) ^= to;
 
             total_pieces_for(*board) ^= move;
@@ -78,7 +111,7 @@ namespace Kangaroo::Move_Generator {
             for (const auto p: All_Pieces) {
                 if (bitboard_for(*board, enemy(status.color_to_move), p) & to) {
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
-                    CallbackType<status, Move_Type::Capture_Promotion, chess_piece>::callback(board, move, from, to, args...);
+                    Move_Receiver_Base<status, Move_Type::Capture_Promotion, chess_piece, CallbackType, Args...>::handle_ep(board, move, from, to, args...);
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
                     break;
                 }
@@ -121,7 +154,7 @@ namespace Kangaroo::Move_Generator {
             for (const auto p: All_Pieces) {
                 if (bitboard_for(*board, enemy(status.color_to_move), p) & to) {
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
-                    CallbackType<status, Move_Type::Capture, chess_piece>::callback(board, move, from, to, args...);
+                    Move_Receiver_Base<status, Move_Type::Capture, chess_piece, CallbackType, Args...>::handle_ep(board, move, from, to, args...);
                     bitboard_for(*board, enemy(status.color_to_move), p) ^= to;
                     break;
                 }
@@ -153,9 +186,37 @@ namespace Kangaroo::Move_Generator {
             all_pieces_for(*board, status.color_to_move) ^= move;
             total_pieces_for(*board) ^= move;
 
-            CallbackType<status, Move_Type::Normal, chess_piece>::callback(board, move, from, to, args...);
+            Move_Receiver_Base<status, Move_Type::Normal, chess_piece, CallbackType, Args...>::handle_ep(board, move, from, to, args...);
 
             bitboard_for(*board, status.color_to_move, chess_piece) ^= move;
+            all_pieces_for(*board, status.color_to_move) ^= move;
+            total_pieces_for(*board) ^= move;
+        }
+    };
+
+    template<Board_Status status,  template<Board_Status, Move_Type, Chess_Pieces, typename ...Args_> class CallbackType, typename ...Args>
+class Move_Receiver<status, Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...> {
+    public:
+        _ForceInline static constexpr void evaluate_and_perform_move(Chess_Board *board,
+                                                                     const Bitboard from,
+                                                                     const Bitboard to,
+                                                                     Args... args) {
+            using enum Color;
+            using enum Chess_Pieces;
+            const Bitboard move = to | from;
+
+            static_assert(status.color_to_move == White || status.color_to_move == Black);
+            //            static_assert(status.en_passant_p == false);
+
+
+            bitboard_for(*board, status.color_to_move, Pawn) ^= move;
+            all_pieces_for(*board, status.color_to_move) ^= move;
+            total_pieces_for(*board) ^= move;
+
+
+            Move_Receiver_Base<status, Move_Type::Double_Push, Pawn, CallbackType, Args...>::handle_ep(board, move, from, to, args...);
+
+            bitboard_for(*board, status.color_to_move, Pawn) ^= move;
             all_pieces_for(*board, status.color_to_move) ^= move;
             total_pieces_for(*board) ^= move;
         }
@@ -183,12 +244,9 @@ namespace Kangaroo::Move_Generator {
             total_pieces_for(*board) ^= move | capture;
             all_pieces_for(*board, enemy(status.color_to_move)) ^= capture;
             bitboard_for(*board, enemy(status.color_to_move), chess_piece) ^= capture;
-            const Bitboard en_passant_square = en_passant_square_for(*board);
-            en_passant_square_for(*board) = 0ULL;
 
-            CallbackType<status, Move_Type::En_Passant, chess_piece>::callback(board, move, from, to, args...);
+            Move_Receiver_Base<status, Move_Type::En_Passant, chess_piece, CallbackType, Args...>::handle_ep(board, move, from, to, args...);
 
-            en_passant_square_for(*board) = en_passant_square;
             bitboard_for(*board, status.color_to_move, chess_piece) ^= move;
             all_pieces_for(*board, status.color_to_move) ^= move;
             total_pieces_for(*board) ^= move | capture;
@@ -198,63 +256,6 @@ namespace Kangaroo::Move_Generator {
     };
 
 
-    /*
-        template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece>
-        _ForceInline static constexpr void evaluate_and_perform_move([[maybe_unused]] Chess_Board &board,
-                                                                     [[maybe_unused]] const CallbackType &callback,
-                                                                     [[maybe_unused]] const Bitboard from,
-                                                                     [[maybe_unused]] const Bitboard to) {
-            using enum Color;
-            using enum Chess_Pieces;
-
-            const Move move = to | from;
-
-            if constexpr (move_type == Move_Type::Promotion) {
-                if constexpr (status.en_passant_p) {
-                    Bitboard en_passant_square = en_passant_square_for(board);
-                    en_passant_square_for(board) = 0ULL;
-                    evaluate_and_perform_pawn_promotion<status.copy_and_set_en_passant(false), chess_piece>(
-                        board, callback, from, to, move);
-                    en_passant_square_for(board) = en_passant_square;
-                } else {
-                    evaluate_and_perform_pawn_promotion<status, chess_piece>(board, callback, from, to, move);
-                }
-            } else if constexpr (move_type == Move_Type::Capture_Promotion) {
-                if constexpr (status.en_passant_p) {
-                    Bitboard en_passant_square = en_passant_square_for(board);
-                    en_passant_square_for(board) = 0ULL;
-                    evaluate_and_perform_pawn_capture_promotion<status.copy_and_set_en_passant(false), chess_piece>(
-                        board, callback, from, to, move);
-                    en_passant_square_for(board) = en_passant_square;
-                } else {
-                    evaluate_and_perform_pawn_capture_promotion<status, chess_piece>(board, callback, from, to, move);
-                }
-            } else if constexpr (move_type == Move_Type::Capture) {
-                if constexpr (status.en_passant_p) {
-                    Bitboard en_passant_square = en_passant_square_for(board);
-                    en_passant_square_for(board) = 0ULL;
-                    evaluate_and_perform_capture<status.copy_and_set_en_passant(false), chess_piece>(
-                        board, callback, from, to, move);
-                    en_passant_square_for(board) = en_passant_square;
-                } else {
-                    evaluate_and_perform_capture<status, chess_piece>(board, callback, from, to, move);
-                }
-            } else if constexpr (move_type == Move_Type::Normal) {
-                if constexpr (status.en_passant_p) {
-                    Bitboard en_passant_square = en_passant_square_for(board);
-                    en_passant_square_for(board) = 0ULL;
-                    evaluate_and_perform_normal_move<status.copy_and_set_en_passant(false), chess_piece>(
-                        board, callback, move);
-                    en_passant_square_for(board) = en_passant_square;
-                } else {
-                    evaluate_and_perform_normal_move<status, chess_piece>(board, callback, move);
-                }
-            } else if constexpr (move_type == Move_Type::En_Passant) {
-                evaluate_and_perform_en_passant<status, chess_piece>(board, callback, to, move);
-            }
-        }
-
-        */
 };
 
 

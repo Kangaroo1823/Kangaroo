@@ -172,7 +172,7 @@ namespace Kangaroo::Move_Generator {
                     is_pawn_push_admissible<mode>(pawn,
                                                   moved_pawn_2, total_pieces_for(*(this->get_board())))) {
                     // make the move and call the callback function.
-                    Move_Receiver<status, Move_Type::Normal, Chess_Pieces::Pawn,
+                    Move_Receiver<status, Move_Type::Double_Push, Chess_Pieces::Pawn,
                         CallbackType, Args...>::evaluate_and_perform_move(
                         this->get_board(), pawn, moved_pawn_2, args...);
 

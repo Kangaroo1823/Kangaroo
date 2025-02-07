@@ -1428,11 +1428,10 @@ A  B  C  D  E  F  G  H
 
         // test that en-passant captures work.
         pawn_movement_generator_test7();
-        return;
+
         pawn_movement_generator_test8();
         pawn_movement_generator_test9();
         pawn_movement_generator_test10();
-
 
         // test that pawn move generation works in a situation of chess
         pawn_movement_generator_test11();

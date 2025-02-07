@@ -32,7 +32,7 @@ inline constexpr std::string_view fen_cmk_position =
 
 namespace Kangaroo {
     template<Color color>
-    constexpr Bitboard regular_pawn_push(const Bitboard mask) {
+    _ForceInline constexpr Bitboard regular_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
         if constexpr (color == Color::White) {
@@ -45,7 +45,7 @@ namespace Kangaroo {
     }
 
     template<Color color>
-    constexpr Bitboard double_pawn_push(const Bitboard mask) {
+    _ForceInline constexpr Bitboard double_pawn_push(const Bitboard mask) {
         Bitboard pawn_move;
 
         if constexpr (color == Color::White) {
@@ -58,7 +58,7 @@ namespace Kangaroo {
     }
 
     template<Color color>
-    constexpr Bitboard pawn_base_row() {
+    _ForceInline constexpr Bitboard pawn_base_row() {
         if constexpr (color == Color::White) {
             return 0x000000000000FF00ULL;
         } else {
@@ -67,7 +67,7 @@ namespace Kangaroo {
     }
 
 
-    [[nodiscard]] constexpr Bitboard make_move(const Bitboard from, const Bitboard to) {
+    [[nodiscard]] _ForceInline constexpr Bitboard make_move(const Bitboard from, const Bitboard to) {
         const Bitboard ret = from | to;
         return ret;
     }
