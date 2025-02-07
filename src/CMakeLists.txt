@@ -97,7 +97,6 @@ add_library(Kangaroo_library ../include/Bit_Board.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
-        gtest
         Kangaroo_warnings
         Kangaroo_options
 )

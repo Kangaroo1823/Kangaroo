@@ -6,12 +6,16 @@
 #define CHESS_BOARD_H
 
 #include <memory>
+#include <optional>
 
 #include "Base.h"
 #include "Types.h"
 #include "Bit_Board.h"
 #include "Board_Status.h"
+
+#ifdef COMPILE_TESTS
 #include "gtest/gtest.h"
+#endif
 
 inline constexpr std::string_view fen_empty_board = "8/8/8/8/8/8/8/8 w - - 0 1 ";
 inline constexpr std::string_view fen_start_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ";
@@ -80,10 +84,13 @@ namespace Kangaroo {
 
 
     class Chess_Board {
+
+#ifdef COMPILE_TESTS
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base);
         FRIEND_TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base);
+#endif
 
     public:
         [[nodiscard]] constexpr bool is_state_consistent() const {

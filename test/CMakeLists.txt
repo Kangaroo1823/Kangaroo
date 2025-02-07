@@ -19,6 +19,7 @@ add_executable(Kangaroo_tests
         generate_pawn_moves_tests.cpp
         movement_generator_tests.cpp)
 target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
+target_compile_definitions(Kangaroo_tests PRIVATE COMPILE_TESTS)
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_link_libraries(Kangaroo_tests PRIVATE stdc++exp)

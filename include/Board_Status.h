@@ -222,7 +222,7 @@ namespace Kangaroo {
 
     // In the macro we have to refrain from inlining the method, since otherwise stack overflows can occur when the
     // corresponding execute function is called.
-#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _NoInline static constexpr auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _NoInline constexpr auto tn<status, CallbackType>::execute(__VA_ARGS__)
+#define Status_Callback_Template(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _NoInline static auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _NoInline auto tn<status, CallbackType>::execute(__VA_ARGS__)
 #define Status_Callback_Template_Inline(tn, ...) template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> class tn { public: _ForceInline static constexpr auto execute(__VA_ARGS__); }; template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces> class CallbackType> _ForceInline constexpr auto tn<status, CallbackType>::execute(__VA_ARGS__)
 
 

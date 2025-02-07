@@ -1408,6 +1408,10 @@ A  B  C  D  E  F  G  H
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/K6r/8/3P4/8 w kqKQ d3 0 1");
+
+        print_chess_board(board);
+
+
     }
 
     TEST(Movement_Generator_Test, test_pawn_movement_generator) {
