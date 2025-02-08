@@ -7,14 +7,14 @@
 
 #include "Chess_Board.h"
 #include <print>             // for print
-#include <cstddef>                // for size_t
+#include <cstddef>
+#include <sstream>
 #include <numeric>                // for accumulate
 #include <ranges>
 #include <vector>
 #include "Bit_Board.h"  // for Position_t, set_bit, get_bit, rank_...
 #include "Types.h"
 #include "Board_Status.h"
-#include "Movement_Generator.h"
 #include "Move_Generator/Pin_And_Check_Mask_Generator.h"
 
 
@@ -236,17 +236,28 @@ void Kangaroo::Chess_Board::parse_fen_full_move_number(const std::string_view fe
 }
 
 
+namespace Kangaroo
+{
+    Callback_Template_Inline(Dummy) {
+
+    }
+
+    Status_Callback_Template(Update_Check_Flag, Chess_Board* board) {
+        Move_Generator::Pin_And_Check_Mask_Generator<status> generator(board);
+        return generator.get_check_mask();
+    }
+}
+
+
 std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::update_check_flag(
     std::unique_ptr<Board_Status> &&status) {
 
-    using namespace Kangaroo::Movement_Generator;
     using enum Color;
     using enum Chess_Pieces;
 
-    Move_Generator::Pin_And_Check_Mask_Generator<Board_Status(0x00)> gen(this);
+    auto b = execute_status_callback_template<Update_Check_Flag,Dummy>(*status, this);
 
-
-    if (gen.get_check_mask()) {
+    if (b) {
         status->check_p = true;
     } else {
         status->check_p = false;
@@ -298,8 +309,10 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::reset_board(const
     return status;
 }
 
-Kangaroo::Chess_Board::Chess_Board(const std::string_view fen) {
-    void(reset_board(fen)); // -V530
+Kangaroo::Chess_Board::Chess_Board() {
+    chess_board = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    half_move_number = 0;
+    full_move_number = 0;
 }
 
 std::ostream &Kangaroo::operator<<(std::ostream &os, const Kangaroo::Chess_Board &board) {

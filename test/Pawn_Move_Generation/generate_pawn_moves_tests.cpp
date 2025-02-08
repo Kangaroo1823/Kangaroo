@@ -7,10 +7,9 @@
 #include <ranges>
 #include <algorithm>
 
-#include "Chess_Board.h"
-#include "Movement_Generator.h"
-#include "gtest/gtest.h"
-#include "Move_Generator/Move_Generator.h"
+#include "../../include/Chess_Board.h"
+#include "../../cpm_source_cache/googletest/c89ee04fa01138c2db034b2627b51a145ba09878/googletest/googletest/include/gtest/gtest.h"
+#include "../../include/Move_Generator/Move_Generator.h"
 
 
 namespace Kangaroo::Generate_Pawn_Moves_Tests {
@@ -33,7 +32,6 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawns_base) {
-        using namespace Movement_Generator;
 
         Chess_Board board{};
         auto status = board.reset_board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
@@ -287,7 +285,6 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawns_base) {
-        using namespace Kangaroo::Movement_Generator;
         Chess_Board board{};
         auto status = board.reset_board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
 
@@ -541,7 +538,6 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture) {
-        using namespace Kangaroo::Movement_Generator;
 
         Chess_Board board{};
         auto status = board.reset_board(fen_tricky_position_w);
@@ -685,7 +681,6 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
 
 
     TEST(Pawn_Move_Generator, pawn_move_generator_black_pawn_capture) {
-        using namespace Kangaroo::Movement_Generator;
         Chess_Board board{};
         auto status = board.reset_board(fen_tricky_position_b);
 

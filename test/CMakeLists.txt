@@ -16,8 +16,19 @@ add_executable(Kangaroo_tests
         create_occupation_of_mask_tests.cpp
         magic_numbers_test.cpp
         attack_tables_tests.cpp
-        generate_pawn_moves_tests.cpp
-        movement_generator_tests.cpp)
+        Pawn_Move_Generation/generate_pawn_moves_tests.cpp
+        Pin_Mask_Generation/Tests.cpp
+        Pawn_Move_Generation/Empty_Board.cpp
+        Pawn_Move_Generation/Simple.cpp
+        Pawn_Move_Generation/Promotion1.cpp
+        Pawn_Move_Generation/Pins1.cpp
+        Pawn_Move_Generation/Pins2.cpp
+        Pawn_Move_Generation/Pins3.cpp
+        Pawn_Move_Generation/EnPassant1.cpp
+        Pawn_Move_Generation/EnPassant2.cpp
+        Pawn_Move_Generation/EnPassant3.cpp
+        Pawn_Move_Generation/EnPassant4.cpp
+        Pawn_Move_Generation/Check1.cpp)
 target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
 target_compile_definitions(Kangaroo_tests PRIVATE COMPILE_TESTS)
 

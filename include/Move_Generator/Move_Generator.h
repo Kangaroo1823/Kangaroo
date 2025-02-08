@@ -9,17 +9,22 @@
 
 #include "Pawn_Move_Generator.h"
 
-namespace Kangaroo::Move_Generator {
-    template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args_> class CallbackType>
-    class Move_Generator : public Pawn_Move_Generator<status, CallbackType> {
+namespace Kangaroo::Move_Generator
+{
+    template <Board_Status status, template<Board_Status, Move_Type, Chess_Pieces, typename... Args_> class
+              CallbackType>
+    class Move_Generator : public Pawn_Move_Generator<status, CallbackType>
+    {
     public:
-        constexpr explicit Move_Generator(Chess_Board *board)
+        constexpr explicit Move_Generator(Chess_Board* board)
             : Pin_And_Check_Mask_Generator<status>(board),
-              Pawn_Move_Generator<status, CallbackType>(board) {
+              Pawn_Move_Generator<status, CallbackType>(board)
+        {
         }
 
-        template<typename ...Args>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_movements(Args... args) {
+        template <typename... Args>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_pawn_movements(Args... args)
+        {
             using enum Move_Generation_Mode;
 
             // pawn move generation
@@ -32,12 +37,12 @@ namespace Kangaroo::Move_Generator {
             return moves;
         }
 
-        template<typename ...Args>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(Args... args) {
+        template <typename... Args>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_moves(Args... args)
+        {
             const std::size_t moves = this->generate_pawn_movements(args...);
 
             return moves;
         }
-
     };
 }

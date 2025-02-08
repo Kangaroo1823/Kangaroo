@@ -74,23 +74,17 @@ endif()
 find_package(OpenMP)
 
 # create a library to hold the tested logic of the ChessEngine
-add_library(Kangaroo_library ../include/Bit_Board.h
+add_library(Kangaroo_library
         Bit_Board.cpp
-        chess_board.cpp
-        ../include/chess_board.h
-        ../include/base.h
-        ../include/constants.h
-        ../include/types.h
-  #      ../include/_move_generator.h
+        Chess_Board.cpp
+        ../include/Bit_Board.h
+        ../include/Chess_Board.h
+        ../include/Base.h
+        ../include/Constants.h
+        ../include/Types.h
         ../include/Board_Status.h
-        Movement_Generator.cpp
-        ../include/Movement_Generator.h
-        Move_Receiver.cpp
         ../include/Move_Generator/Move_Receiver.h
-        Board_Status.cpp
-        Move_Generator/Pin_And_Check_Mask_Generator.cpp
         ../include/Move_Generator/Pin_And_Check_Mask_Generator.h
-        Move_Generator/Pawn_Move_Generator.cpp
         ../include/Move_Generator/Pawn_Move_Generator.h
         ../include/Move_Evaluator/Movement_Evaluator.h
         ../include/Move_Generator/Move_Generator.h

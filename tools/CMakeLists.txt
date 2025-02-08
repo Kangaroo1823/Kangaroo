@@ -16,9 +16,9 @@ add_executable(Kangaroo_constants_generator_masks
         ../src/Bit_Board.cpp
         attack_masks.h
         create_possible_slider_moves.h
-        ../include/base.h
-        ../include/constants.h
-        ../include/types.h
+        ../include/Base.h
+        ../include/Constants.h
+        ../include/Types.h
         move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_masks
         PUBLIC
@@ -67,11 +67,11 @@ add_executable(Kangaroo_constants_generator_magics constants_generator.cpp
         ../src/Bit_Board.cpp
         attack_masks.h
         create_possible_slider_moves.h
-        ../include/base.h
+        ../include/Base.h
         magic_numbers.h
         magic_numbers.cpp
-        ../include/constants.h
-        ../include/types.h
+        ../include/Constants.h
+        ../include/Types.h
         move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_magics
         PUBLIC
@@ -116,11 +116,11 @@ add_executable(Kangaroo_constants_generator_attacks
         ../src/Bit_Board.cpp
         attack_masks.h
         create_possible_slider_moves.h
-        ../include/base.h
+        ../include/Base.h
         magic_numbers.h
         magic_numbers.cpp
-        ../include/constants.h
-        ../include/types.h
+        ../include/Constants.h
+        ../include/Types.h
         move_generator.h)
 target_link_libraries(Kangaroo_constants_generator_attacks
         PUBLIC

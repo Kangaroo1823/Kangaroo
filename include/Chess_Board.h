@@ -111,7 +111,7 @@ namespace Kangaroo {
         }
 
 
-        explicit Chess_Board(std::string_view fen = "8/8/8/8/8/8/8/8 w - - 0 1");
+        explicit Chess_Board();
 
         explicit constexpr Chess_Board(const std::array<Bitboard, 15> &data) {
             for (auto it = chess_board.begin(); const auto &d: data) {
