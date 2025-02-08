@@ -4,12 +4,8 @@
 // Created by U439644 on 1/8/2025.
 //
 
-#include <bitset>
-#include <algorithm>
 
-#include "Movement_Generator.h"
 #include "gtest/gtest.h"
-#include "move_generator.h"
 #include "Move_Generator/Move_Generator.h"
 
 namespace Kangaroo::Movement_Generator_Tests {
@@ -287,7 +283,7 @@ namespace Kangaroo::Movement_Generator_Tests {
      * Test that the board below leads to two generated moves.
      */
     void pawn_movement_generator_test2() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
         using enum Chess_Pieces;
         using enum Color;
 
@@ -449,7 +445,7 @@ namespace Kangaroo::Movement_Generator_Tests {
      * Test that the board below, it is tested that the pawn will promote if it is moved.
      */
     void pawn_movement_generator_test3() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
 
         /*
             A  B  C  D  E  F  G  H
@@ -831,7 +827,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
     // test that with a diagonally pinned pawn no moves are generated.
     void pawn_movement_generator_test4() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
         /*
 
                A  B  C  D  E  F  G  H
@@ -888,7 +884,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
     // test if vertically pinned pawn moves are generated correctly
     void pawn_movement_generator_test5() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
 
         Chess_Board board{};
         const auto status = board.reset_board("5K2/8/4b3/5P2/8/8/8/5r2 w - - 0 1");
@@ -959,7 +955,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
     // test that horizontally pinned pawns cannot move.
     void pawn_movement_generator_test6() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/2b5/r2P3K/8/8 w - - 0 1");
@@ -995,7 +991,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
     // test en_passant captures
     void pawn_movement_generator_test7() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
 
         /*
                        A  B  C  D  E  F  G  H
@@ -1102,7 +1098,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
 
     void pawn_movement_generator_test8() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
 
         /*
         A  B  C  D  E  F  G  H
@@ -1211,7 +1207,7 @@ namespace Kangaroo::Movement_Generator_Tests {
 
 
     void pawn_movement_generator_test9() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
         /*
 A  B  C  D  E  F  G  H
 
@@ -1316,7 +1312,7 @@ A  B  C  D  E  F  G  H
 
 
     void pawn_movement_generator_test10() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
         /*
 A  B  C  D  E  F  G  H
 
@@ -1401,7 +1397,7 @@ A  B  C  D  E  F  G  H
     }
 
     void pawn_movement_generator_test11() {
-        using namespace Kangaroo::Movement_Generator;
+        using namespace Kangaroo::Move_Generator;
         /*
 
 */
