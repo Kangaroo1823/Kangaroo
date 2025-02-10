@@ -21,11 +21,13 @@ namespace Kangaroo {
         benchmark::DoNotOptimize(&move);
     }
 
-    const auto board = std::make_unique<Chess_Board>(fen_tricky_position_w);
+    auto board = std::make_unique<Chess_Board>();
     Move_Generator::Move_Generator<Board_Status(0x3d), Benchmark_Callback> generator(board.get());
 
     // cppcheck-suppress constParameterCallback
     static void BM_move_generator(benchmark::State &state) {
+
+        [[maybe_unused]] auto s  = board->reset_board(fen_tricky_position_w);
 
         for ([[maybe_unused]] auto _: state) {
 
