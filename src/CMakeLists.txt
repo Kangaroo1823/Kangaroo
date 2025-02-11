@@ -88,12 +88,17 @@ add_library(Kangaroo_library
         ../include/Move_Generator/Pawn_Move_Generator.h
         ../include/Move_Evaluator/Movement_Evaluator.h
         ../include/Move_Generator/Move_Generator.h
+        Logger.cpp
+        ../include/Logger.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
         Kangaroo_warnings
         Kangaroo_options
+        spdlog::spdlog
+        fmt::fmt
 )
+target_compile_definitions(Kangaroo_library PUBLIC LOG_DIRECTORY="${CMAKE_BINARY_DIR}")
 
 if(OpenMP_CXX_FOUND)
     target_link_libraries(Kangaroo_library PUBLIC OpenMP::OpenMP_CXX)

@@ -4,14 +4,17 @@
 
 #include "Chess_Board.h"
 
+#include "Logger.h"
 
 
 int main() {
 
-    const auto board = std::make_unique<Kangaroo::Chess_Board>(fen_tricky_position_w);
-    print_chess_board(*board);
+    Kangaroo::Chess_Board board{};
+    [[maybe_unused]] auto s = board.reset_board(fen_tricky_position_w);
+    print_chess_board(board);
 
 
+    logger->info("Hello World!");
 
     return 0;
 }

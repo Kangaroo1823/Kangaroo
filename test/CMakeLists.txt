@@ -36,8 +36,6 @@ target_link_libraries(Kangaroo_tests
         Kangaroo_warnings
         gtest
         gtest_main
-        spdlog::spdlog
-        fmt::fmt
 )
 target_compile_definitions(Kangaroo_tests PRIVATE COMPILE_TESTS)
 
