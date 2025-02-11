@@ -10,19 +10,19 @@ function(Kangaroo_setup_dependencies)
     # For each dependency, see if it's
     # already been provided to us by a parent project
 
-    #    if (NOT TARGET fmt::fmt)
-    #        cpmaddpackage("gh:fmtlib/fmt#11.0.2")
-    #    endif ()
+    if (NOT TARGET fmt::fmt)
+        cpmaddpackage("gh:fmtlib/fmt#11.1.3")
+    endif ()
 
-#    if (NOT TARGET Boost::boost)
-#        CPMAddPackage(
-#                NAME Boost
-#                VERSION 1.87.0
-#                URL https://github.com/boostorg/boost/releases/download/boost-1.87.0/boost-1.87.0-cmake.zip
-#                URL_HASH SHA256=03530dec778bc1b85b070f0b077f3b01fd417133509bb19fe7c142e47777a87b
-#                OPTIONS "BOOST_ENABLE_CMAKE ON"
-#        )
-#    endif ()
+    #    if (NOT TARGET Boost::boost)
+    #        CPMAddPackage(
+    #                NAME Boost
+    #                VERSION 1.87.0
+    #                URL https://github.com/boostorg/boost/releases/download/boost-1.87.0/boost-1.87.0-cmake.zip
+    #                URL_HASH SHA256=03530dec778bc1b85b070f0b077f3b01fd417133509bb19fe7c142e47777a87b
+    #                OPTIONS "BOOST_ENABLE_CMAKE ON"
+    #        )
+    #    endif ()
 
     #    if (NOT TARGET Catch2::Catch2WithMain)
     #        cpmaddpackage(
@@ -48,7 +48,6 @@ function(Kangaroo_setup_dependencies)
     endif ()
 
 
-
     if (NOT TARGET benchmark::benchmark)
         set(HAVE_STD_REGEX ON)
         set(RUN_HAVE_STD_REGEX 1)
@@ -64,17 +63,17 @@ function(Kangaroo_setup_dependencies)
         )
     endif ()
 
-    #  if(NOT TARGET spdlog::spdlog)
-    #    cpmaddpackage(
-    #      NAME
-    #      spdlog
-    #      VERSION
-    #      1.11.0
-    #      GITHUB_REPOSITORY
-    #      "gabime/spdlog"
-    #      OPTIONS
-    #      "SPDLOG_FMT_EXTERNAL ON")
-    #  endif()
+    if (NOT TARGET spdlog::spdlog)
+        cpmaddpackage(
+                NAME
+                spdlog
+                VERSION
+                1.15.1
+                GITHUB_REPOSITORY
+                "gabime/spdlog"
+                OPTIONS
+                "SPDLOG_FMT_EXTERNAL ON")
+    endif ()
 
     #  if(NOT TARGET Catch2::Catch2WithMain)
     #    cpmaddpackage("gh:catchorg/Catch2@3.3.2")

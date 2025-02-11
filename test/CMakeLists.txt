@@ -29,7 +29,16 @@ add_executable(Kangaroo_tests
         Pawn_Move_Generation/EnPassant3.cpp
         Pawn_Move_Generation/EnPassant4.cpp
         Pawn_Move_Generation/Check1.cpp)
-target_link_libraries(Kangaroo_tests PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings gtest gtest_main)
+target_link_libraries(Kangaroo_tests
+        PRIVATE
+        Kangaroo_library
+        Kangaroo_options
+        Kangaroo_warnings
+        gtest
+        gtest_main
+        spdlog::spdlog
+        fmt::fmt
+)
 target_compile_definitions(Kangaroo_tests PRIVATE COMPILE_TESTS)
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

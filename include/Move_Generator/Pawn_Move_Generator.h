@@ -288,7 +288,7 @@ namespace Kangaroo::Move_Generator {
 
 
         template<Color color>
-        [[nodiscard]] static _ForceInline constexpr bool
+        [[nodiscard]] static _ForceInline constexpr Bitboard
         en_passant_left_pawn_position(const Bitboard en_passant_square) {
             using enum Color;
             if constexpr (color == White) {
@@ -299,7 +299,7 @@ namespace Kangaroo::Move_Generator {
         }
 
         template<Color color>
-        [[nodiscard]] static _ForceInline constexpr bool en_passant_right_pawn_position(
+        [[nodiscard]] static _ForceInline constexpr Bitboard en_passant_right_pawn_position(
             const Bitboard en_passant_square) {
             using enum Color;
             if constexpr (color == White) {
