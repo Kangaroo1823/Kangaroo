@@ -23,6 +23,8 @@ add_executable(Kangaroo_constants_generator_masks
 target_link_libraries(Kangaroo_constants_generator_masks
         PUBLIC
         Kangaroo_warnings
+        fmt::fmt
+        spdlog::spdlog
 )
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -76,6 +78,8 @@ add_executable(Kangaroo_constants_generator_magics constants_generator.cpp
 target_link_libraries(Kangaroo_constants_generator_magics
         PUBLIC
         Kangaroo_warnings
+        fmt::fmt
+        spdlog::spdlog
 )
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -125,6 +129,8 @@ add_executable(Kangaroo_constants_generator_attacks
 target_link_libraries(Kangaroo_constants_generator_attacks
         PUBLIC
         Kangaroo_warnings
+        fmt::fmt
+        spdlog::spdlog
 )
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -166,6 +172,8 @@ add_executable(Kangaroo_constants_generator_pin_tables
 target_link_libraries(Kangaroo_constants_generator_pin_tables
         PUBLIC
         Kangaroo_warnings
+        fmt::fmt
+        spdlog::spdlog
 )
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -206,6 +214,8 @@ add_executable(Kangaroo_constants_generator_xray_visibility_tables
 target_link_libraries(Kangaroo_constants_generator_xray_visibility_tables
         PUBLIC
         Kangaroo_warnings
+        fmt::fmt
+        spdlog::spdlog
 )
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

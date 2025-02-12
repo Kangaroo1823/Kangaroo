@@ -9,12 +9,14 @@
 
 int main() {
 
+    init_logger();
+
     Kangaroo::Chess_Board board{};
     [[maybe_unused]] auto s = board.reset_board(fen_tricky_position_w);
     print_chess_board(board);
 
 
-    logger->info("Hello World!");
+    spdlog::info("Hello World!");
 
     return 0;
 }

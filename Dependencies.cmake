@@ -11,7 +11,12 @@ function(Kangaroo_setup_dependencies)
     # already been provided to us by a parent project
 
     if (NOT TARGET fmt::fmt)
-        cpmaddpackage("gh:fmtlib/fmt#11.1.3")
+        cpmaddpackage(
+                NAME fmt
+                GITHUB_REPOSITORY fmtlib/fmt
+                GIT_TAG 11.1.3
+                VERSION 11.1.3
+        )
     endif ()
 
     #    if (NOT TARGET Boost::boost)

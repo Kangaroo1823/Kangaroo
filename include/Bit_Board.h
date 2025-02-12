@@ -20,8 +20,10 @@
 #include <cstddef>         // for size_t
 #include <cstdint>         // for int64_t, uint64_t
 #include <format>
+#include <sstream>
 #include <string>          // for string
 #include <utility>         // for to_underlying
+
 
 #include "Base.h"
 #include "Types.h"
@@ -253,7 +255,26 @@ template<Color color>
 std::string format_square(Square position);
 
 inline std::string format_bitboard(Bitboard bitboard) {
-    return std::format("0x{:x}, ", bitboard);
+    std::stringstream ss;
+
+    ss << "/*\n";
+
+    for (int rank = 7; rank >= 0; rank--) {
+        ss << std::format("  {}   ", rank + 1);
+        for (int file = 0; file < 8; file++) {
+            if (bitboard & (1ULL << (rank * 8 + file))) {
+                ss << " 1 ";
+            } else {
+                ss << " . ";
+            }
+        }
+        ss << "\n";
+    }
+    ss << "\n       A  B  C  D  E  F  G  H\n\n";
+    ss << "       bitboard as 64 bit integer: */\n";
+    ss << std::format("       0x{0:x},\n", bitboard);
+
+    return ss.str();
 }
 
 

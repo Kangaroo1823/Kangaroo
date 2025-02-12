@@ -7,9 +7,11 @@
 #include <ranges>
 #include <algorithm>
 
+#include "Logger.h"
 #include "../../include/Chess_Board.h"
 #include "../../cpm_source_cache/googletest/c89ee04fa01138c2db034b2627b51a145ba09878/googletest/googletest/include/gtest/gtest.h"
 #include "../../include/Move_Generator/Move_Generator.h"
+
 
 
 namespace Kangaroo::Generate_Pawn_Moves_Tests {
@@ -530,7 +532,7 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
         if (!std::ranges::contains(moves, move)) {
             throw std::runtime_error("Move is not in moves");
         }
-        print_bitboard(move);
+        spdlog::info("Move: {}", format_bitboard(move));
     }
 
     Status_Callback_Template(Pawn_Move_Generator_white_pawn_capture, Chess_Board *board, const std::array<Move, 8> &moves) {
@@ -539,6 +541,8 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
     TEST(Pawn_Move_Generator, pawn_move_generator_white_pawn_capture) {
+
+        init_logger();
 
         Chess_Board board{};
         auto status = board.reset_board(fen_tricky_position_w);

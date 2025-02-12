@@ -118,7 +118,14 @@ add_dependencies(Kangaroo_library generate_files)
 add_executable(Kangaroo
         main.cpp
 )
-target_link_libraries(Kangaroo PRIVATE Kangaroo_library Kangaroo_options Kangaroo_warnings)
+target_link_libraries(Kangaroo
+        PRIVATE
+        Kangaroo_library
+        Kangaroo_options
+        Kangaroo_warnings
+        fmt::fmt
+        spdlog::spdlog
+)
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_link_libraries(Kangaroo PRIVATE stdc++exp)

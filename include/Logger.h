@@ -5,9 +5,13 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 #include "spdlog/spdlog.h"
+#pragma GCC diagnostic pop
 
-extern std::shared_ptr<spdlog::logger> logger;
+std::shared_ptr<spdlog::logger> init_logger();
+
 
 #endif //LOGGER_H
+

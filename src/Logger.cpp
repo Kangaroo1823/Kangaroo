@@ -7,9 +7,6 @@
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks-inl.h"
 
-                                                        std::shared_ptr<spdlog::logger> default_logger();
-std::shared_ptr<spdlog::logger> logger = default_logger();
-
 
 
 void test_logger() {
@@ -22,7 +19,7 @@ void test_logger() {
 }
 
 
-std::shared_ptr<spdlog::logger> default_logger() {
+std::shared_ptr<spdlog::logger> init_logger() {
     auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
     auto logFileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(std::string(LOG_DIRECTORY) + "/message.log", true);

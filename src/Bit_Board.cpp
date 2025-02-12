@@ -6,28 +6,14 @@
 #include <print>
 #include <array>       // for array
 
+
 /**
  * print a bitboard
  *    - as an 8 x 8 square of binaries and
  *    - as a 64 bit unsigned integer
  */
 void print_bitboard(const Bitboard bitboard) {
-    std::print("/*\n");
-
-    for (int rank = 7; rank >= 0; rank--) {
-        std::print("  {}   ", rank + 1);
-        for (int file = 0; file < 8; file++) {
-            if (bitboard & (1ULL << (rank * 8 + file))) {
-                std::print(" 1 ");
-            } else {
-                std::print(" . ");
-            }
-        }
-        std::print("\n");
-    }
-    std::print("\n       A  B  C  D  E  F  G  H\n\n");
-    std::print("       bitboard as 64 bit integer: */\n");
-    std::print("       0x{0:x},\n", bitboard);
+    std::print("{}\n", format_bitboard(bitboard));
 }
 
 std::string format_square(const Square position) {
