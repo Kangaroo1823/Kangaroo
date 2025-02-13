@@ -141,11 +141,11 @@ enum class Move_Generation_Mode : uint64_t {
 enum class Move_Type : uint64_t {
     Normal = 1,
     Double_Push = 2,
-    Castling = 3,
-    En_Passant = 4,
-    Promotion = 5,
-    Capture = 6,
-    Capture_Promotion = 7,
+    Castling = 4,
+    En_Passant = 8,
+    Promotion = 16,
+    Capture = 32,
+    Capture_Promotion = 48, // needs to be equal to "Capture + Promotion"
 };
 
 

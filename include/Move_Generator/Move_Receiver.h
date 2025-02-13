@@ -8,6 +8,13 @@
 #include "../Board_Status.h"
 #include "../Chess_Board.h"
 
+/**
+*  The Move_Receiver and Move_Receiver_Base classes handle board modification.
+*  When a move is generated the board and status needs to be modified accordingly.
+*
+*
+*/
+
 namespace Kangaroo::Move_Generator {
 
     template<Board_Status status, Move_Type move_type, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args> class CallbackType, typename ...Args>
@@ -15,7 +22,7 @@ namespace Kangaroo::Move_Generator {
     public:
         _ForceInline static constexpr auto handle_ep(Chess_Board *board, const Bitboard move, const Bitboard from, const Bitboard to, Args... args) {
             if constexpr (status.en_passant_p) {
-                auto en_passant_square = en_passant_square_for(*board);
+                const auto en_passant_square = en_passant_square_for(*board);
                 en_passant_square_for(*board) = 0ULL;
                 CallbackType<status.copy_and_set_en_passant(false), move_type, chess_piece>::callback(board, move, from, to, args...);
                 en_passant_square_for(*board) = en_passant_square;
