@@ -1,8 +1,0 @@
-//
-// Created by U439644 on 2/13/2025.
-//
-
-#ifndef CALLBACKHANDLER_H
-#define CALLBACKHANDLER_H
-
-#endif //CALLBACKHANDLER_H

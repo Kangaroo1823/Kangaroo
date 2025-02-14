@@ -90,7 +90,7 @@ add_library(Kangaroo_library
         ../include/Move_Generator/Move_Generator.h
         Logger.cpp
         ../include/Logger.h
-        ../include/Move_Generator/CallbackHandler.h
+        ../include/Move_Generator/Callback_Handler.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
