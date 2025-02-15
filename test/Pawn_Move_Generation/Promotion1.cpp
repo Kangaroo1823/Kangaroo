@@ -4,8 +4,10 @@
 // Created by peter on 2/8/25.
 //
 
+#include "Logger.h"
 #include "gtest/gtest.h"
 #include "Move_Generator/Move_Generator.h"
+#include "spdlog/spdlog.h"
 
 namespace Kangaroo::Pawn_Move_Generation::Promotion1
 {
@@ -15,6 +17,9 @@ namespace Kangaroo::Pawn_Move_Generation::Promotion1
                              const std::array<Bitboard, 8> &moves) {
         using enum Chess_Pieces;
         using enum Color;
+
+        spdlog::info(format_chess_board(*board, false, status));
+        spdlog::info(format_bitboard(move));
 
         const auto it = std::ranges::find(moves, move);
         if (it == moves.end()) {
@@ -396,6 +401,7 @@ namespace Kangaroo::Pawn_Move_Generation::Promotion1
     TEST(Pawn_Move_Generation, Promotion1) {
         using namespace Kangaroo::Move_Generator;
 
+        init_logger();
         /*
             A  B  C  D  E  F  G  H
 

@@ -7,6 +7,7 @@
 
 #include "../Board_Status.h"
 #include "../Chess_Board.h"
+#include "Callback_Handler.h"
 
 /**
 *  The Move_Receiver and Move_Receiver_Base classes handle board modification.
@@ -24,10 +25,10 @@ namespace Kangaroo::Move_Generator {
             if constexpr (status.en_passant_p) {
                 const auto en_passant_square = en_passant_square_for(*board);
                 en_passant_square_for(*board) = 0ULL;
-                CallbackType<status.copy_and_set_en_passant(false), move_type, chess_piece>::callback(board, move, from, to, args...);
+                Callback_Handler<status.copy_and_set_en_passant(false), move_type, chess_piece, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
                 en_passant_square_for(*board) = en_passant_square;
             } else {
-                CallbackType<status, move_type, chess_piece>::callback(board, move, from, to, args...);
+                Callback_Handler<status, move_type, chess_piece, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
             }
         }
     };
@@ -36,14 +37,19 @@ namespace Kangaroo::Move_Generator {
     template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args> class CallbackType, typename ...Args>
     class Move_Receiver_Base<status, Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...> {
     public:
-        _ForceInline static constexpr auto handle_ep(Chess_Board *board, const Bitboard move, const Bitboard from, const Bitboard to, Args... args) {
+        _ForceInline static constexpr auto handle_ep(
+            [[maybe_unused]] Chess_Board *board,
+            [[maybe_unused]] const Bitboard move,
+            [[maybe_unused]] const Bitboard from,
+            [[maybe_unused]] const Bitboard to,
+            [[maybe_unused]] Args... args) {
             if constexpr (status.en_passant_p) {
                 auto en_passant_square = en_passant_square_for(*board);
                 en_passant_square_for(*board) = regular_pawn_push<status.color_to_move>(from);
-                CallbackType<status.copy_and_set_en_passant(true), Move_Type::Double_Push, Chess_Pieces::Pawn>::callback(board, move, from, to, args...);
+                Callback_Handler<status.copy_and_set_en_passant(true), Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
                 en_passant_square_for(*board) = en_passant_square;
             } else {
-                CallbackType<status, Move_Type::Double_Push, Chess_Pieces::Pawn>::callback(board, move, from, to, args...);
+                Callback_Handler<status, Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
             }
         }
 
@@ -54,10 +60,13 @@ namespace Kangaroo::Move_Generator {
     public:
         _ForceInline static constexpr void evaluate_and_perform_move([[maybe_unused]] Chess_Board *board,
                                                                      [[maybe_unused]] const Bitboard from,
-                                                                     [[maybe_unused]] const Bitboard to) {
-            throw std::exception("This version of Move_Receiver::evaluate_and_perform_move() is not implemented yet.");
+                                                                     [[maybe_unused]] const Bitboard to,
+                                                                     [[maybe_unused]] Args... args) {
+            throw std::runtime_error("This version of Move_Receiver::evaluate_and_perform_move() is not implemented yet.");
         }
     };
+
+
 
 
     template<Board_Status status, Chess_Pieces chess_piece, template<Board_Status, Move_Type, Chess_Pieces, typename ...Args_> class CallbackType, typename ...Args>
