@@ -18,7 +18,7 @@ namespace Kangaroo::Pawn_Move_Generation::Promotion1
         using enum Chess_Pieces;
         using enum Color;
 
-        spdlog::info(format_chess_board(*board, false, status));
+        spdlog::info(format_chess_board(*board, true, status));
         spdlog::info(format_bitboard(move));
 
         const auto it = std::ranges::find(moves, move);

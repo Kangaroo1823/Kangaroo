@@ -13,7 +13,7 @@ namespace Kangaroo::Pawn_Move_Generation::Check1
 
     Callback_Template_Inline(Pawn_Movement_Generator_Test11_Callback, const std::array<Chess_Board, 1> &new_boards) {
 
-        print_chess_board(*board);
+        print_chess_board(*board, true);
 
 
         if (status.color_to_move != Color::White) {
@@ -46,26 +46,20 @@ namespace Kangaroo::Pawn_Move_Generation::Check1
           7    .  .  .  .  .  .  .  .
           6    .  .  .  .  .  .  .  .          half move number:  0
           5    .  .  .  .  .  .  .  .          full move number:  1
-          4    .  .  .  .  .  .  .  .
-          3    .  .  .  ♙  .  .  .  .
-          2    ♟  ♟  ♟  .  ♟  ♟  ♟  ♟
+          4    ♚  .  .  ♟  .  .  .  ♖
+          3    .  .  .  .  .  .  .  .
+          2    .  .  .  .  .  .  .  .
           1    .  .  .  .  .  .  .  .
 
                A  B  C  D  E  F  G  H
 
         */
-        Kangaroo::Chess_Board(std::array<Bitboard, 15>{
-            /* white pawns    */ 0x000000000000f700, /* white knights */ 0x0000000000000000, /* white bishops */
-            0x0000000000000000,
-            /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
-            0x0000000000000000,
-            /* black pawns    */ 0x0000000000080000, /* black knights */ 0x0000000000000000, /* black bishops */
-            0x0000000000000000,
-            /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
-            0x0000000000000000,
-            /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
-            0x0000000000000001
-        }),
+        Kangaroo::Chess_Board( std::array<Bitboard, 15>{
+          /* white pawns    */ 0x0000000008000000, /* white knights */ 0x0000000000000000, /* white bishops */ 0x0000000000000000,
+          /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */ 0x0000000001000000,
+          /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */ 0x0000000000000000,
+          /* black rooks    */ 0x0000000080000000, /* black queens  */ 0x0000000000000000, /* black king    */ 0x0000000000000000,
+          /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */ 0x0000000000000001 }),
     };
 
     TEST(Pawn_Move_Generation, Check1)

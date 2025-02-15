@@ -7,7 +7,7 @@
 
 #include "../Board_Status.h"
 #include "../Chess_Board.h"
-#include "Callback_Handler.h"
+
 
 /**
 *  The Move_Receiver and Move_Receiver_Base classes handle board modification.
@@ -25,10 +25,10 @@ namespace Kangaroo::Move_Generator {
             if constexpr (status.en_passant_p) {
                 const auto en_passant_square = en_passant_square_for(*board);
                 en_passant_square_for(*board) = 0ULL;
-                Callback_Handler<status.copy_and_set_en_passant(false), move_type, chess_piece, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
+                CallbackType<status.copy_and_set_en_passant(false), move_type, chess_piece>::callback(board, move, from, to, args...);
                 en_passant_square_for(*board) = en_passant_square;
             } else {
-                Callback_Handler<status, move_type, chess_piece, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
+                CallbackType<status, move_type, chess_piece>::callback(board, move, from, to, args...);
             }
         }
     };
@@ -46,10 +46,10 @@ namespace Kangaroo::Move_Generator {
             if constexpr (status.en_passant_p) {
                 auto en_passant_square = en_passant_square_for(*board);
                 en_passant_square_for(*board) = regular_pawn_push<status.color_to_move>(from);
-                Callback_Handler<status.copy_and_set_en_passant(true), Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
+                CallbackType<status.copy_and_set_en_passant(true), Move_Type::Double_Push, Chess_Pieces::Pawn>::callback(board, move, from, to, args...);
                 en_passant_square_for(*board) = en_passant_square;
             } else {
-                Callback_Handler<status, Move_Type::Double_Push, Chess_Pieces::Pawn, CallbackType, Args...>::handle_callback(board, move, from, to, args...);
+                CallbackType<status, Move_Type::Double_Push, Chess_Pieces::Pawn>::callback(board, move, from, to, args...);
             }
         }
 
@@ -113,6 +113,7 @@ namespace Kangaroo::Move_Generator {
                 chess_piece == Rook || chess_piece == Knight ||
                 chess_piece == Bishop || chess_piece == Queen);
             static_assert(status.color_to_move == White || status.color_to_move == Black);
+            static_assert(chess_piece != Pawn);
             // static_assert(status.en_passant_p == false);
 
 

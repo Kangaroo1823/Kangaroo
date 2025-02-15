@@ -119,7 +119,7 @@ constexpr Square square_of(const Bitboard bitboard) {
  * @param mask The Bitboard mask that specifies which bits to extract.
  * @return A Bitboard containing the extracted bits, densely packed.
  */
-_ForceInline Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) {
+_ForceInline constexpr Bitboard extract_bits_from_mask(const Bitboard bitboard, const Bitboard mask) {
     return _pext_u64(bitboard, mask);
 }
 
@@ -136,7 +136,7 @@ _ForceInline Bitboard ExtractMask(const Bitboard bitboard, const Bitboard mask) 
  *             in the occupancy creation.
  * @return A Bitboard representing the calculated occupancy based on the index and mask.
  */
-_ForceInline Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask) {
+_ForceInline constexpr Bitboard create_occupation_from_mask_(const std::size_t index, const Bitboard mask) {
     Bitboard occupancy = 0ULL;
     Bitboard mask_copy = mask;
 
@@ -160,7 +160,7 @@ _ForceInline Bitboard create_occupation_from_mask_(const std::size_t index, cons
  * @param mask A Bitboard representing the mask where the index bits are to be deposited.
  * @return A Bitboard with the occupation mask applied, effectively storing the mapping of index bits to the mask.
  */
-_ForceInline Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask) {
+_ForceInline constexpr Bitboard create_occupancy_from_mask(const std::size_t index, const Bitboard mask) {
     return _pdep_u64(index, mask);
 }
 

@@ -4,17 +4,36 @@
 
 #ifndef PAWN_MOVE_GENERATOR_H
 #define PAWN_MOVE_GENERATOR_H
-#include <bits/fs_fwd.h>
 
 #include "Pin_And_Check_Mask_Generator.h"
-#include "Move_Receiver.h"
+#include "Callback_Handler.h"
 
 namespace Kangaroo::Move_Generator {
+
+
+    namespace Pawn_Move_Generator_Internal {
+        template<Move_Generation_Mode mode, Move_Type move_type>
+        constexpr Move_Type get_capture_move_type() {
+            if constexpr (mode == Move_Generation_Mode::Promotion_Move_Generation) {
+                if constexpr (move_type == Move_Type::Capture) {
+                    return Move_Type::Capture_Promotion;
+                } else {
+                    return Move_Type::Promotion;
+                }
+            } else {
+                return move_type;
+            }
+        }
+    }
 
     template<Board_Status status, Move_Type move_type, template<Board_Status, Move_Type, Chess_Pieces, typename... Args_> class CallbackType, typename ...Args>
     class Perform_Callback {
     public:
-        static constexpr void perform_callback(Chess_Board *board, const Bitboard from, const Bitboard to, Args...args) {
+        static constexpr void perform_callback(
+            [[maybe_unused]] Chess_Board *board,
+            [[maybe_unused]] const Bitboard from,
+            [[maybe_unused]] const Bitboard to,
+            [[maybe_unused]] Args...args) {
             throw std::runtime_error("Perform_Callback::perform_callback() is not supposed to be called!");
         }
     };
@@ -33,53 +52,28 @@ namespace Kangaroo::Move_Generator {
             std::size_t moves = 0ULL;
             // check if we are in Promotion_Move_Generation-mode
             if constexpr (mode == Move_Generation_Mode::Promotion_Move_Generation) {
+
                 if constexpr (status.check_p) {
                     if (to & this->get_check_mask()) {
                         // if so, perform the move and call the callback function.
-                        Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Queen, CallbackType, Args
-                            ...>::evaluate_and_perform_move(
+                        Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
+                            ...>::handle_callback(
                             this->get_board(), from, to, args...);
-
-                        Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Bishop, CallbackType, Args
-                            ...>::evaluate_and_perform_move(
-                            this->get_board(), from, to, args...);
-
-                        Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Knight, CallbackType, Args
-                            ...>::evaluate_and_perform_move(
-                            this->get_board(), from, to, args...);
-
-                        Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Rook, CallbackType, Args
-                            ...>::evaluate_and_perform_move(
-                            this->get_board(), from, to, args...);
-
                         moves += 4ULL;
                     }
                 } else {
                     // if so, perform the move and call the callback function.
-                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Queen, CallbackType, Args
-                        ...>::evaluate_and_perform_move(
+                    Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
+                        ...>::handle_callback(
                         this->get_board(), from, to, args...);
-
-                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Bishop, CallbackType, Args
-                        ...>::evaluate_and_perform_move(
-                        this->get_board(), from, to, args...);
-
-                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Knight, CallbackType, Args
-                        ...>::evaluate_and_perform_move(
-                        this->get_board(), from, to, args...);
-
-                    Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Rook, CallbackType, Args
-                        ...>::evaluate_and_perform_move(
-                        this->get_board(), from, to, args...);
-
                     moves += 4ULL;
                 }
             } else {
                 if constexpr (status.check_p) {
                     if (to & this->get_check_mask()) {
                         // perform the move and run the callback
-                        Move_Receiver<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
-                            ...>::evaluate_and_perform_move(
+                        Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
+                            ...>::handle_callback(
                             this->get_board(), from, to, args...);
 
                         // increment the number of moves generated.
@@ -87,8 +81,8 @@ namespace Kangaroo::Move_Generator {
                     }
                 } else {
                     // perform the move and run the callback
-                    Move_Receiver<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
-                        ...>::evaluate_and_perform_move(
+                    Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
+                        ...>::handle_callback(
                         this->get_board(), from, to, args...);
 
                     // increment the number of moves generated.
@@ -165,7 +159,7 @@ namespace Kangaroo::Move_Generator {
 
                     // and check if it is admissible.
                     if (is_pawn_push_admissible<mode>(from, to, total_pieces_for(*(this->get_board())))) {
-                        moves += evaluate_pawn_move<mode, Move_Type::Normal, Args...>(from, to, args...);
+                        moves += evaluate_pawn_move<mode, Pawn_Move_Generator_Internal::get_capture_move_type<mode, Normal>(), Args...>(from, to, args...);
                     }
                 }
 
@@ -233,8 +227,8 @@ namespace Kangaroo::Move_Generator {
                         to & this->get_check_mask() && is_pawn_push_admissible<mode>(from,
                             to, total_pieces_for(*(this->get_board())))) {
                         // make the move and call the callback function.
-                        Move_Receiver<status, Move_Type::Double_Push, Chess_Pieces::Pawn,
-                            CallbackType, Args...>::evaluate_and_perform_move(
+                        Callback_Handler<status, Move_Type::Double_Push, Chess_Pieces::Pawn,
+                            CallbackType, Args...>::handle_callback(
                             this->get_board(), from, to, args...);
 
                         // increment the number of moves generated.
@@ -249,8 +243,8 @@ namespace Kangaroo::Move_Generator {
                         is_pawn_push_admissible<mode>(from,
                                                       to, total_pieces_for(*(this->get_board())))) {
                         // make the move and call the callback function.
-                        Move_Receiver<status, Move_Type::Double_Push, Chess_Pieces::Pawn,
-                            CallbackType, Args...>::evaluate_and_perform_move(
+                        Callback_Handler<status, Move_Type::Double_Push, Chess_Pieces::Pawn,
+                            CallbackType, Args...>::handle_callback(
                             this->get_board(), from, to, args...);
 
                         // increment the number of moves generated.
@@ -294,7 +288,7 @@ namespace Kangaroo::Move_Generator {
                 // generate a Bitboard with a single bit set where the Pawn is attacking
                 Bitboard to = bitboard_square_of(pawn_attacks);
 
-                moves += evaluate_pawn_move<mode, Move_Type::Capture, Args...>(from, to, args...);
+                moves += evaluate_pawn_move<mode, Pawn_Move_Generator_Internal::get_capture_move_type<mode, Capture>(), Args...>(from, to, args...);
             }
 
             // return the number of moves generated
@@ -329,11 +323,11 @@ namespace Kangaroo::Move_Generator {
                                                                  const Bitboard to, Args... args) {
             if constexpr (status.check_p) {
                 if (to & this->get_check_mask()) {
-                    Move_Receiver<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
-                        ...>::evaluate_and_perform_move(board, from, to, args...);
+                    Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
+                        ...>::handle_callback(board, from, to, args...);
                 }
             } else {
-                Move_Receiver<status, move_type, Chess_Pieces::Pawn, CallbackType, Args...>::evaluate_and_perform_move(
+                Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args...>::handle_callback(
                     board, from, to, args...);
             }
         }
