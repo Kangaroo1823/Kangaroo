@@ -47,7 +47,7 @@ namespace Kangaroo::Move_Generator
         }
 
         template<typename... Args>
-        [[nodiscard ]] _ForceInline constexpr std::size_t generate_knight_movements(Args... args)
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_knight_movements(Args... args)
         {
             using enum Move_Generation_Mode;
 
