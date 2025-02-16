@@ -16,8 +16,8 @@
 
 namespace Kangaroo::Generate_Pawn_Moves_Tests {
     Callback_Template_Inline(Pawn_Move_Generator_White_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
-        if (status.color_to_move != Color::White) {
-            throw std::runtime_error("Color is not white");
+        if (status.color_to_move != Color::Black) {
+            throw std::runtime_error("Color is not black");
         }
         if (chess_piece != Chess_Pieces::Pawn) {
             throw std::runtime_error("Chess piece is not pawn");
@@ -275,7 +275,7 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
 
 
     Callback_Template_Inline(Pawn_Move_Generator_Black_Pawn_Base_Callback, const std::array<Move, 16> &moves) {
-        if (status.color_to_move != Color::Black) {
+        if (status.color_to_move != Color::White) {
             throw std::runtime_error("Color is not white");
         }
         if (chess_piece != Chess_Pieces::Pawn) {
@@ -523,8 +523,8 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
     Callback_Template_Inline(Pawn_Move_Generator_White_Pawn_Capture_Callback, const std::array<Move, 8> &moves) {
-        if (status.color_to_move != Color::White) {
-            throw std::runtime_error("Color is not white");
+        if (status.color_to_move != Color::Black) {
+            throw std::runtime_error("Color is not black");
         }
         if (chess_piece != Chess_Pieces::Pawn) {
             throw std::runtime_error("Chess piece is not pawn");
@@ -670,8 +670,8 @@ namespace Kangaroo::Generate_Pawn_Moves_Tests {
     }
 
     Callback_Template_Inline(Pawn_Move_Generator_Black_Pawn_Capture_Callback, const std::array<Move, 8> &moves) {
-        if (status.color_to_move != Color::Black) {
-            throw std::runtime_error("Color is not black");
+        if (status.color_to_move != Color::White) {
+            throw std::runtime_error("Color is not white");
         }
         if (chess_piece != Chess_Pieces::Pawn) {
             throw std::runtime_error("Chess piece is not pawn");

@@ -11,9 +11,9 @@ namespace Kangaroo::Pawn_Move_Generation::EnPassant2
 {
     Callback_Template_Inline(Pawn_Movement_Generator_Test8_Callback, const std::array<Chess_Board, 2> &new_boards)
     {
-        if (status.color_to_move != Color::White)
+        if (status.color_to_move != Color::Black)
         {
-            throw std::runtime_error("color should be white");
+            throw std::runtime_error("color should be black");
         }
 
         if (chess_piece != Chess_Pieces::Pawn)
@@ -21,7 +21,7 @@ namespace Kangaroo::Pawn_Move_Generation::EnPassant2
             throw std::runtime_error("chess piece should be pawn");
         }
 
-        if (std::ranges::find(new_boards, *board) == new_boards.end())
+        if (std::ranges::find(new_boards, *pac_gen->get_board()) == new_boards.end())
         {
             throw std::runtime_error("board not found in new_boards");
         }

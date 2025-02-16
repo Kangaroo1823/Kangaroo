@@ -25,34 +25,34 @@ namespace Kangaroo::Pawn_Move_Generation::Simple
         };
 
 
-        const auto board_it = std::ranges::find(new_boards, *board);
+        const auto board_it = std::ranges::find(new_boards, *pac_gen->get_board());
         if (board_it == new_boards.end())
         {
             std::stringstream ss;
-            ss << "board: " << *board << " not found in boards";
+            ss << "board: " << *pac_gen->get_board() << " not found in boards";
             throw std::runtime_error(ss.str());
         }
-        if (!board->is_state_consistent())
+        if (!pac_gen->get_board()->is_state_consistent())
         {
             std::stringstream ss;
-            ss << "board: " << std::endl << *board << " is not consistent." << std::endl;
+            ss << "board: " << std::endl << pac_gen->get_board() << " is not consistent." << std::endl;
             ss << "--- details of board: ---------------------------------------------------" << std::endl;
-            ss << "   white pawns:    " << format_bitboard(bitboard_for(*board, White, Pawn)) << std::endl;
-            ss << "   black pawns:    " << format_bitboard(bitboard_for(*board, Black, Pawn)) << std::endl;
-            ss << "   white knights:  " << format_bitboard(bitboard_for(*board, White, Knight)) << std::endl;
-            ss << "   black knights:  " << format_bitboard(bitboard_for(*board, Black, Knight)) << std::endl;
-            ss << "   white bishops:  " << format_bitboard(bitboard_for(*board, White, Bishop)) << std::endl;
-            ss << "   black bishops:  " << format_bitboard(bitboard_for(*board, Black, Bishop)) << std::endl;
-            ss << "   white rooks:    " << format_bitboard(bitboard_for(*board, White, Rook)) << std::endl;
-            ss << "   black rooks:    " << format_bitboard(bitboard_for(*board, Black, Rook)) << std::endl;
-            ss << "   white queens:   " << format_bitboard(bitboard_for(*board, White, Queen)) << std::endl;
-            ss << "   black queens:   " << format_bitboard(bitboard_for(*board, Black, Queen)) << std::endl;
-            ss << "   white king:     " << format_bitboard(bitboard_for(*board, White, King)) << std::endl;
-            ss << "   black king:     " << format_bitboard(bitboard_for(*board, Black, King)) << std::endl;
-            ss << "   white pieces:   " << format_bitboard(all_pieces_for(*board, White)) << std::endl;
-            ss << "   black pieces:   " << format_bitboard(all_pieces_for(*board, Black)) << std::endl;
-            ss << "   all pieces:     " << format_bitboard(total_pieces_for(*board)) << std::endl;
-            ss << "   en passant sq.: " << format_bitboard(en_passant_square_for(*board)) << std::endl;
+            ss << "   white pawns:    " << format_bitboard(bitboard_for(*pac_gen->get_board(), White, Pawn)) << std::endl;
+            ss << "   black pawns:    " << format_bitboard(bitboard_for(*pac_gen->get_board(), Black, Pawn)) << std::endl;
+            ss << "   white knights:  " << format_bitboard(bitboard_for(*pac_gen->get_board(), White, Knight)) << std::endl;
+            ss << "   black knights:  " << format_bitboard(bitboard_for(*pac_gen->get_board(), Black, Knight)) << std::endl;
+            ss << "   white bishops:  " << format_bitboard(bitboard_for(*pac_gen->get_board(), White, Bishop)) << std::endl;
+            ss << "   black bishops:  " << format_bitboard(bitboard_for(*pac_gen->get_board(), Black, Bishop)) << std::endl;
+            ss << "   white rooks:    " << format_bitboard(bitboard_for(*pac_gen->get_board(), White, Rook)) << std::endl;
+            ss << "   black rooks:    " << format_bitboard(bitboard_for(*pac_gen->get_board(), Black, Rook)) << std::endl;
+            ss << "   white queens:   " << format_bitboard(bitboard_for(*pac_gen->get_board(), White, Queen)) << std::endl;
+            ss << "   black queens:   " << format_bitboard(bitboard_for(*pac_gen->get_board(), Black, Queen)) << std::endl;
+            ss << "   white king:     " << format_bitboard(bitboard_for(*pac_gen->get_board(), White, King)) << std::endl;
+            ss << "   black king:     " << format_bitboard(bitboard_for(*pac_gen->get_board(), Black, King)) << std::endl;
+            ss << "   white pieces:   " << format_bitboard(all_pieces_for(*pac_gen->get_board(), White)) << std::endl;
+            ss << "   black pieces:   " << format_bitboard(all_pieces_for(*pac_gen->get_board(), Black)) << std::endl;
+            ss << "   all pieces:     " << format_bitboard(total_pieces_for(*pac_gen->get_board())) << std::endl;
+            ss << "   en passant sq.: " << format_bitboard(en_passant_square_for(*pac_gen->get_board())) << std::endl;
             ss << "-------------------------------------------------------------------------" << std::endl;
             throw std::runtime_error(ss.str());
         }

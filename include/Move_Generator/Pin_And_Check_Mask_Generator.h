@@ -5,19 +5,25 @@
 #ifndef PIN_AND_CHECK_MASK_GENERATOR_H
 #define PIN_AND_CHECK_MASK_GENERATOR_H
 
-#include "Board_Status.h"
-#include "Chess_Board.h"
 #include "Bit_Board.h"
+#include "Chess_Board.h"
 #include "Constants.h"
+
+
+namespace Kangaroo {
+    class Chess_Board;
+}
 
 namespace Kangaroo::Move_Generator {
 
-    template<Board_Status status>
+    template<Color color_to_move>
     class Pin_And_Check_Mask_Generator {
     public:
         constexpr explicit Pin_And_Check_Mask_Generator(Chess_Board *board) : m_board(board) {
             generate_pin_and_check_mask();
         }
+
+        constexpr Pin_And_Check_Mask_Generator(const Pin_And_Check_Mask_Generator &gen) = default;
 
         _ForceInline constexpr void generate_pin_and_check_mask() {
             using enum Pin_Masks_Suitable_For;
@@ -71,7 +77,7 @@ namespace Kangaroo::Move_Generator {
             const auto pieces_in_intersection = Bitcount(ray & total_pieces_for(*m_board));
 
             const auto player_pieces_in_intersection = Bitcount(
-                ray & all_pieces_for(*m_board, status.color_to_move));
+                ray & all_pieces_for(*m_board, color_to_move));
 
             // check if count of set bits in the intersection of the ray with all_pieces is two and that the piece in
             // between is of the same color as the King.
@@ -122,7 +128,7 @@ namespace Kangaroo::Move_Generator {
             using enum Chess_Pieces;
             using enum Pin_Masks_Suitable_For;
 
-            static_assert(status.color_to_move == White || status.color_to_move == Black, "Invalid color");
+            static_assert(color_to_move == White || color_to_move == Black, "Invalid color");
             static_assert(purpose == Detecting_Pins || purpose == Detecting_Check, "Invalid purpose");
 
             // reset the pin masks
@@ -133,16 +139,16 @@ namespace Kangaroo::Move_Generator {
             }
 
             // compute King position
-            const Square king_position = square_of(bitboard_for(*m_board, status.color_to_move, King));
+            const Square king_position = square_of(bitboard_for(*m_board, color_to_move, King));
 
             // loop over all the rooks of opposite color
-            Bitloop(bitboard_for(*m_board, enemy(status.color_to_move), Rook), rooks_remaining) {
+            Bitloop(bitboard_for(*m_board, enemy(color_to_move), Rook), rooks_remaining) {
                 // change the HV-pin-mask, if necessary
                 update_pin_mask_for_movement_like<Rook, purpose>(king_position, rooks_remaining);
             }
 
             // loop over all the queens of opposite color
-            Bitloop(bitboard_for(*m_board, enemy(status.color_to_move), Queen), queens_remaining) {
+            Bitloop(bitboard_for(*m_board, enemy(color_to_move), Queen), queens_remaining) {
                 // change the HV-pin-mask, if necessary
                 update_pin_mask_for_movement_like<Rook, purpose>(king_position, queens_remaining);
 
@@ -151,7 +157,7 @@ namespace Kangaroo::Move_Generator {
             }
 
             // loop over all the bishops of opposite color
-            Bitloop(bitboard_for(*m_board, enemy(status.color_to_move), Bishop), bishops_remaining) {
+            Bitloop(bitboard_for(*m_board, enemy(color_to_move), Bishop), bishops_remaining) {
                 // change the D-pin-mask, if necessary
                 update_pin_mask_for_movement_like<Bishop, purpose>(king_position, bishops_remaining);
             }

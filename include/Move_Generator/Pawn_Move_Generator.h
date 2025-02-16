@@ -42,9 +42,9 @@ namespace Kangaroo::Move_Generator {
 
     template<Board_Status status, template<Board_Status, Move_Type, Chess_Pieces, typename... Args_> class
         CallbackType>
-    class Pawn_Move_Generator : public virtual Pin_And_Check_Mask_Generator<status> {
+    class Pawn_Move_Generator : public virtual Pin_And_Check_Mask_Generator<status.color_to_move> {
     public:
-        constexpr explicit Pawn_Move_Generator(Chess_Board *board) : Pin_And_Check_Mask_Generator<status>(board) {
+        constexpr explicit Pawn_Move_Generator(Chess_Board *board) : Pin_And_Check_Mask_Generator<status.color_to_move>(board) {
         }
 
         template<Move_Generation_Mode mode, Move_Type move_type, typename... Args>

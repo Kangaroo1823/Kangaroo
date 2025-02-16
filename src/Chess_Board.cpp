@@ -243,7 +243,7 @@ namespace Kangaroo
     }
 
     Status_Callback_Template(Update_Check_Flag, Chess_Board* board) {
-        Move_Generator::Pin_And_Check_Mask_Generator<status> generator(board);
+        Move_Generator::Pin_And_Check_Mask_Generator<status.color_to_move> generator(board);
         return generator.get_check_mask();
     }
 }
@@ -255,9 +255,7 @@ std::unique_ptr<Kangaroo::Board_Status> Kangaroo::Chess_Board::update_check_flag
     using enum Color;
     using enum Chess_Pieces;
 
-    auto b = execute_status_callback_template<Update_Check_Flag,Dummy>(*status, this);
-
-    if (b) {
+    if (execute_status_callback_template<Update_Check_Flag,Dummy>(*status, this)) {
         status->check_p = true;
     } else {
         status->check_p = false;

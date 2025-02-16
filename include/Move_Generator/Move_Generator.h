@@ -17,7 +17,7 @@ namespace Kangaroo::Move_Generator
     {
     public:
         constexpr explicit Move_Generator(Chess_Board* board)
-            : Pin_And_Check_Mask_Generator<status>(board),
+            : Pin_And_Check_Mask_Generator<status.color_to_move>(board),
               Pawn_Move_Generator<status, CallbackType>(board)
         {
         }

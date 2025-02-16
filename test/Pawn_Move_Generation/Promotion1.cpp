@@ -18,7 +18,7 @@ namespace Kangaroo::Pawn_Move_Generation::Promotion1
         using enum Chess_Pieces;
         using enum Color;
 
-        spdlog::info(format_chess_board(*board, true, status));
+        spdlog::info(format_chess_board(*pac_gen->get_board(), true, status));
         spdlog::info(format_bitboard(move));
 
         const auto it = std::ranges::find(moves, move);
@@ -29,15 +29,15 @@ namespace Kangaroo::Pawn_Move_Generation::Promotion1
         };
 
 
-        if (const auto board_it = std::ranges::find(new_boards, *board); board_it == new_boards.end()) {
+        if (const auto board_it = std::ranges::find(new_boards, *pac_gen->get_board()); board_it == new_boards.end()) {
             std::stringstream ss;
-            ss << "board: " << *board << " not found in boards";
+            ss << "board: " << *pac_gen->get_board() << " not found in boards";
             throw std::runtime_error(ss.str());
         }
 
-        if (!board->is_state_consistent()) {
+        if (!pac_gen->get_board()->is_state_consistent()) {
             std::stringstream ss;
-            ss << "board: " << *board << " is not consistent";
+            ss << "board: " << *pac_gen->get_board() << " is not consistent";
 
             throw std::runtime_error(ss.str());
         }

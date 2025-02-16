@@ -17,7 +17,7 @@ namespace Kangaroo {
 
     Callback_Template_Inline(Benchmark_Callback, uint64_t &cntr) {
         ++cntr;
-        benchmark::DoNotOptimize(&board);
+        benchmark::DoNotOptimize(&pac_gen);
         benchmark::DoNotOptimize(&move);
     }
 

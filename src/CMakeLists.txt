@@ -83,7 +83,7 @@ add_library(Kangaroo_library
         ../include/Constants.h
         ../include/Types.h
         ../include/Board_Status.h
-        ../include/Move_Generator/Move_Receiver.h
+        ../include/Move_Generator/Board_Converter.h
         ../include/Move_Generator/Pin_And_Check_Mask_Generator.h
         ../include/Move_Generator/Pawn_Move_Generator.h
         ../include/Move_Evaluator/Movement_Evaluator.h

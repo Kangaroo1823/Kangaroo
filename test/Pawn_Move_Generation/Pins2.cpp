@@ -20,17 +20,17 @@ namespace Kangaroo::Pawn_Move_Generation::Pins2
         };
 
 
-        if (const auto board_it = std::ranges::find(new_boards, *board); board_it == new_boards.end())
+        if (const auto board_it = std::ranges::find(new_boards, *pac_gen->get_board()); board_it == new_boards.end())
         {
             std::stringstream ss;
-            ss << "board: " << *board << " not found in boards";
+            ss << "board: " << *pac_gen->get_board() << " not found in boards";
             throw std::runtime_error(ss.str());
         }
 
-        if (!board->is_state_consistent())
+        if (!pac_gen->get_board()->is_state_consistent())
         {
             std::stringstream ss;
-            ss << "board: " << *board << " is not consistent";
+            ss << "board: " << *pac_gen->get_board() << " is not consistent";
 
             throw std::runtime_error(ss.str());
         }

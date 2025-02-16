@@ -5,7 +5,7 @@
 #ifndef CALLBACK_HANDLER_H
 #define CALLBACK_HANDLER_H
 #include "Board_Status.h"
-#include "Move_Receiver.h"
+#include "Board_Converter.h"
 
 
 namespace Kangaroo::Move_Generator {
@@ -24,7 +24,7 @@ namespace Kangaroo::Move_Generator {
             const Bitboard from,
             const Bitboard to,
             Args... args) {
-            Move_Receiver<status, move_type, piece, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
+            Board_Converter<status, move_type, piece, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
         }
     };
 
@@ -35,10 +35,10 @@ namespace Kangaroo::Move_Generator {
     public:
         _ForceInline static constexpr void handle_callback(Chess_Board *board, const Bitboard from,
                                                            const Bitboard to, Args... args) {
-            Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Queen, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
-            Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
-            Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Bishop, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
-            Move_Receiver<status, Move_Type::Promotion, Chess_Pieces::Knight, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
+            Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Queen, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
+            Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
+            Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Bishop, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
+            Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Knight, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
         }
     };
 
@@ -48,13 +48,13 @@ namespace Kangaroo::Move_Generator {
     public:
         _ForceInline static constexpr void handle_callback(Chess_Board *board, const Bitboard from,
                                                            const Bitboard to, Args... args) {
-            Move_Receiver<status, Move_Type::Capture_Promotion, Chess_Pieces::Queen, CallbackType, Args...>::evaluate_and_perform_move(
+            Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Queen, CallbackType, Args...>::evaluate_and_perform_move(
                 board, from, to, args...);
-            Move_Receiver<status, Move_Type::Capture_Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(
+            Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(
                 board, from, to, args...);
-            Move_Receiver<status, Move_Type::Capture_Promotion, Chess_Pieces::Bishop, CallbackType, Args...>::evaluate_and_perform_move(
+            Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Bishop, CallbackType, Args...>::evaluate_and_perform_move(
                 board, from, to, args...);
-            Move_Receiver<status, Move_Type::Capture_Promotion, Chess_Pieces::Knight, CallbackType, Args...>::evaluate_and_perform_move(
+            Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Knight, CallbackType, Args...>::evaluate_and_perform_move(
                 board, from, to, args...);
         }
     };
