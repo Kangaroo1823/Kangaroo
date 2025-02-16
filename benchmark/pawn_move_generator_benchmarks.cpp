@@ -27,7 +27,7 @@ namespace Kangaroo {
     // cppcheck-suppress constParameterCallback
     static void BM_move_generator(benchmark::State &state) {
 
-        [[maybe_unused]] auto s  = board->reset_board(fen_tricky_position_w);
+        [[maybe_unused]] auto s  = board->reset_board(fen_start_position);
 
         for ([[maybe_unused]] auto _: state) {
 
@@ -39,7 +39,7 @@ namespace Kangaroo {
         }
     }
 
-    BENCHMARK(BM_move_generator)->Iterations(1000000000);
+    BENCHMARK(BM_move_generator);
 }
 
 

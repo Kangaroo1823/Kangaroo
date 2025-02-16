@@ -46,6 +46,8 @@ namespace Kangaroo::Move_Generator {
     public:
         constexpr explicit Pawn_Move_Generator(Chess_Board *board) : Pin_And_Check_Mask_Generator<status.color_to_move>(board) {
         }
+        constexpr explicit Pawn_Move_Generator(const Pin_And_Check_Mask_Generator<status.color_to_move> &pac_gen) : Pin_And_Check_Mask_Generator<status.color_to_move>(pac_gen) {
+        }
 
         template<Move_Generation_Mode mode, Move_Type move_type, typename... Args>
         std::size_t evaluate_pawn_move(const Bitboard from, const Bitboard to, Args... args) {

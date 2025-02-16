@@ -91,6 +91,7 @@ add_library(Kangaroo_library
         Logger.cpp
         ../include/Logger.h
         ../include/Move_Generator/Callback_Handler.h
+        ../include/Move_Generator/Knight_Move_Generator.h
 )
 target_link_libraries(Kangaroo_library
         PUBLIC
