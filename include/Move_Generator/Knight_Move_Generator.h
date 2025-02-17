@@ -6,6 +6,7 @@
 #define KNIGHT_MOVE_GENERATOR_H
 
 #include "Board_Status.h"
+#include "Callback_Handler.h"
 #include "Chess_Board.h"
 #include "constants_attacks.h"
 
@@ -15,34 +16,56 @@ namespace Kangaroo::Move_Generator {
 
     class Knight_Move_Generator : public virtual Pin_And_Check_Mask_Generator<status.color_to_move> {
     public:
-        constexpr explicit Knight_Move_Generator(Chess_Board* board) : Pin_And_Check_Mask_Generator<status.color_to_move>(board) {}
-        constexpr explicit Knight_Move_Generator(const Pin_And_Check_Mask_Generator<status.color_to_move> &pac_gen) : Pin_And_Check_Mask_Generator<status.color_to_move>(pac_gen) {}
+        constexpr explicit
+        Knight_Move_Generator(Chess_Board *board) : Pin_And_Check_Mask_Generator<status.color_to_move>(board) {
+        }
+
+        constexpr explicit
+        Knight_Move_Generator(
+            const Pin_And_Check_Mask_Generator<status.color_to_move> &pac_gen) : Pin_And_Check_Mask_Generator<status.
+            color_to_move>(pac_gen) {
+        }
 
         template<Move_Generation_Mode mode, typename... Args>
         [[nodiscard]] _ForceInline constexpr std::size_t generate_knight_moves(Args... args) {
+
+            static_assert(status.color_to_move == Color::White || status.color_to_move == Color::Black);
+            static_assert(mode == Move_Generation_Mode::Normal_Move_Generation);
 
             using enum Move_Generation_Mode;
             using enum Chess_Pieces;
 
             std::size_t moves = 0;
 
-            Bitboard knights = bitboard_for(*this->get_board(), status.color_to_move, Knight) & ~(this->get_pin_mask_D() | this->get_pin_mask_HV());
+            if constexpr (mode == Normal_Move_Generation) {
+                Bitboard knights =
+                        bitboard_for(*this->get_board(), status.color_to_move, Knight) & ~(
+                            this->get_pin_mask_D() | this->get_pin_mask_HV());
 
-            Bitloop(knights, knights_remaining) {
-                Bitboard knight = bitboard_square_of(knights_remaining);
-                Bitboard possible_night_moves = Constants::knight_attacks[knight] & !all_pieces_for(*this->get_board(), status.color_to_move);
+                Bitloop(knights, knights_remaining) {
+                    const Bitboard from = bitboard_square_of(knights_remaining);
+                    Bitboard possible_night_moves = Constants::knight_attacks[from] & !all_pieces_for(
+                                                        *this->get_board(), status.color_to_move);
 
-                Bitloop(possible_night_moves, possible_night_moves_remaining) {
-                    Bitboard to = bitboard_square_of(possible_night_moves_remaining);
+                    Bitboard possible_night_captures = possible_night_moves & all_pieces_for(
+                                                           *this->get_board(), enemy(status.color_to_move));
+                    possible_night_moves = possible_night_moves ^ possible_night_captures;
 
-                    if ( to & all_pieces_for(*this->get_board(), enemy(status.color_to_move))) {
+                    Bitloop(possible_night_moves, possible_night_moves_remaining) {
+                        Bitboard to = bitboard_square_of(possible_night_moves_remaining);
 
-                    } else {
-
+                        Callback_Handler<status, Move_Type::Normal, Chess_Pieces::Knight, CallbackType, Args
+                            ...>::handle_callback(this->get_board(), from, to, args...);
+                        ++moves;
                     }
 
+                    Bitloop(possible_night_captures, possible_night_captures_remaining) {
+                        Bitboard to = bitboard_square_of(possible_night_captures_remaining);
+                        Callback_Handler<status, Move_Type::Capture, Chess_Pieces::Knight, CallbackType, Args
+                            ...>::handle_callback(this->get_board(), from, to, args...);
+                        ++moves;
+                    }
                 }
-
             }
 
             return moves;

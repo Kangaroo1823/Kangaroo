@@ -157,10 +157,10 @@ namespace Kangaroo::Move_Generator {
                 if constexpr (mode == Normal_Move_Generation || mode == Pin_HV_Move_Generation ||
                               mode == Promotion_Move_Generation) {
                     // compute the moved Pawn
-                    const Bitboard to = regular_pawn_push<status.color_to_move>(from);
 
                     // and check if it is admissible.
-                    if (is_pawn_push_admissible<mode>(from, to, total_pieces_for(*(this->get_board())))) {
+                    if (const Bitboard to = regular_pawn_push<status.color_to_move>(from);
+                        is_pawn_push_admissible<mode>(from, to, total_pieces_for(*(this->get_board())))) {
                         moves += evaluate_pawn_move<mode, Pawn_Move_Generator_Internal::get_capture_move_type<mode, Normal>(), Args...>(from, to, args...);
                     }
                 }
