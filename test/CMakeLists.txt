@@ -31,7 +31,7 @@ add_executable(Kangaroo_tests
         Pawn_Move_Generation/Check1.cpp)
 target_link_libraries(Kangaroo_tests
         PRIVATE
-        Kangaroo_library
+        Kangaroo
         Kangaroo_options
         Kangaroo_warnings
         gtest

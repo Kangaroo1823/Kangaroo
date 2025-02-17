@@ -20,6 +20,13 @@ project(
         HOMEPAGE_URL "https://github.com/pml76/Kangaroo"
         LANGUAGES CXX C)
 
+
+# set the visibility default to hidden. We do this in order to achieve good inlining
+# for private functions/methods. Exported function/macros are marked as such.
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
 include(cmake/PreventInSourceBuilds.cmake)
 
 include(KangarooOptions.cmake)

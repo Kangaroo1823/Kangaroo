@@ -1,5 +1,7 @@
 set( CMAKE_VERBOSE_MAKEFILE ON )
 
+include(GenerateExportHeader)
+
 if(NOT TARGET Kangaroo_options)
     message(ERROR " Need target 'Kangaroo_options' to build Kangaroo_library")
 endif ()
@@ -36,45 +38,45 @@ endif ()
 #)
 # FetchContent_MakeAvailable(Boost)
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2" )
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj /EHsc /arch:AVX2" )
-    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} /bigobj /EHsc /arch:AVX2" )
-
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ot")
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /Ot")
-    set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} /O2 /Ot")
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
-        # using clang with clang-cl front end
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2 " )
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj /EHsc /arch:AVX2" )
-        set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} /bigobj /EHsc /arch:AVX2" )
-
-        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ot")
-        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /Ot")
-        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} /O2 /Ot")
-    elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
-        # using clang with regular front end
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
-        set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
-
-       # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
-       # set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
-       # set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
-    endif()
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
-    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
-
-endif()
+#if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2" )
+#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj /EHsc /arch:AVX2" )
+#    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} /bigobj /EHsc /arch:AVX2" )
+#
+#    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ot")
+#    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /Ot")
+#    set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} /O2 /Ot")
+#elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#    if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+#        # using clang with clang-cl front end
+#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /EHsc /arch:AVX2 " )
+#        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj /EHsc /arch:AVX2" )
+#        set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} /bigobj /EHsc /arch:AVX2" )
+#
+#        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ot")
+#        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /Ot")
+#        set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} /O2 /Ot")
+#    elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
+#        # using clang with regular front end
+#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
+#        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
+#        set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
+#
+#       # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -flto")
+#       # set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -flto")
+#       # set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -march=native -O3 -flto")
+#    endif()
+#else()
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64-v3")
+#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64-v3")
+#    set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -march=x86-64-v3")
+#
+#endif()
 
 find_package(OpenMP)
 
 # create a library to hold the tested logic of the ChessEngine
-add_library(Kangaroo_library
+add_library(Kangaroo
         Bit_Board.cpp
         Chess_Board.cpp
         ../include/Bit_Board.h
@@ -93,36 +95,37 @@ add_library(Kangaroo_library
         ../include/Move_Generator/Callback_Handler.h
         ../include/Move_Generator/Knight_Move_Generator.h
 )
-target_link_libraries(Kangaroo_library
+target_link_libraries(Kangaroo
         PUBLIC
         Kangaroo_warnings
         Kangaroo_options
         spdlog::spdlog
         fmt::fmt
 )
-target_compile_definitions(Kangaroo_library PUBLIC LOG_DIRECTORY="${CMAKE_BINARY_DIR}")
-
+target_compile_definitions(Kangaroo PUBLIC LOG_DIRECTORY="${CMAKE_BINARY_DIR}")
+generate_export_header(Kangaroo)
 if(OpenMP_CXX_FOUND)
-    target_link_libraries(Kangaroo_library PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(Kangaroo PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_link_libraries(Kangaroo_library PRIVATE stdc++exp)
+    target_link_libraries(Kangaroo PRIVATE stdc++exp)
 endif ()
 
 
-target_include_directories(Kangaroo_library PRIVATE ../include)
-target_include_directories(Kangaroo_library PUBLIC ${CMAKE_BINARY_DIR})
-add_dependencies(Kangaroo_library generate_files)
+target_include_directories(Kangaroo PUBLIC ../include)
+target_include_directories(Kangaroo PUBLIC ${CMAKE_BINARY_DIR}/src)
+target_include_directories(Kangaroo PUBLIC ${CMAKE_BINARY_DIR})
+add_dependencies(Kangaroo generate_files)
 
 
 # take care of the main executable
-add_executable(Kangaroo
+add_executable(Kangaroo_bin
         main.cpp
 )
-target_link_libraries(Kangaroo
+target_link_libraries(Kangaroo_bin
         PRIVATE
-        Kangaroo_library
+        Kangaroo
         Kangaroo_options
         Kangaroo_warnings
         fmt::fmt
@@ -130,14 +133,14 @@ target_link_libraries(Kangaroo
 )
 
 if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_link_libraries(Kangaroo PRIVATE stdc++exp)
+    target_link_libraries(Kangaroo_bin PRIVATE stdc++exp)
 endif ()
 
-target_include_directories(Kangaroo PRIVATE ../include)
+target_include_directories(Kangaroo_bin PRIVATE ../include)
 
 
 if(Kangaroo_ENABLE_IPO)
     include(../cmake/InterproceduralOptimization.cmake)
-    Kangaroo_enable_ipo_for_target(Kangaroo_library)
     Kangaroo_enable_ipo_for_target(Kangaroo)
+    Kangaroo_enable_ipo_for_target(Kangaroo_bin)
 endif()
