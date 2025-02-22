@@ -23,7 +23,6 @@ namespace Kangaroo::Pawn_Move_Generation::EnPassant1
 
         if (std::ranges::find(new_boards, *pac_gen->get_board()) == new_boards.end())
         {
-            print_chess_board(*pac_gen->get_board());
             throw std::runtime_error("board not found in new_boards");
         }
     }

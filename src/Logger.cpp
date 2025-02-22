@@ -35,6 +35,5 @@ std::shared_ptr<spdlog::logger> init_logger() {
 
     spdlog::set_default_logger(l);
 
-    test_logger();
     return l;
 }

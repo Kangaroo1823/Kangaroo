@@ -26,9 +26,8 @@ TEST(Attack_Tables_Generator, slider_attack_test) {
     constexpr auto position = Square::E4;
 
     constexpr Bitboard mask = Constants::rook_attack_masks[std::to_underlying(position)];
-    const std::size_t hash_index = create_magic_hash_index<Chess_Pieces::Rook>(position, occupancy, Bitcount(mask));
+    [[maybe_unused]] const std::size_t hash_index = create_magic_hash_index<Chess_Pieces::Rook>(position, occupancy, Bitcount(mask));
 
-    print_bitboard(Constants::rook_attack_table[hash_index]);
 
     ASSERT_TRUE(true);
 }
@@ -135,8 +134,6 @@ Bitboard is_position_attacked_by_test_rig(const std::string_view fen) {
     auto board = std::make_unique<Kangaroo::Chess_Board>();
     [[maybe_unused]] auto s = board->reset_board(fen);
 
-    print_chess_board(*board);
-
     Bitboard result = 0ULL;
 
     for (std::size_t rank = 0; rank < 8; ++rank) {
@@ -149,7 +146,6 @@ Bitboard is_position_attacked_by_test_rig(const std::string_view fen) {
         }
     }
 
-    print_bitboard(result);
 
     return result;
 }

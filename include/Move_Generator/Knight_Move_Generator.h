@@ -44,8 +44,11 @@ namespace Kangaroo::Move_Generator {
 
                 Bitloop(knights, knights_remaining) {
                     const Bitboard from = bitboard_square_of(knights_remaining);
-                    Bitboard possible_night_moves = Constants::knight_attacks[from] & !all_pieces_for(
-                                                        *this->get_board(), status.color_to_move);
+                    Bitboard possible_night_moves = Constants::knight_attacks[std::to_underlying(square_of(from))] & ~all_pieces_for( *this->get_board(), status.color_to_move);
+
+                    if constexpr (status.check_p) {
+                        possible_night_moves &= this->get_check_mask();
+                    }
 
                     Bitboard possible_night_captures = possible_night_moves & all_pieces_for(
                                                            *this->get_board(), enemy(status.color_to_move));
@@ -56,7 +59,7 @@ namespace Kangaroo::Move_Generator {
 
                         Callback_Handler<status, Move_Type::Normal, Chess_Pieces::Knight, CallbackType, Args
                             ...>::handle_callback(this->get_board(), from, to, args...);
-                        ++moves;
+                        ++moves; // -V779
                     }
 
                     Bitloop(possible_night_captures, possible_night_captures_remaining) {

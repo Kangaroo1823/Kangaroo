@@ -51,7 +51,6 @@ TEST(Mask_Generator, rook_attack_masks) {
     // tests for rooks
     for (const Square &position : All_Positions) {
         const Bitboard board = create_rook_attack_mask(position);
-        print_bitboard(board);
 
         ASSERT_EQ(create_attack_mask_for<Chess_Pieces::Rook>(position), board);
     }
@@ -60,7 +59,6 @@ TEST(Mask_Generator, rook_attack_masks) {
     for (const Square &position : All_Positions) {
 
         const Bitboard board = create_bishop_attack_mask(position);
-        print_bitboard(board);
         ASSERT_EQ(create_attack_mask_for<Chess_Pieces::Bishop>(position), board);
     }
 }

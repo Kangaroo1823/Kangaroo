@@ -61,7 +61,7 @@ namespace Kangaroo::Move_Generator {
                         Callback_Handler<status, move_type, Chess_Pieces::Pawn, CallbackType, Args
                             ...>::handle_callback(
                             this->get_board(), from, to, args...);
-                        moves += 4ULL;
+                        moves += 4ULL; // -V779
                     }
                 } else {
                     // if so, perform the move and call the callback function.
@@ -234,7 +234,7 @@ namespace Kangaroo::Move_Generator {
                             this->get_board(), from, to, args...);
 
                         // increment the number of moves generated.
-                        ++moves;
+                        ++moves; // -V779
                     }
                 }
             } else {

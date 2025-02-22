@@ -13,8 +13,6 @@ namespace Kangaroo::Pawn_Move_Generation::Check1
 
     Callback_Template_Inline(Pawn_Movement_Generator_Test11_Callback, const std::array<Chess_Board, 1> &new_boards) {
 
-        print_chess_board(*pac_gen->get_board(), true);
-
 
         if (status.color_to_move != Color::Black) {
             throw std::runtime_error("color should be black");
@@ -84,8 +82,6 @@ namespace Kangaroo::Pawn_Move_Generation::Check1
 
         Chess_Board board{};
         const auto status = board.reset_board("8/8/8/8/K6r/8/3P4/8 w kqKQ - 0 1");
-
-        print_chess_board(board);
 
         const std::size_t n = execute_status_callback_template<Pawn_Movement_Generator_Test11,
         Pawn_Movement_Generator_Test11_Callback>(*status, &board, new_boards);

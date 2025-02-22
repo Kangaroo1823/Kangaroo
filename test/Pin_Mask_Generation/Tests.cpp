@@ -25,7 +25,6 @@ namespace Kangaroo::Pin_Mask_Generation::Test
 
     Status_Callback_Template(Compare_Pin_Mask_D2, Chess_Board * board, const Bitboard value, const std::string& str) {
         Move_Generator::Move_Generator<status, CallbackType> gen(board);
-        print_bitboard(gen.get_pin_mask_D());
         ASSERT_EQ(gen.get_pin_mask_D(), value) << str;
     }
 
@@ -172,7 +171,6 @@ namespace Kangaroo::Pin_Mask_Generation::Test
             *s, &board, 0x0, "33th test not true");
 
         s = board.reset_board("8/6k1/8/8/3p4/8/1B6/8 b - - 0 1 ");
-        print_chess_board(board);
         execute_status_callback_template<Compare_Pin_Mask_D, Dummy, Chess_Board *, const Bitboard>(// -V530
             *s, &board, 0x201008040200, "34th test not true");
 

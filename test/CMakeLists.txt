@@ -28,7 +28,11 @@ add_executable(Kangaroo_tests
         Pawn_Move_Generation/EnPassant2.cpp
         Pawn_Move_Generation/EnPassant3.cpp
         Pawn_Move_Generation/EnPassant4.cpp
-        Pawn_Move_Generation/Check1.cpp)
+        Pawn_Move_Generation/Check1.cpp
+        Knight_Move_Generation/Simple.cpp
+        Knight_Move_Generation/PinHV.cpp
+        Knight_Move_Generation/PinD.cpp
+        Knight_Move_Generation/Check1.cpp)
 target_link_libraries(Kangaroo_tests
         PRIVATE
         Kangaroo

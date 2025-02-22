@@ -36,7 +36,7 @@ namespace Kangaroo::Move_Generator {
         _ForceInline static constexpr void handle_callback(Chess_Board *board, const Bitboard from,
                                                            const Bitboard to, Args... args) {
             Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Queen, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
-            Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
+            Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...); // -V779
             Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Bishop, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
             Board_Converter<status, Move_Type::Promotion, Chess_Pieces::Knight, CallbackType, Args...>::evaluate_and_perform_move(board, from, to, args...);
         }
@@ -50,7 +50,7 @@ namespace Kangaroo::Move_Generator {
                                                            const Bitboard to, Args... args) {
             Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Queen, CallbackType, Args...>::evaluate_and_perform_move(
                 board, from, to, args...);
-            Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move(
+            Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Rook, CallbackType, Args...>::evaluate_and_perform_move( // -V779
                 board, from, to, args...);
             Board_Converter<status, Move_Type::Capture_Promotion, Chess_Pieces::Bishop, CallbackType, Args...>::evaluate_and_perform_move(
                 board, from, to, args...);

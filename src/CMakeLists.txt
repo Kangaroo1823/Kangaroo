@@ -102,6 +102,8 @@ target_link_libraries(Kangaroo
         spdlog::spdlog
         fmt::fmt
 )
+
+
 target_compile_definitions(Kangaroo PUBLIC LOG_DIRECTORY="${CMAKE_BINARY_DIR}")
 generate_export_header(Kangaroo)
 if(OpenMP_CXX_FOUND)

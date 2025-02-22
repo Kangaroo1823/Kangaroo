@@ -4,6 +4,7 @@
 
 #ifndef MOVE_GENERATOR_H
 #define MOVE_GENERATOR_H
+#include "Knight_Move_Generator.h"
 
 #endif //MOVE_GENERATOR_H
 
@@ -17,17 +18,21 @@ namespace Kangaroo::Move_Generator
     template <Board_Status status, template<Board_Status, Move_Type, Chess_Pieces, typename... Args_> class
               CallbackType>
     class Move_Generator : public Pawn_Move_Generator<status, CallbackType>
+        , public Knight_Move_Generator<status, CallbackType>
     {
     public:
         constexpr explicit Move_Generator(Chess_Board* board)
-            : Pin_And_Check_Mask_Generator<status.color_to_move>(board),
-              Pawn_Move_Generator<status, CallbackType>(board)
+            : Pin_And_Check_Mask_Generator<status.color_to_move>(board)
+            , Pawn_Move_Generator<status, CallbackType>(board)
+            , Knight_Move_Generator<status, CallbackType>(board)
+
         {
         }
 
         constexpr explicit Move_Generator(const Pin_And_Check_Mask_Generator<status.color_to_move> &pac_gen)
         : Pin_And_Check_Mask_Generator<status.color_to_move>(pac_gen)
         , Pawn_Move_Generator<status, CallbackType>(pac_gen)
+        , Knight_Move_Generator<status, CallbackType>(pac_gen)
         {
         }
 
