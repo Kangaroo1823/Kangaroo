@@ -13,7 +13,7 @@
 #include <utility>                         // for to_underlying
 
 
-#include "../tools/attack_masks.h"
+#include "../tools/Attack_Masks.h"
 #include "../include/Bit_Board.h"           // for Bitboard, Position, print_...
 #include "gtest/gtest.h"    // for StringRef, AssertionHandler
 

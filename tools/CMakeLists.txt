@@ -14,7 +14,7 @@ add_executable(Kangaroo_constants_generator_masks
         constants_generator.cpp
         ../include/Bit_Board.h
         ../src/Bit_Board.cpp
-        attack_masks.h
+        Attack_Masks.h
         create_possible_slider_moves.h
         ../include/Base.h
         ../include/Constants.h
@@ -67,11 +67,11 @@ add_custom_target(
 add_executable(Kangaroo_constants_generator_magics constants_generator.cpp
         ../include/Bit_Board.h
         ../src/Bit_Board.cpp
-        attack_masks.h
+        Attack_Masks.h
         create_possible_slider_moves.h
         ../include/Base.h
-        magic_numbers.h
-        magic_numbers.cpp
+        Magic_Numbers.h
+        Magic_Numbers.cpp
         ../include/Constants.h
         ../include/Types.h
         move_generator.h)
@@ -118,11 +118,11 @@ add_executable(Kangaroo_constants_generator_attacks
         constants_generator.cpp
         ../include/Bit_Board.h
         ../src/Bit_Board.cpp
-        attack_masks.h
+        Attack_Masks.h
         create_possible_slider_moves.h
         ../include/Base.h
-        magic_numbers.h
-        magic_numbers.cpp
+        Magic_Numbers.h
+        Magic_Numbers.cpp
         ../include/Constants.h
         ../include/Types.h
         move_generator.h)

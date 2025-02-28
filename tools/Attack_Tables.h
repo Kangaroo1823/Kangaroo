@@ -10,7 +10,8 @@
 #include <vector>
 
 #include "../include/Bit_Board.h"
-#include "magic_numbers.h"
+#include "../include/Address_Attack_Tables.h"
+#include "Magic_Numbers.h"
 #include "constants_magics.h"
 
 /**********************************************************************************
@@ -18,43 +19,20 @@
  *********************************************************************************/
 
 
-template<Chess_Pieces slider>
-constexpr std::size_t create_hash_index(const Square position, const Bitboard occupancy,
-                                        const int64_t relevant_bits) {
-    if constexpr (slider == Chess_Pieces::Bishop) {
-        return (occupancy * Constants::bishop_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
-    } else {
-        return (occupancy * Constants::rook_magic_numbers[std::to_underlying(position)]) >> (64 - relevant_bits);
-    }
-}
-
-
-template<Chess_Pieces slider>
-constexpr std::size_t create_magic_hash_index(const Square position, const Bitboard occupancy,
-                                              const int64_t relevant_bits) {
-    const std::size_t offset = (slider == Chess_Pieces::Bishop ? 512 : 4096) * std::to_underlying(position);
-
-    return offset + create_hash_index<slider>(position, occupancy, relevant_bits);
-}
 
 
 template<Chess_Pieces slider>
 /**
- * Computes the attack mask for a sliding piece (rook or bishop) based on its position
- * on the board. The function determines if the slider is a bishop or rook and retrieves
- * the corresponding attack mask from the predefined constants.
+ * Generates an attack table for sliding pieces (rooks or bishops) based on their movement
+ * patterns on the chessboard. The function precomputes all possible attack bitboards
+ * for each position on the board, considering obstacles and movement ranges.
  *
- * @param position The position of the sliding piece on the chess board (e.g., A1, B2, etc.).
- * @return The attack mask represented as a Bitboard, defining all possible attack moves
- *         from the given position for the respective slider.
+ * @param position The position where the slider is on the board.
+ * @tparam slider  Specifies the type of sliding piece (rook or bishop) for which the attack
+ *                 table is being created.
+ * @return A comprehensive mapping of board positions to their corresponding attack bitboards,
+ *         indicating all valid movements for the given piece type at each position.
  */
-constexpr Bitboard get_attack_mask_for_slider(const Square position) {
-    return slider == Chess_Pieces::Bishop
-               ? Constants::bishop_attack_masks[std::to_underlying(position)]
-               : Constants::rook_attack_masks[std::to_underlying(position)];
-}
-
-template<Chess_Pieces slider>
 constexpr std::array<Bitboard, slider == Chess_Pieces::Bishop ? 512 : 4096>
 create_attack_table_for(const Square position) {
     const Bitboard mask = get_attack_mask_for_slider<slider>(position);

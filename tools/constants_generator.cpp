@@ -10,19 +10,19 @@
 #include <ranges>
 #include <algorithm>
 
-#include "attack_masks.h"
+#include "Attack_Masks.h"
 #include "Types.h"
 
 #ifdef GENERATE_ATTACKS
-#include "attack_tables.h"
+#include "Attack_Tables.h"
 #endif
 
 #ifdef GENERATE_MAGICS
-#include "magic_numbers.h"
+#include "Magic_Numbers.h"
 #endif
 
 #ifdef GENERATE_MASKS
-#include "attack_masks.h"
+#include "Attack_Masks.h"
 #endif
 
 

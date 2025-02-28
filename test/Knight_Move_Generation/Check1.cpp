@@ -12,7 +12,7 @@ namespace Kangaroo::Knight_Move_Generation::PinCheck1 {
                              2> &new_boards, const std::array<Bitboard, 2> &moves) {
         using enum Chess_Pieces;
         using enum Color;
-        
+
         const auto it = std::ranges::find(moves, move);
         if (it == moves.end()) {
             std::stringstream ss;

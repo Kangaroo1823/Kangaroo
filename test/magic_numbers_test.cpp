@@ -9,7 +9,7 @@
 #include "gtest/gtest.h"  // for AssertionHandler, StringRef
 
 #include "Bit_Board.h"
-#include "magic_numbers.h"
+#include "Magic_Numbers.h"
 #include "constants_masks.h"
 #include "constants_magics.h"
 

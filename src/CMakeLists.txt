@@ -94,6 +94,9 @@ add_library(Kangaroo
         ../include/Logger.h
         ../include/Move_Generator/Callback_Handler.h
         ../include/Move_Generator/Knight_Move_Generator.h
+        ../include/Move_Generator/Rook_Move_Generator.h
+        ../include/Address_Attack_Tables.h
+        ../include/Get_Attacks_For.h
 )
 target_link_libraries(Kangaroo
         PUBLIC

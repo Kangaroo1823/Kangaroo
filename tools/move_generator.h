@@ -9,7 +9,7 @@
 #include <filesystem>
 #include "../include/Board_Status.h"
 #include "constants_attacks.h"
-#include "../tools/attack_tables.h"
+#include "../tools/Attack_Tables.h"
 #include "../include/Chess_Board.h"
 
 template<Chess_Pieces slider>
