@@ -14,8 +14,8 @@ function(Kangaroo_setup_dependencies)
         cpmaddpackage(
                 NAME fmt
                 GITHUB_REPOSITORY fmtlib/fmt
-                GIT_TAG 11.1.3
-                VERSION 11.1.3
+                GIT_TAG 11.1.4
+                VERSION 11.1.4
         )
     endif ()
 
@@ -47,7 +47,7 @@ function(Kangaroo_setup_dependencies)
                 NAME googletest
                 GITHUB_REPOSITORY google/googletest
                 GIT_TAG release-1.12.1
-                VERSION 1.15.2
+                VERSION 1.16.0
                 OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
         )
     endif ()
@@ -62,7 +62,7 @@ function(Kangaroo_setup_dependencies)
                 NAME
                 benchmark
                 VERSION
-                1.9.1
+                1.9.2
                 GITHUB_REPOSITORY
                 "google/benchmark"
         )
@@ -73,7 +73,7 @@ function(Kangaroo_setup_dependencies)
                 NAME
                 spdlog
                 VERSION
-                1.15.1
+                1.15.2
                 GITHUB_REPOSITORY
                 "gabime/spdlog"
                 OPTIONS
