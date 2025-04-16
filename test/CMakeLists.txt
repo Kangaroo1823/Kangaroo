@@ -32,7 +32,8 @@ add_executable(Kangaroo_tests
         Knight_Move_Generation/Simple.cpp
         Knight_Move_Generation/PinHV.cpp
         Knight_Move_Generation/PinD.cpp
-        Knight_Move_Generation/Check1.cpp)
+        Knight_Move_Generation/Check1.cpp
+        Rook_Move_Generation/Simple1.cpp)
 target_link_libraries(Kangaroo_tests
         PRIVATE
         Kangaroo
