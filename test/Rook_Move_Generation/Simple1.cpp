@@ -8,10 +8,14 @@
 #include <gtest/gtest.h>
 
 namespace Kangaroo::Rook_Move_Generation::Simple {
-    Callback_Template_Inline(Pawn_Movement_Generator_Test2_Callback,const std::array<Chess_Board,
+    Callback_Template_Inline(Rook_Movement_Generator_Test2_Callback,const std::array<Chess_Board,
                              4> &new_boards, const std::array<Bitboard, 4> &moves) {
         using enum Chess_Pieces;
         using enum Color;
+
+
+        print_chess_board(*pac_gen->get_board());
+        return;
 
 
         const auto it = std::ranges::find(moves, move);
@@ -67,10 +71,10 @@ namespace Kangaroo::Rook_Move_Generation::Simple {
         }
     }
 
-    Status_Callback_Template(Pawn_Movement_Generator_Test2, Chess_Board* board,
+    Status_Callback_Template(Rook_Movement_Generator_Test2, Chess_Board* board,
                              const std::array<Chess_Board, 4> &chess_boards, const std::array<Bitboard, 4> &moves) {
         Move_Generator::Move_Generator<status, CallbackType> generator(board);
-        return generator.generate_knight_movements(chess_boards, moves);
+        return generator.generate_rook_movements(chess_boards, moves);
     }
 
 
@@ -263,10 +267,11 @@ namespace Kangaroo::Rook_Move_Generation::Simple {
 
 
         Chess_Board board{};
-        const auto status = board.reset_board(fen_start_position);
+        const auto status = board.reset_board("8/8/8/8/8/8/8/R7 w KQkq - 0 1 ");
 
-        const std::size_t n = execute_status_callback_template<Pawn_Movement_Generator_Test2,
-            Pawn_Movement_Generator_Test2_Callback, Chess_Board *,
+
+        const std::size_t n = execute_status_callback_template<Rook_Movement_Generator_Test2,
+            Rook_Movement_Generator_Test2_Callback, Chess_Board *,
             const std::array<Chess_Board, 4> &, const std::array<
                 Move, 4> &>(*status, &board, new_boards, moves);
 
