@@ -74,14 +74,14 @@ namespace Kangaroo::Move_Generator {
                 Bitloop(possible_queen_moves, possible_queen_moves_remaining) {
                     Bitboard to = bitboard_square_of(possible_queen_moves_remaining);
 
-                    Callback_Handler<status, Move_Type::Normal, Bishop, CallbackType, Args
+                    Callback_Handler<status, Move_Type::Normal, Queen, CallbackType, Args
                         ...>::handle_callback(this->get_board(), from, to, args...);
                     ++moves; // -V779
                 }
 
                 Bitloop(possible_queen_captures, possible_rook_captures_remaining) {
                     Bitboard to = bitboard_square_of(possible_rook_captures_remaining);
-                    Callback_Handler<status, Move_Type::Capture, Bishop, CallbackType, Args
+                    Callback_Handler<status, Move_Type::Capture, Queen, CallbackType, Args
                         ...>::handle_callback(this->get_board(), from, to, args...);
                     ++moves;
                 }

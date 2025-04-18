@@ -13,9 +13,9 @@ namespace Kangaroo::Queen_Move_Generation::Simple {
         using enum Chess_Pieces;
         using enum Color;
 
-//        print_chess_board(*pac_gen->get_board(), true);
+        print_chess_board(*pac_gen->get_board(), true);
 //        print_bitboard(move);
-//        return;
+        return;
 
         if (const auto it = std::ranges::find(moves, move); it == moves.end())
         {
