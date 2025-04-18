@@ -97,6 +97,7 @@ add_library(Kangaroo
         ../include/Move_Generator/Rook_Move_Generator.h
         ../include/Address_Attack_Tables.h
         ../include/Get_Attacks_For.h
+        ../include/Move_Generator/Bishop_Move_Generator.cpp
 )
 target_link_libraries(Kangaroo
         PUBLIC
