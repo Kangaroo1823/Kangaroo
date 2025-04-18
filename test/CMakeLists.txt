@@ -41,7 +41,8 @@ add_executable(Kangaroo_tests
         Bishop_Move_Generator/Blocking.cpp
         Bishop_Move_Generator/Pin_D.cpp
         Bishop_Move_Generator/Pin_HV.cpp
-        Queen_Move_Generator/Simple.cpp)
+        Queen_Move_Generator/Simple.cpp
+        Rook_Move_Generation/Check1.cpp)
 target_link_libraries(Kangaroo_tests
         PRIVATE
         Kangaroo
