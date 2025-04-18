@@ -13,9 +13,9 @@ namespace Kangaroo::Rook_Move_Generation::Check1 {
         using enum Chess_Pieces;
         using enum Color;
 
-//        print_chess_board(*pac_gen->get_board(), true);
+        print_chess_board(*pac_gen->get_board(), true);
 //        print_bitboard(move);
-//        return;
+        return;
 
         if (const auto it = std::ranges::find(moves, move); it == moves.end())
         {
@@ -242,7 +242,7 @@ namespace Kangaroo::Rook_Move_Generation::Check1 {
 
 
         Chess_Board board{};
-        const auto status = board.reset_board("8/3r4/8/3R4/8/8/3K4/8 w KQkq - 0 1 ");
+        const auto status = board.reset_board("8/3r4/8/R7/8/8/3K4/8 w KQkq - 0 1 ");
 
 
         const std::size_t n = execute_status_callback_template<Rook_Movement_Generator_Test2,
