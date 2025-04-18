@@ -36,7 +36,9 @@ add_executable(Kangaroo_tests
         Rook_Move_Generation/Simple1.cpp
         Rook_Move_Generation/Blocking.cpp
         Rook_Move_Generation/HV_Pin.cpp
-        Rook_Move_Generation/D_Pin.cpp)
+        Rook_Move_Generation/D_Pin.cpp
+        Bishop_Move_Generator/Simple1.cpp
+        Bishop_Move_Generator/Blocking.cpp)
 target_link_libraries(Kangaroo_tests
         PRIVATE
         Kangaroo

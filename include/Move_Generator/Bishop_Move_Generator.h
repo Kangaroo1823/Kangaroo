@@ -2,8 +2,8 @@
 // Created by peter on 2/22/25.
 //
 
-#ifndef ROOK_MOVE_GENERATOR_H
-#define ROOK_MOVE_GENERATOR_H
+#ifndef BISHOP_MOVE_GENERATOR_H
+#define BISHOP_MOVE_GENERATOR_H
 
 #include "Board_Status.h"
 #include "Callback_Handler.h"
@@ -26,7 +26,7 @@ namespace Kangaroo::Move_Generator {
         }
 
         template<Move_Generation_Mode mode, typename... Args>
-        [[nodiscard]] _ForceInline constexpr std::size_t generate_rook_moves(Args... args) {
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_bishop_moves(Args... args) {
             static_assert(status.color_to_move == Color::White || status.color_to_move == Color::Black);
             static_assert(mode == Move_Generation_Mode::Normal_Move_Generation |
                           mode == Move_Generation_Mode::Pin_D_Move_Generation );
@@ -85,4 +85,4 @@ namespace Kangaroo::Move_Generator {
 }
 
 
-#endif //ROOK_MOVE_GENERATOR_H
+#endif //BISHOP_MOVE_GENERATOR_H

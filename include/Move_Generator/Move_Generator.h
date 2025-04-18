@@ -7,6 +7,7 @@
 
 #include "Knight_Move_Generator.h"
 #include "Rook_Move_Generator.h"
+#include "Bishop_Move_Generator.h"
 #include "Pawn_Move_Generator.h"
 
 namespace Kangaroo::Move_Generator
@@ -18,6 +19,7 @@ namespace Kangaroo::Move_Generator
     class Move_Generator : public Pawn_Move_Generator<status, CallbackType>
         , public Knight_Move_Generator<status, CallbackType>
         , public Rook_Move_Generator<status, CallbackType>
+        , public Bishop_Move_Generator<status, CallbackType>
 
     {
     public:
@@ -26,6 +28,7 @@ namespace Kangaroo::Move_Generator
             , Pawn_Move_Generator<status, CallbackType>(board)
             , Knight_Move_Generator<status, CallbackType>(board)
             , Rook_Move_Generator<status, CallbackType>(board)
+            , Bishop_Move_Generator<status, CallbackType>(board)
 
         {
         }
@@ -35,6 +38,7 @@ namespace Kangaroo::Move_Generator
         , Pawn_Move_Generator<status, CallbackType>(pac_gen)
         , Knight_Move_Generator<status, CallbackType>(pac_gen)
         , Rook_Move_Generator<status, CallbackType>(pac_gen)
+        , Bishop_Move_Generator<status, CallbackType>(pac_gen)
         {
         }
 
@@ -44,6 +48,15 @@ namespace Kangaroo::Move_Generator
             std::size_t moves = 0;
             moves += this->template generate_rook_moves<Normal_Move_Generation>(args...);
             moves += this->template generate_rook_moves<Pin_HV_Move_Generation>(args...);
+            return moves;
+        }
+
+        template<typename ... Args>
+        [[nodiscard]] _ForceInline constexpr std::size_t generate_bishop_movements(Args... args) {
+            using enum Move_Generation_Mode;
+            std::size_t moves = 0;
+            moves += this->template generate_bishop_moves<Normal_Move_Generation>(args...);
+            moves += this->template generate_bishop_moves<Pin_D_Move_Generation>(args...);
             return moves;
         }
 
@@ -80,6 +93,7 @@ namespace Kangaroo::Move_Generator
             moves += this->generate_pawn_movements(args...);
             moves += this->generate_knight_movements(args...);
             moves += this->generate_rook_movements(args...);
+            moves += this->generate_bishop_movements(args...);
 
             return moves;
         }
