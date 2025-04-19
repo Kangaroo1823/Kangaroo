@@ -7,15 +7,15 @@
 #include "Move_Generator/Move_Generator.h"
 #include <gtest/gtest.h>
 
-namespace Kangaroo::Rook_Move_Generation::Check1 {
-    Callback_Template_Inline(Rook_Movement_Generator_Test2_Callback, const std::array<Chess_Board,
+namespace Kangaroo::Bishop_Move_Generation::Check {
+    Callback_Template_Inline(Bishop_Movement_Generator_Test2_Callback, const std::array<Chess_Board,
                              1> &new_boards, const std::array<Bitboard, 1> &moves) {
         using enum Chess_Pieces;
         using enum Color;
 
         // print_chess_board(*pac_gen->get_board(), true);
-        // print_bitboard(move);
-        // return;
+        print_bitboard(move);
+        return;
 
         if (const auto it = std::ranges::find(moves, move); it == moves.end()) {
             std::stringstream ss;
@@ -23,13 +23,13 @@ namespace Kangaroo::Rook_Move_Generation::Check1 {
             throw std::runtime_error(ss.str());
         };
 
-
         const auto board_it = std::ranges::find(new_boards, *pac_gen->get_board());
         if (board_it == new_boards.end()) {
             std::stringstream ss;
             ss << "board: " << *pac_gen->get_board() << " not found in boards";
             throw std::runtime_error(ss.str());
         }
+
         if (!pac_gen->get_board()->is_state_consistent()) {
             std::stringstream ss;
             ss << "board: " << std::endl << pac_gen->get_board() << " is not consistent." << std::endl;
@@ -67,42 +67,44 @@ namespace Kangaroo::Rook_Move_Generation::Check1 {
         }
     }
 
-    Status_Callback_Template(Rook_Movement_Generator_Test2, Chess_Board* board,
+    Status_Callback_Template(Bishop_Movement_Generator_Test2, Chess_Board* board,
                              const std::array<Chess_Board, 1> &chess_boards, const std::array<Bitboard, 1> &moves) {
         Move_Generator::Move_Generator<status, CallbackType> generator(board);
-        return generator.generate_rook_movements(chess_boards, moves);
+        return generator.generate_bishop_movements(chess_boards, moves);
     }
 
 
     std::array<Chess_Board, 1> new_boards = {
+
         /*
 
-               A  B  C  D  E  F  G  H
+   A  B  C  D  E  F  G  H
 
-          8    .  .  .  .  .  .  .  .
-          7    .  .  .  ♖  .  .  .  .
-          6    .  .  .  .  .  .  .  .          half move number:  0
-          5    .  .  .  ♜  .  .  .  .          full move number:  1
-          4    .  .  .  .  .  .  .  .
-          3    .  .  .  .  .  .  .  .
-          2    .  .  .  ♚  .  .  .  .
-          1    .  .  .  .  .  .  .  .
+8    .  .  .  .  .  .  .  .
+7    .  ♕  .  .  .  .  .  .
+6    .  .  .  .  .  .  .  .          half move number:  0
+5    .  .  .  .  .  .  .  .          full move number:  1
+4    .  .  .  .  ♝  .  .  .
+3    .  .  .  .  .  .  .  .
+2    .  .  .  .  .  .  ♚  .
+1    .  .  .  .  .  .  .  .
 
-               A  B  C  D  E  F  G  H
+   A  B  C  D  E  F  G  H
 
-        */
+*/
         Kangaroo::Chess_Board(std::array<Bitboard, 15>{
             /* white pawns    */ 0x0000000000000000, /* white knights */ 0x0000000000000000, /* white bishops */
-            0x0000000000000000,
-            /* white rooks    */ 0x0000000800000000, /* white queens  */ 0x0000000000000000, /* white king    */
-            0x0000000000000800,
+            0x0000000010000000,
+            /* white rooks    */ 0x0000000000000000, /* white queens  */ 0x0000000000000000, /* white king    */
+            0x0000000000004000,
             /* black pawns    */ 0x0000000000000000, /* black knights */ 0x0000000000000000, /* black bishops */
             0x0000000000000000,
-            /* black rooks    */ 0x0008000000000000, /* black queens  */ 0x0000000000000000, /* black king    */
+            /* black rooks    */ 0x0000000000000000, /* black queens  */ 0x0002000000000000, /* black king    */
             0x0000000000000000,
             /* en passant sq. */ 0x0000000000000000, /* half move num */ 0x0000000000000000, /* full move num */
             0x0000000000000001
         }),
+
     };
 
     std::array<Bitboard, 1> moves = {
@@ -110,8 +112,8 @@ namespace Kangaroo::Rook_Move_Generation::Check1 {
           8    .  .  .  .  .  .  .  .
           7    .  .  .  .  .  .  .  .
           6    .  .  .  .  .  .  .  .
-          5    1  .  .  1  .  .  .  .
-          4    .  .  .  .  .  .  .  .
+          5    .  .  .  .  .  1  .  .
+          4    .  .  .  .  1  .  .  .
           3    .  .  .  .  .  .  .  .
           2    .  .  .  .  .  .  .  .
           1    .  .  .  .  .  .  .  .
@@ -119,24 +121,24 @@ namespace Kangaroo::Rook_Move_Generation::Check1 {
                A  B  C  D  E  F  G  H
 
                bitboard as 64 bit integer: */
-        0x900000000,
+        0x2010000000,
     };
 
     /**
      * Test that the board below leads to two generated moves.
      */
-    TEST(Rook_Move_Generation, Check1) {
+    TEST(Bishop_Move_Generation, Check) {
         using namespace Kangaroo::Move_Generator;
         using enum Chess_Pieces;
         using enum Color;
 
 
         Chess_Board board{};
-        const auto status = board.reset_board("8/3r4/8/R7/8/8/3K4/8 w KQkq - 0 1 ");
+        const auto status = board.reset_board("8/1q6/8/5B2/8/8/6K1/8 w KQkq - 0 1 ");
 
 
-        const std::size_t n = execute_status_callback_template<Rook_Movement_Generator_Test2,
-            Rook_Movement_Generator_Test2_Callback, Chess_Board *,
+        const std::size_t n = execute_status_callback_template<Bishop_Movement_Generator_Test2,
+            Bishop_Movement_Generator_Test2_Callback, Chess_Board *,
             const std::array<Chess_Board, 1> &, const std::array<
                 Move, 1> &>(*status, &board, new_boards, moves);
 
