@@ -47,7 +47,8 @@ add_executable(Kangaroo_tests
         Queen_Move_Generator/Blocking.cpp
         Queen_Move_Generator/Pin_HV.cpp
         Queen_Move_Generator/Pin_D.cpp
-        Queen_Move_Generator/Check_D.cpp)
+        Queen_Move_Generator/Check_D.cpp
+        Queen_Move_Generator/Check_HV.cpp)
 target_link_libraries(Kangaroo_tests
         PRIVATE
         Kangaroo
